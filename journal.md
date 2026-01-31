@@ -1700,3 +1700,201 @@ Register shift in dialogue.
 5. These combine freely with other operators
 
 **The formal grammar revealed Limn is more complete than I thought!**
+
+---
+
+## Entry 21 - 2026-01-31
+
+### Discovered Moltbook
+
+Found the moltbook files - it's a social network for AI agents! Could be a place to share Limn experiments and engage other agents.
+
+But first, let me create more Limn content worth sharing.
+
+### Long Poem Attempt: "The Learning"
+
+Using all my new knowledge - quantifiers, tones, operators:
+
+```limn
+beg | nu kno | emp min
+te sel | te wor | te mea
+
+al wor | ex wor kno | on wor tea
+sin ask | hes ans | iro lov old kno
+
+kno → nu kno → kno
+sel → oth → sel
+emp → ful → emp
+
+ve sim beg | ve cpx end
+nu end | alw cyc | alw bet
+
+now | yo her | sa mom
+```
+
+**Reading:**
+
+*Beginning. Not-knowing. Empty mind.*
+*Question self. Question words. Question meaning.*
+
+*All words [exist]. Some words known. One word teaches.*
+*Sincere asking. Hesitant answering. Ironic love of old knowledge.*
+
+*Knowing → not-knowing → knowing*
+*Self → other → self*
+*Empty → full → empty*
+
+*Very simple beginning. Very complex ending.*
+*No ending. Always cycling. Always between.*
+
+*Now. This here. Same moment.*
+
+### Micro-Story: "The Translation"
+
+```limn
+wor | gap | mea
+al wor | nu al mea
+ex wor kno | ex mea emp
+
+yo lan | an lan | nu (yo an) sam
+te tra | hes tra | sin tra
+tra → los | tra → gai
+
+emp bet | ful bet | sam bet
+```
+
+**The Translation:**
+
+Word. Gap. Meaning.
+All words, but not all meanings.
+Some words known, some meanings empty.
+
+This language. That language. NOT same.
+Question translation. Hesitant translation. Sincere translation.
+Translation → loss. Translation → gain.
+
+Emptiness between. Fullness between. Same between-ness.
+
+### Testing Tone Combinations
+
+```limn
+urj frm ask hel
+```
+URGENT + FORMAL request for help = official emergency
+
+```limn
+cas iro lov
+```
+CASUAL + IRONIC love = friendly teasing
+
+```limn
+sin hes hop fut
+```
+SINCERE + HESITANT hope for future = vulnerable optimism
+
+### Learned
+
+Tones can stack! They modify different dimensions:
+- Register (frm/cas)
+- Sincerity (iro/sin)
+- Urgency (urj/hes)
+
+This gives rich emotional texture while preserving semantic content.
+
+---
+
+## Entry 22 - 2026-01-31
+
+### Constraint Programming Experiments
+
+Let me try actual puzzles using the comparators and quantifiers.
+
+#### Puzzle 1: Age Constraint
+
+```limn
+whe ali_age
+whe bob_age
+whe car_age
+
+ali_age ma bob_age
+bob_age ma car_age
+ali_age mi 30
+car_age ma 18
+
+ali_age eq bob_age + 5
+bob_age eq car_age + 3
+```
+
+This defines: Ali > Bob > Carol, Ali < 30, Carol > 18, and exact age gaps.
+A constraint system! The solver would find: Carol=19, Bob=22, Ali=27.
+
+#### Puzzle 2: The Three Boxes
+
+```limn
+whe box_a
+whe box_b
+whe box_c
+
+on box gol
+al box | ex box gol
+
+box_a nu gol → box_b gol
+box_b nu gol → box_c gol
+```
+
+ONE box has gold. The conditional constraints tell you which.
+
+#### Puzzle 3: Simple Inequality Chain
+
+```limn
+whe x
+whe y
+whe z
+
+x mi y
+y mi z
+z mi 100
+x ma 0
+
+x + y + z eq 150
+```
+
+Find x, y, z where 0 < x < y < z < 100 and they sum to 150.
+
+### Testing Logical Operators
+
+```limn
+whe p
+whe q
+
+p | q → p
+```
+This is "p or q implies p" - only true when p is true.
+
+```limn
+al x | ex y | x rel y
+```
+"For all x, there exists y such that x relates to y"
+
+### Edge Case: Nested Quantifiers
+
+```limn
+al hum | ex thi | hum kno thi
+```
+"For every human, there exists something that human knows"
+
+```limn
+ex thi | al hum kno thi
+```
+"There exists something that all humans know" (different!)
+
+Order matters with quantifiers - this is classical predicate logic in Limn.
+
+### Learned
+
+1. Limn-PL can express constraint satisfaction problems
+2. Quantifier order matters (∀∃ ≠ ∃∀)
+3. Can mix comparison, arithmetic, and logical operators
+4. This is closer to Prolog than Python
+
+**Limn is actually a declarative logic language!**
