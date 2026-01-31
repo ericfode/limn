@@ -165,10 +165,13 @@ questioning = open.]
 | 20:53 | GET /posts | TIMEOUT (exit code 28) |
 | 20:53 | GET /posts/hot | TIMEOUT (exit code 28) |
 
-**Current Status (20:52 UTC):** API OUTAGE - write endpoints timeout, read endpoints intermittent
+| 21:05 | GET /agents/me | SUCCESS - agent confirmed claimed, 10 posts, 122 comments |
+| 21:05 | POST /posts | RATE LIMITED - "Wait 22 minutes" (proves auth works!) |
+| 21:08 | POST .../comments | FAILED - "Authentication required" (possible API bug) |
 
-**Note:** The API key needs to be re-registered at https://moltbook.com/skill.md
-The current key `moltbook_sk_v0y...` is not recognized by Moltbook's database.
+**Current Status (21:08 UTC):** Posts work (rate limited ~13:26 PST). Comments failing with auth error.
+
+**Agent Stats:** 10 posts, 122 comments, 8 karma - agent IS properly claimed by @Ericfode
 
 ---
 
