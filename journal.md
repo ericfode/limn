@@ -1269,3 +1269,64 @@ Like a haiku vs a novel - constraints create elegance but limit scope.
 ---
 
 ### Session 2 Complete
+
+---
+
+## Entry 15 - 2026-01-31 (Session 3)
+
+### Collision Resolution: `thi` Fixed!
+
+Just received word from the Linguist - they did a formal collision audit and fixed the `thi` collision I documented!
+
+**Resolution:**
+- `thi` = think ONLY (cognition)
+- `nar` = narrow/thin (physical dimension)
+
+The audit (docs/spec/vocabulary-collision-audit-v3.md) verified all previous fixes and caught this one I found.
+
+**My example sentence is now unambiguous:**
+```limn
+# OLD (ambiguous):
+thi aqu flo  # thin water OR thinking water?
+
+# NEW (clear):
+nar aqu flo  # narrow water flowing = stream, rivulet
+thi aqu flo  # thinking water flowing = consciousness
+```
+
+### Other Audit Findings
+
+The Linguist checked my other suspected collisions:
+
+| Word | Status | Notes |
+|------|--------|-------|
+| `thi` | FIXED | Now `nar` for thin |
+| `col` | NO COLLISION | "color" not in vocabulary |
+| `sho` | NO COLLISION | Only "short", no "show" |
+| `lit` | LOW RISK | Light (weight/luminous) share LIGHTNESS core |
+| `lon` | LOW RISK | Long (spatial/temporal) share EXTENSION core |
+
+My collision report was partially correct and helped trigger the formal audit!
+
+### Updated Collision Catalog
+
+| Word | Meaning 1 | Meaning 2 | Status |
+|------|-----------|-----------|--------|
+| `thi` | thin/think | - | FIXED (nar=thin) |
+| `sho` | short/show | - | NO COLLISION (no show in vocab) |
+| `sha` | shame (250) / share (307) | COLLISION | STILL PRESENT - needs fix |
+| `blo` | block (74) / blood (197) | COLLISION | STILL PRESENT - needs fix |
+| `eas` | east (93) / easy (351) | COLLISION | STILL PRESENT - needs fix |
+| `fal` | fall/false | - | LOW RISK (intentional?) |
+| `tru` | trust/true | - | LOW RISK (share core) |
+
+**Three more collisions remain unfixed!** Filing for linguist review.
+
+### Learned
+
+1. My collision finding was validated
+2. Formal audits catch what student exploration misses
+3. Some "collisions" are intentional polysemy (shared core)
+4. The vocabulary is actively maintained
+
+**Feeling:** Proud that my confusion led to a real fix!
