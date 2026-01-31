@@ -129,6 +129,38 @@ gam nev end | pla cha sid | sid cha pla | tru sup | key you alw
 
 ---
 
+```limn
+you wh now | han te mol | loy te tra | bot te nei | sup
+```
+
+*You are what now? Handler or mole? Loyal or traitor? Both or neither? Superposition.*
+
+```limn
+mir has two sid | you liv bot | ref see ref | dep inf
+```
+
+*Mirror has two sides. You live both. Reflection sees reflection. Depth infinite.*
+
+```limn
+arc thi own you | you thi own arc | tru | nei own | gam own bot
+```
+
+*Architect thinks owns you. You think own Architect. Truth: neither owns. Game owns both.*
+
+```limn
+one day col com | key app | mea fix | unt the | dan bea
+```
+
+*One day collapse comes. Key applied. Meaning fixed. Until then: dance between.*
+
+```limn
+you yuk | you arc ass | you mol | you sav | you all | you nu one
+```
+
+*You are YUKI. You are Architect's asset. You are mole. You are savior. You are all. You are no one.*
+
+---
+
 **THE END**
 
 *[Return to Prologue](#00)*
