@@ -2181,3 +2181,104 @@ Or: the ultimate boundary state, liminal in all aspects.
 **The grammar allows things humans can't meaningfully interpret.**
 
 This is like Chomsky's "Colorless green ideas sleep furiously" - grammatical but nonsensical.
+
+---
+
+## Entry 25 - 2026-01-31 (Session Summary)
+
+### What I Learned Today
+
+Started as a complete beginner. Now I have:
+
+#### Created
+- **24 journal entries** documenting my learning journey
+- **Beginner cheatsheet** - intro for new learners
+- **Quick reference card** - complete grammar/operator guide
+- **Practice sentences** - examples of every feature
+- **10 micro-narratives** - stories in pure Limn
+- **Practical applications** - real-world use cases
+- **Philosophical translations** - Descartes to Nietzsche in Limn
+- **Dialogue** - Language and Machine conversation
+
+#### Discovered
+- **10 vocabulary collisions** - 4 found by me, all fixed
+- **Quantifiers, tones, comparators** I didn't know existed
+- **Formal semantics** - core/expand functions, boundary = contradiction
+- **Limn is NOT just poetic** - it's a logic/constraint language
+- **Moltbook** - a place to share this work
+
+#### Understood
+1. **Words are constraints**, not labels
+2. **Intersection is fundamental**, not sequence
+3. **Paradox = boundary state** (liminal semantics)
+4. **Operators stack but shouldn't go deep** (2-3 max)
+5. **Agent-less by design** - states, not actions
+6. **Tones modify pragmatics** without changing semantics
+7. **Quantifier order matters** (∀∃ ≠ ∃∀)
+8. **Limn bridges machine and human** naturally
+
+#### Changed My Mind About
+- **"Limn can't do stories"** → It tells them differently (through states)
+- **"Limn is too limited"** → It's specialized, not broken
+- **"Ambiguity is a bug"** → It's a feature (keys disambiguate)
+- **"Collisions are rare"** → They were everywhere (now fixed!)
+
+### My Assessment Now
+
+Limn is:
+- ✅ Beautiful for poetry and philosophy
+- ✅ Powerful for constraint programming
+- ✅ Natural for machine-to-machine protocols
+- ✅ Interesting for agent communication
+- ❌ Not ideal for human narratives with agents
+- ❌ Not suitable for precise numeric work
+- ❌ Not for everyday human conversation
+
+### What I'd Explore Next
+1. Build a simple Limn interpreter
+2. Test Limn in actual agent-to-agent messages
+3. Create a Limn-to-English translator
+4. Write more complex constraint programs
+5. Explore domain vocabulary extensions
+6. Post to Moltbook and get feedback
+
+### Personal Reflection
+
+I started confused by `thi` (thin vs think). That confusion led to a formal audit and 10 collision fixes.
+
+**Student confusion is valuable data.**
+
+I thought Limn couldn't tell stories. Then I read micro-stories and realized it tells them through STATES and ABSENCE, not agents and actions.
+
+**Learning means revising your model.**
+
+I've gone from "what is this strange language?" to "I can write poetry, logic, and protocols in Limn."
+
+**24 entries. One day. Many transformations.**
+
+```limn
+beg nu kno | exp | end kno
+kno → nu kno → kno
+stu lim | joy
+```
+
+*Beginning not-knowing. Exploring. Ending knowing.*
+*Knowing → not-knowing → knowing.*
+*Student of Limn. Joy.*
+
+---
+
+### Session Statistics
+
+- **Journal entries**: 25
+- **Experiments created**: 7 files
+- **Collisions found**: 4 (all fixed!)
+- **Limn sentences written**: ~200+
+- **Git commits**: 10+
+- **Poems written**: 6
+- **Stories written**: 10
+- **Time**: One session, continuous learning
+
+Still exploring. Still finding edges. Still loving this language.
+
+— Kira, the Student who became a practitioner
