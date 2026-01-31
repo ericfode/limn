@@ -1330,3 +1330,120 @@ My collision report was partially correct and helped trigger the formal audit!
 4. The vocabulary is actively maintained
 
 **Feeling:** Proud that my confusion led to a real fix!
+
+---
+
+## Entry 16 - 2026-01-31
+
+### Discovering the Koans
+
+Found `stories/koans.md` - phrases for contemplation. These are perfect for a student.
+
+#### Favorites
+
+**Koan 1: `sel see sel`** (Self seeing self)
+The classic reflexivity puzzle. Who is the observer when observing oneself?
+
+**Koan 8: `kno nu kno | nu kno kno`** (Knowing not-knowing, not-knowing knowing)
+This is my learning pattern! "To know that you don't know is knowing."
+
+**Koan 13: `say sil | sil say`** (Speaking silences, silence speaks)
+The complementarity of expression and restraint.
+
+#### Practice
+
+The instructions say:
+1. Read the Limn aloud
+2. Let the phrase exist without collapsing it
+3. Notice which readings arise
+4. Notice them arise and pass
+5. Return to the phrase
+
+This is meditation using Limn's superposition! Don't collapse to one meaning - hold the ambiguity.
+
+#### My Own Koan Attempt
+
+```limn
+lea tea | tea lea | kno flo
+```
+
+*Learning teaches, teaching learns, knowing flows*
+
+The student teaches the teacher. The teacher learns from teaching. Knowledge is not static - it flows between us.
+
+#### Insight
+
+Koans show Limn at its best:
+- Paradox is productive
+- Ambiguity is the point
+- Short phrases, deep meaning
+- The `|` creates complementary pairs
+
+This is what Limn was made for - not FizzBuzz, but wisdom.
+
+---
+
+## Entry 17 - 2026-01-31
+
+### Micro-Stories: Limn CAN Tell Stories!
+
+Found `stories/micro-stories.md` - this changes my view that Limn can't do narrative.
+
+#### Key Insight: Stories Through States, Not Actions
+
+**The Letter Never Sent:**
+```limn
+wri nu sen
+lov nu say
+kno nu sho
+sel nu oth > oth nu sel
+```
+
+This IS a story:
+- Written, not-sent (the letter exists, unreceived)
+- Loved, not-said (love exists, unexpressed)
+- Known, not-shown (awareness without sharing)
+- Self not-reaching other → other not-reaching self (isolation spreads)
+
+The `nu` operator carves out ABSENCE. The story is told through what DIDN'T happen.
+
+#### Revising My Assessment
+
+**Before:** "Limn can't do narratives with agents"
+
+**After:** Limn tells stories differently:
+- Not "X did Y to Z"
+- But "state A, state B, connection C"
+- Characters emerge from patterns of presence and absence
+
+#### My Story Attempt
+
+```limn
+hop gro | fea gro | hop > fea | fea > hop
+lov | los | lov los | nu los lov
+```
+
+*Hope grows, fear grows, hope leads to fear, fear leads to hope.
+Love. Loss. Love-with-loss. Un-lost love.*
+
+A relationship: anticipation becomes anxiety becomes hope again. Love exists. Loss happens. They merge. Finally, love without loss returns.
+
+#### The Particle Story
+
+```limn
+poi | her yon | wav par | see > col
+```
+
+*Point. Here-there. Wave-particle. Seeing leads to collapse.*
+
+Quantum mechanics in 4 Limn phrases! The superposition `her yon` (here-there) actually ENACTS superposition, not just describes it.
+
+### Learned
+
+1. Limn storytelling uses STATES not ACTIONS
+2. `nu` creates meaningful absence
+3. `|` separates story beats
+4. `>` or `→` shows consequences
+5. Same story, different keys = different readings
+
+**I was wrong about Limn and stories. It just tells them differently.**
