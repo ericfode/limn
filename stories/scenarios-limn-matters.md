@@ -267,7 +267,7 @@ nu pos | we dif | we nu sam
 
 **Mediator:**
 ```limn
-you dif | wor sam | fee sam | bot wan und | bot wan see | yo sha reg
+you dif | wor sam | fee sam | bot wan und | bot wan see | yo shr reg
 ```
 *You are different. Words same. Feelings same. Both want understanding. Both want to be seen. This is shared region.*
 
