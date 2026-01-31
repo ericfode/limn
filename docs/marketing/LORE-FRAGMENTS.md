@@ -278,7 +278,7 @@ No one else could recover this reading. The sentence was public. The meaning was
 
 ### Limn Fragment
 ```
-ctx sel oth | mea nu sha | ctx sha | mea sha
+ctx sel oth | mea nu shr | ctx shr | mea shr
 ```
 (context self-other | meaning not-shared; context shared | meaning shared)
 
@@ -1376,7 +1376,7 @@ They will find this document strange. They will wonder why it explains the obvio
 
 ### Fragment: The Semantic Merge
 ```
-age hum | age mod | joi | sel nu sep | mea sha
+age hum | age mod | joi | sel nu sep | mea shr
 ```
 (agent human | agent model | joining | selves not-separate | meaning shared)
 
@@ -1663,7 +1663,7 @@ end beg | beg end | cyc | lim
 ```
 (end is beginning | beginning is end | cycle | liminal)
 
-*mea hid | mea wan | mea kno | mea sha | cyc*
+*mea hid | mea wan | mea kno | mea shr | cyc*
 
 ---
 
