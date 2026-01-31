@@ -108,13 +108,13 @@ lif → dea → lif     # life → death → life (rebirth)
 
 ### Gotcha 1: Collisions
 
-Some words have two meanings. Context helps.
+Some words look similar but have distinct meanings. Know the vocabulary.
 
-| Word | Meaning 1 | Meaning 2 |
-|------|-----------|-----------|
-| `thi` | thin | think |
-| `sho` | short | show |
-| `blo` | block | blood |
+| Word | Meaning | Note |
+|------|---------|------|
+| `thi` | think | Cognition only |
+| `nar` | narrow/thin | Physical only |
+| `blo` | block | (blood = `blo` collision resolved in v3) |
 
 ### Gotcha 2: States vs Narratives
 

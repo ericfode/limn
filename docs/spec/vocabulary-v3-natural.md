@@ -43,7 +43,7 @@
 | `lon` | long | long, extended | river, snake, road, timeline |
 | `sho` | short | short, brief | moment, spark, blink, dot |
 | `wid` | wide | wide, broad | plain, ocean, horizon, sheet |
-| `thi` | thin | thin, narrow | thread, crack, blade, beam |
+| `nar` | narrow | thin, narrow | thread, crack, blade, beam |
 | `hev` | heavy | heavy, massive | lead, anchor, burden, gravity |
 | `lit` | light | light, weightless | feather, air, cloud, ghost |
 | `den` | dense | dense, compact | neutron star, packed, solid |
@@ -463,7 +463,7 @@ ctx det mea      (context determines meaning - key mechanism)
 | `mag` | `big` | Direct English word for size |
 | `min` | `sma` | First syllable of "small" |
 | `bre` | `sho` | First syllable of "short" |
-| `nar` | `thi` | First syllable of "thin" |
+| `thi` | `nar` | Reverted: `thi` now reserved for "think" (collision fix) |
 | `aur` | `gol` | First syllable of "gold" |
 | `lig` | `woo` | First syllable of "wood" |
 | `fer` | `iro` | First syllable of "iron" |
