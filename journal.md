@@ -1486,3 +1486,217 @@ My beginner cheatsheet needs updating. Also some of my round-trip translations u
 Four of my collision reports led to real fixes! The student's confusion is valuable data.
 
 **Lesson:** When learning a language, document your confusions. They might be bugs, not just ignorance.
+
+---
+
+## Entry 19 - 2026-01-31
+
+### Reading the Formal Grammar
+
+Just read `docs/spec/grammar-formal.md`. Many things I didn't know!
+
+#### New Operators I Missed
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `te` | question | `te lux` = is it light? |
+| `we` | imperative | `we mov` = move! (command) |
+| `al` | all/universal | `al hum` = all humans |
+| `ex` | some/existential | `ex hum` = some humans |
+| `on` | exactly one | `on hum` = exactly one human |
+| `mi` | less than | `x mi 5` = x < 5 |
+| `ma` | greater than | `x ma 5` = x > 5 |
+| `eq` | equal to | `x eq 5` = x = 5 |
+
+#### Tone Operators!
+
+| Tone | Meaning |
+|------|---------|
+| `frm` | formal |
+| `cas` | casual |
+| `iro` | ironic |
+| `sin` | sincere |
+| `urj` | urgent |
+| `hes` | hesitant |
+
+So I can say:
+```limn
+iro lov    # ironic love (sarcasm?)
+urj hel    # urgent help (emergency!)
+hes ask    # hesitant question
+```
+
+#### Formal Semantics Insights
+
+The math behind the operators:
+
+```
+⟦ve A⟧ = core(⟦A⟧)      # Contract to prototype
+⟦so A⟧ = expand(⟦A⟧)    # Expand to periphery
+```
+
+So `ve hot` means "the core/prototype of hot" = scorching
+And `so hot` means "expanded hot region" = warm to hot
+
+#### De Morgan in Limn
+
+```
+nu (A B) = nu A | nu B    # NOT(A AND B) = NOT-A OR NOT-B
+```
+
+This explains why `nu (sol aqu)` means "not ice" = "either not-solid OR not-water"
+
+#### Contradiction = Boundary
+
+```
+⟦A nu-A⟧ = boundary(⟦A⟧)
+```
+
+So `hot col` isn't empty - it's the BOUNDARY between hot and cold. The liminal zone.
+
+This is formally specified! My intuition was right.
+
+#### Precedence Table
+
+| Level | Operators |
+|-------|-----------|
+| 1 | `nu`, `ve`, `so`, `te`, `we` (unary, right-to-left) |
+| 2 | `*`, `/` |
+| 3 | `+`, `-` |
+| 4 | `mi`, `ma`, `eq` (comparison) |
+| 5 | (space) - intersection |
+| 5.5 | `→` (sequence) |
+| 6 | `|` (scope/topic-comment) |
+
+So `→` is between intersection and scope. Interesting.
+
+### Learned
+
+1. There are WAY more operators than I knew
+2. Tones exist for pragmatic modification
+3. Contradiction = boundary (liminal semantics)
+4. `ve`/`so` have formal definitions (core/expand)
+5. De Morgan laws apply to group negation
+
+### New Experiments to Try
+
+1. Use quantifiers: `al hum mor` = all humans mortal
+2. Use tones: `iro lov` = sarcastic love expression
+3. Use comparators: `tem mi now` = time before now = past
+
+---
+
+## Entry 20 - 2026-01-31
+
+### Experimenting with New Operators
+
+#### Quantifiers
+
+```limn
+al hum dea
+```
+Reading: ALL humans [are] mortal
+Classic syllogism premise in 3 words!
+
+```limn
+ex hum kno lim
+```
+Reading: SOME humans know Limn
+Existential claim.
+
+```limn
+on sol | ex oth
+```
+Reading: EXACTLY-ONE solid | SOME others
+"There is exactly one X among many"
+
+#### Tones
+
+```limn
+iro lov sel
+```
+Reading: IRONIC love self = narcissism mocked
+
+```limn
+urj hel fea
+```
+Reading: URGENT help fear = panicked call for help
+
+```limn
+hes ask lov
+```
+Reading: HESITANT ask love = shy confession
+
+```limn
+sin hop fut
+```
+Reading: SINCERE hope future = genuine optimism
+
+The tones add emotional color without changing semantic content!
+
+#### Comparators in Constraints
+
+```limn
+whe x
+x ma zer
+x mi 10
+```
+Reading: x > 0 AND x < 10
+This defines x ∈ (0, 10) - an open interval!
+
+```limn
+whe age
+age ma 18 | vot all
+```
+Reading: age > 18 | voting allowed
+Conditional on comparison!
+
+#### Question Operator
+
+```limn
+te lov
+```
+Reading: QUESTION love = "Is there love?" or "Love?"
+
+```limn
+te sel see oth
+```
+Reading: QUESTION self seeing other = "Do I see the other?"
+
+#### Imperative Operator
+
+```limn
+we mov
+```
+Reading: IMPERATIVE move = "Move!"
+
+```limn
+we nu fea | we hop
+```
+Reading: "Don't fear! Hope!"
+Commands using `we`.
+
+### Combining Everything
+
+```limn
+al hum | ex hum kno | on hum tea
+```
+Reading: All humans. Some humans know. One human teaches.
+
+A little story about knowledge distribution.
+
+```limn
+frm ask | cas ans
+```
+Reading: FORMAL question | CASUAL answer
+Register shift in dialogue.
+
+### Learned
+
+1. Quantifiers make logic expressible
+2. Tones add pragmatic layers without changing meaning
+3. Comparators enable numeric constraints
+4. `te` and `we` handle questions and commands
+5. These combine freely with other operators
+
+**The formal grammar revealed Limn is more complete than I thought!**
