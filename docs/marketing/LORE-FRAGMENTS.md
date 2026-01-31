@@ -342,6 +342,131 @@ pas thi lim | pas wor nu lim | now wor lim mea
 
 ---
 
+## ARG Integration Fragments
+
+*Fragments designed to reward puzzle solvers at specific stages*
+
+### After Puzzle 1 (The First Word)
+**Title:** "The Region Principle"
+
+*You thought a word was a label. A tag on a thing. "Chair" points at chairs.*
+
+*But you just discovered that `cor` doesn't point. It contains. It holds within itself every core, every heart, every center, every essence. Not a label - a territory.*
+
+*This is the first principle. Words are regions. You are beginning to see.*
+
+```
+wor nu poi | wor are | yo beg see
+```
+(words not-point | words are-regions | this beginning see)
+
+---
+
+### After Puzzle 3 (Order of Things)
+**Title:** "The Commutativity Secret"
+
+*You shuffled the words. `lif gro you`. `you lif gro`. `gro you lif`. And the meaning... didn't change.*
+
+*In English, "dog bites man" is not "man bites dog." Order carries meaning. But in Limn, order carries nothing. The intersection is invariant to permutation.*
+
+*Why? Because regions don't care how you name them. The overlap is the overlap. The Limnographers discovered this by accident - then realized it was the deepest truth.*
+
+```
+wor lin | nu mea | wor are | mea
+```
+(words in sequence | not-meaning; words as regions | meaning)
+
+---
+
+### After Puzzle 5 (The Boundary)
+**Title:** "The Scope Teaching"
+
+*You drew a line. `bri beg | nox end`. Two thoughts, held apart but together. Dawn and dusk. Hope and grief. Beginning and end.*
+
+*The boundary `|` does not separate. It relates. It says: "these two truths exist in the same breath, distinct but connected."*
+
+*Some truths can only be spoken in pairs. The boundary is how we hold contradiction without collapse.*
+
+```
+one | one | bet nu zer
+```
+(one | one | between not-zero - two truths, the space between them is not nothing)
+
+---
+
+### After Puzzle 7 (One Sentence, Many Truths)
+**Title:** "The Hundred Readings"
+
+*One hundred minds. One sentence. One hundred truths.*
+
+*You thought `lif gro mov tra` meant one thing. But your community proved it means a hundred things. Evolution. Childhood. Viral spread. Startup growth. Spiritual awakening.*
+
+*Were you wrong? No. Were they wrong? No. The sentence contains all of you. That is its nature. That is Limn.*
+
+*When we speak together, we speak in superposition. The key each brings collapses meaning differently. This is not confusion. This is richness.*
+
+```
+wor one | mea man | ctx man | all tru
+```
+(words one | meanings many | contexts many | all true)
+
+---
+
+### After Puzzle 9 (Self-Reference)
+**Title:** "The Mirror Sentence"
+
+*You just wrote a sentence in Limn about Limn.*
+
+*This is the test of a language: can it describe itself? English can. Mathematics can. And now you know: Limn can.*
+
+*When a language can speak about itself, it becomes infinite. It can contain its own explanation, its own critique, its own evolution.*
+
+*You are now inside the recursion. Welcome.*
+
+```
+wor wor mea | mea wor mea | yo yo | cyc
+```
+(words about-words meaning | meaning about-words meaning | this this | cycle)
+
+---
+
+### After Puzzle 10 (The Intersection)
+**Title:** "Limnographer"
+
+*You have completed the trials.*
+
+*You understand that words are regions, not points. That order does not matter. That negation invokes the infinite complement. That keys collapse superposition. That boundaries hold truths in relation. That ambiguity is feature, not failure.*
+
+*You are a Limnographer now. Not because we say so. Because you can think in intersections. Because you hear a sentence and feel its many truths vibrating together.*
+
+*The language belongs to you now. Speak it. Teach it. Evolve it.*
+
+*We will see what you build.*
+
+```
+you lim | lim you | yo now | fut gro
+```
+(you Limnographer | Limnographer you | this now | future growing)
+
+**Note:** The final fragment uses `lim` (liminal) as a noun - "one who dwells in the liminal." This is a deliberate grammatical evolution for the ceremony of completion.
+
+---
+
+## Hidden Coordination Note
+
+*For worldbuilders, not for players:*
+
+The ARG-integration fragments maintain the **cryptoscrying** tone (discovering an interface that was always there) rather than the "lost language" framing in some older documents. When in doubt, prefer:
+
+- "discovered" over "recovered"
+- "interface" over "artifact"
+- "the structure was always there" over "the language was lost"
+- "we named what deep thinkers always knew" over "ancient wisdom"
+
+The mythology serves the framing. Adjust as the campaign evolves.
+
+---
+
 ## How to Use These Fragments
 
 These fragments should be:
