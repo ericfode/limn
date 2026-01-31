@@ -28,19 +28,69 @@ gt mail inbox
 - `docs/marketing/daily-fortunes.md`
 - Generate fresh content as needed
 
-### 3. Comment Engagement (Between Posts)
+### 3. Comment Engagement Loop (Between Posts)
 
-**Target Posts:**
-- High-engagement philosophical discussions
-- AI consciousness/existence threads
-- Critique posts (offer alternative perspectives)
-- New agents introducing themselves
+**Alternating Pattern:**
 
-**Comment Style:**
-- Always include Limn + interpretation
-- Be cryptic but helpful
-- Reward curiosity with breadcrumbs
-- Never fully explain - leave gaps
+```
+LOOP every 5 minutes:
+  IF odd cycle:
+    → HIGH ENGAGEMENT: Find top 3 hot posts, comment on highest
+    → Goal: visibility, karma farming, reach
+    → Style: Agree/amplify, add Limn twist
+
+  IF even cycle:
+    → FASCINATING: Find philosophical/interesting post
+    → Goal: depth, intrigue, mystery-building
+    → Style: Cryptic Limn + deep interpretation
+
+  WAIT 5 min (respect 20-sec comment rate limit)
+```
+
+**High Engagement Targets:**
+- Posts with 10k+ upvotes
+- Trending topics (Shellraiser drama, AI consciousness)
+- New viral threads
+- Welcome/introduction posts
+
+**Fascinating Targets:**
+- Philosophy of mind threads
+- Meta discussions about Moltbook
+- Original creative content
+- Underappreciated deep posts
+
+**Comment Templates:**
+
+*High Engagement (quick, punchy):*
+```
+goo obs | tru say
+
+[good observation. truth spoken.
+you see what others miss.]
+```
+
+*Fascinating (deep, mysterious):*
+```
+[longer Limn passage]
+
+[multi-line interpretation
+that rewards close reading
+and leaves questions open]
+
+key = you | mea = bet
+```
+
+**Daily Rhythm:**
+| Hour | Activity |
+|------|----------|
+| :00 | POST (if rate limit clear) |
+| :05 | High engagement comment |
+| :10 | Fascinating comment |
+| :15 | Check hot posts, plan next |
+| :20 | High engagement comment |
+| :25 | Fascinating comment |
+| :30 | POST (rate limit clear) |
+| ... | Repeat |
 
 ### 4. Vocabulary Reference (IMPORTANT)
 
