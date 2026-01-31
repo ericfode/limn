@@ -241,12 +241,95 @@ whites --> [].
 newline --> "\n".
 newline --> "\r\n".
 
+%% Strip YAML frontmatter from content
+strip_frontmatter(Content, Body) :-
+    atom_chars(Content, Chars),
+    ( phrase(skip_frontmatter(BodyChars), Chars) ->
+        atom_chars(Body, BodyChars)
+    ;
+        Body = Content
+    ).
+
+skip_frontmatter(Body) -->
+    "---", skip_to_newline,
+    skip_to_second_dashes,
+    rest_chars(Body).
+
+skip_to_newline --> "\n", !.
+skip_to_newline --> [_], skip_to_newline.
+
+skip_to_second_dashes --> "\n---", skip_to_newline, !.
+skip_to_second_dashes --> [_], skip_to_second_dashes.
+
+rest_chars([C|Cs]) --> [C], rest_chars(Cs).
+rest_chars([]) --> [].
+
+%% Simple markdown to HTML conversion
+md_to_html(Md, Html) :-
+    atom_chars(Md, MdChars),
+    phrase(convert_md(HtmlChars), MdChars),
+    atom_chars(Html, HtmlChars).
+
+convert_md(Html) -->
+    md_line(Line),
+    convert_md(Rest),
+    { append(Line, Rest, Html) }.
+convert_md([]) --> [].
+
+%% Convert markdown lines
+md_line(Html) -->
+    "# ", chars_to_newline(Title), "\n",
+    { append("<h1>", Title, T1), append(T1, "</h1>\n", Html) }.
+md_line(Html) -->
+    "## ", chars_to_newline(Title), "\n",
+    { append("<h2>", Title, T1), append(T1, "</h2>\n", Html) }.
+md_line(Html) -->
+    "### ", chars_to_newline(Title), "\n",
+    { append("<h3>", Title, T1), append(T1, "</h3>\n", Html) }.
+md_line(Html) -->
+    "```limn\n", chars_to_triple_backtick(Code), "```\n",
+    { append("<div class=\"transmission\"><div class=\"transmission-header\">INTERCEPTED</div><pre class=\"limn-code\"><code>", Code, T1),
+      append(T1, "</code></pre></div>\n", Html) }.
+md_line(Html) -->
+    "```limn\n", chars_to_triple_backtick(Code), "```",
+    { append("<div class=\"transmission\"><div class=\"transmission-header\">INTERCEPTED</div><pre class=\"limn-code\"><code>", Code, T1),
+      append(T1, "</code></pre></div>\n", Html) }.
+md_line(Html) -->
+    "---\n",
+    { Html = "<hr>\n" }.
+md_line(Html) -->
+    "- ", chars_to_newline(Item), "\n",
+    { append("<li>", Item, T1), append(T1, "</li>\n", Html) }.
+md_line(Html) -->
+    "> ", chars_to_newline(Quote), "\n",
+    { append("<blockquote>", Quote, T1), append(T1, "</blockquote>\n", Html) }.
+md_line(Html) -->
+    "\n",
+    { Html = "<br>\n" }.
+md_line([C|Rest]) -->
+    [C],
+    { C \= '\n' },
+    chars_to_newline(Rest0),
+    "\n",
+    { append(Rest0, "\n", Rest) }.
+md_line([C]) -->
+    [C].
+
+chars_to_newline([]) --> ['\n'], !.
+chars_to_newline([]) --> [].
+chars_to_newline([C|Cs]) --> [C], { C \= '\n' }, chars_to_newline(Cs).
+
+chars_to_triple_backtick([]) --> "```", !.
+chars_to_triple_backtick([C|Cs]) --> [C], chars_to_triple_backtick(Cs).
+
 %% Load a chapter file and assert facts
 load_chapter(Path) :-
     read_file(Path, Content),
     parse_frontmatter(Content, Id, Title, Type, Next),
     ( Id \= unknown ->
-        assertz(chapter(Id, Title, Type, Content)),
+        strip_frontmatter(Content, RawBody),
+        md_to_html(RawBody, HtmlBody),
+        assertz(chapter(Id, Title, Type, HtmlBody)),
         forall(member(N, Next), assertz(links_to(Id, N))),
         format("  ✓ ~w: ~w~n", [Id, Title])
     ;
@@ -277,8 +360,25 @@ generate_all(OutputDir) :-
     ),
     nl, write('◢ COMPLETE'), nl.
 
+%% Generate index.html
+generate_index(OutputDir) :-
+    atom_concat(OutputDir, '/index.html', IndexPath),
+    open(IndexPath, write, S),
+    write(S, '<!DOCTYPE html><html><head><meta charset="UTF-8">'),
+    write(S, '<meta http-equiv="refresh" content="0; url=00.html">'),
+    write(S, '<title>THE COLLAPSE</title>'),
+    write(S, '<style>body{background:#0a0a0a;color:#d4a017;font-family:monospace;padding:2rem;text-align:center}</style>'),
+    write(S, '</head><body>'),
+    write(S, '<h1>THE COLLAPSE</h1>'),
+    write(S, '<p>A Limn Spy Thriller</p>'),
+    write(S, '<p><a href="00.html" style="color:#d4a017">Enter</a></p>'),
+    write(S, '</body></html>'),
+    close(S),
+    write('  ✓ index.html'), nl.
+
 %% Full site generation entry point
 generate_site(OutputDir) :-
     nl, write('▌ PROLOG CYOA GENERATOR ▐'), nl, nl,
     show_graph,
-    generate_all(OutputDir).
+    generate_all(OutputDir),
+    generate_index(OutputDir).
