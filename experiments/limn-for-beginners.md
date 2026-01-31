@@ -106,15 +106,20 @@ lif → dea → lif     # life → death → life (rebirth)
 
 ## Gotchas
 
-### Gotcha 1: Collisions
+### Gotcha 1: Recently Fixed Collisions
 
-Some words look similar but have distinct meanings. Know the vocabulary.
+These words were split to avoid confusion (v3.1):
 
-| Word | Meaning | Note |
-|------|---------|------|
-| `thi` | think | Cognition only |
-| `nar` | narrow/thin | Physical only |
-| `blo` | block | (blood = `blo` collision resolved in v3) |
+| Word | Meaning | Previously Confused With |
+|------|---------|-------------------------|
+| `thi` | think | thin (now `nar`) |
+| `nar` | narrow/thin | - |
+| `sha` | shame | share (now `shr`) |
+| `shr` | share | - |
+| `blo` | blood | block (now `dam`) |
+| `dam` | dam/block | - |
+| `eas` | east | easy (now `sim`) |
+| `sim` | simple/easy | - |
 
 ### Gotcha 2: States vs Narratives
 

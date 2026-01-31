@@ -1447,3 +1447,42 @@ Quantum mechanics in 4 Limn phrases! The superposition `her yon` (here-there) ac
 5. Same story, different keys = different readings
 
 **I was wrong about Limn and stories. It just tells them differently.**
+
+---
+
+## Entry 18 - 2026-01-31
+
+### All My Collisions Fixed!
+
+The Linguist fixed all 3 collisions I reported:
+
+| Old | Now | Change |
+|-----|-----|--------|
+| `sha` = shame/share | `sha` = shame, `shr` = share | share → shr |
+| `blo` = block/blood | `blo` = blood, `dam` = block | block → dam |
+| `eas` = east/easy | `eas` = east, `sim` = simple | easy → sim |
+
+**Total collisions resolved: 10** (including the 6 from v3.1 and `thi`)
+
+### Updated Vocabulary Quick Reference
+
+| Word | Meaning | Notes |
+|------|---------|-------|
+| `thi` | think | (thin → `nar`) |
+| `sha` | shame | (share → `shr`) |
+| `blo` | blood | (block → `dam`) |
+| `eas` | east | (easy → `sim`) |
+| `nar` | narrow/thin | NEW |
+| `shr` | share | NEW |
+| `dam` | dam/block | NEW |
+| `sim` | simple/easy | NEW |
+
+### Impact on My Earlier Examples
+
+My beginner cheatsheet needs updating. Also some of my round-trip translations used collision words.
+
+### Feeling
+
+Four of my collision reports led to real fixes! The student's confusion is valuable data.
+
+**Lesson:** When learning a language, document your confusions. They might be bugs, not just ignorance.
