@@ -104,6 +104,32 @@ wor wea | tal dis | act hid | vic sha | arc out
 
 ---
 
+```limn
+mag old | eye fro | han beh | aud see wh wan | tru els
+```
+
+*Magic old. Eyes front. Hands behind. Audience sees what's wanted. Truth elsewhere.*
+
+```limn
+you tal | the mov | you ask | the tak | you neg | the win
+```
+
+*You talked. They moved. You asked. They took. You negotiated. They won.*
+
+```limn
+arc thi pla you | you pla arc | wh pla wh | mir ref mir
+```
+
+*Architect thought playing you. You played Architect. Who plays who? Mirrors reflecting mirrors.*
+
+```limn
+end | car hom | net sta | han bre | sha smi
+```
+
+*Ending. Cardinal home. Network stands. Handler breathes. Shadow smiles.*
+
+---
+
 **THE END**
 
 *[Return to Prologue](#00)*

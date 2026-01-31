@@ -132,6 +132,44 @@ rul exi | rul bro | bot tru | han fie | nev aga te nev say
 
 ---
 
+```limn
+you sit roo | you sen ord | you wat oth die | unt nu mor
+```
+
+*You sat in room. You sent orders. You watched others die. Until no more.*
+
+```limn
+han nu go fie | rul sac | rul pro | you bro rul | you sav car
+```
+
+*Handlers don't go to field. Rule is sacred. Rule protects. You broke rule. You saved Cardinal.*
+
+```limn
+wh you now | han sti te | age now te | bot te nei | cha
+```
+
+*What are you now? Handler still? Agent now? Both or neither? Changed.*
+
+```limn
+car loo you | see | see per beh wor | see han wil ris all
+```
+
+*Cardinal looked at you. Saw. Saw person behind words. Saw handler willing to risk all.*
+
+```limn
+you nev sam | the nev sam | rul nev sam | som thi wor mor rul
+```
+
+*You never same. They never same. Rules never same. Some things worth more than rules.*
+
+```limn
+nex tim | te mes | te ord | te go sel | ans unk | ans you
+```
+
+*Next time: send message? Send orders? Go yourself? Answer unknown. Answer yours.*
+
+---
+
 **THE END**
 
 *[Return to Prologue](#00)*

@@ -125,6 +125,38 @@ ord giv | ord bro | sac mad | sac pri | mis suc te
 
 ---
 
+```limn
+kni ret | kni civ | kni nu sol | kni cho bec sol aga
+```
+
+*Knight retired. Knight civilian. Knight not soldier. Knight chose to become soldier again.*
+
+```limn
+you say sta saf | kni hea | kni ign | kni sav
+```
+
+*You said stay safe. Knight heard. Knight ignored. Knight saved.*
+
+```limn
+som vic cos | som los giv | som mat mor | kni mat mos
+```
+
+*Some victories cost. Some losses give. Some matter more. Knight mattered most.*
+
+```limn
+whe kni now | run sti te | cap te | gon te | ans nu | ans nev
+```
+
+*Where Knight now? Running still? Captured? Gone? Answer none. Answer never.*
+
+```limn
+you rem | you owe | you car | kni kno
+```
+
+*You remember. You owe. You carry. Knight knows.*
+
+---
+
 **THE END**
 
 *[Return to Prologue](#00)*
