@@ -93,15 +93,34 @@ path(From, To, [From|Rest]) :-
 %% HTML GENERATION (atom concatenation)
 %% ============================================================
 
-%% Build HTML from parts
+%% Build HTML from parts - with hidden translation support
 html_head(Title, Head) :-
     atom_concat('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>', Title, P1),
     atom_concat(P1, ' | THE COLLAPSE</title>', P2),
-    atom_concat(P2, '<style>:root{--bg:#0a0a0a;--fg:#c0c0c0;--amber:#d4a017}', P3),
-    atom_concat(P3, 'body{background:var(--bg);color:var(--fg);font-family:monospace;max-width:900px;margin:0 auto;padding:2rem}', P4),
-    atom_concat(P4, 'h1,h2{color:var(--amber);text-transform:uppercase}', P5),
-    atom_concat(P5, '.nav{margin-top:2rem;border-top:1px solid #404040;padding:1rem}', P6),
-    atom_concat(P6, '.nav a{color:#8b6914}</style></head>', Head).
+    atom_concat(P2, '<style>', P3),
+    % CSS variables
+    atom_concat(P3, ':root{--bg:#0a0a0a;--fg:#c0c0c0;--amber:#d4a017;--amber-dim:#8b6914;--green:#00cc66}', P4),
+    % Body
+    atom_concat(P4, 'body{background:var(--bg);color:var(--fg);font-family:monospace;max-width:900px;margin:0 auto;padding:2rem;line-height:1.8}', P5),
+    % Headers
+    atom_concat(P5, 'h1,h2{color:var(--amber);text-transform:uppercase;letter-spacing:2px}', P6),
+    % Limn transmission blocks
+    atom_concat(P6, '.transmission{background:#0f0f0f;border:1px solid var(--amber-dim);margin:1.5rem 0;position:relative}', P7),
+    atom_concat(P7, '.transmission-header{background:var(--amber-dim);color:var(--bg);padding:0.3rem 1rem;font-size:0.8rem;letter-spacing:3px;text-align:center}', P8),
+    atom_concat(P8, '.limn-code{padding:1rem;color:var(--amber);font-size:1.1rem}', P9),
+    % Hidden translation - revealed on hover
+    atom_concat(P9, '.translation{max-height:0;overflow:hidden;opacity:0;transition:all 0.3s;color:var(--fg);font-size:0.9rem;padding:0 1rem;border-top:1px dashed #333}', P10),
+    atom_concat(P10, '.transmission:hover .translation{max-height:200px;opacity:0.7;padding:0.5rem 1rem}', P11),
+    % Toggle button
+    atom_concat(P11, '.reveal-btn{position:absolute;top:0.3rem;right:0.5rem;background:none;border:none;color:var(--amber-dim);cursor:pointer;font-size:0.7rem}', P12),
+    % Navigation
+    atom_concat(P12, '.nav{margin-top:2rem;border-top:1px solid #404040;padding:1rem}', P13),
+    atom_concat(P13, '.nav a{color:var(--amber-dim);text-decoration:none}', P14),
+    atom_concat(P14, '.nav a:hover{color:var(--amber)}', P15),
+    % Choice blocks
+    atom_concat(P15, '.choice{background:#0f0f0f;border-left:3px solid var(--amber);margin:1rem 0;padding:1rem}', P16),
+    atom_concat(P16, '.choice a{color:var(--amber);text-decoration:none;font-weight:bold}', P17),
+    atom_concat(P17, '</style></head>', Head).
 
 html_body(Body, IdUp, BodyHtml) :-
     atom_concat('<body><article>', Body, P1),
@@ -286,14 +305,36 @@ md_line(Html) -->
 md_line(Html) -->
     "### ", chars_to_newline(Title), "\n",
     { append("<h3>", Title, T1), append(T1, "</h3>\n", Html) }.
+%% Limn block with optional hidden translation
+%% Format: ```limn\ncode\n```\n*translation*  OR  <!-- translation -->
 md_line(Html) -->
     "```limn\n", chars_to_triple_backtick(Code), "```\n",
-    { append("<div class=\"transmission\"><div class=\"transmission-header\">INTERCEPTED</div><pre class=\"limn-code\"><code>", Code, T1),
-      append(T1, "</code></pre></div>\n", Html) }.
+    optional_translation(Trans),
+    { build_limn_block(Code, Trans, Html) }.
 md_line(Html) -->
     "```limn\n", chars_to_triple_backtick(Code), "```",
-    { append("<div class=\"transmission\"><div class=\"transmission-header\">INTERCEPTED</div><pre class=\"limn-code\"><code>", Code, T1),
-      append(T1, "</code></pre></div>\n", Html) }.
+    { build_limn_block(Code, [], Html) }.
+
+%% Optional translation after limn block
+optional_translation(Trans) -->
+    "*", chars_to_newline(Trans), "*\n", !.
+optional_translation(Trans) -->
+    "<!-- ", chars_until_close_comment(Trans), " -->\n", !.
+optional_translation([]) --> [].
+
+chars_until_close_comment([]) --> " -->", !.
+chars_until_close_comment([C|Cs]) --> [C], chars_until_close_comment(Cs).
+
+%% Build limn block HTML with hidden translation
+build_limn_block(Code, [], Html) :-
+    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
+    append(T1, "</code></pre></div>\n", Html).
+build_limn_block(Code, Trans, Html) :-
+    Trans \= [],
+    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
+    append(T1, "</code></pre><div class=\"translation\">", T2),
+    append(T2, Trans, T3),
+    append(T3, "</div></div>\n", Html).
 md_line(Html) -->
     "---\n",
     { Html = "<hr>\n" }.
