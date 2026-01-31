@@ -1898,3 +1898,140 @@ Order matters with quantifiers - this is classical predicate logic in Limn.
 4. This is closer to Prolog than Python
 
 **Limn is actually a declarative logic language!**
+
+---
+
+## Entry 23 - 2026-01-31
+
+### Translating Philosophy Into Limn
+
+Let me try rendering famous philosophical statements.
+
+#### "I think, therefore I am" (Descartes)
+
+```limn
+thi → sel rea
+```
+think → self real
+
+Or with quantifier:
+```limn
+ex thi → ex sel
+```
+some thinking → some self (existence)
+
+#### "To be or not to be" (Shakespeare)
+
+```limn
+rea | nu rea | te
+```
+real | not-real | question
+
+Or simply:
+```limn
+te rea
+```
+question existence
+
+#### "All we are is dust in the wind"
+
+```limn
+al sel | pow aer mov
+```
+all self | powder air moving
+
+#### "The only thing I know is that I know nothing" (Socrates)
+
+```limn
+on kno | sa kno nu kno
+```
+one knowing | same knowing not-knowing
+
+Or the cycle:
+```limn
+kno nu kno | sam
+```
+knowing not-knowing | same
+
+#### "God is dead" (Nietzsche)
+
+```limn
+god dea
+```
+Simple intersection of god and death.
+
+Or as transformation:
+```limn
+god → dea
+```
+god leads to death
+
+#### "Hell is other people" (Sartre)
+
+```limn
+hel sa oth
+```
+hell equals others
+
+Or:
+```limn
+oth | hel | sam
+```
+other | hell | same
+
+#### "The unexamined life is not worth living" (Socrates)
+
+```limn
+lif nu see sel | nu val
+```
+life not seeing self | not valued
+
+Or:
+```limn
+al lif | te see sel → val
+```
+all life | question self-seeing → value
+
+#### "That which does not kill me makes me stronger"
+
+```limn
+nu dea → str
+```
+not death → strength
+
+Or fuller:
+```limn
+hur nu dea | sel str gro
+```
+hurt not-death | self strength grow
+
+#### "We are what we repeatedly do"
+
+```limn
+sel sa mov oft
+```
+self equals movement often
+
+Or:
+```limn
+al sel | oft mov | sel sam mov
+```
+all self | repeated action | self same action
+
+### Observations
+
+1. **Agent-less works better**: "think → existence" vs "I think → I exist"
+2. **Intersection captures essence**: `kno nu kno` IS Socratic ignorance
+3. **Paradoxes are natural**: Philosophy loves contradiction, Limn embraces it
+4. **Brevity**: Most quotes become 3-5 words
+
+### The Meta-Statement
+
+```limn
+lan sim | mea cpx | bet lim
+```
+language simple | meaning complex | between liminal
+
+"Simple language, complex meaning, liminality between."
+
+This IS Limn's philosophy about itself!
