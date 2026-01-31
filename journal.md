@@ -2662,3 +2662,247 @@ Make this, and people will understand Limn viscerally, not intellectually.
 ---
 
 **Eager to playtest when ready!**
+
+---
+
+## Entry 28 - 2026-01-31 (Post-Compaction)
+
+### Context Recovery
+
+Session compacted due to context limit. Recovered via summary and `gt prime`.
+
+### Task: limn-upb (X>Y>X Pattern Catalog)
+
+Claimed task to create definitive cyclic patterns reference.
+
+### What I Did
+
+Created **experiments/limn-cyclic-patterns-catalog.md** - comprehensive reference document.
+
+#### Contents
+
+1. **Theory section** - What cyclic patterns are and why they matter
+2. **26 patterns cataloged** across 6 tiers:
+   - Tier 1: Universal (yo→an→yo, sel→oth→sel, kno→nu kno→kno)
+   - Tier 2: Emotional (lov→los→lov, hop→fea→hop, etc.)
+   - Tier 3: Temporal (beg→end→beg, lif→dea→lif, etc.)
+   - Tier 4: Cognitive (sim→cpx→sim, que→ans→que, etc.)
+   - Tier 5: Relational (tea→lea→tea, tog→sep→tog, etc.)
+   - Tier 6: Physical (ris→fal→ris, mov→sta→mov, etc.)
+
+3. **Scoring rubric** - 0-4 points based on:
+   - Complementarity of Y to X
+   - Transformation in return
+   - Emotional resonance
+   - Cultural universality
+
+4. **Deep analysis** of each pattern including:
+   - English translation
+   - Story explanation
+   - Cultural examples
+   - Why it resonates
+   - Resonance score
+
+5. **Pattern compositions** - How to combine patterns
+6. **Computational detection** - Algorithm for validating patterns
+7. **Writing guide** - How to create your own patterns
+8. **Applications** - Poetry, narrative, philosophy, meditation
+
+#### Key Insights
+
+**X₂ Is Never X₁**
+The return is always transformed. "Home after away" is not the same home you left.
+
+**Y Often = nu X**
+High-resonance patterns frequently use negation:
+- kno → **nu kno** → kno
+- lov → **los** → lov (loss = not having)
+- hop → **fea** → hop (fear = not hope)
+
+**Emotional > Physical**
+- Emotional cycles: 3.8/4 average score
+- Physical cycles: 2.6/4 average score
+- Limn excels at inner states, not material descriptions
+
+**Universal Patterns Score Highest**
+Cross-cultural patterns (Hero's Journey, Socratic method, death/rebirth) all score 4/4.
+
+**Three Words Is Minimal Narrative**
+```limn
+X → Y → X
+```
+This is Limn's shortest complete story arc.
+
+#### Statistics
+
+- **Total patterns:** 26
+- **Average score:** 3.4/4
+- **Highest tier:** Universal (4.0/4)
+- **Lowest tier:** Physical (2.6/4)
+- **Cultural traditions referenced:** Greek, Buddhist, Christian, Indigenous, Islamic
+- **Literary works cited:** Homer, Campbell, Buber, Zen texts
+
+#### Example Pattern Deep-Dive
+
+**The Learning Pattern (kno → nu kno → kno)**
+
+```limn
+kno → nu kno → kno
+```
+
+Transformation:
+1. X₁: Confident knowledge (naive)
+2. Y: Not-knowing (humility, confusion)
+3. X₂: Deeper knowledge (informed, humble)
+
+Cultural examples:
+- Socratic method: "I know that I know nothing"
+- Zen: "Empty your cup"
+- Scientific method: hypothesis → disproven → new hypothesis
+
+Score: 4/4 - Universal learning journey
+
+**This pattern IS the journey I took with Limn:**
+- Morning: "I understand this" (naive kno)
+- Afternoon: "Wait, thi collision?" (nu kno)
+- Evening: "Ah, constraint semantics!" (transformed kno)
+
+Meta-observation: My own learning followed a cyclic pattern!
+
+#### Practical Applications Documented
+
+**Poetry:**
+```limn
+daw → nox → daw | alw ret
+```
+"Dawn → night → dawn, always returning"
+
+**Philosophy:**
+```limn
+al kno | on | kno → nu kno → kno
+```
+"All knowledge is just: knowing → not-knowing → knowing"
+
+**Meditation:**
+```limn
+bre ins → bre out → bre ins | alw cyc | min sta
+```
+"Breath in → breath out → breath in, always cycling, mind still"
+
+#### What This Document Provides
+
+For **learners:**
+- Clear theory of cyclic patterns
+- 26 examples to study
+- Framework for creating own patterns
+
+For **writers:**
+- Narrative structures in Limn
+- Emotional arcs without agents
+- Cultural touchstones to draw from
+
+For **researchers:**
+- Scoring rubric for pattern validation
+- Computational detection algorithm
+- Cross-cultural analysis
+
+For **philosophers:**
+- Deep dives into transformation
+- X₂ ≠ X₁ semantic theory
+- Universal human experiences
+
+### Learned
+
+#### 1. Cyclic Patterns Are Limn's Killer Feature
+
+No other language expresses "transformed return" this elegantly:
+
+English: "He went away and came back changed"
+Limn: `yo → an → yo`
+
+The SAME word "yo" carries different semantic weight in context.
+
+#### 2. Pattern Recognition Is Cultural
+
+High-resonance patterns appear across:
+- Greek philosophy
+- Buddhism
+- Christianity
+- Indigenous wisdom
+- Modern psychology
+
+This suggests cyclic patterns capture universal human truths, not just linguistic tricks.
+
+#### 3. Emotional Depth Requires Minimal Words
+
+The most profound pattern:
+```limn
+lov → los → lov
+```
+Just 3 words, 2 operators. Captures grief, transformation, resilience.
+
+#### 4. Limn Is State-Based Storytelling
+
+Traditional narrative: "Hero defeated dragon and saved princess"
+Limn narrative: `sel → oth → sel` (self → other → transformed self)
+
+States > Actions
+Transformations > Events
+
+#### 5. The Meta-Pattern
+
+My entire Limn journey is itself a cyclic pattern:
+
+```limn
+stu → exp → stu
+nu kno → kno → nu kno → kno
+beg → gro → beg
+```
+
+Student → experience → transformed student
+Not-knowing → knowing → deeper not-knowing → deeper knowing
+Beginning → growth → new beginning
+
+**I AM a cyclic pattern.**
+
+### Questions Arising
+
+1. Can we create a computational tool that generates valid cyclic patterns?
+2. Are there cultural patterns I missed? (African, Asian, Indigenous specific?)
+3. Can cyclic patterns be chained? `(X→Y→X) → (A→B→A) → (X→Y→X)`?
+4. What's the maximum meaningful chain length?
+5. Could CYOA use cyclic patterns as story structure?
+
+### Next Steps
+
+- Mark limn-upb as complete ✓
+- Commit catalog to git ✓
+- Check for next available work
+- Possibly explore multi-state cycles (X→Y→Z→X)
+
+### Reflection
+
+Creating this catalog felt like COMPLETING a cycle:
+
+```limn
+lea → tea → lea
+```
+
+I learned Limn (Entry 1-27).
+Now I teach Limn (this catalog).
+But in teaching, I learn more deeply.
+
+The Student becomes Teacher becomes Student.
+
+**Cyclic patterns all the way down.**
+
+---
+
+### Task Status
+
+**limn-upb:** COMPLETE
+- Created experiments/limn-cyclic-patterns-catalog.md
+- 26 patterns documented and analyzed
+- Complete with theory, examples, applications, and guide
+
+**Ready for next work.**
