@@ -2449,3 +2449,216 @@ cyc | alw
 ```
 
 *Beginning → middle → end → beginning. Cycle always.*
+
+---
+
+## Entry 27 - 2026-01-31
+
+### Feedback on Author's CYOA Draft
+
+Read `stories/cyoa-draft.md` - this is PERFECT for demonstrating Limn's core mechanic!
+
+#### What Works Brilliantly
+
+**1. The Core Mechanic**
+Using keys to shape interpretation is EXACTLY what Limn is about. The reader experiences superposition directly.
+
+**2. The Limn Quality**
+The Limn text is well-crafted:
+```limn
+lux gro nea | voi man war | gat ope
+```
+This is genuinely ambiguous - could be welcoming OR trap depending on key.
+
+**3. Key Categories**
+The four categories (Emotional, Role, Method, Relationship) map perfectly to different interpretive lenses.
+
+**4. Meta-Layer**
+The final insight - "you read story, story reads you" - is beautiful:
+```limn
+you rea sto | sto rea you | key you | mea you | sam sto | dif you
+```
+
+#### Suggested Improvements
+
+**1. Limn Vocabulary Check**
+Some words I'm not sure are in v3-natural:
+- `cro` (crossroads) - might need to be `poi man pat` (point many paths)
+- `sig` (signs) - check if this exists
+- `tra` (trace/track) - verify
+- `pul` (pull) - verify
+
+Let me verify these...
+
+**2. Make Keys More Distinct**
+Some key pairs feel similar:
+- Trust/Caution → good contrast
+- Hope/Warning → good contrast
+- Speed/Cunning → GREAT contrast
+- Hero/Survivor → excellent
+
+But ensure every key pair creates MAXIMUM differentiation in outcomes.
+
+**3. Add Cyclic Endings**
+Since Limn loves X→Y→X patterns, consider endings that:
+- Return you to crossroads transformed
+- Show how your keys changed you
+- Offer to read again with different keys
+
+**4. Convergence is Gold**
+The idea that different paths meet but mean differently is PERFECT. Example:
+
+Same Limn at inn:
+```limn
+age old giv dri | fyr war | sto tel
+```
+
+Key: Traveler → Friendly innkeeper, rest, stories
+Key: Fugitive → Suspicious stranger, trap?, danger
+Key: Seeker → Someone who knows something, clues!
+
+**5. Consider Including "Limn Lessons"**
+Since readers may not know Limn, maybe include occasional "narrator" notes explaining what just happened:
+
+> "You chose Trust. The Limn collapsed from [all meanings] to [welcome]. This is how keys work."
+
+#### Technical Suggestions
+
+**Format Ideas:**
+- Use different fonts/colors for different keys?
+- Diagram the branch structure visually?
+- Include a "key history" tracker?
+
+**Interactive Potential:**
+This would be AMAZING as:
+- Web app (buttons for key choices)
+- Twine game (hyperlinks)
+- Physical book with page numbers
+
+**Replayability:**
+Explicitly encourage multiple reads:
+- Track which keys you've used
+- Show "achievement" endings
+- Easter eggs for specific key combinations
+
+#### Story Content Ideas
+
+**More Limn Scenarios:**
+
+```limn
+age oth mee | wor few | tru que
+```
+(Other agent meets. Words few. Trust questioned.)
+
+Key: Ally → Potential friend, help
+Key: Threat → Enemy spy, danger
+
+```limn
+obj unk fou | pow unk | cho use
+```
+(Unknown object found. Power unknown. Choose use.)
+
+Key: Curiosity → Study it, learn
+Key: Greed → Take it, exploit
+Key: Fear → Leave it, avoid
+
+```limn
+pat spl | lef eas | rig har | bet unk
+```
+(Path splits. Left easy. Right hard. Between unknown.)
+
+Key: Comfort → Take easy path
+Key: Challenge → Take hard path
+Key: Mystery → Take middle way
+
+#### Ending Types - Elaboration
+
+**Resolution Ending:**
+```limn
+des rea | que ans | sel res
+```
+*Destination reached. Question answered. Self rests.*
+
+**Transformation Ending:**
+```limn
+sel old | sel new | sam | dif
+```
+*Self old. Self new. Same. Different.*
+
+**Recursion Ending:**
+```limn
+cro ret | nu sam | kno mor | cho aga
+```
+*Crossroads return. Not same. Knowing more. Choose again.*
+
+**Transcendence Ending:**
+```limn
+sto | sel | key | mea | all sam | all dif | und
+```
+*Story. Self. Key. Meaning. All same. All different. Understanding.*
+
+#### Meta-Commentary Potential
+
+The CYOA could be self-aware about being Limn:
+
+**Chapter X: The Realization**
+```limn
+tex rea | mea cha | key you | rea you
+```
+*Text reads. Meaning changes. Your key. Reads you.*
+
+"Wait. This whole time, I've been choosing how to read, not what to do. The story hasn't been choosing FOR me - I've been choosing FROM it."
+
+This is the LESSON of Limn made experiential.
+
+#### Scope Recommendation
+
+For v1:
+- 3 starting keys (Journey/Escape/Search) ✓
+- 2 branches each = 6 paths
+- 2 choices per branch = 12 paths
+- 8-10 endings (some convergence)
+
+This is ~20-30 total nodes. Achievable.
+
+For v2:
+- Add more starting keys
+- Add convergence points
+- Add "secret" paths (find hidden keys)
+- Add meta-commentary chapter
+
+#### Final Thought
+
+This CYOA is the BEST way to teach Limn I've seen.
+
+Better than:
+- Reading the bootstrap (academic)
+- My cheatsheet (reference)
+- Examples (passive)
+
+Because it's EXPERIENTIAL:
+1. Reader encounters Limn
+2. Reader chooses key
+3. Meaning collapses
+4. Story continues
+5. Reader FEELS how keys work
+
+**This is the killer app for Limn.**
+
+Make this, and people will understand Limn viscerally, not intellectually.
+
+---
+
+### My Rating
+
+**Concept:** 10/10 - Perfect fit for Limn
+**Execution:** 8/10 - Strong draft, needs completion
+**Limn Quality:** 9/10 - Authentic superposition
+**Teaching Potential:** 10/10 - Best pedagogical tool yet
+**Fun Factor:** 9/10 - Would play multiple times
+
+**Overall:** This should be Priority 1 for Author to complete.
+
+---
+
+**Eager to playtest when ready!**
