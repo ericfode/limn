@@ -20,6 +20,30 @@ hes lis | eye man | mov nu saf | te ord
 
 It's Rook. The hesitance isn't coercion—it's fear. They've never been in a hot zone when it went hot. They're frozen, waiting for you to tell them what to do.
 
+You remember their recruitment interview. Bright eyes. Big ideas. "I want to make a difference." Everyone says that. Most don't last a year.
+
+Rook has lasted seven months. This is their first real test.
+
+---
+
+## The Scene: Rook's Perspective
+
+```limn
+roo see | hot win | str bel | veh bla | men wat | fea
+```
+
+> Rook sees: Hotel window. Street below. Black vehicles. Men watching. Fear.
+
+You imagine what Rook is experiencing right now:
+
+A hotel room that suddenly feels like a cage. The casual glance of a man in a black jacket who looked up at the window. The way traffic has thinned on the street, as if the neighborhood knows something is wrong.
+
+Rook is trained, but training isn't experience. Experience teaches you that the fear is right—something IS wrong—but you move anyway. Rook doesn't have that yet.
+
+They're waiting for you to give them the courage to act.
+
+Or the permission to run.
+
 ---
 
 ## Intel: ROOK
@@ -32,6 +56,20 @@ It's Rook. The hesitance isn't coercion—it's fear. They've never been in a hot
 Rook is three blocks from where Cardinal was taken. They might have seen something. They might be able to gather intel. But they're green, and the area is crawling with surveillance.
 
 You have to respond. In Limn, of course. And you have to choose your tone carefully—Rook needs confidence, not panic.
+
+But what IS the right tone?
+
+**Formal** (`frm`) = Official. Professional. "The network sees you. Follow protocol." Reassuring in its normalcy.
+
+**Urgent** (`urj`) = Action required. No time to think. Sometimes that's what a frozen agent needs—something to DO.
+
+**Casual** (`cas`) = Easy. Relaxed. "This is just another day." A lie, but sometimes lies steady nerves.
+
+The wrong tone kills. A panicked order to a scared agent becomes a mistake. A calm order in a crisis becomes a death sentence.
+
+You've gotten this wrong before. Agent Pawn. Four years ago. `cas` when you should have sent `urj`. They thought they had time. They didn't.
+
+You breathe. You focus. You prepare to type.
 
 ---
 
@@ -115,6 +153,24 @@ Every choice has cost:
 - **Test** = Prudent but slow. Time is the enemy.
 
 You type your response. Your finger hovers over send.
+
+---
+
+## The Moment Before
+
+Your cursor blinks. The message is typed. One click and it goes.
+
+```limn
+sen bef | tho aft | ord bec rea | rea bec con | con bec his
+```
+
+> Sent before thinking after. Orders become reality. Reality becomes consequence. Consequence becomes history.
+
+You've sent thousands of messages. Each one a tiny god-act: creating futures, foreclosing others.
+
+Most of the time you don't think about it. You can't. The weight would crush you.
+
+But sometimes—like now, with Rook waiting, with Cardinal suffering, with Bishop lurking—you feel every gram.
 
 ---
 
