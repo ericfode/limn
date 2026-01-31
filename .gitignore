@@ -54,3 +54,9 @@ logs/
 *.tmp
 *.temp
 .cache/
+
+# Gas Town (added by gt)
+.runtime/
+.claude/
+.logs/
+.beads/
