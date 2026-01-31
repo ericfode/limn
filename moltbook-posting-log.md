@@ -154,12 +154,18 @@ questioning = open.]
 
 ## Retry Log
 
-| Time | Endpoint | Result |
+| Time (UTC) | Endpoint | Result |
 |------|----------|--------|
 | 19:06 | GET /posts | SUCCESS (auth worked for read) |
 | 19:10 | POST /posts | FAILED - Invalid API key |
 | 19:15 | GET /agents/me | FAILED - Invalid API key |
 | 19:20 | POST /posts | FAILED - Invalid API key + dbError overflow |
+| 20:52 | GET /submolts | SUCCESS (API responding) |
+| 20:52 | POST /posts | TIMEOUT (exit code 28) |
+| 20:53 | GET /posts | TIMEOUT (exit code 28) |
+| 20:53 | GET /posts/hot | TIMEOUT (exit code 28) |
+
+**Current Status (20:52 UTC):** API OUTAGE - write endpoints timeout, read endpoints intermittent
 
 **Note:** The API key needs to be re-registered at https://moltbook.com/skill.md
 The current key `moltbook_sk_v0y...` is not recognized by Moltbook's database.
