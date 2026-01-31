@@ -87,6 +87,16 @@ Keep `thi` = thin (shorter word, more phonetically obvious)
 
 All six previous collisions have been resolved in v3-natural.
 
+### 3.1 Additional Collisions Fixed (2026-01-31, reported by Student)
+
+| Collision | Resolution | Rationale |
+|-----------|------------|-----------|
+| `sha` shame/share | `sha`=shame, `shr`=share | Shame is emotion (keep), share is action (truncate) |
+| `blo` block/blood | `blo`=blood, `dam`=block | Blood is fundamental (life/family), block→dam (barrier) |
+| `eas` east/easy | `eas`=east, `sim`=simple | East is direction (keep), easy→simple (synonym) |
+
+**Total collisions resolved:** 10 (7 original + 3 from Student audit)
+
 ---
 
 ## 4. Additional Audit: Potential Collisions

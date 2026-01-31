@@ -71,7 +71,7 @@
 | `exp` | expand | expansion | growth, explosion, spread |
 | `con` | contract | contraction | shrink, squeeze, focus |
 | `flo` | flow | flowing | river, blood, traffic, time |
-| `blo` | block | blocking | dam, wall, barrier, stop |
+| `dam` | dam | blocking | dam, wall, barrier, stop |
 | `pul` | pull | pulling | gravity, magnet, attraction |
 | `pus` | push | pushing | wind, force, repulsion |
 | `cut` | cut | cutting, dividing | blade, decision, border |
@@ -304,7 +304,7 @@
 | `hur` | hurt | hurting | harm, damage, pain |
 | `giv` | give | giving | provide, share, release |
 | `tak` | take | taking | acquire, receive, remove |
-| `sha` | share | sharing | divide, give-part, together |
+| `shr` | share | sharing | divide, give-part, together |
 | `pro` | protect | protecting | guard, defend, safe |
 | `rul` | rule | ruling | control, decide, power |
 | `obe` | obey | obeying | follow-rule, submit |
@@ -348,7 +348,7 @@
 | `bad` | bad | bad | negative, wrong, avoid |
 | `bea` | beautiful | beautiful | aesthetic-good, pleasing |
 | `ugl` | ugly | ugly | aesthetic-bad, displeasing |
-| `eas` | easy | easy | low-effort, simple, clear |
+| `sim` | simple | easy, simple | low-effort, clear, basic |
 | `rea` | real | real | exists, actual, concrete |
 | `fak` | fake | fake | doesn't exist, pretend |
 | `new` | new | new | recent, innovative, future |
