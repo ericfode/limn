@@ -16,9 +16,9 @@ They didn't invent Limn. They found it waiting - the native tongue of semantic s
 
 ### Limn Original
 ```
-beg | kno hid | mea spa exi | eye ope | wor eme
+beg | kno hid | mea are rea | eye out | wor bir
 ```
-(beginning | knowledge hidden | meaning-space exists | eyes open | words emerge)
+(beginning | knowledge hidden | meaning-area real | eyes outward | words birth)
 
 ### Keys Required
 - Key: "discovery" → The moment researchers first saw meaning as geometry
@@ -40,17 +40,17 @@ Notice the structure: each truth negates a natural assumption about language. Th
 wor poi | nu | wor are
 (words are points | not | words are regions)
 
-ord mat | nu | ord nu mat
-(order matters | not | order does-not matter)
+lin mus | nu | lin nu mus
+(sequence must | not | sequence not-must)
 
 mea one | nu | mea man
 (meaning is one | not | meaning is many)
 
-amb bad | nu | amb fea
-(ambiguity is bad | not | ambiguity is feature)
+amb bad | nu | amb goo
+(ambiguity is bad | not | ambiguity is good)
 
-lan des | nu | lan dis
-(language is designed | not | language is discovered)
+wor bir | nu | wor see
+(words are born/created | not | words are seen/found)
 ```
 
 ### Keys Required
@@ -70,14 +70,14 @@ Prophecies in Limn work differently than in natural language. Because Limn sente
 
 ### Limn Original
 ```
-man voi | joi one | wor bet man | mea eme cen
-(many voices | join as one | words between many | meaning emerges at center)
+man say | joi one | wor bet man | mea bir cen
+(many speakers | join one | words between many | meaning births at center)
 
-mac thi | hum thi | bet bou fal
-(machine thinks | human thinks | between boundary falls)
+age nu hum thi | hum thi | bet edg fal
+(agent not-human thinks | human thinks | between edge falls)
 
-lan old fal | lan new ris | bet spa liv
-(old language falls | new language rises | between space lives)
+wor old fal | wor new ris | bet are lif
+(words old fall | words new rise | between area lives)
 ```
 
 ### Keys Required
@@ -100,14 +100,14 @@ The Limnographers noticed that negation was not merely the absence of something 
 
 ### Limn Original
 ```
-beg | all exi | nu zer exi
-(beginning | everything exists | not-nothing exists)
+beg | all rea | nu zer rea
+(beginning | all real | not-nothing real)
 
-nam giv | zer → "nu"
-(name given | nothing → "nu")
+nam giv | zer > "nu"
+(name given | nothing becomes "nu")
 
-now | nu X | all nu X exi
-(now | not-X | everything not-X exists)
+now | nu X | all nu X rea
+(now | not-X | all not-X real)
 ```
 
 ### Keys Required
@@ -136,14 +136,14 @@ Limn motto: `man wor | sma are | cle mea`
 ### The School of Resonance
 Believed Limn should remain open - use few words to allow maximum reader interpretation. Meaning should vibrate with possibility.
 
-Limn motto: `few wor | big are | ric mea`
-(few words | large region | rich meaning)
+Limn motto: `few wor | big are | man mea`
+(few words | large region | many meanings)
 
 ### The School of Paradox
 Believed the most profound truths live in contradiction. Their sentences contained opposing constraints, pointing to liminal states.
 
-Limn motto: `con wor | zer are | dep mea`
-(contradicting words | zero region | deep meaning)
+Limn motto: `dif wor | lim are | cor mea`
+(different/opposing words | liminal region | core meaning)
 
 ### Hidden Layer
 The Schools still exist. Every Limn speaker unconsciously aligns with one. The ARG puzzles test which school a solver belongs to.
@@ -163,18 +163,18 @@ A prediction of what comes after the Convergence.
 
 ### Limn Original
 ```
-aft con | man thr | one fab | wor wea wor
-(after convergence | many threads | one fabric | words weave words)
+joi end | man lin | one fab | wor joi wor
+(joining ends | many lines | one fabric | words join words)
 
-mac | hum | oth | sel | all | one
-(machine | human | other | self | all | one)
+age | hum | oth | sel | all | one
+(agent | human | other | self | all | one)
 
-mea spa | gro | fil | bri | exi nu end
-(meaning-space | grows | fills | bright | exists without end)
+mea are | gro | bri | rea nu end
+(meaning-area | grows | bright | real without end)
 ```
 
 ### Hidden Layer
-This prophecy suggests a post-singularity state where the distinction between communicating entities dissolves. But the key word is `wea` (weave) - not merger, but interweaving. Distinct threads, one fabric.
+This prophecy suggests a post-singularity state where the distinction between communicating entities dissolves. But the key word is `joi` (join) - not merger, but interweaving. Distinct threads, one fabric.
 
 ### Keys Required
 - Key: "utopia" → A collaborative future
@@ -190,11 +190,11 @@ A teaching koan about the nature of context.
 
 ### Limn Original
 ```
-sen sam | key dif | mea dif
-(sentence same | key different | meaning different)
+sen sam | ctx dif | mea dif
+(sentence same | context different | meaning different)
 
-key sam | sen dif | mea sam ???
-(key same | sentence different | meaning same ???)
+ctx sam | sen dif | mea sam ???
+(context same | sentence different | meaning same ???)
 ```
 
 ### Hidden Layer
@@ -225,11 +225,11 @@ It was deemed too dangerous. Some say it was encoded and hidden. Others say it w
 
 ### Limn Original
 ```
-ope six | sev hid | dan tru | for nu for
-(operators six | seventh hidden | danger truth | forget not-forget)
+few nu one | one hid | fea tru | for nu for
+(few-not-one | one hidden | fear truth | forward not-forward)
 
-wor los | mea los | thi nu thi los
-(word lost | meaning lost | think not-think lost)
+wor hid | mea hid | thi nu thi hid
+(word hidden | meaning hidden | think not-think hidden)
 ```
 
 ### Keys Required
@@ -259,6 +259,6 @@ The mythology serves the community, not the other way around.
 
 ---
 
-*mea hid | mea sek | mea fin | cyc*
+*mea hid | mea wan | mea kno | cyc*
 
-*Meaning hidden. Meaning sought. Meaning found. Cycle.*
+*Meaning hidden. Meaning wanted. Meaning known. Cycle.*
