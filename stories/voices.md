@@ -247,7 +247,7 @@ Care, cycles, patience, connection
 bod | bod nec res | lux say res | lis
 cyc | bir dea bir dea | nor | hea nor
 sky | wou | hea | sca bea | you hea | old sca | wis
-tog see | sha see | hea tog
+tog see | shr see | hea tog
 ```
 
 *Body. Body needs rest. Light says rest. Listen.*
@@ -257,7 +257,7 @@ tog see | sha see | hea tog
 
 ### Notes
 
-The Healer reads the sunset as instruction for the body. The phrase `sky | wou | hea | sca bea` transforms the red sky into a wound that heals into beautiful scars. Healing is communal: `tog see | sha see | hea tog`.
+The Healer reads the sunset as instruction for the body. The phrase `sky | wou | hea | sca bea` transforms the red sky into a wound that heals into beautiful scars. Healing is communal: `tog see | shr see | hea tog`.
 
 ---
 
@@ -275,7 +275,7 @@ Structure, material, construction, durability
 ### Sample: Observing a Sunset
 
 ```limn
-lux ang | sha lon | str tes | mat exp con
+lux ang | nox lon | str tes | mat exp con
 woo glo | sto col | iro wai | tem cha | mat adj
 wor don | too dow | sit | loo | mat res | sel res
 tom | ris | bui mor | sun sup | wor con
