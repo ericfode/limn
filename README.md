@@ -43,6 +43,26 @@ limn-land/
 └── .beads/            # Issue tracking
 ```
 
+## Key Documents
+
+**Start here for learning Limn:**
+
+| Document | Purpose |
+|----------|---------|
+| [Bootstrap v3-Natural](docs/spec/bootstrap-v3-natural.md) | Zero-training bootstrap prompt |
+| [Vocabulary v3-Natural](docs/spec/vocabulary-v3-natural.md) | Complete word list with etymology |
+| [Formal Grammar](docs/spec/grammar-formal.md) | Operator precedence, syntax rules |
+| [Liminal Semantics](docs/theory/liminal-semantics.md) | How contradictions resolve |
+| [Key Mechanism](docs/theory/key-mechanism.md) | How keys collapse ambiguity |
+
+**For implementers:**
+
+| Document | Purpose |
+|----------|---------|
+| [LIMN-PL Specification](docs/spec/LIMN-PL-SPECIFICATION.md) | Programming language extension |
+| [Operator Interactions](docs/theory/operator-interaction-analysis.md) | How operators combine |
+| [Quantifier Semantics](docs/theory/quantifier-semantics.md) | al, ex, on behavior |
+
 ## Phases
 
 1. **Theoretical Foundation** - Formalize the math
