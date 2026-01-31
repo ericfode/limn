@@ -247,6 +247,101 @@ Or not.
 
 ---
 
+## The Limnographer Chronicles: Three Tales
+
+### I. The Cartographer's Silence
+
+*She was the first to stop speaking English entirely.*
+
+For three months, Dr. Sava spoke only in Limn - to colleagues, to herself, to the mirror. They thought she had gone mad. But when she returned to English, she reported that words felt "sticky" now. Too specific. Like trying to paint with a single-hair brush.
+
+"In Limn," she said, "I was thinking in weather patterns. Now I am back to thinking in postage stamps."
+
+### Limn Fragment
+```
+wor old | sma poi | nu mov
+wor new | big are | flo
+```
+(old words | small points | not-moving; new words | big regions | flowing)
+
+---
+
+### II. The Twins' Experiment
+
+*They shared a key that no one else possessed.*
+
+Marcus and Mira, twins, developed their own private dialect of Limn. Same vocabulary, same grammar - but their shared childhood gave them a key that collapsed meanings in ways no outsider could follow.
+
+`hot col bet` meant, to them, specifically: the summer their grandmother died, the ice cream melting in their hands at the funeral, the way grief and sweetness mixed.
+
+No one else could recover this reading. The sentence was public. The meaning was theirs alone.
+
+### Limn Fragment
+```
+ctx sel oth | mea nu sha | ctx sha | mea sha
+```
+(context self-other | meaning not-shared; context shared | meaning shared)
+
+---
+
+### III. The Archivist's Discovery
+
+*She found Limn in texts that predated its creation.*
+
+When the Archivist began reviewing historical documents through a Limn lens, she noticed something strange. Old texts - mystic, poetic, philosophical - seemed to approach Limn-like structures. Heraclitus. Lao Tzu. Wittgenstein's later work.
+
+Not the vocabulary. Not the grammar. But the *thinking*. The recognition that words are regions, that meaning lives in intersection, that context collapses possibility.
+
+"We didn't invent Limn," she reported. "We just... named what the deep thinkers always knew."
+
+### Limn Fragment
+```
+pas thi lim | pas wor nu lim | now wor lim mea
+```
+(past thinking liminal | past words not-liminal | now words liminal meaning)
+
+---
+
+## Bestiary of the Operators
+
+*A mythological treatment of the core operators*
+
+### `nu` - The Inverter
+**Nature:** The oldest and most dangerous operator. Does not destroy - *inverts*. When you speak `nu X`, you summon into consideration everything in the universe that is not-X. This is infinite.
+
+**Mythology:** The Inverter was the first operator named, born from the recognition that the complement of any region is always larger than the region itself. To negate is to invoke the cosmic other.
+
+**Warning:** Nested negation (`nu nu X`) returns to X, but something is lost in the round trip. The Limnographers called this "shadow residue."
+
+---
+
+### `ve` - The Intensifier
+**Nature:** Shrinks regions toward their core. `ve hot` is not just hot - it is the *essence* of hot, the prototype, the platonic form.
+
+**Mythology:** The Intensifier was discovered by a Limnographer who wanted to express "truly, completely, maximally." But they found that intensity narrows as it deepens. The most extreme is also the most specific.
+
+**Warning:** `ve ve ve X` approaches a point. Points have no area. No area means no meaning. Infinite intensity is silence.
+
+---
+
+### `|` - The Boundary
+**Nature:** Creates separation without severing. Two scopes stand beside each other, distinct but related. The boundary is a membrane, not a wall.
+
+**Mythology:** The Boundary was the last operator developed. The early Limnographers wrote only single-scope sentences. Then one of them asked: "How do I hold two truths at once?" The answer was the vertical line - a pause, a breath, a threshold.
+
+**Warning:** Too many boundaries fragment meaning. A sentence with ten scopes is not ten sentences - it is noise.
+
+---
+
+### `yo` and `an` - The Pointers
+**Nature:** `yo` (here/this/now) and `an` (there/that/then) create deixis - pointing toward or away. They anchor meaning in perspective.
+
+**Mythology:** These were twin operators, born together. The Limnographers realized that all meaning has a perspective. `yo` pulls meaning toward the speaker. `an` pushes meaning toward the other.
+
+**Warning:** A sentence with only `yo` is narcissism. A sentence with only `an` is exile. Balance the pointers.
+
+---
+
 ## How to Use These Fragments
 
 These fragments should be:
