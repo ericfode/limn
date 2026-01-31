@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-01-31",
+    "author": "Dr. Solvik",
+    "purpose": "Test corpus for Experiment 005 - Embedding Compositionality"
+  },
+  "test_cases": {
+    "physical_compositions": [
+      {"limn": "sol aqu", "english": "ice", "type": "valid", "notes": "solid+water"},
+      {"limn": "liq aqu", "english": "water", "type": "valid", "notes": "liquid+water"},
+      {"limn": "gas aqu", "english": "steam", "type": "valid", "notes": "gas+water"},
+      {"limn": "sol car", "english": "coal", "type": "valid", "notes": "solid+carbon"},
+      {"limn": "liq iro", "english": "molten iron", "type": "valid", "notes": "liquid+iron"},
+      {"limn": "hot dry", "english": "desert", "type": "valid", "notes": "hot+dry"},
+      {"limn": "col wet", "english": "rain", "type": "valid", "notes": "cold+wet"},
+      {"limn": "hot wet", "english": "humid", "type": "valid", "notes": "hot+wet"},
+      {"limn": "col dry", "english": "winter", "type": "valid", "notes": "cold+dry"},
+      {"limn": "bri lux", "english": "brilliant light", "type": "valid", "notes": "bright+light"},
+      {"limn": "dim lux", "english": "dim light", "type": "valid", "notes": "dim+light"}
+    ],
+    "emotional_compositions": [
+      {"limn": "joy lov", "english": "happiness", "type": "valid", "notes": "joy+love"},
+      {"limn": "sad wan", "english": "longing", "type": "valid", "notes": "sad+want"},
+      {"limn": "ang fea", "english": "rage", "type": "valid", "notes": "anger+fear"},
+      {"limn": "joy sur", "english": "delight", "type": "valid", "notes": "joy+surprise"},
+      {"limn": "sad alo", "english": "lonely", "type": "valid", "notes": "sad+alone"},
+      {"limn": "hap pea", "english": "contentment", "type": "valid", "notes": "happy+peace"}
+    ],
+    "contradictions": [
+      {"limn": "hot col", "english": null, "type": "contradiction", "notes": "hot+cold"},
+      {"limn": "sol gas", "english": null, "type": "contradiction", "notes": "solid+gas"},
+      {"limn": "liq gas", "english": null, "type": "contradiction", "notes": "liquid+gas"},
+      {"limn": "big sma", "english": null, "type": "contradiction", "notes": "big+small"},
+      {"limn": "bri dim", "english": null, "type": "contradiction", "notes": "bright+dim"},
+      {"limn": "fas slo", "english": null, "type": "contradiction", "notes": "fast+slow"},
+      {"limn": "joy sad", "english": null, "type": "contradiction", "notes": "joy+sad"},
+      {"limn": "liv dea", "english": null, "type": "contradiction", "notes": "live+dead"}
+    ],
+    "operator_tests": [
+      {"limn": "nu hot", "expected_relation": "cold", "type": "negation"},
+      {"limn": "nu big", "expected_relation": "small", "type": "negation"},
+      {"limn": "nu bri", "expected_relation": "dim", "type": "negation"},
+      {"limn": "nu joy", "expected_relation": "sad", "type": "negation"},
+      {"limn": "ve hot", "expected_relation": "very hot", "type": "intensifier"},
+      {"limn": "ve big", "expected_relation": "very big", "type": "intensifier"},
+      {"limn": "so hot", "expected_relation": "somewhat hot", "type": "diminisher"},
+      {"limn": "so big", "expected_relation": "somewhat big", "type": "diminisher"}
+    ],
+    "commutativity_pairs": [
+      {"a": "sol aqu", "b": "aqu sol"},
+      {"a": "hot dry", "b": "dry hot"},
+      {"a": "joy lov", "b": "lov joy"},
+      {"a": "big red", "b": "red big"},
+      {"a": "fas mov", "b": "mov fas"},
+      {"a": "col wet", "b": "wet col"}
+    ],
+    "cross_lingual": [
+      {
+        "limn": "sol aqu",
+        "translations": {
+          "english": "ice",
+          "mandarin": "冰",
+          "spanish": "hielo",
+          "arabic": "ثلج",
+          "japanese": "氷"
+        }
+      },
+      {
+        "limn": "gas aqu",
+        "translations": {
+          "english": "steam",
+          "mandarin": "蒸汽",
+          "spanish": "vapor",
+          "arabic": "بخار",
+          "japanese": "蒸気"
+        }
+      },
+      {
+        "limn": "hot dry",
+        "translations": {
+          "english": "desert",
+          "mandarin": "沙漠",
+          "spanish": "desierto",
+          "arabic": "صحراء",
+          "japanese": "砂漠"
+        }
+      }
+    ]
+  },
+  "single_words": {
+    "physical": ["sol", "liq", "gas", "hot", "col", "wet", "dry", "bri", "dim", "big", "sma", "fas", "slo"],
+    "emotional": ["joy", "sad", "ang", "fea", "lov", "hat", "hap", "sur"],
+    "spatial": ["up", "dow", "lef", "rig", "nea", "far", "in", "out"]
+  }
+}
