@@ -187,14 +187,21 @@ python -c "import src.limn_pl_interpreter as lp; lp.run_all_tests()"
 
 ---
 
-## Open Questions for Linguist
+## Open Questions for Linguist - RESOLVED
 
-See bead `limn-land-355` and `docs/spec/limn-pl-v1.md` Section 12:
+These questions have been addressed in the linguistic analysis documents:
 
-1. **Recursion asymmetry**: `cau` introduces asymmetry - is this acceptable?
-2. **Quantifier scope**: How do `al`/`ex` interact with commutativity?
-3. **Negation-as-failure**: Closed-world assumption needed for `nu x amo gro`
-4. **Type system**: Is explicit typing needed for Limn-PL?
+1. **Recursion asymmetry**: RESOLVED - `cau` is acceptable; asymmetry is inherent to recursion.
+   See: `.beads/linguist-questions.txt` (Question 1)
+
+2. **Quantifier scope**: RESOLVED - Operators are non-commutative; scope is explicit via `|`.
+   See: `docs/theory/quantifier-semantics.md`, `docs/theory/operator-interaction-analysis.md`
+
+3. **Negation-as-failure**: RESOLVED - Semantic Limn uses open-world; Limn-PL uses closed-world.
+   See: `.beads/linguist-questions.txt` (Question 3)
+
+4. **Type system**: DOCUMENTED - Informal type system in grammar-formal.md Section 11.
+   See: `docs/spec/grammar-formal.md`
 
 ---
 
