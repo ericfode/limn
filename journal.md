@@ -2035,3 +2035,149 @@ language simple | meaning complex | between liminal
 "Simple language, complex meaning, liminality between."
 
 This IS Limn's philosophy about itself!
+
+---
+
+## Entry 24 - 2026-01-31
+
+### Testing Extreme Operator Nesting
+
+What happens when I push operators to the limit?
+
+#### Triple Negation
+
+```limn
+nu nu nu hot
+```
+
+Parse: nu(nu(nu(hot)))
+= NOT(NOT(NOT(hot)))
+= NOT(hot)
+= cold
+
+Triple negation = single negation. Math checks out!
+
+#### Quintuple Very
+
+```limn
+ve ve ve ve ve hot
+```
+
+Parse: ve(ve(ve(ve(ve(hot)))))
+= core(core(core(core(core(hot)))))
+= The MOST prototypical hot thing
+= Core of the sun? Pure heat abstraction?
+
+At some point `ve` converges to a single point.
+
+#### Mixed Deep Stacking
+
+```limn
+nu ve so nu ve hot
+```
+
+Parse right-to-left:
+1. `ve hot` = very hot
+2. `nu ve hot` = NOT very hot
+3. `so nu ve hot` = somewhat NOT-very-hot
+4. `ve so nu ve hot` = very (somewhat NOT-very-hot)
+5. `nu ve so nu ve hot` = NOT(very(somewhat NOT-very-hot))
+
+This is getting absurd. What region is this even selecting?
+
+My intuition: This should collapse to a broad region because the operators cancel each other out in complex ways.
+
+**Practical limit confirmed: 2-3 operators max for interpretability.**
+
+#### Vacuous Operators
+
+```limn
+nu
+```
+
+According to formal grammar: `⟦nu⟧ = ⟦nu S⟧ = ∅` (the void)
+
+Just "NOT" with no operand = nothingness.
+
+```limn
+ve
+```
+
+`⟦ve⟧ = ⟦ve S⟧ = core(S)` = pure essence, the platonic ideal
+
+```limn
+te
+```
+
+`⟦te⟧ = ⟦te S⟧ = question(S)` = universal question, questioning itself
+
+These are philosophically rich!
+
+#### Repeated Words
+
+```limn
+hot hot hot
+```
+
+`⟦hot hot hot⟧ = ⟦hot⟧ ∩ ⟦hot⟧ ∩ ⟦hot⟧ = ⟦hot⟧`
+
+Idempotent. No effect. Like stuttering.
+
+But with tones:
+```limn
+urj urj urj hel
+```
+
+Does urgency stack? Or is it just three urgent tones = one urgent?
+
+#### Empty Scope
+
+```limn
+|
+```
+
+Just a boundary with nothing. What does this mean?
+
+Maybe: pure separation, the concept of boundary itself.
+
+Or: Nothing separated from nothing = void.
+
+#### Self-Referential Quantifiers
+
+```limn
+al al al
+```
+
+"All all all" - does this even parse?
+
+Maybe: all of all of all = the universal set of universal sets?
+
+Or it's just grammatically ill-formed.
+
+#### Maximum Contradiction
+
+```limn
+hot col wet dry big sma
+```
+
+hot AND cold AND wet AND dry AND big AND small
+
+The intersection should be empty or liminal across ALL dimensions.
+
+This is... everything that is simultaneously opposite in every way.
+
+Maybe: quantum superposition? Schrödinger's cat?
+
+Or: the ultimate boundary state, liminal in all aspects.
+
+### Learned
+
+1. Deep nesting (4+ ops) becomes uninterpretable
+2. Vacuous operators have philosophical meaning
+3. Repetition is idempotent
+4. Maximum contradiction = total liminality
+5. Some expressions are grammatically valid but semantically pathological
+
+**The grammar allows things humans can't meaningfully interpret.**
+
+This is like Chomsky's "Colorless green ideas sleep furiously" - grammatical but nonsensical.
