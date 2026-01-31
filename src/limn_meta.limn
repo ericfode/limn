@@ -1,0 +1,91 @@
+# Limn Meta - Metacircular Limn Interpreter
+# pro (program): interpreter for Limn in Limn
+# sol pro cns | nu eng | sol Limn
+
+# ============================================================================
+# nod (node types) - encoded as numbers
+# ============================================================================
+# NOD_LIT sa 1 (literal value)
+# NOD_VAR sa 2 (variable reference)
+# NOD_BIN sa 3 (binary operation)
+# NOD_CNS sa 4 (constraint)
+
+# ============================================================================
+# ope (operation types) - encoded as numbers
+# ============================================================================
+# OPE_JOI sa 1 (add)
+# OPE_CUT sa 2 (subtract)
+# OPE_EXP sa 3 (multiply)
+# OPE_CON sa 4 (divide)
+
+# ============================================================================
+# rel (relation types) - encoded as numbers
+# ============================================================================
+# REL_SA sa 1 (equals)
+# REL_MA sa 2 (greater)
+# REL_MI sa 3 (less)
+
+# ============================================================================
+# env_sol (environment solve) - solve variable in environment
+# env format: gro | nom1 | val1 | nom2 | val2 | ... |
+# ============================================================================
+
+whe env
+whe nom
+whe env_sol_result
+
+# If environment has binding at position 0,1 for nom
+whe env_nom_0
+whe env_val_1
+
+# env_sol: look up nom in env, return value
+# Simplified: check if par 0 env sa nom, then par 1 env sa result
+par 0 env sa env_nom_0
+par 1 env sa env_val_1
+
+# if env_nom_0 sa nom the env_val_1 oth 0 sa env_sol_result
+# (simplified: direct binding)
+
+# ============================================================================
+# eva_lit (evaluate literal) - lit val sa val
+# ============================================================================
+
+whe lit_val
+whe eva_lit_result
+
+# lit_val sa eva_lit_result
+lit_val sa eva_lit_result
+
+# ============================================================================
+# eva_bin (evaluate binary operation)
+# ============================================================================
+
+whe bin_ope
+whe bin_lef_val
+whe bin_rig_val
+whe eva_bin_result
+
+# if ope sa 1 the lef joi rig oth ...
+# Simplified direct constraints:
+# For JOI: bin_lef_val joi bin_rig_val sa eva_bin_result (when bin_ope sa 1)
+
+# ============================================================================
+# demo: interpret a joi b sa c
+# ============================================================================
+
+# AST: nod_type sa 3 (binary), ope sa 1 (joi), lef_val, rig_val
+whe nod_type
+whe ope_type
+whe a_val
+whe b_val
+whe c_val
+
+# Constraint: a joi b sa c
+a_val joi b_val sa c_val
+
+---
+# key (input) - interpret: 3 joi 5 sa ?
+nod_type sa 3
+ope_type sa 1
+a_val sa 3
+b_val sa 5

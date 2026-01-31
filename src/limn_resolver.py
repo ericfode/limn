@@ -1,0 +1,700 @@
+#!/usr/bin/env python3
+"""
+Limn Dependency Resolver - Transitive dependency resolution with semver.
+
+Features:
+- Transitive dependency resolution
+- Semver constraint solving
+- Conflict detection and reporting
+- Lock file generation (pak.lock.limn)
+- Dependency graph visualization
+"""
+
+import os
+import sys
+import json
+import hashlib
+from pathlib import Path
+from typing import Dict, List, Optional, Set, Tuple, Any
+from dataclasses import dataclass, field
+from collections import defaultdict
+import subprocess
+import re
+
+# Import from other modules
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from limn_registry import (
+    SemVer, Registry, RegistryManager, PackageEntry,
+    ipfs_available, ipfs_cat, LIMN_HOME
+)
+
+
+# ============================================================================
+# Configuration
+# ============================================================================
+
+PAK_CACHE = LIMN_HOME / "pak"
+PAK_MANIFEST = "pak.limn"
+PAK_LOCK = "pak.lock.limn"
+
+
+# ============================================================================
+# Data Structures
+# ============================================================================
+
+@dataclass
+class Dependency:
+    """A dependency specification."""
+    name: str
+    constraint: str  # Version constraint like "^1.0.0" or CID
+    is_cid: bool = False  # True if constraint is a direct CID
+
+    def __hash__(self):
+        return hash((self.name, self.constraint))
+
+    def __eq__(self, other):
+        return self.name == other.name and self.constraint == other.constraint
+
+
+@dataclass
+class ResolvedDep:
+    """A resolved dependency."""
+    name: str
+    version: str
+    cid: str
+    dependencies: List["Dependency"] = field(default_factory=list)
+    integrity: str = ""  # Hash for verification
+
+    def __hash__(self):
+        return hash((self.name, self.version, self.cid))
+
+
+@dataclass
+class ResolutionGraph:
+    """The full dependency resolution graph."""
+    root_deps: List[Dependency]
+    resolved: Dict[str, ResolvedDep]  # name -> ResolvedDep
+    errors: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+
+    def to_lock_dict(self) -> dict:
+        """Convert to lock file format."""
+        return {
+            "version": 1,
+            "dependencies": {
+                name: {
+                    "version": dep.version,
+                    "cid": dep.cid,
+                    "integrity": dep.integrity,
+                    "dependencies": [d.name for d in dep.dependencies],
+                }
+                for name, dep in self.resolved.items()
+            }
+        }
+
+
+@dataclass
+class LockFile:
+    """A parsed lock file."""
+    version: int
+    dependencies: Dict[str, ResolvedDep]
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "LockFile":
+        deps = {}
+        for name, dep_data in d.get("dependencies", {}).items():
+            deps[name] = ResolvedDep(
+                name=name,
+                version=dep_data.get("version", ""),
+                cid=dep_data.get("cid", ""),
+                dependencies=[Dependency(n, "") for n in dep_data.get("dependencies", [])],
+                integrity=dep_data.get("integrity", ""),
+            )
+        return cls(version=d.get("version", 1), dependencies=deps)
+
+    @classmethod
+    def from_limn(cls, content: str) -> "LockFile":
+        """Parse lock file from Limn format."""
+        deps = {}
+        current_pkg = None
+        current_data = {}
+
+        for line in content.split('\n'):
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+
+            # Parse Limn constraints
+            # dep_{name}_ver sa "1.0.0"
+            # dep_{name}_cid sa "bafybei..."
+            match = re.match(r'dep_([a-z_]+)_(ver|cid|int)\s+sa\s+"([^"]+)"', line)
+            if match:
+                name = match.group(1).replace('_', '-')
+                field = match.group(2)
+                value = match.group(3)
+
+                if name not in deps:
+                    deps[name] = {"version": "", "cid": "", "integrity": "", "dependencies": []}
+
+                if field == "ver":
+                    deps[name]["version"] = value
+                elif field == "cid":
+                    deps[name]["cid"] = value
+                elif field == "int":
+                    deps[name]["integrity"] = value
+
+        resolved = {}
+        for name, data in deps.items():
+            resolved[name] = ResolvedDep(
+                name=name,
+                version=data["version"],
+                cid=data["cid"],
+                integrity=data["integrity"],
+                dependencies=[],
+            )
+
+        return cls(version=1, dependencies=resolved)
+
+    def to_limn(self) -> str:
+        """Generate Limn format lock file."""
+        lines = [
+            "# pak.lock.limn - Resolved dependencies",
+            "# Generated by limn pak install",
+            "# DO NOT EDIT MANUALLY",
+            "",
+        ]
+
+        # Variable declarations
+        for name in sorted(self.dependencies.keys()):
+            safe_name = name.replace('-', '_')
+            lines.append(f"whe dep_{safe_name}_ver")
+            lines.append(f"whe dep_{safe_name}_cid")
+            lines.append(f"whe dep_{safe_name}_int")
+
+        lines.append("")
+        lines.append("---")
+        lines.append("# Resolved versions")
+        lines.append("")
+
+        # Bindings
+        for name, dep in sorted(self.dependencies.items()):
+            safe_name = name.replace('-', '_')
+            lines.append(f'dep_{safe_name}_ver sa "{dep.version}"')
+            lines.append(f'dep_{safe_name}_cid sa "{dep.cid}"')
+            if dep.integrity:
+                lines.append(f'dep_{safe_name}_int sa "{dep.integrity}"')
+            lines.append("")
+
+        return '\n'.join(lines)
+
+
+# ============================================================================
+# Manifest Parsing
+# ============================================================================
+
+def parse_manifest(path: Path) -> Tuple[Dict[str, Any], List[Dependency]]:
+    """Parse pak.limn manifest file."""
+    if not path.exists():
+        return {}, []
+
+    content = path.read_text(encoding='utf-8')
+    metadata = {}
+    dependencies = []
+
+    # Parse metadata
+    for pattern, key in [
+        (r'pak_nom\s+sa\s+"([^"]+)"', 'name'),
+        (r'pak_ver_maj\s+sa\s+(\d+)', 'version_major'),
+        (r'pak_ver_min\s+sa\s+(\d+)', 'version_minor'),
+        (r'pak_ver_pat\s+sa\s+(\d+)', 'version_patch'),
+        (r'pak_aut\s+sa\s+"([^"]+)"', 'author'),
+        (r'pak_des\s+sa\s+"([^"]+)"', 'description'),
+        (r'pak_ent\s+sa\s+"([^"]+)"', 'entry'),
+    ]:
+        match = re.search(pattern, content)
+        if match:
+            metadata[key] = match.group(1)
+            if key.startswith('version_'):
+                metadata[key] = int(metadata[key])
+
+    # Compose version string
+    if 'version_major' in metadata:
+        metadata['version'] = f"{metadata.get('version_major', 0)}." \
+                              f"{metadata.get('version_minor', 0)}." \
+                              f"{metadata.get('version_patch', 0)}"
+
+    # Parse dependencies
+    # Format: dep_name sa "constraint"
+    # Or: dep_name sa cid "bafybei..."
+    for match in re.finditer(r'dep_([a-z_]+)\s+sa\s+(?:cid\s+)?"([^"]+)"', content):
+        dep_name = match.group(1).replace('_', '-')
+        constraint = match.group(2)
+
+        # Check if CID
+        is_cid = constraint.startswith('bafybei') or constraint.startswith('Qm')
+
+        dependencies.append(Dependency(
+            name=dep_name,
+            constraint=constraint,
+            is_cid=is_cid,
+        ))
+
+    return metadata, dependencies
+
+
+def generate_manifest(metadata: dict, dependencies: List[Dependency]) -> str:
+    """Generate pak.limn content."""
+    lines = [
+        "# pak.limn - Package manifest",
+        "",
+        "# Package info",
+        "whe pak_nom",
+        "whe pak_ver_maj",
+        "whe pak_ver_min",
+        "whe pak_ver_pat",
+        "whe pak_aut",
+        "whe pak_des",
+        "whe pak_ent",
+        "",
+    ]
+
+    # Add dependency variables
+    for dep in dependencies:
+        safe_name = dep.name.replace('-', '_')
+        lines.append(f"whe dep_{safe_name}")
+
+    lines.extend([
+        "",
+        "---",
+        f'pak_nom sa "{metadata.get("name", "")}"',
+        f'pak_ver_maj sa {metadata.get("version_major", 1)}',
+        f'pak_ver_min sa {metadata.get("version_minor", 0)}',
+        f'pak_ver_pat sa {metadata.get("version_patch", 0)}',
+        f'pak_aut sa "{metadata.get("author", "")}"',
+        f'pak_des sa "{metadata.get("description", "")}"',
+        f'pak_ent sa "{metadata.get("entry", "src/main.limn")}"',
+        "",
+    ])
+
+    # Add dependency constraints
+    if dependencies:
+        lines.append("# Dependencies")
+        for dep in dependencies:
+            safe_name = dep.name.replace('-', '_')
+            if dep.is_cid:
+                lines.append(f'dep_{safe_name} sa cid "{dep.constraint}"')
+            else:
+                lines.append(f'dep_{safe_name} sa "{dep.constraint}"')
+
+    return '\n'.join(lines)
+
+
+# ============================================================================
+# Dependency Resolver
+# ============================================================================
+
+class DependencyResolver:
+    """Resolves dependencies transitively."""
+
+    def __init__(self, registry_manager: RegistryManager = None):
+        self.registry = registry_manager or RegistryManager()
+        self.cache = PAK_CACHE
+        self.cache.mkdir(parents=True, exist_ok=True)
+
+    def resolve(self, dependencies: List[Dependency],
+                lock_file: LockFile = None) -> ResolutionGraph:
+        """
+        Resolve all dependencies transitively.
+
+        If a lock file is provided, prefer locked versions.
+        """
+        graph = ResolutionGraph(
+            root_deps=dependencies,
+            resolved={},
+        )
+
+        # Queue of (dependency, parent_name) to process
+        queue = [(dep, None) for dep in dependencies]
+        seen = set()  # (name, constraint) pairs we've processed
+
+        while queue:
+            dep, parent = queue.pop(0)
+            key = (dep.name, dep.constraint)
+
+            if key in seen:
+                continue
+            seen.add(key)
+
+            # Check if already resolved (possibly different version)
+            if dep.name in graph.resolved:
+                existing = graph.resolved[dep.name]
+                # Check if compatible
+                if dep.is_cid:
+                    if existing.cid != dep.constraint:
+                        graph.errors.append(
+                            f"Conflict: {dep.name} required as CID {dep.constraint} "
+                            f"but already resolved to {existing.cid}"
+                        )
+                else:
+                    if not SemVer.parse(existing.version).satisfies(dep.constraint):
+                        graph.errors.append(
+                            f"Conflict: {dep.name}@{existing.version} doesn't satisfy "
+                            f"{dep.constraint} (required by {parent or 'root'})"
+                        )
+                continue
+
+            # Check lock file first
+            if lock_file and dep.name in lock_file.dependencies:
+                locked = lock_file.dependencies[dep.name]
+                # Verify constraint is still satisfied
+                if dep.is_cid:
+                    if locked.cid == dep.constraint:
+                        graph.resolved[dep.name] = locked
+                        continue
+                else:
+                    if SemVer.parse(locked.version).satisfies(dep.constraint):
+                        graph.resolved[dep.name] = locked
+                        continue
+                    else:
+                        graph.warnings.append(
+                            f"Lock file version {dep.name}@{locked.version} "
+                            f"no longer satisfies {dep.constraint}, re-resolving"
+                        )
+
+            # Resolve from registry or IPFS
+            resolved = self._resolve_single(dep, graph)
+            if resolved:
+                graph.resolved[dep.name] = resolved
+
+                # Add transitive dependencies to queue
+                for trans_dep in resolved.dependencies:
+                    queue.append((trans_dep, dep.name))
+
+        return graph
+
+    def _resolve_single(self, dep: Dependency, graph: ResolutionGraph) -> Optional[ResolvedDep]:
+        """Resolve a single dependency."""
+        if dep.is_cid:
+            return self._resolve_by_cid(dep, graph)
+        else:
+            return self._resolve_by_name(dep, graph)
+
+    def _resolve_by_cid(self, dep: Dependency, graph: ResolutionGraph) -> Optional[ResolvedDep]:
+        """Resolve dependency by direct CID."""
+        cid = dep.constraint
+
+        # Check cache
+        cache_path = self.cache / cid
+        if cache_path.exists():
+            return self._load_from_cache(dep.name, cid, cache_path, graph)
+
+        # Fetch from IPFS
+        if not ipfs_available():
+            graph.errors.append(f"Cannot fetch {dep.name}: IPFS not available")
+            return None
+
+        print(f"  Fetching {dep.name} ({cid[:12]}...)")
+        if not self._fetch_to_cache(cid):
+            graph.errors.append(f"Failed to fetch {dep.name} from IPFS")
+            return None
+
+        return self._load_from_cache(dep.name, cid, cache_path, graph)
+
+    def _resolve_by_name(self, dep: Dependency, graph: ResolutionGraph) -> Optional[ResolvedDep]:
+        """Resolve dependency by name from registry."""
+        # Lookup in registry
+        result = self.registry.lookup(dep.name, dep.constraint)
+        if not result:
+            graph.errors.append(f"Package not found: {dep.name} ({dep.constraint})")
+            return None
+
+        version, cid, _ = result
+
+        # Check cache
+        cache_path = self.cache / cid
+        if cache_path.exists():
+            return self._load_from_cache(dep.name, cid, cache_path, graph, version)
+
+        # Fetch from IPFS
+        if not ipfs_available():
+            graph.errors.append(f"Cannot fetch {dep.name}: IPFS not available")
+            return None
+
+        print(f"  Fetching {dep.name}@{version} ({cid[:12]}...)")
+        if not self._fetch_to_cache(cid):
+            graph.errors.append(f"Failed to fetch {dep.name} from IPFS")
+            return None
+
+        return self._load_from_cache(dep.name, cid, cache_path, graph, version)
+
+    def _fetch_to_cache(self, cid: str) -> bool:
+        """Fetch package from IPFS to cache."""
+        cache_path = self.cache / cid
+        try:
+            result = subprocess.run(
+                ["ipfs", "get", "-o", str(cache_path), cid],
+                capture_output=True,
+                timeout=120
+            )
+            return result.returncode == 0
+        except Exception:
+            return False
+
+    def _load_from_cache(self, name: str, cid: str, cache_path: Path,
+                         graph: ResolutionGraph, version: str = None) -> Optional[ResolvedDep]:
+        """Load package info from cache."""
+        manifest_path = cache_path / PAK_MANIFEST
+        if not manifest_path.exists():
+            # Maybe it's a single file, not a directory
+            if cache_path.is_file():
+                # Treat as a file package (no transitive deps)
+                return ResolvedDep(
+                    name=name,
+                    version=version or "0.0.0",
+                    cid=cid,
+                    dependencies=[],
+                    integrity=self._compute_integrity(cache_path),
+                )
+            graph.errors.append(f"Invalid package: {name} (no manifest)")
+            return None
+
+        metadata, dependencies = parse_manifest(manifest_path)
+
+        # Use version from manifest if not provided
+        if not version:
+            version = metadata.get('version', '0.0.0')
+
+        return ResolvedDep(
+            name=name,
+            version=version,
+            cid=cid,
+            dependencies=dependencies,
+            integrity=self._compute_integrity(cache_path),
+        )
+
+    def _compute_integrity(self, path: Path) -> str:
+        """Compute integrity hash for a package."""
+        if path.is_file():
+            content = path.read_bytes()
+            return "sha256-" + hashlib.sha256(content).hexdigest()
+
+        # For directories, hash the manifest
+        manifest = path / PAK_MANIFEST
+        if manifest.exists():
+            content = manifest.read_bytes()
+            return "sha256-" + hashlib.sha256(content).hexdigest()
+
+        return ""
+
+    def install_resolved(self, graph: ResolutionGraph, target_dir: Path = None) -> bool:
+        """Install resolved dependencies to target directory."""
+        if graph.errors:
+            print("Cannot install: resolution errors exist")
+            for err in graph.errors:
+                print(f"  - {err}")
+            return False
+
+        if target_dir is None:
+            target_dir = Path.cwd()
+
+        deps_dir = target_dir / ".limn_deps"
+        deps_dir.mkdir(exist_ok=True)
+
+        for name, dep in graph.resolved.items():
+            print(f"Installing {name}@{dep.version}...")
+
+            # Create symlink from deps dir to cache
+            dep_link = deps_dir / name
+            cache_path = self.cache / dep.cid
+
+            if dep_link.exists() or dep_link.is_symlink():
+                dep_link.unlink()
+
+            try:
+                dep_link.symlink_to(cache_path)
+            except OSError:
+                # On Windows, might need to copy instead
+                import shutil
+                if cache_path.is_dir():
+                    shutil.copytree(cache_path, dep_link)
+                else:
+                    shutil.copy2(cache_path, dep_link)
+
+        print(f"\nInstalled {len(graph.resolved)} packages")
+        return True
+
+
+# ============================================================================
+# CLI Interface
+# ============================================================================
+
+def cmd_resolve(args):
+    """Resolve dependencies."""
+    path = Path(args[0]) if args else Path.cwd()
+    manifest_path = path / PAK_MANIFEST if path.is_dir() else path
+
+    if not manifest_path.exists():
+        print(f"Error: No {PAK_MANIFEST} found")
+        return
+
+    print(f"Resolving dependencies for {manifest_path}...")
+
+    # Parse manifest
+    metadata, dependencies = parse_manifest(manifest_path)
+    if not dependencies:
+        print("No dependencies to resolve")
+        return
+
+    print(f"Found {len(dependencies)} direct dependencies")
+
+    # Check for lock file
+    lock_path = manifest_path.parent / PAK_LOCK
+    lock_file = None
+    if lock_path.exists():
+        print("Using existing lock file")
+        lock_file = LockFile.from_limn(lock_path.read_text())
+
+    # Resolve
+    registry = RegistryManager()
+    registry.fetch()  # Load default registry
+
+    resolver = DependencyResolver(registry)
+    graph = resolver.resolve(dependencies, lock_file)
+
+    # Report
+    if graph.warnings:
+        print("\nWarnings:")
+        for w in graph.warnings:
+            print(f"  ⚠ {w}")
+
+    if graph.errors:
+        print("\nErrors:")
+        for e in graph.errors:
+            print(f"  ✗ {e}")
+        return
+
+    print(f"\nResolved {len(graph.resolved)} packages:")
+    for name, dep in sorted(graph.resolved.items()):
+        print(f"  {name}@{dep.version} -> {dep.cid[:16]}...")
+
+    # Generate lock file
+    lock = LockFile(version=1, dependencies=graph.resolved)
+    lock_content = lock.to_limn()
+    lock_path.write_text(lock_content)
+    print(f"\nGenerated {PAK_LOCK}")
+
+
+def cmd_install(args):
+    """Install dependencies."""
+    path = Path(args[0]) if args else Path.cwd()
+    manifest_path = path / PAK_MANIFEST if path.is_dir() else path
+
+    if not manifest_path.exists():
+        print(f"Error: No {PAK_MANIFEST} found")
+        return
+
+    # Check for lock file
+    lock_path = manifest_path.parent / PAK_LOCK
+    lock_file = None
+    if lock_path.exists():
+        lock_file = LockFile.from_limn(lock_path.read_text())
+        print(f"Installing from lock file ({len(lock_file.dependencies)} packages)...")
+
+        # Install from lock file
+        registry = RegistryManager()
+        resolver = DependencyResolver(registry)
+
+        # Convert lock file deps to resolution graph
+        graph = ResolutionGraph(
+            root_deps=[],
+            resolved=lock_file.dependencies,
+        )
+
+        resolver.install_resolved(graph, manifest_path.parent)
+    else:
+        # Resolve first
+        print("No lock file found, resolving dependencies...")
+        cmd_resolve([str(manifest_path.parent)])
+
+        # Now install
+        lock_path = manifest_path.parent / PAK_LOCK
+        if lock_path.exists():
+            lock_file = LockFile.from_limn(lock_path.read_text())
+            registry = RegistryManager()
+            resolver = DependencyResolver(registry)
+            graph = ResolutionGraph(
+                root_deps=[],
+                resolved=lock_file.dependencies,
+            )
+            resolver.install_resolved(graph, manifest_path.parent)
+
+
+def cmd_tree(args):
+    """Show dependency tree."""
+    path = Path(args[0]) if args else Path.cwd()
+    manifest_path = path / PAK_MANIFEST if path.is_dir() else path
+
+    if not manifest_path.exists():
+        print(f"Error: No {PAK_MANIFEST} found")
+        return
+
+    metadata, dependencies = parse_manifest(manifest_path)
+
+    print(f"{metadata.get('name', 'package')}@{metadata.get('version', '0.0.0')}")
+
+    lock_path = manifest_path.parent / PAK_LOCK
+    if lock_path.exists():
+        lock_file = LockFile.from_limn(lock_path.read_text())
+
+        def print_dep(name: str, indent: int = 0, seen: set = None):
+            if seen is None:
+                seen = set()
+
+            prefix = "  " * indent + ("├── " if indent > 0 else "")
+
+            if name in lock_file.dependencies:
+                dep = lock_file.dependencies[name]
+                circular = name in seen
+                suffix = " (circular)" if circular else ""
+                print(f"{prefix}{name}@{dep.version}{suffix}")
+
+                if not circular:
+                    seen = seen | {name}
+                    for trans in dep.dependencies:
+                        print_dep(trans.name, indent + 1, seen)
+            else:
+                print(f"{prefix}{name} (not resolved)")
+
+        for dep in dependencies:
+            print_dep(dep.name)
+    else:
+        for dep in dependencies:
+            constraint = f"cid:{dep.constraint[:12]}..." if dep.is_cid else dep.constraint
+            print(f"├── {dep.name} ({constraint})")
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Limn Dependency Resolver")
+        print()
+        print("Commands:")
+        print("  resolve [dir]     Resolve dependencies and generate lock file")
+        print("  install [dir]     Install dependencies")
+        print("  tree [dir]        Show dependency tree")
+        return
+
+    cmd = sys.argv[1]
+    args = sys.argv[2:]
+
+    if cmd == "resolve":
+        cmd_resolve(args)
+    elif cmd == "install":
+        cmd_install(args)
+    elif cmd == "tree":
+        cmd_tree(args)
+    else:
+        print(f"Unknown command: {cmd}")
+
+
+if __name__ == "__main__":
+    main()

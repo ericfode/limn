@@ -1,0 +1,64 @@
+# Bead: Phase 3 - Version Resolution
+# pha (phase) 3 | ver (version) res (resolution)
+
+# ============================================================================
+# Task: Implement semantic version resolution in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha3_ver_res"
+bea_pha sa 3
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs registry lookup
+bea_dep sa gro | "pha3_reg_loo" |
+
+# ============================================================================
+# Implementation: Version resolution constraints
+# ============================================================================
+
+# Semantic version structure:
+whe ver_maj   # major version
+whe ver_min   # minor version
+whe ver_pat   # patch version
+
+# Version comparison:
+whe ver_a_maj
+whe ver_a_min
+whe ver_a_pat
+whe ver_b_maj
+whe ver_b_min
+whe ver_b_pat
+whe ver_cmp   # comparison result: -1 (a<b), 0 (a=b), 1 (a>b)
+
+# Comparison constraints:
+ver_a_maj ma ver_b_maj cau ver_cmp sa 1
+ver_a_maj mi ver_b_maj cau ver_cmp sa -1
+ver_a_maj sa ver_b_maj cau ver_a_min ma ver_b_min cau ver_cmp sa 1
+ver_a_maj sa ver_b_maj cau ver_a_min mi ver_b_min cau ver_cmp sa -1
+ver_a_maj sa ver_b_maj cau ver_a_min sa ver_b_min cau ver_a_pat ma ver_b_pat cau ver_cmp sa 1
+ver_a_maj sa ver_b_maj cau ver_a_min sa ver_b_min cau ver_a_pat mi ver_b_pat cau ver_cmp sa -1
+ver_a_maj sa ver_b_maj cau ver_a_min sa ver_b_min cau ver_a_pat sa ver_b_pat cau ver_cmp sa 0
+
+# Version range matching:
+whe ver_ran_min_maj
+whe ver_ran_min_min
+whe ver_ran_min_pat
+whe ver_ran_max_maj
+whe ver_ran_max_min
+whe ver_ran_max_pat
+whe ver_ran_mat   # matches range (1/0)
+
+# Find best matching version:
+whe ver_req       # requested version/range
+whe ver_ava_gro   # available versions
+whe ver_bes       # best match
+
+---
+# key: define task
+bea_des sa "Implement semantic version resolution using Limn constraints. Version comparison, range matching, find best matching version from available versions. Support semver constraints."

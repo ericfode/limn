@@ -1,0 +1,150 @@
+TITLE: Limn-PL Implementation Questions for Linguist
+
+DESCRIPTION:
+During implementation of Limn-PL (programming language in Limn), several questions arose that need linguistic/formal analysis:
+
+1. RECURSION EXPRESSIBILITY [RESOLVED Session 6]
+Can recursion be fully expressed without explicit function call syntax?
+Current approach uses `cau` (cause) for function invocation.
+Is there a more Limn-native way to express recursion as pure constraints?
+
+RESOLUTION: `cau` is acceptable; pure constraint recursion is possible but requires fixed-point semantics.
+
+Analysis:
+1. **Current approach works**: `cau` provides clear, implementable recursive calls
+   - Base case and recursive case combined via `pa` (alternatives)
+   - Order of cases doesn't matter (constraint-based)
+   - Example: `(n sa 0 | eff sa 1) pa (n ma 0 | fac cau (n cut 1) eff f | eff sa n exp f)`
+
+2. **The asymmetry is inherent to recursion itself**:
+   - Recursive computation MUST reference smaller subproblems
+   - This self-reference is directional (larger depends on smaller)
+   - `cau` makes this directionality explicit and executable
+
+3. **Pure constraint alternative** (more Limn-native, less practical):
+   - Use relational/fixed-point semantics from constraint logic programming
+   - Define relation R as least fixed-point satisfying constraints
+   - Example: `fac` is the smallest relation where `(0,1) amo fac` and
+     `al n | n ma 0 | (n, n exp (fac (n cut 1))) amo fac`
+
+4. **Recommendation**: Keep `cau` as pragmatic syntax. Optionally add `rec` marker
+   for explicitly recursive relations in future versions.
+
+5. **Key insight**: Within the constraint set, commutativity holds (base case
+   and recursive case can be listed in any order). `cau` only adds execution
+   semantics, not semantic content.
+
+2. QUANTIFIER SCOPE AND COMMUTATIVITY [RESOLVED Session 6]
+How do `al` (all) and `ex` (exists) interact with Limn's commutativity?
+Classical logic says quantifier scope matters, but Limn claims commutativity.
+
+RESOLUTION: Commutativity applies to content-word intersection only, not to operators.
+Per grammar-formal.md Section 6:
+- Content words: `⟦A B⟧ = ⟦B A⟧` (commutative)
+- Operators (incl. quantifiers): scope over what follows (non-commutative)
+
+Quantifiers `al`, `ex`, `on` are operators like `nu`, `ve`, `yo`:
+- `al X | ex Y` ≠ `ex Y | al X` (different scope binding)
+- `al X Y` means "for all x in X∩Y" (intersection under universal)
+- `ex X Y` means "for some x in X∩Y" (intersection under existential)
+
+Within quantifier scope, content words remain commutative:
+- `al (X Y)` = `al (Y X)` (order inside scope doesn't matter)
+
+This preserves Limn's core commutativity for constraint intersection while
+maintaining standard logical semantics for quantifier scope.
+
+3. NEGATION SEMANTICS [RESOLVED Session 6]
+Does `nu` (negation) support closed-world assumption?
+What are the formal semantics for negation in open-world vs closed-world?
+
+RESOLUTION: Different semantics for Semantic Limn vs Limn-PL.
+
+**Semantic Limn (natural language)** - OPEN-WORLD:
+- `nu A` = complement of A in semantic space S: `⟦nu A⟧ = S \ ⟦A⟧`
+- This defines a REGION, not a truth value
+- "Not bright" includes dark, dim, uncertain brightness, unknown entities
+- Open-world: absence of evidence ≠ evidence of absence
+- Example: `nu bri lif` = things that are alive and not bright (nocturnal creatures, etc.)
+
+**Limn-PL (programming language)** - CLOSED-WORLD:
+- For constraint solving over FINITE domains
+- `nu x amo gro` requires gro to be fully enumerated
+- If x is not provably in gro, then x is NOT in gro (negation-as-failure)
+- This is necessary for decidable, terminating constraint propagation
+- As stated in limn-pl-grammar.md: "Negation uses closed-world assumption"
+
+**Why the distinction is coherent**:
+1. Semantic Limn describes REGIONS of meaning - open-world is natural
+2. Limn-PL computes over FINITE SETS - closed-world enables execution
+3. The KEY MECHANISM bridges them: a key provides closed-world context
+   - Without key: open-world superposition of meanings
+   - With key: closed-world collapse to specific interpretation
+
+**Formal statement**:
+- Semantic: `⟦nu A⟧ = {x ∈ S : x ∉ ⟦A⟧}` (all of S not in A)
+- Programming: `nu(x amo gro) ≡ ∀y ∈ gro: x ≠ y` (x differs from every element)
+
+4. TYPE COERCION [RESOLVED Session 6]
+How should Limn-PL handle numeric types?
+Should `3 joi 4.5` produce integer 7 or float 7.5?
+
+RESOLUTION: Use standard numeric widening - results use the most precise type.
+
+**Rules**:
+1. `int OP int → int` (3 joi 4 = 7)
+2. `int OP float → float` (3 joi 4.5 = 7.5)
+3. `float OP int → float` (3.5 joi 4 = 7.5)
+4. `float OP float → float` (3.5 joi 4.5 = 8.0)
+
+**Division special case**:
+- `int con int → float` if not exact (7 con 2 = 3.5)
+- `int con int → int` if exact (8 con 2 = 4) — OR always float for consistency
+
+**Rationale**:
+- Standard approach used by Python, JavaScript, most modern languages
+- Preserves precision (never loses information)
+- Constraint-compatible: if result must be int, add `eff ve one` constraint
+
+**Implementation note**: The Python-based interpreter naturally handles this via
+Python's numeric tower. Document as specification for other implementations.
+
+5. COLLECTION CONSTRAINTS [RESOLVED Session 6]
+How to express constraints over collections with variable binding?
+
+RESOLUTION: Use quantifiers (`al`/`ex`) combined with membership (`amo`) or index constraints.
+
+**Element-based binding** (iterate over elements):
+```limn
+al x | x amo collection | P(x)      # for all x in collection: P(x)
+ex x | x amo collection | P(x)      # exists x in collection: P(x)
+```
+Example from filter:
+```limn
+al x | (x amo gro-in | pred cau x eff tru) | x amo gro-out
+```
+
+**Index-based binding** (iterate over indices):
+```limn
+al i | i mi (who arr) | P(par i arr)    # for all indices i: P(arr[i])
+ex i | i mi (who arr) | P(par i arr)    # exists index i: P(arr[i])
+```
+Example from sort:
+```limn
+al i | (par i gro-out) mi (par (i joi 1) gro-out)
+```
+
+**Head/tail decomposition** (recursive pattern):
+```limn
+(who arr sa 0 | base-case) pa
+(who arr ma 0 | ex h | ex t | fst arr sa h | nxt arr sa t | P(h) | recurse(t))
+```
+
+**Key insight**: The quantifier (`al`/`ex`) creates the binding scope.
+The membership/index constraint (`amo`/`par`) restricts the domain.
+The body constraint (`P(x)`) expresses the property.
+
+This pattern is consistent with constraint logic programming (Prolog/Datalog).
+
+---
+These questions documented in docs/spec/limn-pl-v1.md Section 12 (archived).

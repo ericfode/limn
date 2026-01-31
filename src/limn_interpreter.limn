@@ -1,0 +1,86 @@
+# Limn Interpreter in Limn
+# sol pro cns | nu eng
+
+# ============================================================================
+# This is the metacircular Limn interpreter
+# It interprets Limn programs encoded as data
+# ============================================================================
+
+# ============================================================================
+# Node encoding (data representation)
+# ============================================================================
+# LIT_TYPE sa 1   (literal: gro | 1 | val |)
+# VAR_TYPE sa 2   (variable: gro | 2 | nom |)
+# BIN_TYPE sa 3   (binary: gro | 3 | ope | lef | rig |)
+
+# ============================================================================
+# Operation codes
+# ============================================================================
+# JOI_OPE sa 1
+# CUT_OPE sa 2
+# EXP_OPE sa 3
+# CON_OPE sa 4
+
+# ============================================================================
+# eva_joi: evaluate addition
+# ============================================================================
+
+whe eva_joi_a
+whe eva_joi_b
+whe eva_joi_result
+
+eva_joi_a joi eva_joi_b sa eva_joi_result
+
+# ============================================================================
+# eva_cut: evaluate subtraction
+# ============================================================================
+
+whe eva_cut_a
+whe eva_cut_b
+whe eva_cut_result
+
+eva_cut_a cut eva_cut_b sa eva_cut_result
+
+# ============================================================================
+# eva_exp: evaluate multiplication
+# ============================================================================
+
+whe eva_exp_a
+whe eva_exp_b
+whe eva_exp_result
+
+eva_exp_a exp eva_exp_b sa eva_exp_result
+
+# ============================================================================
+# eva_con: evaluate division
+# ============================================================================
+
+whe eva_con_a
+whe eva_con_b
+whe eva_con_result
+
+eva_con_a con eva_con_b sa eva_con_result
+
+# ============================================================================
+# Demonstration
+# ============================================================================
+# This interpreter evaluates by constraint satisfaction
+# The "program" is the key, the "result" is the solved variable
+
+---
+# key: Interpret operations
+# Program 1: 3 + 5 = ?
+eva_joi_a sa 3
+eva_joi_b sa 5
+
+# Program 2: 10 - 3 = ?
+eva_cut_a sa 10
+eva_cut_b sa 3
+
+# Program 3: 4 * 6 = ?
+eva_exp_a sa 4
+eva_exp_b sa 6
+
+# Program 4: 20 / 4 = ?
+eva_con_a sa 20
+eva_con_b sa 4

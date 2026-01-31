@@ -1,0 +1,61 @@
+# Bead: Phase 2 - Package Publishing
+# pha (phase) 2 | pak (package) pub (publish)
+
+# ============================================================================
+# Task: Implement package publishing to IPFS in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha2_pak_pub"
+bea_pha sa 2
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs IPFS detection and package validation
+bea_dep sa gro | "pha2_ipfs_det" | "pha1_pak_val" |
+
+# ============================================================================
+# Implementation: Publishing constraints
+# ============================================================================
+
+# New wor (words) for publishing:
+whe wor_pub   # publish
+whe wor_add   # add to IPFS
+whe wor_bun   # bundle
+
+# Publishing state:
+whe pub_pak_dir     # package directory
+whe pub_pak_bun     # bundled package
+whe pub_ipfs_add    # IPFS add command
+whe pub_res_cid     # resulting CID
+whe pub_res_suc     # success (1/0)
+whe pub_res_err     # error message
+
+# Publishing constraints:
+whe pub_pre_val     # pre: validation passed
+whe pub_pre_dae     # pre: daemon running
+
+pub_pre_val sa 1 cau pub_pre_dae sa 1 cau pub_res_suc sa 1
+pub_pre_val sa 0 cau pub_res_err sa "Package validation failed"
+pub_pre_dae sa 0 cau pub_res_err sa "IPFS daemon not running"
+
+# Bundle creation:
+whe bun_fil_gro     # files in bundle
+whe bun_exc_gro     # excluded files (.git, node_modules, etc)
+whe bun_res_dir     # result directory
+
+# Add to IPFS:
+whe add_dir
+whe add_opt_pin     # pin after adding
+whe add_opt_rec     # recursive
+whe add_res_cid
+
+add_opt_rec sa 1 cau add_opt_pin sa 1 cau add_res_cid ma ""
+
+---
+# key: define task
+bea_des sa "Implement package publishing to IPFS using Limn constraints. Extend vocabulary with pub (publish), add, bun (bundle). Create package bundle, add to IPFS, return CID. Validate package and daemon before publishing."

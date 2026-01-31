@@ -1,0 +1,96 @@
+# pak ini (init) - Initialize new package
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe pak_nom       # package name
+whe pak_dir       # directory (defaults to pak_nom)
+
+# ============================================================================
+# Template content
+# ============================================================================
+
+whe man_tem       # manifest template
+whe ent_tem       # entry file template
+whe rea_tem       # readme template
+
+# ============================================================================
+# Output variables
+# ============================================================================
+
+whe dir_cre       # directory created
+whe src_cre       # src/ created
+whe tes_cre       # test/ created
+whe man_wri       # manifest written
+whe ent_wri       # entry written
+whe rea_wri       # readme written
+whe res_suc       # overall success
+
+# ============================================================================
+# Templates as constraints
+# ============================================================================
+
+man_tem sa "# pak.limn - Package manifest
+
+whe pak_nom
+whe pak_ver_maj
+whe pak_ver_min
+whe pak_ver_pat
+whe pak_aut
+whe pak_des
+whe pak_ent
+
+---
+pak_nom sa \"{NOM}\"
+pak_ver_maj sa 1
+pak_ver_min sa 0
+pak_ver_pat sa 0
+pak_aut sa \"\"
+pak_des sa \"\"
+pak_ent sa \"src/main.limn\"
+"
+
+ent_tem sa "# main.limn - Package entry point
+
+whe greeting
+
+---
+greeting sa \"Hello from {NOM}\"
+"
+
+rea_tem sa "# {NOM}
+
+A Limn package.
+
+## Installation
+
+limn pak add {NOM}
+
+## Usage
+
+use nom \"{NOM}\"
+"
+
+# ============================================================================
+# Operations (using host primitives)
+# ============================================================================
+
+# Create directories
+cre cau pak_dir eff dir_cre
+cre cau pak_dir joi "/src" eff src_cre
+cre cau pak_dir joi "/test" eff tes_cre
+
+# Write files
+wri cau pak_dir joi "/pak.limn" man_tem eff man_wri
+wri cau pak_dir joi "/src/main.limn" ent_tem eff ent_wri
+wri cau pak_dir joi "/README.md" rea_tem eff rea_wri
+
+# Success if all operations succeeded
+dir_cre sa tru cau src_cre sa tru cau tes_cre sa tru cau man_wri sa tru cau ent_wri sa tru cau res_suc sa tru
+
+---
+# key: example
+pak_nom sa "my-package"
+pak_dir sa "my-package"

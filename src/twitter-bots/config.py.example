@@ -1,0 +1,142 @@
+"""
+Limn Twitter Bot Configuration Template
+
+Copy this file to config.py and fill in your credentials.
+NEVER commit config.py to version control.
+
+Setup Instructions:
+1. Create a Twitter Developer account at https://developer.twitter.com
+2. Create a new project and app with OAuth 1.0a and OAuth 2.0 enabled
+3. Generate all required tokens/keys
+4. Create an Anthropic account at https://anthropic.com
+5. Generate an API key
+6. Copy this file to config.py and fill in values
+"""
+
+# =============================================================================
+# Twitter API Credentials
+# =============================================================================
+
+# Twitter API v2 credentials (required)
+TWITTER_BEARER_TOKEN = "your_bearer_token_here"
+
+# OAuth 1.0a credentials for posting (required for write operations)
+TWITTER_API_KEY = "your_api_key_here"
+TWITTER_API_SECRET = "your_api_secret_here"
+
+# Access tokens (required for posting on behalf of bots)
+# You'll need separate tokens for each bot account
+BOT_CREDENTIALS = {
+    "observer": {
+        "access_token": "your_observer_access_token",
+        "access_token_secret": "your_observer_access_token_secret",
+    },
+    "gardener": {
+        "access_token": "your_gardener_access_token",
+        "access_token_secret": "your_gardener_access_token_secret",
+    },
+    "merchant": {
+        "access_token": "your_merchant_access_token",
+        "access_token_secret": "your_merchant_access_token_secret",
+    },
+    "void": {
+        "access_token": "your_void_access_token",
+        "access_token_secret": "your_void_access_token_secret",
+    },
+    "weaver": {
+        "access_token": "your_weaver_access_token",
+        "access_token_secret": "your_weaver_access_token_secret",
+    },
+}
+
+# =============================================================================
+# Anthropic API Credentials
+# =============================================================================
+
+ANTHROPIC_API_KEY = "your_anthropic_api_key_here"
+ANTHROPIC_MODEL = "claude-sonnet-4-20250514"  # or "claude-opus-4-5-20251101" for higher quality
+
+# =============================================================================
+# Bot Configuration
+# =============================================================================
+
+# Enable/disable posting to Twitter (False = dry run mode)
+ENABLE_LIVE_POSTING = False
+
+# Logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+LOG_LEVEL = "INFO"
+
+# Path to log files
+LOG_DIR = "./logs"
+
+# Database for tracking posts and conversations
+DATABASE_PATH = "./data/limn_bots.db"
+
+# =============================================================================
+# Rate Limiting
+# =============================================================================
+
+# Twitter API rate limits (per 15-minute window)
+RATE_LIMITS = {
+    "tweets_per_user": 50,  # Conservative limit (Twitter allows 200)
+    "mentions_lookup": 450,
+    "user_lookup": 900,
+}
+
+# Minimum seconds between posts for each bot
+MIN_POST_INTERVAL_SECONDS = 300  # 5 minutes
+
+# =============================================================================
+# Scheduling
+# =============================================================================
+
+# Timezone for scheduling
+TIMEZONE = "America/New_York"
+
+# Default posting times (24-hour format)
+DEFAULT_POST_TIMES = ["09:00", "12:00", "15:00", "18:00", "21:00"]
+
+# Campaign phases (dates in YYYY-MM-DD format)
+CAMPAIGN_PHASES = {
+    "phase_1_mystery": {
+        "start": "2024-01-01",
+        "end": "2024-01-07",
+        "description": "Bots post independently, minimal interaction",
+        "conversation_ratio": 0.2,
+    },
+    "phase_2_interaction": {
+        "start": "2024-01-08",
+        "end": "2024-01-14",
+        "description": "Bots start noticing each other",
+        "conversation_ratio": 0.4,
+    },
+    "phase_3_conversation": {
+        "start": "2024-01-15",
+        "end": "2024-01-21",
+        "description": "Full conversations, outsiders start asking",
+        "conversation_ratio": 0.6,
+    },
+    "phase_4_reveal": {
+        "start": "2024-01-22",
+        "end": "2024-01-31",
+        "description": "First explanatory content, soft reveal",
+        "conversation_ratio": 0.5,
+    },
+}
+
+# =============================================================================
+# Content Settings
+# =============================================================================
+
+# Maximum tweet length (Twitter limit is 280)
+MAX_TWEET_LENGTH = 280
+
+# Links to include in certain responses
+MANIFESTO_URL = "https://example.com/limn/manifesto"
+LEARN_URL = "https://example.com/limn/learn"
+
+# Probability of including hashtags (0.0 to 1.0)
+HASHTAG_PROBABILITY = 0.1  # Keep it rare for mystery
+
+# Allowed hashtags (picked randomly when used)
+ALLOWED_HASHTAGS = ["#limn", "#conlang"]

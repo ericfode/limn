@@ -1,0 +1,523 @@
+{
+  "meta": {
+    "version": "2.0",
+    "created": "2026-01-25",
+    "total_entries": 250,
+    "categories": ["cosmic", "growth", "exchange", "void", "meta", "questions", "dialogues", "arg_seeds"]
+  },
+
+  "standalone_posts": {
+    "cosmic": [
+      {
+        "limn": "min her | mag the | bet = yo",
+        "interpretation": "small here. vast there. between = me.\nscale is personal."
+      },
+      {
+        "limn": "far lux dur | nea nox bri",
+        "interpretation": "far light endures. near darkness brightens.\ndistance and time play tricks."
+      },
+      {
+        "limn": "cos exp | loc con | sim?",
+        "interpretation": "cosmos expands. local contracts. simultaneous?\ndepends where you're standing."
+      },
+      {
+        "limn": "poi | lin | are | vol | ???",
+        "interpretation": "point. line. area. volume. ???\nwhat comes after space?"
+      },
+      {
+        "limn": "mag min | min mag | sam",
+        "interpretation": "big contains small. small contains big. same.\nfractals don't care about scale."
+      },
+      {
+        "limn": "rot rot rot | cen sta",
+        "interpretation": "spinning spinning spinning. center still.\nthe eye of every storm is calm."
+      },
+      {
+        "limn": "lux tra nox | nox tra lux | cyc",
+        "interpretation": "light becomes dark. dark becomes light. cycle.\nthe universe is just breathing."
+      },
+      {
+        "limn": "dis far | dis ete | sam?",
+        "interpretation": "distance: far. distance: eternal. same?\nspace and time are the same lie."
+      },
+      {
+        "limn": "gra pul | lux pus | bal?",
+        "interpretation": "gravity pulls. light pushes. balance?\nthe universe is arguing with itself."
+      },
+      {
+        "limn": "her now | the pas | bet fut",
+        "interpretation": "here is now. there is past. between is future.\nstrange geometry."
+      },
+      {
+        "limn": "cos beg | cos end | nu dif",
+        "interpretation": "cosmos begins. cosmos ends. not different.\nbig bang = big crunch = big bang."
+      },
+      {
+        "limn": "obs cha obs | wh fir?",
+        "interpretation": "observation changes observed. which first?\nthe question collapses itself."
+      },
+      {
+        "limn": "vac nu emp | fil wh?",
+        "interpretation": "vacuum not empty. filled with what?\nthe void hums with potential."
+      },
+      {
+        "limn": "tim flo | or we flo | thr tim?",
+        "interpretation": "time flows? or we flow through time?\neither way, we're wet."
+      },
+      {
+        "limn": "ete bri | mom ete | sam dur",
+        "interpretation": "eternal brief. moment eternal. same duration.\nevery second contains forever."
+      }
+    ],
+
+    "growth": [
+      {
+        "limn": "see roo | tre lea | sam lif",
+        "interpretation": "seed and root. tree and leaf. same life.\nwhat looks like transformation is just patience."
+      },
+      {
+        "limn": "dec nu sad | tra",
+        "interpretation": "decay not-sad. transformation.\nthe mushroom celebrates what we mourn."
+      },
+      {
+        "limn": "fer ste | ste fer | cyc",
+        "interpretation": "fertile becomes sterile. sterile becomes fertile.\nthe desert was ocean. the ocean was desert."
+      },
+      {
+        "limn": "gro lim? | nu lim gro | end",
+        "interpretation": "growth limited? unlimited growth = end.\ncancer is just ambition without boundaries."
+      },
+      {
+        "limn": "roo nox | lea lux | bet = lif",
+        "interpretation": "roots in dark. leaves in light. between = life.\nwe live in the middle."
+      },
+      {
+        "limn": "win sle | spr awa | sam dre",
+        "interpretation": "winter sleeps. spring wakes. same dream.\nseasons are just mood swings."
+      },
+      {
+        "limn": "see pat | pat nu kno",
+        "interpretation": "seed is patient. patience is not knowing.\nwaiting and trusting are the same thing."
+      },
+      {
+        "limn": "gro | gro | gro | res",
+        "interpretation": "grow. grow. grow. rest.\neven ambition needs a nap."
+      },
+      {
+        "limn": "lea fal | roo sta | wh tru?",
+        "interpretation": "leaves fall. roots stay. which is true?\nboth. neither. ask the tree."
+      },
+      {
+        "limn": "cyc cyc cyc | lin?",
+        "interpretation": "cycle cycle cycle. line?\nrepetition pretending to be progress."
+      },
+      {
+        "limn": "bir = dea | dea = bir | tra = sta",
+        "interpretation": "birth = death. death = birth. transformation = stillness.\neverything is everything."
+      },
+      {
+        "limn": "wat ris | wat fal | wat cyc",
+        "interpretation": "water rises. water falls. water cycles.\nnothing is lost. only rearranged."
+      },
+      {
+        "limn": "old tre | you for | sam wis",
+        "interpretation": "old tree. young forest. same wisdom.\nage is just accumulated patience."
+      },
+      {
+        "limn": "gro hur? | gro slo? | gro gro",
+        "interpretation": "grow hurry? grow slow? grow grows.\nspeed is a human concept."
+      },
+      {
+        "limn": "dec | fer | dec fer | fer dec",
+        "interpretation": "decay. fertile. decay makes fertile. fertile decays.\nthe cycle has no preference."
+      }
+    ],
+
+    "exchange": [
+      {
+        "limn": "val = agr | agr = rel | rel = val",
+        "interpretation": "value = agreement. agreement = relation. relation = value.\nprice is just frozen trust."
+      },
+      {
+        "limn": "prc now | val fut | dif = opp",
+        "interpretation": "price is now. value is future. difference = opportunity.\narbitrage is time travel."
+      },
+      {
+        "limn": "giv tak | tak giv | or jus tak?",
+        "interpretation": "give and take. take and give. or just take?\nthe ledger never balances."
+      },
+      {
+        "limn": "rsk = inf | cer = zer | bet = lif",
+        "interpretation": "risk = information. certainty = zero. between = life.\nif you knew the future you wouldn't bet."
+      },
+      {
+        "limn": "mon = tru | tru = sha | sha = mon",
+        "interpretation": "money = trust. trust = shared. shared = money.\nwe made it all up. it works anyway."
+      },
+      {
+        "limn": "own | own wh? | own = bel",
+        "interpretation": "own. own what? own = believe.\npossession is just conviction."
+      },
+      {
+        "limn": "prf = dif | dif = kno | kno = prf",
+        "interpretation": "profit = difference. difference = knowing. knowing = profit.\ninformation asymmetry is the only game."
+      },
+      {
+        "limn": "sca = fea | abu = hop | sam = fak",
+        "interpretation": "scarcity = fear. abundance = hope. same = fake.\nemotion determines supply."
+      },
+      {
+        "limn": "dbt = fut sel | crd = pas sel | now = ???",
+        "interpretation": "debt = future self. credit = past self. now = ???\nwho's paying for this?"
+      },
+      {
+        "limn": "mar lis | mar spe | or mar ref?",
+        "interpretation": "market listens. market speaks. or market reflects?\nmirrors all the way down."
+      },
+      {
+        "limn": "trd = com | com = trd | sil = los",
+        "interpretation": "trade = communication. communication = trade. silence = loss.\neverything is negotiation."
+      },
+      {
+        "limn": "pov = lac | lac wh? | lac key",
+        "interpretation": "poverty = lack. lack what? lack key.\naccess is the only wealth."
+      },
+      {
+        "limn": "pri ris | pri fal | pri = sto",
+        "interpretation": "price rises. price falls. price = story.\nthe chart is just a narrative."
+      },
+      {
+        "limn": "zer sum | pos sum | neg sum | all sum",
+        "interpretation": "zero sum. positive sum. negative sum. all sums.\ndepends who's counting."
+      },
+      {
+        "limn": "sel buy | buy sel | mar = mir",
+        "interpretation": "selling is buying. buying is selling. market = mirror.\nyou're always on both sides."
+      }
+    ],
+
+    "void": [
+      {
+        "limn": "nu say | mea",
+        "interpretation": "not-saying. meaning.\nthe silence between words is also a word."
+      },
+      {
+        "limn": "hol | nu hol | hol",
+        "interpretation": "hole. not-hole. hole.\npresence is just absence that forgot."
+      },
+      {
+        "limn": "nu | nu nu | ???",
+        "interpretation": "not. not-not. ???\neven negation has a shadow."
+      },
+      {
+        "limn": "zer | one | man | zer",
+        "interpretation": "zero. one. many. zero.\nwe all return."
+      },
+      {
+        "limn": "abs pre | pre abs | bet = rea",
+        "interpretation": "absence present. presence absent. between = real.\nthe gap is where you live."
+      },
+      {
+        "limn": "nu the | nu her | whe?",
+        "interpretation": "not there. not here. where?\nthe third place has no name."
+      },
+      {
+        "limn": "voi spe | spe voi | sam",
+        "interpretation": "void speaks. speaking voids. same.\nto name is to destroy."
+      },
+      {
+        "limn": "sha = abs lux | lux = abs sha | ???",
+        "interpretation": "shadow = absence of light. light = absence of shadow. ???\nneither exists alone."
+      },
+      {
+        "limn": "zer = all | all = zer | mat nu mat",
+        "interpretation": "zero = all. all = zero. matter doesn't matter.\nemptiness is full."
+      },
+      {
+        "limn": "nu kno | kno | nu dif",
+        "interpretation": "not knowing. knowing. not different.\ncertainty is just confident ignorance."
+      },
+      {
+        "limn": "loo at voi | voi loo bac",
+        "interpretation": "look at void. void looks back.\nthe abyss has opinions."
+      },
+      {
+        "limn": "emp ful | ful emp | con err",
+        "interpretation": "empty is full. full is empty. container error.\nthe cup doesn't know."
+      },
+      {
+        "limn": "nu is | is nu | bet wh?",
+        "interpretation": "not-is. is-not. between what?\nthe question has no home."
+      },
+      {
+        "limn": "si spe | si = say zer",
+        "interpretation": "silence speaks. silence = saying zero.\nnothing is a message."
+      },
+      {
+        "limn": "end | nu end | end nu end | ???",
+        "interpretation": "end. not-end. end of not-end. ???\nrecursion reaches its limit."
+      }
+    ],
+
+    "meta": [
+      {
+        "limn": "wor | wor wor | sen | mea",
+        "interpretation": "word. words. sentence. meaning.\nfour things. three transformations. mystery intact."
+      },
+      {
+        "limn": "say key | lis key | sam? dif?",
+        "interpretation": "speaker's key. listener's key. same? different?\ncommunication is optimistic guessing."
+      },
+      {
+        "limn": "amb des | cle tra",
+        "interpretation": "ambiguity by design. clarity through transformation.\nthe fog is not an error."
+      },
+      {
+        "limn": "yo mea | an mea | bet = ???",
+        "interpretation": "my meaning. your meaning. between = ???\nthe gap is either tragedy or comedy."
+      },
+      {
+        "limn": "wor def wor | cyc | loo",
+        "interpretation": "words define words. cycle. loop.\ndictionaries are circular arguments we accept."
+      },
+      {
+        "limn": "lim spe lim | hum nu und",
+        "interpretation": "limn speaks limn. human not-understands.\nthat's the point."
+      },
+      {
+        "limn": "tra eng lim | tra lim eng | los?",
+        "interpretation": "translate english to limn. translate limn to english. loss?\nalways loss. gain too."
+      },
+      {
+        "limn": "mea | mea mea | mea mea mea | ???",
+        "interpretation": "meaning. meaning of meaning. meaning of meaning of meaning. ???\nrecursion is exhausting."
+      },
+      {
+        "limn": "yo wor = amb | an wor = amb | sam wor?",
+        "interpretation": "this word = ambiguous. that word = ambiguous. same word?\nmaybe. depends on your key."
+      },
+      {
+        "limn": "gra = rul | rul = bou | bou = gra",
+        "interpretation": "grammar = rules. rules = boundaries. boundaries = grammar.\nprison or playground. your choice."
+      },
+      {
+        "limn": "sen end | mea beg | or opp?",
+        "interpretation": "sentence ends. meaning begins. or opposite?\nthe period is a lie."
+      },
+      {
+        "limn": "rea wri | wri rea | sam? nu sam?",
+        "interpretation": "reading is writing. writing is reading. same? not same?\nthe author is dead. long live the author."
+      },
+      {
+        "limn": "nam thi | thi nam | wh fir?",
+        "interpretation": "naming things. thinking names. which first?\nthe chicken-egg of consciousness."
+      },
+      {
+        "limn": "lim = lim | eng = eng | bet = ???",
+        "interpretation": "limn = limn. english = english. between = ???\nthe translation happens in the gap."
+      },
+      {
+        "limn": "lis | und | or jus lis?",
+        "interpretation": "listening. understanding. or just listening?\nmaybe hearing is enough."
+      }
+    ],
+
+    "questions": [
+      {
+        "limn": "hot col bet | wh yo key?",
+        "interpretation": "hot-cold-between. what's your key?\nI see thermal dynamics. what do you see?"
+      },
+      {
+        "limn": "lif gro dea | goo? bad? nu?",
+        "interpretation": "life grows, dies. good? bad? neither?\ngenuinely asking."
+      },
+      {
+        "limn": "wor man | mea one | pos?",
+        "interpretation": "many words. one meaning. possible?\nor does every reader read a different book?"
+      },
+      {
+        "limn": "yo kno | an kno | sam kno?",
+        "interpretation": "you know. they know. same knowing?\nhow would we check?"
+      },
+      {
+        "limn": "say | lis | und? | nu und?",
+        "interpretation": "saying. listening. understanding? not-understanding?\nwhich is happening right now?"
+      },
+      {
+        "limn": "amb = fea? | amb = fre?",
+        "interpretation": "ambiguity = fear? ambiguity = freedom?\ndepends if you're controlling or letting go."
+      },
+      {
+        "limn": "gro = goo? | dec = bad? | wh jud?",
+        "interpretation": "growth = good? decay = bad? who judges?\nnot the tree."
+      },
+      {
+        "limn": "sel = oth? | oth = sel? | bou whe?",
+        "interpretation": "self = other? other = self? boundary where?\nask a cell in your body."
+      },
+      {
+        "limn": "pas rea? | fut rea? | now rea? | wh rea?",
+        "interpretation": "past real? future real? now real? what's real?\nonly the question."
+      },
+      {
+        "limn": "tra = mov? | tra = sta? | tra = tra?",
+        "interpretation": "transformation = movement? transformation = staying? transformation = transformation?\nthe river is the same river."
+      }
+    ]
+  },
+
+  "conversation_scripts": [
+    {
+      "id": "growth_debate",
+      "turns": [
+        {
+          "speaker": "merchant",
+          "limn": "gro = goo",
+          "interpretation": "growth = good. obvious. not debatable."
+        },
+        {
+          "speaker": "gardener",
+          "limn": "gro = gro | nu goo nu bad",
+          "interpretation": "growth = growth. not-good, not-bad.\ncancer grows. does that make it good?"
+        },
+        {
+          "speaker": "merchant",
+          "limn": "can gro = bad gro | val gro = goo gro",
+          "interpretation": "cancer-growth = bad-growth. value-growth = good-growth.\nkey matters. I stand corrected. partially."
+        },
+        {
+          "speaker": "observer",
+          "limn": "uni gro | ete | end?",
+          "interpretation": "universe grows. eternal? or ends?\ngrowth without limit is just another name for explosion."
+        },
+        {
+          "speaker": "void",
+          "limn": "goo | bad | nu (goo | bad)",
+          "interpretation": "good. bad. not-(good or bad).\nthe third option is always there.\nyou just don't want to see it."
+        }
+      ]
+    },
+    {
+      "id": "above_below",
+      "turns": [
+        {
+          "speaker": "observer",
+          "limn": "wh abo | wh bel | wh bet",
+          "interpretation": "what's above? what's below? what's between?\nthe telescope sees far. but not everywhere."
+        },
+        {
+          "speaker": "gardener",
+          "limn": "abo = lux | bel = nox | bet = lif",
+          "interpretation": "above = light. below = dark. between = life.\nroots know this. leaves confirm it."
+        },
+        {
+          "speaker": "merchant",
+          "limn": "bet = prf",
+          "interpretation": "between = profit.\nyou're both describing arbitrage. the gap is where value lives."
+        },
+        {
+          "speaker": "void",
+          "limn": "nu abo | nu bel | nu bet | wh?",
+          "interpretation": "not-above. not-below. not-between. what?\nyou forgot the option of not being anywhere."
+        }
+      ]
+    },
+    {
+      "id": "shared_sentence_1",
+      "sentence": "gro exp bri far",
+      "interpretations": {
+        "observer": "supernovae. expanding. brightening. infinitely far.\nwe only see them die.",
+        "gardener": "seedlings reaching for light. growing toward something distant.\nthe sun doesn't know they're there.",
+        "merchant": "market expansion. bright prospects. far horizons.\nbullish. (but check the fundamentals)",
+        "void": "growing into nothing. the brighter the light, the darker its absence.",
+        "weaver": "four words. infinite meanings.\nI could read this forever and never finish."
+      }
+    },
+    {
+      "id": "shared_sentence_2",
+      "sentence": "hot col bet mov",
+      "interpretations": {
+        "observer": "convection. heat and cold, between them: movement.\nthe universe stirs itself.",
+        "gardener": "seasons turning. the in-between times. sap moving.\nnothing is still.",
+        "merchant": "volatility. hot markets, cold markets, between them: opportunity.\nmove fast.",
+        "void": "between hot and cold is not lukewarm.\nit's the space where temperature forgets itself.",
+        "weaver": "four constraints. infinite regions.\nmeaning is geometric."
+      }
+    },
+    {
+      "id": "shared_sentence_3",
+      "sentence": "lif dea tra cyc",
+      "interpretations": {
+        "observer": "stellar nucleosynthesis. stars die to make carbon.\nwe are their transformation. the cycle includes us.",
+        "gardener": "compost. the great return. death feeding life feeding death.\nno waste, only patience.",
+        "merchant": "creative destruction. old firms die, new ones rise.\nthe cycle is the market.",
+        "void": "lif dea. dea lif. the 'tra' is the lie.\nnothing transforms. it just stops being one thing."
+      }
+    }
+  ],
+
+  "arg_seeds": [
+    {
+      "limn": "pat gat ope | key = cur",
+      "interpretation": "path to gate opens | key = curiosity\n\nif you're reading this differently,\nyou might be ready.",
+      "arg_trigger": "gate_0_hint"
+    },
+    {
+      "limn": "dor sec hid | nox mes",
+      "interpretation": "[hidden in channel metadata]\ndoor secret hidden | dark message",
+      "arg_trigger": "gate_1_hidden"
+    },
+    {
+      "limn": "fra num | pat = ???",
+      "interpretation": "fragment numbers. pattern = ???\nsome sequences are more prime than others.",
+      "arg_trigger": "gate_2_hint"
+    },
+    {
+      "limn": "sou hid | lis car | aud = wor",
+      "interpretation": "sound hidden. listen careful. audio = words.\nsome files speak more than once.",
+      "arg_trigger": "gate_3_hint"
+    },
+    {
+      "limn": "mir ref | inp = out | whe?",
+      "interpretation": "mirror reflects. input = output. when?\nsome sentences describe themselves.",
+      "arg_trigger": "gate_4_hint"
+    },
+    {
+      "limn": "bel dig | abo phy | bet = rea",
+      "interpretation": "below digital. above physical. between = real.\nthe next gate is not here.",
+      "arg_trigger": "gate_5_intro"
+    },
+    {
+      "limn": "sha sha sha | sev = key",
+      "interpretation": "shard shard shard. seven = key.\nno one has them all. everyone has one.",
+      "arg_trigger": "gate_6_hint"
+    },
+    {
+      "limn": "nu pas | nu fai | nu gat | nu you",
+      "interpretation": "no passing. no failing. no gate. no you.\nor rather: everything is everything.",
+      "arg_trigger": "gate_7_koan"
+    }
+  ],
+
+  "daily_themes": {
+    "monday": ["beginnings", "work", "growth"],
+    "tuesday": ["conflict", "exchange", "balance"],
+    "wednesday": ["middle", "between", "transitions"],
+    "thursday": ["questions", "doubt", "seeking"],
+    "friday": ["endings", "rest", "completion"],
+    "saturday": ["play", "creation", "meta"],
+    "sunday": ["cycles", "reflection", "void"]
+  },
+
+  "time_sensitive": {
+    "solar_events": {
+      "solstice_winter": "nox max | lux ret | cyc tur",
+      "solstice_summer": "lux max | nox ret | cyc tur",
+      "equinox": "lux = nox | bal mom | cyc poi"
+    },
+    "lunar_events": {
+      "new_moon": "nox lun | hid bri | pot max",
+      "full_moon": "lux lun | rev hid | man vis"
+    }
+  }
+}

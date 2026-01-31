@@ -1,0 +1,4 @@
+error: failed to parse manifest at `Z:\gastowns\linga-land\limn-rs\Cargo.toml`
+
+Caused by:
+  can't find `solver` bench at `benches\solver.rs` or `benches\solver\main.rs`. Please specify bench.path if you want to use a non-default path.

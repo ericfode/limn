@@ -1,0 +1,65 @@
+# Bead: Phase 1 - Import/Use System
+# pha (phase) 1 | use (import) sys (system)
+
+# ============================================================================
+# Task: Implement use/import system in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha1_use_sys"
+bea_pha sa 1
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs manifest parser and lock resolution
+bea_dep sa gro | "pha1_pak_man" | "pha1_lok_res" |
+
+# ============================================================================
+# Implementation: Import system constraints
+# ============================================================================
+
+# New wor (words) for imports:
+whe wor_use   # use/import
+whe wor_cid   # content identifier
+whe wor_nom   # name
+whe wor_fro   # from (registry)
+whe wor_get   # get specific export
+
+# Import statement structure:
+whe use_typ       # cid | nom | nom+ver
+whe use_cid_val   # CID value if direct
+whe use_nom_val   # name if registry lookup
+whe use_ver_maj   # version if specified
+whe use_ver_min
+whe use_ver_pat
+whe use_fro_reg   # registry if non-default
+whe use_get_gro   # specific exports to get
+
+# Resolution constraints:
+whe use_res_cid   # resolved CID
+whe use_res_pak   # resolved package content
+whe use_res_exp   # resolved exports
+
+# Constraint: use by CID resolves directly
+use_typ sa "cid" cau use_res_cid sa use_cid_val
+
+# Constraint: use by nom requires registry lookup
+use_typ sa "nom" cau use_res_cid sa reg_loo_res
+
+# Constraint: use by nom+ver requires version lookup
+whe reg_loo_nom
+whe reg_loo_ver
+whe reg_loo_res
+
+# Export binding:
+whe exp_nom
+whe exp_val
+whe exp_bnd   # bound in current namespace
+
+---
+# key: define task
+bea_des sa "Implement use/import system using Limn constraints. Extend vocabulary with use, cid, nom, fro, get. Support use cid, use nom, use nom ver. Resolve imports, bind exports to namespace."

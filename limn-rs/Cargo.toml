@@ -1,0 +1,55 @@
+[package]
+name = "limn"
+version = "0.2.0"
+edition = "2021"
+authors = ["Limn Contributors"]
+description = "Limn - A constraint-based programming language with IPFS package management"
+license = "MIT"
+repository = "https://github.com/limn-lang/limn"
+keywords = ["language", "constraint", "ipfs", "decentralized"]
+categories = ["compilers", "development-tools"]
+
+[[bin]]
+name = "limn"
+path = "src/main.rs"
+
+[dependencies]
+# CLI
+clap = { version = "4.4", features = ["derive"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime (for IPFS)
+tokio = { version = "1.35", features = ["full"] }
+
+# HTTP client (for IPFS API)
+reqwest = { version = "0.11", features = ["json"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Cryptography (for package signing)
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+rand = "0.8"
+sha2 = "0.10"
+base64 = "0.21"
+
+# Utilities
+indexmap = { version = "2.1", features = ["serde"] }
+semver = "1.0"
+dirs = "5.0"
+colored = "2.1"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "solver"
+harness = false
+
+[profile.release]
+lto = true
+codegen-units = 1

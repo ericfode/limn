@@ -1,0 +1,17 @@
+# Limn-PL: Multiple Solutions Example
+# pro (program): alternative calculations
+
+# var (variables)
+whe x
+whe doubled
+whe squared
+whe halved
+
+# cns (constraints)
+x exp 2 sa doubled
+x exp x sa squared
+x con 2 sa halved
+
+---
+# key (input values)
+x sa 10

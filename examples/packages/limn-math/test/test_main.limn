@@ -1,0 +1,51 @@
+# Tests for limn-math package
+
+# ============================================================================
+# Test: Addition
+# ============================================================================
+whe test_add_a
+whe test_add_b
+whe test_add_result
+whe test_add_expected
+whe test_add_pass
+
+test_add_a joi test_add_b sa test_add_result
+test_add_result sa test_add_expected cau test_add_pass sa tru
+
+# ============================================================================
+# Test: Circle Area
+# ============================================================================
+whe test_circle_r
+whe test_circle_area
+whe test_circle_expected
+whe test_circle_pass
+whe test_pi
+
+test_pi sa 3.14159265359
+test_circle_r exp test_circle_r exp test_pi sa test_circle_area
+
+# ============================================================================
+# Test: Temperature Conversion
+# ============================================================================
+whe test_c
+whe test_f
+whe test_temp_t1
+whe test_temp_t2
+whe test_temp_pass
+
+test_c exp 9 sa test_temp_t1
+test_temp_t1 con 5 sa test_temp_t2
+test_temp_t2 joi 32 sa test_f
+
+---
+# key: Run tests
+# Addition: 3 + 5 = 8
+test_add_a sa 3
+test_add_b sa 5
+test_add_expected sa 8
+
+# Circle: r=2, area should be ~12.566
+test_circle_r sa 2
+
+# Temperature: 100C = 212F
+test_c sa 100

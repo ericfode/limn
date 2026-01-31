@@ -1,0 +1,63 @@
+# pak pub (publish) - Publish package to IPFS
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe pak_dir       # package directory
+
+# ============================================================================
+# State variables
+# ============================================================================
+
+whe ipfs_run      # IPFS daemon running
+whe val_res       # validation result
+whe val_err       # validation errors
+
+# ============================================================================
+# Output variables
+# ============================================================================
+
+whe res_cid       # resulting CID
+whe res_suc       # success (tru/fal)
+whe res_err       # error message
+
+# ============================================================================
+# Pre-conditions
+# ============================================================================
+
+# Detect IPFS daemon
+ipfs_det cau eff det_res
+whe det_run
+det_run sa det_res
+
+# Validate package
+pak_val cau pak_dir eff val_res
+
+# ============================================================================
+# Publish constraints
+# ============================================================================
+
+# Must have IPFS running and valid package
+det_run sa tru cau val_res sa tru cau pub_ok sa tru
+whe pub_ok
+
+# Add to IPFS if preconditions met
+pub_ok sa tru cau ipfs_add cau pak_dir eff add_cid
+whe add_cid
+
+# Pin the content
+pub_ok sa tru cau add_cid ma "" cau ipfs_pin cau add_cid eff pin_res
+whe pin_res
+
+# Set results
+add_cid ma "" cau res_cid sa add_cid cau res_suc sa tru
+add_cid sa hol cau res_suc sa fal cau res_err sa "Failed to add to IPFS"
+
+det_run sa fal cau res_suc sa fal cau res_err sa "IPFS daemon not running"
+val_res sa fal cau res_suc sa fal cau res_err sa "Package validation failed"
+
+---
+# key: example
+pak_dir sa "."

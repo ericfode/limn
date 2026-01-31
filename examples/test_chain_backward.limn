@@ -1,0 +1,15 @@
+# Test: Chain backward propagation
+# Given final value, compute initial
+
+whe a
+whe b
+whe c
+whe d
+
+a exp 2 sa b
+b joi 5 sa c
+c con 3 sa d
+
+---
+# key: final value given, solve backward
+d sa 7

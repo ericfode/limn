@@ -1,0 +1,53 @@
+# Example: Using IPFS Packages in Limn
+# This demonstrates the import system
+
+# Import a package by CID (once published)
+# use cid bafybeiabc123xyz
+
+# Or import by name from registry
+# use nom "limn-math"
+
+# For this example, we'll define constraints inline
+# In practice, these would come from the imported package
+
+# ============================================================================
+# Temperature converter using imported math package
+# ============================================================================
+
+# These variables would be imported from limn-math
+whe temp_c
+whe temp_f
+whe temp_t1
+whe temp_t2
+
+# Temperature conversion constraints (from limn-math)
+# F = C * 9/5 + 32
+temp_c exp 9 sa temp_t1
+temp_t1 con 5 sa temp_t2
+temp_t2 joi 32 sa temp_f
+
+# Our application-specific variables
+whe user_input
+whe converted_output
+whe conversion_direction
+
+# Link to temperature variables based on direction
+# direction = "c_to_f": input is Celsius, output is Fahrenheit
+# direction = "f_to_c": input is Fahrenheit, output is Celsius
+
+# For C to F:
+conversion_direction sa "c_to_f" cau user_input sa temp_c cau converted_output sa temp_f
+
+# For F to C:
+conversion_direction sa "f_to_c" cau user_input sa temp_f cau converted_output sa temp_c
+
+---
+# key: Convert 100 Celsius to Fahrenheit
+conversion_direction sa "c_to_f"
+user_input sa 100
+# Expected: converted_output = 212
+
+# Alternative key: Convert 32 Fahrenheit to Celsius
+# conversion_direction sa "f_to_c"
+# user_input sa 32
+# Expected: converted_output = 0

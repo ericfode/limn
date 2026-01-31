@@ -1,0 +1,691 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "total_words": 585,
+    "domains": 13,
+    "syllable_structure": "CV, CVC, or abbreviated forms"
+  },
+
+  "operators": {
+    "logical": {
+      "nu": {"function": "negation", "description": "inverts following constraint"},
+      "ve": {"function": "intensifier", "description": "narrows to prototype"},
+      "so": {"function": "weakener", "description": "expands to periphery"},
+      "al": {"function": "universalizer", "description": "applies to all"},
+      "ex": {"function": "existentializer", "description": "applies to some"},
+      "on": {"function": "singularizer", "description": "applies to exactly one"},
+      "ma": {"function": "maximizer", "description": "extreme degree"},
+      "mi": {"function": "minimizer", "description": "slight degree"},
+      "eq": {"function": "equalizer", "description": "same degree"},
+      "di": {"function": "differentiator", "description": "different degree"}
+    },
+    "reference": {
+      "yo": {"function": "proximal", "description": "this, here, now"},
+      "an": {"function": "distal", "description": "that, there, then"},
+      "sa": {"function": "same-reference", "description": "aforementioned, it"},
+      "wh": {"function": "query", "description": "what, which, who"},
+      "ev": {"function": "every", "description": "each instance"},
+      "no": {"function": "no", "description": "zero instances"},
+      "th": {"function": "the", "description": "specific known"},
+      "a": {"function": "a/an", "description": "unspecified"}
+    },
+    "scope": {
+      "|": {"function": "boundary", "description": "scope delimiter"},
+      "(": {"function": "open-group", "description": "start nested scope"},
+      ")": {"function": "close-group", "description": "end nested scope"},
+      "+": {"function": "addition", "description": "combine constraints"},
+      "-": {"function": "subtraction", "description": "remove constraint"},
+      ">": {"function": "direction", "description": "flow from to"},
+      "<": {"function": "reverse", "description": "flow to from"},
+      "=": {"function": "equivalence", "description": "same meaning"}
+    }
+  },
+
+  "domains": {
+    "physical": {
+      "name": "Physical World",
+      "word_count": 80,
+      "categories": {
+        "matter_states": {
+          "sol": {"region": "solid, rigid", "examples": ["rock", "bone", "ice", "metal"]},
+          "liq": {"region": "liquid, flowing", "examples": ["water", "blood", "oil", "mercury"]},
+          "gas": {"region": "gaseous, diffuse", "examples": ["air", "steam", "breath", "smoke"]},
+          "pla": {"region": "plasma, energetic", "examples": ["lightning", "sun", "fire core"]},
+          "gel": {"region": "semi-solid, viscous", "examples": ["mud", "gel", "lava", "honey"]},
+          "pow": {"region": "powder, granular", "examples": ["sand", "dust", "flour", "ash"]},
+          "fib": {"region": "fibrous, stringy", "examples": ["thread", "hair", "root", "nerve"]},
+          "cry": {"region": "crystalline", "examples": ["ice", "diamond", "salt", "quartz"]},
+          "org": {"region": "organic matter", "examples": ["flesh", "wood", "leaf", "skin"]},
+          "met": {"region": "metallic", "examples": ["iron", "gold", "silver", "copper"]}
+        },
+        "elements": {
+          "aqu": {"region": "water-related", "examples": ["ocean", "rain", "tear", "dew"]},
+          "pyr": {"region": "fire-related", "examples": ["flame", "ember", "spark", "heat"]},
+          "ter": {"region": "earth-related", "examples": ["soil", "clay", "stone", "mountain"]},
+          "aer": {"region": "air-related", "examples": ["wind", "breath", "sky", "void"]},
+          "lux": {"region": "light-related", "examples": ["sun", "lamp", "glow", "beam"]},
+          "nox": {"region": "darkness-related", "examples": ["shadow", "night", "void", "blind"]},
+          "fer": {"region": "iron/strength", "examples": ["blade", "chain", "forge", "hard"]},
+          "aur": {"region": "gold/precious", "examples": ["treasure", "rare", "value", "gleam"]},
+          "sil": {"region": "silver/reflection", "examples": ["mirror", "moon", "mercury", "sheen"]},
+          "lig": {"region": "wood/plant matter", "examples": ["tree", "branch", "lumber", "forest"]},
+          "pet": {"region": "stone/mineral", "examples": ["rock", "gem", "ore", "fossil"]},
+          "sal": {"region": "salt/preservation", "examples": ["brine", "cure", "tears", "ocean"]},
+          "ole": {"region": "oil/fat", "examples": ["grease", "fuel", "butter", "slick"]},
+          "vit": {"region": "glass/transparency", "examples": ["window", "lens", "crystal", "clear"]},
+          "tex": {"region": "fabric/woven", "examples": ["cloth", "net", "web", "weave"]}
+        },
+        "properties": {
+          "mag": {"region": "large, big", "examples": ["giant", "vast", "mountain", "whale"]},
+          "min": {"region": "small, tiny", "examples": ["ant", "grain", "atom", "whisper"]},
+          "lon": {"region": "long, extended", "examples": ["river", "snake", "road", "timeline"]},
+          "bre": {"region": "short, brief", "examples": ["moment", "spark", "blink", "dot"]},
+          "wid": {"region": "wide, broad", "examples": ["plain", "ocean", "horizon", "sheet"]},
+          "nar": {"region": "narrow, thin", "examples": ["thread", "crack", "blade", "beam"]},
+          "hev": {"region": "heavy, massive", "examples": ["lead", "anchor", "burden", "gravity"]},
+          "lit": {"region": "light, weightless", "examples": ["feather", "air", "cloud", "ghost"]},
+          "den": {"region": "dense, compact", "examples": ["neutron star", "packed", "solid"]},
+          "spa": {"region": "sparse, scattered", "examples": ["stars", "mist", "dots", "rare"]},
+          "smo": {"region": "smooth", "examples": ["silk", "glass", "ice", "calm"]},
+          "rou": {"region": "rough", "examples": ["bark", "sandpaper", "gravel", "raw"]},
+          "har": {"region": "hard, resistant", "examples": ["diamond", "steel", "stubborn"]},
+          "sof": {"region": "soft, yielding", "examples": ["pillow", "clay", "gentle", "kind"]},
+          "wet": {"region": "wet, moist", "examples": ["rain", "sweat", "dew", "tears"]},
+          "dry": {"region": "dry, parched", "examples": ["desert", "bone", "thirst", "dust"]},
+          "hot": {"region": "hot, thermal", "examples": ["fire", "sun", "fever", "passion"]},
+          "col": {"region": "cold, frozen", "examples": ["ice", "winter", "death", "numb"]},
+          "bri": {"region": "bright, luminous", "examples": ["sun", "star", "idea", "joy"]},
+          "dim": {"region": "dim, faint", "examples": ["twilight", "memory", "whisper"]}
+        },
+        "actions": {
+          "mov": {"region": "motion, movement", "examples": ["travel", "flow", "dance", "shift"]},
+          "res": {"region": "rest, stillness", "examples": ["pause", "sleep", "death", "calm"]},
+          "ris": {"region": "rising, ascending", "examples": ["climb", "grow", "hope", "sunrise"]},
+          "fal": {"region": "falling, descending", "examples": ["drop", "decline", "sunset", "fail"]},
+          "rot": {"region": "rotation, spinning", "examples": ["wheel", "orbit", "cycle", "turn"]},
+          "osc": {"region": "oscillation, vibration", "examples": ["wave", "pulse", "breath", "rhythm"]},
+          "exp": {"region": "expansion", "examples": ["growth", "explosion", "spread"]},
+          "con": {"region": "contraction", "examples": ["shrink", "squeeze", "focus"]},
+          "flo": {"region": "flowing", "examples": ["river", "blood", "traffic", "time"]},
+          "blo": {"region": "blocking", "examples": ["dam", "wall", "barrier", "stop"]},
+          "pul": {"region": "pulling", "examples": ["gravity", "magnet", "attraction"]},
+          "pus": {"region": "pushing", "examples": ["wind", "force", "repulsion"]},
+          "cut": {"region": "cutting, dividing", "examples": ["blade", "decision", "border"]},
+          "joi": {"region": "joining, connecting", "examples": ["bridge", "bond", "marriage", "link"]},
+          "brk": {"region": "breaking", "examples": ["shatter", "crack", "end", "dawn"]},
+          "bui": {"region": "building", "examples": ["construct", "grow", "create"]},
+          "bur": {"region": "burning", "examples": ["fire", "passion", "consume", "fever"]},
+          "fre": {"region": "freezing", "examples": ["ice", "pause", "preserve", "fear"]},
+          "mel": {"region": "melting", "examples": ["thaw", "soften", "dissolve", "love"]},
+          "mix": {"region": "mixing", "examples": ["blend", "chaos", "merge", "hybrid"]}
+        },
+        "structures": {
+          "hol": {"region": "hole, void, cavity", "examples": ["cave", "wound", "gap", "absence"]},
+          "wal": {"region": "wall, barrier", "examples": ["fence", "skin", "limit", "defense"]},
+          "pat": {"region": "path, route", "examples": ["road", "river", "vein", "method"]},
+          "nod": {"region": "node, junction", "examples": ["hub", "joint", "decision", "synapse"]},
+          "edg": {"region": "edge, boundary", "examples": ["cliff", "margin", "limit", "blade"]},
+          "cor": {"region": "core, center", "examples": ["heart", "nucleus", "essence", "truth"]},
+          "sur": {"region": "surface", "examples": ["skin", "interface", "appearance"]},
+          "vol": {"region": "volume, interior", "examples": ["chamber", "womb", "space", "capacity"]},
+          "lay": {"region": "layer, stratum", "examples": ["skin", "sediment", "level", "tier"]},
+          "net": {"region": "network, web", "examples": ["spider", "neural", "social", "grid"]},
+          "bra": {"region": "branch, fork", "examples": ["tree", "decision", "tributary"]},
+          "loo": {"region": "loop, cycle", "examples": ["ring", "orbit", "habit", "return"]},
+          "spi": {"region": "spiral", "examples": ["galaxy", "shell", "DNA", "growth"]},
+          "fra": {"region": "frame, skeleton", "examples": ["bone", "structure", "outline"]},
+          "fil": {"region": "fill, content", "examples": ["water", "meaning", "substance"]}
+        }
+      }
+    },
+
+    "spatial": {
+      "name": "Space & Position",
+      "word_count": 50,
+      "categories": {
+        "directions": {
+          "nor": {"region": "north, up-direction", "examples": ["arctic", "ascent", "heaven"]},
+          "sou": {"region": "south, down-direction", "examples": ["descent", "hell", "depth"]},
+          "eas": {"region": "east, sunrise-direction", "examples": ["dawn", "origin", "Asia"]},
+          "wes": {"region": "west, sunset-direction", "examples": ["end", "frontier", "decline"]},
+          "ver": {"region": "vertical", "examples": ["tower", "fall", "hierarchy"]},
+          "hor": {"region": "horizontal", "examples": ["plain", "equality", "spread"]},
+          "for": {"region": "forward", "examples": ["future", "progress", "advance"]},
+          "bac": {"region": "backward", "examples": ["past", "retreat", "return"]},
+          "lef": {"region": "left, sinister", "examples": ["port", "minority", "wrong"]},
+          "rig": {"region": "right, dexter", "examples": ["starboard", "majority", "correct"]},
+          "clo": {"region": "clockwise", "examples": ["sun-following", "conforming"]},
+          "wid": {"region": "widdershins", "examples": ["counter", "rebellion", "undo"]}
+        },
+        "positions": {
+          "abo": {"region": "above", "examples": ["sky", "superior", "heaven", "over"]},
+          "bel": {"region": "below", "examples": ["ground", "inferior", "hell", "under"]},
+          "ins": {"region": "inside", "examples": ["interior", "included", "internal"]},
+          "out": {"region": "outside", "examples": ["exterior", "excluded", "external"]},
+          "fro": {"region": "in front", "examples": ["face", "future", "before", "lead"]},
+          "beh": {"region": "behind", "examples": ["back", "past", "after", "follow"]},
+          "bes": {"region": "beside", "examples": ["adjacent", "parallel", "peer"]},
+          "bet": {"region": "between", "examples": ["middle", "mediator", "bridge"]},
+          "amo": {"region": "among", "examples": ["within group", "distributed"]},
+          "aro": {"region": "around", "examples": ["surrounding", "encircling"]},
+          "thr": {"region": "through", "examples": ["penetrating", "via", "during"]},
+          "alo": {"region": "along", "examples": ["parallel to", "following"]},
+          "acr": {"region": "across", "examples": ["perpendicular", "spanning"]},
+          "nea": {"region": "near", "examples": ["close", "proximal", "soon"]},
+          "far": {"region": "far", "examples": ["distant", "remote", "later"]},
+          "her": {"region": "here", "examples": ["present location", "now"]},
+          "the": {"region": "there", "examples": ["that location", "then"]},
+          "whe": {"region": "where", "examples": ["location query", "place"]}
+        },
+        "regions": {
+          "poi": {"region": "point", "examples": ["location", "moment", "dot", "idea"]},
+          "lin": {"region": "line", "examples": ["path", "edge", "boundary", "ray"]},
+          "are": {"region": "area", "examples": ["surface", "region", "field"]},
+          "loc": {"region": "local", "examples": ["nearby", "specific", "detailed"]},
+          "glo": {"region": "global", "examples": ["worldwide", "universal", "whole"]},
+          "mic": {"region": "microscopic", "examples": ["atomic", "tiny", "hidden"]},
+          "mac": {"region": "macroscopic", "examples": ["visible", "large", "obvious"]},
+          "cos": {"region": "cosmic", "examples": ["universal", "infinite", "divine"]},
+          "inn": {"region": "inner", "examples": ["core", "private", "essential"]},
+          "cen": {"region": "center", "examples": ["middle", "focus", "heart"]},
+          "per": {"region": "periphery", "examples": ["edge", "margin", "fringe"]},
+          "zon": {"region": "zone", "examples": ["region", "area", "domain"]},
+          "bou": {"region": "boundary", "examples": ["limit", "edge", "border"]},
+          "ori": {"region": "origin", "examples": ["source", "beginning", "home"]},
+          "des": {"region": "destination", "examples": ["goal", "end", "target"]},
+          "hom": {"region": "home", "examples": ["origin", "belonging", "comfort"]},
+          "awa": {"region": "away", "examples": ["distant", "leaving", "foreign"]},
+          "ret": {"region": "return", "examples": ["back to origin", "cycle"]}
+        }
+      }
+    },
+
+    "temporal": {
+      "name": "Time & Change",
+      "word_count": 60,
+      "categories": {
+        "time_points": {
+          "now": {"region": "present moment", "examples": ["current", "actual", "immediate"]},
+          "pas": {"region": "past", "examples": ["history", "memory", "before"]},
+          "fut": {"region": "future", "examples": ["potential", "hope", "after"]},
+          "beg": {"region": "beginning", "examples": ["start", "birth", "genesis"]},
+          "end": {"region": "ending", "examples": ["finish", "death", "terminus"]},
+          "mid": {"region": "middle", "examples": ["center", "ongoing", "during"]},
+          "daw": {"region": "dawn", "examples": ["morning", "start", "hope"]},
+          "dus": {"region": "dusk", "examples": ["evening", "end", "decline"]},
+          "noo": {"region": "noon", "examples": ["peak", "middle", "climax"]},
+          "mom": {"region": "moment", "examples": ["instant", "now", "point"]},
+          "era": {"region": "era", "examples": ["age", "period", "epoch"]},
+          "eve": {"region": "event", "examples": ["occurrence", "change", "node"]},
+          "ete": {"region": "eternal", "examples": ["timeless", "infinite", "always"]}
+        },
+        "durations": {
+          "bri": {"region": "brief", "examples": ["short", "quick", "temporary"]},
+          "per": {"region": "permanent", "examples": ["eternal", "fixed", "stable"]},
+          "tem": {"region": "temporary", "examples": ["passing", "transient", "mortal"]},
+          "int": {"region": "intermittent", "examples": ["pulse", "stutter", "irregular"]},
+          "fre": {"region": "frequent", "examples": ["often", "common", "regular"]},
+          "rar": {"region": "rare", "examples": ["seldom", "uncommon", "precious"]},
+          "onc": {"region": "once", "examples": ["single", "unique", "former"]},
+          "alw": {"region": "always", "examples": ["every time", "eternal", "certain"]},
+          "nev": {"region": "never", "examples": ["at no time", "impossible"]}
+        },
+        "change_types": {
+          "gro": {"region": "growth", "examples": ["increase", "develop", "expand"]},
+          "dec": {"region": "decay", "examples": ["decrease", "deteriorate", "shrink"]},
+          "bir": {"region": "birth", "examples": ["creation", "emergence", "start"]},
+          "dea": {"region": "death", "examples": ["destruction", "end", "stop"]},
+          "tra": {"region": "transformation", "examples": ["change form", "metamorphosis"]},
+          "prs": {"region": "preservation", "examples": ["maintain", "protect", "continue"]},
+          "evo": {"region": "evolution", "examples": ["gradual change", "adaptation"]},
+          "rev": {"region": "revolution", "examples": ["sudden change", "overthrow"]},
+          "cyc": {"region": "cycle", "examples": ["repeat", "orbit", "rhythm"]},
+          "pro": {"region": "progress", "examples": ["advance", "improve", "forward"]},
+          "reg": {"region": "regression", "examples": ["retreat", "worsen", "backward"]},
+          "sta": {"region": "stability", "examples": ["unchanging", "balanced", "calm"]},
+          "cha": {"region": "chaos", "examples": ["disorder", "unpredictable", "change"]},
+          "ord": {"region": "order", "examples": ["structure", "pattern", "rule"]},
+          "eme": {"region": "emergence", "examples": ["arise", "appear", "manifest"]},
+          "van": {"region": "vanishing", "examples": ["disappear", "end", "fade"]},
+          "flu": {"region": "fluctuation", "examples": ["vary", "oscillate", "unstable"]}
+        },
+        "temporal_relations": {
+          "bef": {"region": "before", "examples": ["prior", "earlier", "cause"]},
+          "aft": {"region": "after", "examples": ["subsequent", "later", "effect"]},
+          "dur": {"region": "during", "examples": ["while", "concurrent", "amid"]},
+          "unt": {"region": "until", "examples": ["up to", "waiting", "limit"]},
+          "sin": {"region": "since", "examples": ["from", "because", "after"]},
+          "whi": {"region": "while", "examples": ["during", "as", "simultaneous"]},
+          "seq": {"region": "sequence", "examples": ["order", "series", "chain"]},
+          "sim": {"region": "simultaneous", "examples": ["together", "parallel", "sync"]},
+          "cau": {"region": "cause", "examples": ["reason", "source", "why"]},
+          "eff": {"region": "effect", "examples": ["result", "consequence", "what"]},
+          "tri": {"region": "trigger", "examples": ["initiate", "spark", "start"]},
+          "del": {"region": "delay", "examples": ["wait", "pause", "lag"]},
+          "acc": {"region": "accelerate", "examples": ["speed up", "hasten"]},
+          "rhy": {"region": "rhythm", "examples": ["pattern", "pulse", "cycle"]}
+        }
+      }
+    },
+
+    "living": {
+      "name": "Living Things",
+      "word_count": 60,
+      "categories": {
+        "life_properties": {
+          "lif": {"region": "alive, living", "examples": ["organism", "animate", "vital"]},
+          "hea": {"region": "healthy", "examples": ["well", "thriving", "strong"]},
+          "sic": {"region": "sick", "examples": ["ill", "weak", "dying"]},
+          "you": {"region": "young", "examples": ["new", "immature", "fresh"]},
+          "old": {"region": "old", "examples": ["aged", "mature", "ancient"]},
+          "str": {"region": "strong", "examples": ["powerful", "robust", "intense"]},
+          "wea": {"region": "weak", "examples": ["feeble", "fragile", "faint"]},
+          "fer": {"region": "fertile", "examples": ["productive", "creative", "rich"]},
+          "ste": {"region": "sterile", "examples": ["barren", "empty", "clean"]},
+          "wil": {"region": "wild", "examples": ["untamed", "natural", "free"]},
+          "dom": {"region": "domesticated", "examples": ["tamed", "cultured", "controlled"]},
+          "awa": {"region": "awake", "examples": ["conscious", "alert", "aware"]},
+          "sle": {"region": "asleep", "examples": ["dormant", "unconscious", "rest"]},
+          "hun": {"region": "hungry", "examples": ["needing", "wanting", "seeking"]}
+        },
+        "body_parts": {
+          "hed": {"region": "head", "examples": ["mind", "leader", "top"]},
+          "fac": {"region": "face", "examples": ["front", "identity", "surface"]},
+          "eye": {"region": "eye", "examples": ["vision", "perspective", "watch"]},
+          "ear": {"region": "ear", "examples": ["hearing", "listen", "attention"]},
+          "mou": {"region": "mouth", "examples": ["speech", "consume", "opening"]},
+          "han": {"region": "hand", "examples": ["grasp", "make", "touch"]},
+          "foo": {"region": "foot", "examples": ["base", "walk", "foundation"]},
+          "hrt": {"region": "heart", "examples": ["emotion", "center", "pump"]},
+          "bra": {"region": "brain", "examples": ["thought", "control", "mind"]},
+          "lun": {"region": "lung", "examples": ["breath", "air", "voice"]},
+          "sto": {"region": "stomach", "examples": ["digest", "center", "courage"]},
+          "blo": {"region": "blood", "examples": ["life", "family", "flow"]},
+          "bon": {"region": "bone", "examples": ["structure", "death", "hard"]},
+          "ski": {"region": "skin", "examples": ["boundary", "surface", "touch"]},
+          "mus": {"region": "muscle", "examples": ["strength", "action", "meat"]},
+          "ner": {"region": "nerve", "examples": ["sense", "signal", "anxiety"]},
+          "cel": {"region": "cell", "examples": ["unit", "prison", "life"]},
+          "gen": {"region": "gene", "examples": ["code", "inheritance", "fate"]},
+          "see": {"region": "seed", "examples": ["potential", "start", "small"]},
+          "roo": {"region": "root", "examples": ["origin", "foundation", "hidden"]}
+        },
+        "organisms": {
+          "hum": {"region": "human", "examples": ["person", "sapient", "self"]},
+          "ani": {"region": "animal", "examples": ["creature", "beast", "instinct"]},
+          "pla": {"region": "plant", "examples": ["vegetation", "growth", "still"]},
+          "fun": {"region": "fungus", "examples": ["decay", "network", "hidden"]},
+          "bac": {"region": "bacteria", "examples": ["tiny", "many", "disease/help"]},
+          "vir": {"region": "virus", "examples": ["infection", "spread", "parasite"]},
+          "bir": {"region": "bird", "examples": ["flight", "song", "freedom"]},
+          "fis": {"region": "fish", "examples": ["water", "swim", "cold"]},
+          "rep": {"region": "reptile", "examples": ["cold", "ancient", "scale"]},
+          "mam": {"region": "mammal", "examples": ["warm", "milk", "nurture"]},
+          "tre": {"region": "tree", "examples": ["tall", "rooted", "shelter"]},
+          "gra": {"region": "grass", "examples": ["many", "ground", "food"]},
+          "flo": {"region": "flower", "examples": ["beauty", "sex", "temporary"]},
+          "fru": {"region": "fruit", "examples": ["reward", "seed", "sweet"]},
+          "lea": {"region": "leaf", "examples": ["green", "breath", "many"]},
+          "wor": {"region": "worm", "examples": ["underground", "cycle", "humble"]},
+          "spi": {"region": "spider", "examples": ["web", "trap", "patient"]},
+          "bee": {"region": "bee", "examples": ["swarm", "honey", "sting"]},
+          "wol": {"region": "wolf", "examples": ["pack", "hunt", "wild"]},
+          "sna": {"region": "snake", "examples": ["hidden", "poison", "transform"]}
+        }
+      }
+    },
+
+    "mental": {
+      "name": "Mind & Cognition",
+      "word_count": 70,
+      "categories": {
+        "mental_states": {
+          "thi": {"region": "thinking", "examples": ["cognition", "reasoning", "mind"]},
+          "fee": {"region": "feeling", "examples": ["emotion", "sensation", "intuition"]},
+          "wan": {"region": "wanting", "examples": ["desire", "goal", "motivation"]},
+          "fea": {"region": "fearing", "examples": ["anxiety", "avoidance", "threat"]},
+          "kno": {"region": "knowing", "examples": ["certainty", "truth", "fact"]},
+          "bel": {"region": "believing", "examples": ["faith", "assumption", "model"]},
+          "dou": {"region": "doubting", "examples": ["uncertainty", "question", "skeptic"]},
+          "rem": {"region": "remembering", "examples": ["memory", "past", "recall"]},
+          "obl": {"region": "forgetting", "examples": ["loss", "amnesia", "release", "oblivion"]},
+          "ima": {"region": "imagining", "examples": ["fantasy", "creativity", "future"]},
+          "dre": {"region": "dreaming", "examples": ["sleep-thought", "vision", "hope"]},
+          "att": {"region": "attending", "examples": ["focus", "notice", "select"]},
+          "ign": {"region": "ignoring", "examples": ["dismiss", "filter", "blind"]},
+          "und": {"region": "understanding", "examples": ["comprehension", "model", "grasp"]},
+          "cof": {"region": "confused", "examples": ["lost", "uncertain", "complex"]},
+          "cle": {"region": "clear", "examples": ["understood", "obvious", "simple"]},
+          "cur": {"region": "curious", "examples": ["questioning", "exploring", "open"]},
+          "bor": {"region": "bored", "examples": ["uninterested", "restless", "empty"]},
+          "sur": {"region": "surprised", "examples": ["unexpected", "alert", "change"]},
+          "exp": {"region": "expecting", "examples": ["anticipating", "predicting", "ready"]}
+        },
+        "emotions": {
+          "joy": {"region": "joy", "examples": ["happiness", "pleasure", "delight"]},
+          "sad": {"region": "sadness", "examples": ["grief", "loss", "tears"]},
+          "ang": {"region": "anger", "examples": ["rage", "frustration", "heat"]},
+          "lov": {"region": "love", "examples": ["affection", "bond", "care"]},
+          "hat": {"region": "hate", "examples": ["aversion", "enemy", "destroy"]},
+          "hop": {"region": "hope", "examples": ["optimism", "future", "light"]},
+          "des": {"region": "despair", "examples": ["hopeless", "dark", "give up"]},
+          "pri": {"region": "pride", "examples": ["achievement", "self", "high"]},
+          "sha": {"region": "shame", "examples": ["failure", "hide", "low"]},
+          "gui": {"region": "guilt", "examples": ["wrong", "burden", "owe"]},
+          "gra": {"region": "gratitude", "examples": ["thanks", "debt", "appreciate"]},
+          "env": {"region": "envy", "examples": ["want other's", "compare", "lack"]},
+          "jea": {"region": "jealousy", "examples": ["protect own", "rival", "fear"]},
+          "tru": {"region": "trust", "examples": ["rely", "open", "safe"]},
+          "sus": {"region": "suspicion", "examples": ["doubt", "watch", "unsafe"]},
+          "cal": {"region": "calm", "examples": ["peaceful", "still", "balanced"]},
+          "anx": {"region": "anxiety", "examples": ["worry", "future-fear", "tense"]},
+          "exc": {"region": "excitement", "examples": ["energy", "anticipation", "high"]},
+          "apa": {"region": "apathy", "examples": ["indifferent", "numb", "dead"]},
+          "emp": {"region": "empathy", "examples": ["feel-with", "understand", "connect"]},
+          "pit": {"region": "pity", "examples": ["feel-for", "above", "condescend"]},
+          "awe": {"region": "awe", "examples": ["wonder", "vast", "humble"]},
+          "dis": {"region": "disgust", "examples": ["reject", "impure", "away"]},
+          "ctm": {"region": "contempt", "examples": ["look-down", "dismiss", "scorn"]}
+        },
+        "cognitive_actions": {
+          "per": {"region": "perceiving", "examples": ["sense", "observe", "input"]},
+          "jud": {"region": "judging", "examples": ["evaluate", "decide", "categorize"]},
+          "rea": {"region": "reasoning", "examples": ["logic", "infer", "deduce"]},
+          "lea": {"region": "learning", "examples": ["acquire", "change", "grow"]},
+          "tea": {"region": "teaching", "examples": ["transmit", "show", "guide"]},
+          "que": {"region": "questioning", "examples": ["ask", "doubt", "seek"]},
+          "ans": {"region": "answering", "examples": ["respond", "solve", "give"]},
+          "cre": {"region": "creating", "examples": ["make-new", "invent", "generate"]},
+          "cop": {"region": "copying", "examples": ["replicate", "imitate", "mirror"]},
+          "mod": {"region": "modifying", "examples": ["change", "edit", "adapt"]},
+          "cho": {"region": "choosing", "examples": ["select", "decide", "will"]},
+          "ref": {"region": "reflecting", "examples": ["think-about", "review", "mirror"]},
+          "abs": {"region": "abstracting", "examples": ["generalize", "pattern", "essence"]},
+          "ana": {"region": "analyzing", "examples": ["break-down", "understand", "parts"]},
+          "syn": {"region": "synthesizing", "examples": ["combine", "whole", "create"]},
+          "com": {"region": "comparing", "examples": ["relate", "similar", "different"]},
+          "cat": {"region": "categorizing", "examples": ["group", "type", "class"]},
+          "val": {"region": "validating", "examples": ["check", "confirm", "test"]}
+        }
+      }
+    },
+
+    "communication": {
+      "name": "Communication & Language",
+      "word_count": 40,
+      "categories": {
+        "communication_acts": {
+          "say": {"region": "saying", "examples": ["speak", "express", "state"]},
+          "ask": {"region": "asking", "examples": ["question", "request", "query"]},
+          "tel": {"region": "telling", "examples": ["inform", "narrate", "instruct"]},
+          "lis": {"region": "listening", "examples": ["receive", "attend", "hear"]},
+          "sho": {"region": "showing", "examples": ["demonstrate", "display", "reveal"]},
+          "hid": {"region": "hiding", "examples": ["conceal", "secret", "cover"]},
+          "war": {"region": "warning", "examples": ["alert", "danger", "caution"]},
+          "pra": {"region": "praising", "examples": ["positive-judge", "encourage"]},
+          "cri": {"region": "criticizing", "examples": ["negative-judge", "correct"]},
+          "agr": {"region": "agreeing", "examples": ["align", "yes", "together"]},
+          "per": {"region": "persuading", "examples": ["change-mind", "convince", "sell"]}
+        },
+        "language_elements": {
+          "wor": {"region": "word", "examples": ["unit", "name", "symbol"]},
+          "sen": {"region": "sentence", "examples": ["complete-thought", "statement"]},
+          "mea": {"region": "meaning", "examples": ["content", "reference", "sense"]},
+          "nam": {"region": "name", "examples": ["identifier", "label", "call"]},
+          "def": {"region": "definition", "examples": ["meaning-boundary", "explain"]},
+          "amb": {"region": "ambiguous", "examples": ["many-meaning", "unclear"]},
+          "lit": {"region": "literal", "examples": ["direct", "surface", "exact"]},
+          "met": {"region": "metaphor", "examples": ["indirect", "deep", "transfer"]},
+          "iro": {"region": "irony", "examples": ["opposite-meaning", "twist"]}
+        },
+        "social_communication": {
+          "gre": {"region": "greeting", "examples": ["hello", "start", "acknowledge"]},
+          "tha": {"region": "thanking", "examples": ["gratitude", "debt", "appreciate"]},
+          "apo": {"region": "apologizing", "examples": ["sorry", "guilt", "repair"]},
+          "req": {"region": "requesting", "examples": ["ask-for", "need", "want"]},
+          "off": {"region": "offering", "examples": ["give-option", "help", "share"]},
+          "inv": {"region": "inviting", "examples": ["welcome", "include", "open"]}
+        }
+      }
+    },
+
+    "social": {
+      "name": "Social & Relational",
+      "word_count": 60,
+      "categories": {
+        "relationships": {
+          "sel": {"region": "self", "examples": ["I", "me", "identity"]},
+          "oth": {"region": "other", "examples": ["they", "different", "external"]},
+          "fri": {"region": "friend", "examples": ["ally", "close", "trust"]},
+          "ene": {"region": "enemy", "examples": ["opponent", "hostile", "threat"]},
+          "fam": {"region": "family", "examples": ["kin", "blood", "home"]},
+          "par": {"region": "parent", "examples": ["origin", "care", "above"]},
+          "chi": {"region": "child", "examples": ["offspring", "new", "below"]},
+          "sib": {"region": "sibling", "examples": ["peer", "same-level", "rival"]},
+          "lea": {"region": "leader", "examples": ["guide", "above", "decide"]},
+          "fol": {"region": "follower", "examples": ["below", "obey", "support"]},
+          "mas": {"region": "master", "examples": ["expert", "control", "high"]},
+          "ser": {"region": "servant", "examples": ["obey", "help", "low"]},
+          "gue": {"region": "guest", "examples": ["temporary", "welcome", "outside"]},
+          "hos": {"region": "host", "examples": ["welcome", "provide", "inside"]},
+          "nei": {"region": "neighbor", "examples": ["adjacent", "peer", "near"]},
+          "riv": {"region": "rival", "examples": ["compete", "same-goal", "peer"]}
+        },
+        "social_actions": {
+          "hel": {"region": "helping", "examples": ["assist", "support", "give"]},
+          "har": {"region": "harming", "examples": ["hurt", "damage", "take"]},
+          "giv": {"region": "giving", "examples": ["provide", "share", "release"]},
+          "tak": {"region": "taking", "examples": ["acquire", "receive", "remove"]},
+          "coo": {"region": "cooperating", "examples": ["together-work", "ally", "team"]},
+          "bet": {"region": "betraying", "examples": ["break-trust", "deceive", "harm"]},
+          "pro": {"region": "protecting", "examples": ["guard", "defend", "safe"]},
+          "inc": {"region": "including", "examples": ["add-to-group", "welcome", "expand"]},
+          "rul": {"region": "ruling", "examples": ["control", "decide", "power"]},
+          "obe": {"region": "obeying", "examples": ["follow-rule", "submit", "accept"]},
+          "reb": {"region": "rebelling", "examples": ["break-rule", "resist", "fight"]}
+        },
+        "social_structures": {
+          "gro": {"region": "group", "examples": ["collection", "team", "many"]},
+          "ind": {"region": "individual", "examples": ["one", "alone", "unique"]},
+          "soc": {"region": "society", "examples": ["large-group", "culture", "system"]},
+          "hie": {"region": "hierarchy", "examples": ["levels", "power-structure"]},
+          "equ": {"region": "equality", "examples": ["same-level", "fair", "peer"]},
+          "pow": {"region": "power", "examples": ["control", "ability", "force"]},
+          "aut": {"region": "authority", "examples": ["legitimate-power", "right"]},
+          "fre": {"region": "freedom", "examples": ["no-constraint", "choice", "open"]},
+          "rig": {"region": "right", "examples": ["entitled", "should-have"]},
+          "dut": {"region": "duty", "examples": ["obligated", "should-do"]},
+          "law": {"region": "law", "examples": ["formal-rule", "must"]},
+          "nor": {"region": "norm", "examples": ["informal-rule", "should"]},
+          "cul": {"region": "culture", "examples": ["shared-patterns", "learned"]},
+          "tra": {"region": "tradition", "examples": ["old-pattern", "inherited"]},
+          "inn": {"region": "innovation", "examples": ["new-pattern", "created"]}
+        }
+      }
+    },
+
+    "abstract": {
+      "name": "Abstract Concepts",
+      "word_count": 60,
+      "categories": {
+        "quantities": {
+          "zer": {"region": "zero, none", "examples": ["empty", "nothing", "absent"]},
+          "one": {"region": "one, single", "examples": ["unit", "individual", "unique"]},
+          "few": {"region": "few, some", "examples": ["several", "minority", "rare"]},
+          "man": {"region": "many, numerous", "examples": ["majority", "common", "multiple"]},
+          "all": {"region": "all, every", "examples": ["total", "universal", "complete"]},
+          "mor": {"region": "more", "examples": ["increase", "greater", "add"]},
+          "les": {"region": "less", "examples": ["decrease", "smaller", "subtract"]},
+          "max": {"region": "maximum", "examples": ["most", "peak", "limit"]},
+          "ave": {"region": "average", "examples": ["middle", "typical", "normal"]},
+          "ext": {"region": "extreme", "examples": ["edge", "unusual", "intense"]},
+          "who": {"region": "whole", "examples": ["complete", "total", "all"]}
+        },
+        "logic": {
+          "and": {"region": "conjunction", "examples": ["both", "together", "add"]},
+          "or": {"region": "disjunction", "examples": ["either", "choice", "option"]},
+          "not": {"region": "negation", "examples": ["opposite", "deny", "absent"]},
+          "if": {"region": "condition", "examples": ["when", "assuming", "given"]},
+          "bec": {"region": "because", "examples": ["reason", "cause", "why"]},
+          "thu": {"region": "therefore", "examples": ["result", "conclude", "so"]},
+          "nec": {"region": "necessary", "examples": ["must", "required", "always"]},
+          "pos": {"region": "possible", "examples": ["can", "might", "sometimes"]},
+          "imp": {"region": "impossible", "examples": ["cannot", "never", "contradiction"]},
+          "cer": {"region": "certain", "examples": ["sure", "known", "100%"]},
+          "exi": {"region": "exists", "examples": ["is", "real", "present"]},
+          "sam": {"region": "same", "examples": ["identical", "equal", "one"]},
+          "dif": {"region": "different", "examples": ["distinct", "other", "many"]},
+          "opp": {"region": "opposite", "examples": ["contra", "inverse", "other"]}
+        },
+        "values": {
+          "goo": {"region": "good", "examples": ["positive", "right", "want"]},
+          "bad": {"region": "bad", "examples": ["negative", "wrong", "avoid"]},
+          "bea": {"region": "beautiful", "examples": ["aesthetic-good", "pleasing"]},
+          "ugl": {"region": "ugly", "examples": ["aesthetic-bad", "displeasing"]},
+          "use": {"region": "useful", "examples": ["practical-good", "helps"]},
+          "eas": {"region": "easy", "examples": ["low-effort", "simple", "clear"]},
+          "sim": {"region": "simple", "examples": ["few-parts", "clear", "basic"]},
+          "rea": {"region": "real", "examples": ["exists", "actual", "concrete"]},
+          "fak": {"region": "fake", "examples": ["doesn't exist", "pretend"]},
+          "nat": {"region": "natural", "examples": ["unmodified", "original", "organic"]},
+          "art": {"region": "artificial", "examples": ["modified", "constructed"]},
+          "new": {"region": "new", "examples": ["recent", "innovative", "future"]},
+          "com": {"region": "common", "examples": ["frequent", "normal", "many"]},
+          "uni": {"region": "unique", "examples": ["one-of-kind", "special", "only"]}
+        }
+      }
+    },
+
+    "economics": {
+      "name": "Economics & Exchange",
+      "word_count": 25,
+      "categories": {
+        "economic_concepts": {
+          "buy": {"region": "purchasing", "examples": ["acquire for value", "shop", "consume"]},
+          "sel": {"region": "selling", "examples": ["exchange for value", "trade away"]},
+          "trd": {"region": "trading", "examples": ["mutual exchange", "barter", "swap"]},
+          "mon": {"region": "money/currency", "examples": ["cash", "wealth", "payment medium"]},
+          "prc": {"region": "price/cost", "examples": ["value", "worth", "expense"]},
+          "own": {"region": "ownership", "examples": ["possess", "property", "mine"]},
+          "dbt": {"region": "debt", "examples": ["owe", "loan", "liability"]},
+          "prf": {"region": "profit", "examples": ["gain", "surplus", "benefit"]},
+          "los": {"region": "loss", "examples": ["deficit", "shortage", "waste"]},
+          "wlf": {"region": "wealth", "examples": ["riches", "abundance", "prosperity"]},
+          "pov": {"region": "poverty", "examples": ["scarcity", "lack", "want"]},
+          "sav": {"region": "saving", "examples": ["store", "reserve", "accumulate"]},
+          "spn": {"region": "spending", "examples": ["consume", "use", "exhaust"]},
+          "inv": {"region": "investing", "examples": ["grow value", "commit resources"]},
+          "rsk": {"region": "risk", "examples": ["uncertainty", "gamble", "exposure"]}
+        },
+        "economic_actions": {
+          "pay": {"region": "paying", "examples": ["transfer value", "compensate"]},
+          "ern": {"region": "earning", "examples": ["receive for work", "income"]},
+          "bor": {"region": "borrowing", "examples": ["take temporarily", "loan"]},
+          "len": {"region": "lending", "examples": ["give temporarily", "credit"]},
+          "hir": {"region": "hiring", "examples": ["employ", "contract", "engage"]},
+          "fir": {"region": "firing", "examples": ["release", "dismiss", "terminate"]},
+          "tax": {"region": "taxing", "examples": ["mandatory contribution", "levy"]},
+          "sub": {"region": "subsidizing", "examples": ["support", "fund", "sponsor"]},
+          "auc": {"region": "auctioning", "examples": ["competitive sale", "bid"]},
+          "bar": {"region": "bargaining", "examples": ["negotiate", "haggle", "deal"]}
+        }
+      }
+    },
+
+    "colors": {
+      "name": "Colors & Visual Properties",
+      "word_count": 20,
+      "categories": {
+        "primary_colors": {
+          "red": {"region": "red/warm hue", "examples": ["blood", "fire", "passion", "stop"]},
+          "blu": {"region": "blue/cool hue", "examples": ["sky", "water", "calm", "sadness"]},
+          "yel": {"region": "yellow/bright hue", "examples": ["sun", "gold", "warning", "joy"]},
+          "grn": {"region": "green/natural hue", "examples": ["plants", "growth", "nature", "envy"]},
+          "whi": {"region": "white/light", "examples": ["snow", "purity", "blank", "peace"]},
+          "blk": {"region": "black/dark", "examples": ["night", "void", "death", "formal"]}
+        },
+        "secondary_colors": {
+          "orn": {"region": "orange", "examples": ["sunset", "autumn", "warmth", "energy"]},
+          "pur": {"region": "purple", "examples": ["royalty", "mystery", "luxury"]},
+          "pnk": {"region": "pink", "examples": ["soft", "feminine", "blush", "gentle"]},
+          "brn": {"region": "brown", "examples": ["earth", "wood", "stability", "organic"]},
+          "gry": {"region": "gray", "examples": ["neutral", "age", "ambiguity", "fog"]},
+          "gld": {"region": "gold/golden", "examples": ["treasure", "success", "premium"]}
+        },
+        "visual_qualities": {
+          "sat": {"region": "saturated", "examples": ["vivid", "intense", "pure color"]},
+          "pal": {"region": "pale/desaturated", "examples": ["faded", "washed", "muted"]},
+          "shi": {"region": "shiny/reflective", "examples": ["glossy", "metallic", "polished"]},
+          "mat": {"region": "matte/non-reflective", "examples": ["flat", "dull", "absorbing"]},
+          "opq": {"region": "opaque", "examples": ["solid", "blocking", "impenetrable"]},
+          "iri": {"region": "iridescent", "examples": ["rainbow", "shifting", "pearlescent"]},
+          "flr": {"region": "fluorescent", "examples": ["glowing", "neon", "bright-emitting"]}
+        }
+      }
+    },
+
+    "textures": {
+      "name": "Textures & Tactile Properties",
+      "word_count": 15,
+      "categories": {
+        "surface_textures": {
+          "fuz": {"region": "fuzzy", "examples": ["soft hair", "downy", "plush"]},
+          "sli": {"region": "slimy", "examples": ["mucous", "wet-slick", "viscous"]},
+          "sti": {"region": "sticky", "examples": ["adhesive", "tacky", "clinging"]},
+          "grt": {"region": "gritty", "examples": ["sandy", "granular", "coarse"]},
+          "vel": {"region": "velvety", "examples": ["plush", "rich-soft", "luxurious"]},
+          "scl": {"region": "scaly", "examples": ["overlapping", "reptilian", "fish-like"]},
+          "fur": {"region": "furry", "examples": ["hairy", "animal-coat", "warm"]},
+          "lth": {"region": "leathery", "examples": ["tough-flexible", "hide", "worn"]},
+          "wax": {"region": "waxy", "examples": ["smooth-resistant", "coated"]}
+        },
+        "tactile_sensations": {
+          "tin": {"region": "tingling", "examples": ["prickly", "electric", "pins-needles"]},
+          "nub": {"region": "numb", "examples": ["insensate", "deadened", "frozen"]},
+          "itc": {"region": "itchy", "examples": ["irritating", "scratchy", "urge"]},
+          "thr": {"region": "throbbing", "examples": ["pulsing", "rhythmic-pain", "ache"]},
+          "crp": {"region": "creepy", "examples": ["crawling sensation", "eerie touch"]}
+        }
+      }
+    },
+
+    "discourse": {
+      "name": "Discourse & Connectives",
+      "word_count": 15,
+      "categories": {
+        "logical_connectives": {
+          "how": {"region": "however", "examples": ["contrast", "despite", "but"]},
+          "mwh": {"region": "meanwhile", "examples": ["concurrent", "at same time"]},
+          "thf": {"region": "therefore", "examples": ["consequence", "thus", "so"]},
+          "fur": {"region": "furthermore", "examples": ["addition", "moreover", "also"]},
+          "ins": {"region": "instead", "examples": ["replacement", "rather", "alternatively"]},
+          "oth": {"region": "otherwise", "examples": ["else", "or else", "alternatively"]},
+          "alt": {"region": "although", "examples": ["concession", "despite", "even though"]},
+          "bcs": {"region": "because", "examples": ["reason", "since", "due to"]}
+        },
+        "discourse_markers": {
+          "fst": {"region": "first/firstly", "examples": ["initial", "to begin", "primary"]},
+          "nxt": {"region": "next/then", "examples": ["subsequent", "following", "after"]},
+          "fin": {"region": "finally", "examples": ["last", "ultimate", "concluding"]},
+          "eg": {"region": "for example", "examples": ["instance", "such as", "like"]},
+          "ie": {"region": "that is", "examples": ["clarification", "meaning", "specifically"]},
+          "sum": {"region": "in summary", "examples": ["overall", "to conclude", "briefly"]},
+          "not": {"region": "notably", "examples": ["importantly", "especially", "particularly"]}
+        }
+      }
+    }
+  },
+
+  "quick_reference": {
+    "core_domains": {
+      "physical": ["sol", "liq", "gas", "hot", "col", "bri", "dim", "mag", "min"],
+      "spatial": ["abo", "bel", "ins", "out", "nea", "far", "cen", "per"],
+      "temporal": ["now", "pas", "fut", "beg", "end", "dur", "cyc", "tra"],
+      "living": ["lif", "dea", "gro", "dec", "hea", "sic", "you", "old"],
+      "mental": ["thi", "fee", "kno", "bel", "rem", "ima", "dre", "cur"],
+      "social": ["sel", "oth", "fri", "ene", "fam", "joi", "lea", "fol"],
+      "abstract": ["goo", "bad", "tru", "fal", "sam", "dif", "all", "zer"]
+    },
+    "operators": ["nu", "ve", "so", "yo", "an", "|"]
+  }
+}

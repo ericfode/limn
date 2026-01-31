@@ -1,0 +1,63 @@
+# Bead: Phase 1 - Lock File Resolution
+# pha (phase) 1 | lok (lock) res (resolution)
+
+# ============================================================================
+# Task: Implement lock file and dependency resolution in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha1_lok_res"
+bea_pha sa 1
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs manifest parser
+bea_dep sa gro | "pha1_pak_man" |
+
+# ============================================================================
+# Implementation: Lock file and resolution constraints
+# ============================================================================
+
+# New wor (words) for resolution:
+whe wor_lok   # lock
+whe wor_res   # resolve
+whe wor_tra   # transitive
+whe wor_con   # conflict
+
+# Lock file structure:
+whe lok_fil
+whe lok_dep_gro   # group of dependencies
+
+# Each dependency entry:
+whe lok_dep_nom
+whe lok_dep_cid
+whe lok_dep_ver_maj
+whe lok_dep_ver_min
+whe lok_dep_ver_pat
+
+# Resolution algorithm as constraints:
+whe res_inp_dep     # input dependencies from pak.limn
+whe res_reg_loo     # registry lookup result
+whe res_tra_dep     # transitive dependencies
+whe res_fin_dep     # final resolved dependencies
+
+# Constraint: all deps must resolve to CID
+whe dep_has_cid
+dep_has_cid sa 1 cau lok_dep_cid ma ""
+
+# Conflict detection:
+whe con_dep_a_nom
+whe con_dep_a_cid
+whe con_dep_b_nom
+whe con_dep_b_cid
+whe con_det       # conflict detected
+
+con_dep_a_nom sa con_dep_b_nom cau con_dep_a_cid sa con_dep_b_cid cut con_det sa 1
+
+---
+# key: define task
+bea_des sa "Implement lock file generation and dependency resolution using Limn constraints. Extend vocabulary with lok (lock), res (resolve), tra (transitive), con (conflict). Resolve deps to CIDs, detect conflicts, generate pak.lock.limn."

@@ -1,0 +1,23 @@
+# Limn-PL: Temperature Conversion
+# pro (program): Celsius to Fahrenheit
+# F sa C exp 9 con 5 joi 32
+
+# var (variables)
+whe C
+whe t1
+whe t2
+whe F
+
+# cns (constraints)
+# t1 sa C exp 9
+C exp 9 sa t1
+
+# t2 sa t1 con 5
+t1 con 5 sa t2
+
+# F sa t2 joi 32
+t2 joi 32 sa F
+
+---
+# key (input values)
+C sa 100

@@ -1,0 +1,11 @@
+# Test: Circular dependency resolution
+# x sa y | should propagate value through equality
+
+whe x
+whe y
+
+x sa y
+
+---
+# key: provide one value
+x sa 42

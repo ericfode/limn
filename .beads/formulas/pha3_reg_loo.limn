@@ -1,0 +1,59 @@
+# Bead: Phase 3 - Registry Lookup
+# pha (phase) 3 | reg (registry) loo (lookup)
+
+# ============================================================================
+# Task: Implement registry lookup in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha3_reg_loo"
+bea_pha sa 3
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs registry format
+bea_dep sa gro | "pha3_reg_for" |
+
+# ============================================================================
+# Implementation: Registry lookup constraints
+# ============================================================================
+
+# New wor (words) for lookup:
+whe wor_loo   # lookup
+whe wor_fin   # find
+whe wor_sea   # search
+
+# Lookup state:
+whe loo_nom         # package name to find
+whe loo_ver_maj     # version to find (optional)
+whe loo_ver_min
+whe loo_ver_pat
+whe loo_reg_src     # registry source
+whe loo_res_cid     # result CID
+whe loo_res_fnd     # found (1/0)
+whe loo_res_err     # error message
+
+# Lookup constraints:
+whe loo_has_ver     # version specified (1/0)
+
+# Lookup by name only -> get latest
+loo_has_ver sa 0 cau loo_res_cid sa reg_pak_lat
+
+# Lookup by name + version -> get specific
+loo_has_ver sa 1 cau loo_res_cid sa reg_ver_cid
+
+# Not found handling:
+loo_res_fnd sa 0 cau loo_res_err sa "Package not found in registry"
+
+# Search (partial match):
+whe sea_que         # search query
+whe sea_res_gro     # search results (group of matches)
+whe sea_res_cnt     # result count
+
+---
+# key: define task
+bea_des sa "Implement registry lookup using Limn constraints. Extend vocabulary with loo (lookup), fin (find), sea (search). Lookup by name for latest, lookup by name+version for specific, search for partial matches."

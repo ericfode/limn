@@ -1,0 +1,52 @@
+# Bead: Phase 2 - IPFS Daemon Detection
+# pha (phase) 2 | ipfs det (detection)
+
+# ============================================================================
+# Task: Implement IPFS daemon detection in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha2_ipfs_det"
+bea_pha sa 2
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs Phase 1 complete
+bea_dep sa gro | "pha1_pak_man" | "pha1_use_sys" |
+
+# ============================================================================
+# Implementation: IPFS detection constraints
+# ============================================================================
+
+# New wor (words) for IPFS:
+whe wor_ipfs   # IPFS system
+whe wor_dae    # daemon
+whe wor_det    # detect
+whe wor_con    # connect
+whe wor_pin    # pin content
+
+# IPFS daemon state:
+whe ipfs_dae_run   # daemon running (1/0)
+whe ipfs_dae_ver   # daemon version
+whe ipfs_dae_api   # API endpoint
+whe ipfs_dae_err   # error if not running
+
+# Detection constraints:
+whe ipfs_che_cmd   # check command
+whe ipfs_che_res   # check result
+whe ipfs_che_cod   # exit code
+
+ipfs_che_cod sa 0 cau ipfs_dae_run sa 1
+ipfs_che_cod ma 0 cau ipfs_dae_run sa 0
+ipfs_dae_run sa 0 cau ipfs_dae_err sa "IPFS daemon not running"
+
+# API endpoint default:
+ipfs_dae_run sa 1 cau ipfs_dae_api sa "/ip4/127.0.0.1/tcp/5001"
+
+---
+# key: define task
+bea_des sa "Implement IPFS daemon detection using Limn constraints. Extend vocabulary with ipfs, dae (daemon), det (detect), con (connect), pin. Check if IPFS daemon running, get version, API endpoint."

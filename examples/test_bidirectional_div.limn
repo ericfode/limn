@@ -1,0 +1,13 @@
+# Test: Bidirectional division
+# x con y sa z - solve for x given y and z
+
+whe x
+whe y
+whe z
+
+x con y sa z
+
+---
+# key: solve for x (12 / 4 = 3 -> x = 12)
+y sa 4
+z sa 3

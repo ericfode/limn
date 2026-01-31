@@ -1,0 +1,86 @@
+# pak man (manifest) - Parse and validate pak.limn manifests
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# The manifest parser - a Limn program that parses Limn programs
+# This is a metacircular parser: Limn parsing Limn
+# ============================================================================
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe man_con       # manifest content (raw string)
+whe man_fil       # manifest file path
+
+# ============================================================================
+# Parsed manifest structure
+# ============================================================================
+
+whe pak_nom       # package name
+whe pak_ver_maj   # major version
+whe pak_ver_min   # minor version
+whe pak_ver_pat   # patch version
+whe pak_aut       # author
+whe pak_des       # description
+whe pak_ent       # entry file
+whe pak_dep       # dependencies (group of CIDs)
+
+# ============================================================================
+# Validation constraints
+# ============================================================================
+
+whe man_val       # manifest valid
+whe man_err       # manifest errors
+
+# Required fields:
+pak_nom ma "" cau nom_ok sa tru
+pak_nom sa "" cau nom_ok sa fal cau man_err amo "Missing package name"
+whe nom_ok
+
+pak_ver_maj ma 0 cut pak_ver_maj sa 0 cau ver_ok sa tru
+whe ver_ok
+
+pak_ent ma "" cau ent_ok sa tru
+pak_ent sa "" cau ent_ok sa fal cau man_err amo "Missing entry file"
+whe ent_ok
+
+# All validations must pass
+nom_ok sa tru cau ver_ok sa tru cau ent_ok sa tru cau man_val sa tru
+
+# ============================================================================
+# Version string construction
+# ============================================================================
+
+whe pak_ver_str   # version as string "1.0.0"
+
+# Constraints to build version string (conceptual - strings need host support)
+# pak_ver_str sa pak_ver_maj joi "." joi pak_ver_min joi "." joi pak_ver_pat
+
+# ============================================================================
+# Dependency resolution helpers
+# ============================================================================
+
+whe dep_cnt       # number of dependencies
+whe dep_has       # has dependencies (tru/fal)
+
+who pak_dep sa dep_cnt
+dep_cnt ma 0 cau dep_has sa tru
+dep_cnt sa 0 cau dep_has sa fal
+
+# ============================================================================
+# Manifest output (for init command)
+# ============================================================================
+
+whe man_out       # generated manifest content
+
+# Template constraints (would use string interpolation from host)
+# man_out contains all the whe declarations and key section
+
+---
+# key: Parse manifest from file
+# rea cau man_fil eff man_con
+# pak_par cau man_con eff man_res
+
+# Example: parse existing manifest
+man_fil sa "pak.limn"

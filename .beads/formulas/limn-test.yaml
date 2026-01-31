@@ -1,0 +1,166 @@
+# Limn Unit Test Formula
+# Run with: gt sling --formula limn-test <test-type>
+# Or: bd create --formula limn-test --var test=bootstrap
+
+name: limn-test
+description: Unit testing framework for Limn language properties
+version: 2.0.0
+
+variables:
+  test:
+    description: "Test type: bootstrap, transmission, ambiguity, commutativity, inversion, all"
+    required: true
+    default: "all"
+
+steps:
+  - name: setup
+    description: "Load Limn specifications"
+    files:
+      - docs/spec/vocabulary-v2.md
+      - docs/spec/grammar-formal.md
+      - docs/spec/bootstrap-v2.md
+      - experiments/test-cases.md
+
+  - name: bootstrap-test
+    description: "Test if fresh LLM can learn Limn from bootstrap doc alone"
+    when: "{{ test == 'bootstrap' or test == 'all' }}"
+    prompt: |
+      ## Bootstrappability Test
+
+      1. Read ONLY docs/spec/bootstrap-v2.md (pretend you've never seen Limn before)
+      2. Using ONLY that document, interpret these novel sentences:
+         - `sol aqu mov lif` (solid + water + motion + alive)
+         - `bri beg dim end` (bright + beginning + dim + ending)
+         - `nu gro wea fin` (not + growth + weak + finish)
+      3. For each, list 5+ interpretations
+      4. Rate your confidence (1-5) that you understood the language correctly
+      5. Note what was unclear or missing from the bootstrap doc
+
+      Write results to experiments/results/bootstrap-test.md
+
+  - name: transmission-test
+    description: "Test if keyed communication actually transmits information"
+    when: "{{ test == 'transmission' or test == 'all' }}"
+    prompt: |
+      ## Information Transmission Test
+
+      Protocol:
+      1. Create a KEY (a short narrative context)
+      2. Write 3 Limn sentences that have ONE specific meaning under that key
+      3. Record the intended meanings
+      4. In a FRESH context, provide the KEY + SENTENCES to interpret
+      5. Check if interpretations match intended meanings
+
+      Test Cases:
+      - Key: "Two marine biologists discussing coral reef health"
+      - Key: "A parent explaining death to a child"
+      - Key: "Spies planning an extraction"
+
+      For each: Write sentence, record intended meaning, test retrieval.
+      Calculate accuracy rate.
+
+      Write results to experiments/results/transmission-test.md
+
+  - name: ambiguity-test
+    description: "Test if sentences achieve target interpretation counts"
+    when: "{{ test == 'ambiguity' or test == 'all' }}"
+    prompt: |
+      ## Ambiguity Metrics Test
+
+      For each sentence, WITHOUT any key:
+      1. `lin lif mov` - target: IC > 10
+      2. `sol gro fin` - target: IC > 10
+      3. `nox hid wai` - target: IC > 10
+      4. `ve bri beg` - target: IC > 10
+      5. `dim hot lif` - target: IC > 10
+
+      For each:
+      - List all distinct interpretations you can generate
+      - Count them (IC = Interpretation Count)
+      - Categorize by domain (biology, geography, emotion, etc.)
+      - Pass if IC > 10 AND spans 3+ domains
+
+      Then WITH key "technology":
+      - Re-interpret each sentence
+      - Count interpretations (should be < 5)
+      - Calculate KCR = IC_without / IC_with
+      - Pass if KCR > 5
+
+      Write results to experiments/results/ambiguity-test.md
+
+  - name: commutativity-test
+    description: "Test if word order actually doesn't affect meaning"
+    when: "{{ test == 'commutativity' or test == 'all' }}"
+    prompt: |
+      ## Commutativity Test
+
+      For each base sentence, generate ALL permutations and interpret each:
+
+      1. Base: `lin lif mov` (3! = 6 permutations)
+      2. Base: `bri sol beg` (3! = 6 permutations)
+      3. Base: `nox fin` (2! = 2 permutations)
+
+      For each permutation:
+      - Generate interpretations independently (don't look at other permutations)
+      - Compare interpretation sets
+      - Calculate Jaccard similarity between permutation pairs
+
+      Pass criteria:
+      - Jaccard similarity > 0.7 for all pairs
+      - No systematic "first word anchoring" effect
+
+      Note any order effects observed.
+
+      Write results to experiments/results/commutativity-test.md
+
+  - name: inversion-test
+    description: "Test if single words can flip meaning dramatically"
+    when: "{{ test == 'inversion' or test == 'all' }}"
+    prompt: |
+      ## Single-Word Inversion Test
+
+      Test the inversion property with these pairs:
+
+      1. `bri lin pos` → add `nox` → `bri lin pos nox`
+         Expected: positive → mixed/negative
+
+      2. `lif hot beg` → add `fin` → `lif hot beg fin`
+         Expected: life/energy → death/ending
+
+      3. `saf pos mov` → add `dan` → `saf pos mov dan`
+         Expected: safe positive → dangerous shift
+
+      4. `ris bri` → add `dep` → `ris bri dep`
+         Expected: rising bright → contradiction or underground light
+
+      For each:
+      - Interpret base sentence (rate valence 1-5)
+      - Interpret with added word (rate valence 1-5)
+      - Calculate valence shift
+      - Pass if |shift| > 2.0
+
+      Write results to experiments/results/inversion-test.md
+
+  - name: report
+    description: "Generate summary report"
+    when: "{{ test == 'all' }}"
+    prompt: |
+      ## Generate Test Summary
+
+      Read all test results from experiments/results/*.md
+
+      Create experiments/results/SUMMARY.md with:
+      1. Overall pass/fail for each test category
+      2. Key metrics (IC averages, KCR averages, Jaccard scores)
+      3. Identified issues and design implications
+      4. Recommendations for language iteration
+
+      Format as a test report with clear PASS/FAIL indicators.
+
+outputs:
+  - experiments/results/bootstrap-test.md
+  - experiments/results/transmission-test.md
+  - experiments/results/ambiguity-test.md
+  - experiments/results/commutativity-test.md
+  - experiments/results/inversion-test.md
+  - experiments/results/SUMMARY.md

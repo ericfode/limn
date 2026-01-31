@@ -1,0 +1,15 @@
+# Limn-PL: Addition Example
+# pro (program): a joi b sa c
+
+# var (variables)
+whe a
+whe b
+whe c
+
+# cns (constraints)
+a joi b sa c
+
+---
+# key (input values)
+a sa 10
+b sa 20

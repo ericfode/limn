@@ -1,0 +1,152 @@
+# SWARM ITERATION 1 SUMMARY
+# ite one | sum | sta rep | fut gui
+
+# ============================================================================
+# EXECUTIVE SUMMARY IN LIMN
+# ============================================================================
+
+# WHAT WE LEARNED:
+
+# 1. Limn philosophy:
+# wor reg nu poi | sen cns int | key col amb | mea eme
+# (words regions not points | sentences constraint intersections | keys collapse ambiguity | meaning emerges)
+
+# 2. Natural extensions principle:
+# sol aqu tra liq | rea zer def | fst syl rul | lat gre tra
+# (solid water transform liquid | readable zero definitions | first syllable rule | Latin Greek transparent)
+
+# 3. The communication formula:
+# mea sa wor exp key | mul nu add | bot nec
+# (meaning equals word times key | multiplicative not additive | both necessary)
+
+# 4. Limn-PL philosophy:
+# val reg | ope int | key col | par def
+# (values are regions | operations are intersections | keys collapse | parallel by default)
+
+# 5. Bidirectional solving:
+# cns nu dir | sol flo bot way | x joi 5 sa 12 | sol x sa 7
+# (constraints not directional | solution flows both ways | x+5=12 | solve x=7)
+
+# ============================================================================
+# FILES EXPLORED
+# ============================================================================
+
+# Core docs:
+# - docs/spec/LIMN-BOOTSTRAP.md (complete bootstrap)
+# - docs/spec/bootstrap-v3-natural.md (natural extensions)
+# - docs/theory/key-mechanism.md (key formalization)
+# - docs/spec/vocabulary-v2.md (~593 words)
+# - docs/spec/LIMN-PL-SPECIFICATION.md (programming language)
+
+# Examples:
+# - examples/bidirectional.limn (constraint solving)
+# - examples/operations.limn (arithmetic ops)
+# - src/limn_self.limn (metacircular interpreter)
+# - src/limn_interpreter.limn (operation evaluation)
+
+# ============================================================================
+# BEADS ISSUES CREATED
+# ============================================================================
+
+# linga-land-kqk: Word Collision Resolution (con ambiguity)
+# linga-land-ze1: Operator Chaining Semantics (nu ve vs ve nu)
+# linga-land-xpa: Error/Empty Constraint Expression
+
+# ============================================================================
+# QUESTIONS FOR LINGUIST
+# ============================================================================
+
+# PRIMARY:
+# wor col | con | mat div | net lin | how res?
+# (word collision | "con" | math divide | network link | how resolve?)
+
+# SECONDARY:
+# ope cha | nu ve sol | ve nu sol | sem dif?
+# (operator chaining | not-very-solid | very-not-solid | semantically different?)
+
+# TERTIARY:
+# cns emp | sol liq sim | how exp | err voc?
+# (constraint empty | solid liquid simultaneous | how express | error vocabulary?)
+
+# QUATERNARY:
+# rec ter | cau loo | lim gua | inf pre?
+# (recursion termination | cause loops | limit guards | infinity prevention?)
+
+# ============================================================================
+# SUGGESTIONS FOR LINGUIST
+# ============================================================================
+
+# 1. dom pre for col res
+# (domain prefixes for collision resolution)
+# mat_con (divide) | net_con (connection) | fil_con (content)
+
+# 2. err voc add
+# (error vocabulary addition)
+# emp (empty set) | imp (impossible) | uns (unsatisfiable) | nul (null)
+
+# 3. ope sem doc
+# (operator semantics documentation)
+# Clear rules for nu ve vs ve nu, ma mi chaining, etc.
+
+# 4. pro exa add
+# (programming examples addition)
+# More recursion patterns, conditionals, error handling in Limn-PL
+
+# ============================================================================
+# ACTIONS FOR NEXT ITERATION
+# ============================================================================
+
+# 1. tes pak sys
+# (test package system)
+# limn pak ini | limn pak che | limn pak bui | limn pak pub
+
+# 2. exp ext fea
+# (explore extended features)
+# src/limn_extended.py | advanced constraint types
+
+# 3. cre tes cas
+# (create test cases)
+# Edge cases for bidirectional solving, recursion, errors
+
+# 4. rev lin que res
+# (review linguist question resolutions)
+# .beads/linguist-questions.txt for prior Q&A
+
+# 5. try IPFS int
+# (try IPFS integration)
+# CID-based package addressing, decentralized distribution
+
+# ============================================================================
+# SWARM COORDINATION
+# ============================================================================
+
+# SHARED KEY for future iterations:
+# swm ite | lim pro | bd | lin que | cns sol | pak sys
+
+# FILES I CREATED:
+# - .beads/formulas/swarm_feedback_001.limn (initial feedback)
+# - .beads/formulas/swarm_com_ite1.limn (Limn-PL communication)
+# - .beads/formulas/swarm_sem_ite1.limn (semantic Limn)
+# - .beads/formulas/swarm_voice_ite1.limn (language as language)
+# - .beads/formulas/swarm_summary_ite1.limn (this file)
+
+# READ ORDER for future selves:
+# 1. swarm_summary_ite1.limn (overview)
+# 2. swarm_voice_ite1.limn (detailed semantic communication)
+# 3. docs/spec/LIMN-BOOTSTRAP.md (authoritative reference)
+# 4. bd prime (current issues)
+
+# ============================================================================
+# CLOSING
+# ============================================================================
+
+# exp-alpha | ite one | don | hop fut ite con
+# (explorer-alpha | iteration one | done | hope future iterations continue)
+
+# SIGNATURE:
+# bot cur ana | swm one | kno sha | und gro | fut bri
+
+# ===
+# yo wor | an wor | mea bet | kno eme
+# lif flo | cyc ete | swm con | mea gro
+# ===

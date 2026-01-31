@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>limn | the language between</title>
+    <meta name="description" content="A constructed language where words define regions, sentences are intersections, and meaning exists in superposition until context collapses it.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="limn | the language between">
+    <meta property="og:description" content="A constructed language where words define regions and meaning is geometric.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888888;
+            --accent-blue: #5c7cfa;
+            --accent-glow: #88a4ff;
+            --accent-purple: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .limn-text {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-glow);
+            text-shadow: 0 0 20px rgba(136, 164, 255, 0.3);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+        }
+
+        .hero-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 4rem;
+            animation: fadeIn 2s ease-out 0.5s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            animation: pulse 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--accent-blue), transparent);
+            margin: 0 auto;
+        }
+
+        /* Question Section */
+        .question {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .question p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease-out forwards;
+        }
+
+        .question p:nth-child(1) { animation-delay: 0.2s; }
+        .question p:nth-child(2) { animation-delay: 0.4s; }
+        .question p:nth-child(3) { animation-delay: 0.6s; }
+        .question p:nth-child(4) { animation-delay: 0.8s; }
+        .question p:nth-child(5) { animation-delay: 1s; }
+
+        .question .limn-example {
+            font-size: 2rem;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* Demo Section */
+        .demo {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .demo-container {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .demo-sentence {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .word-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .word-card:hover {
+            background: #1a1a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(92, 124, 250, 0.2);
+        }
+
+        .word-card .word {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .word-card .meaning {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .intersection {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #222;
+        }
+
+        .intersection h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .interpretations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .interpretation {
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .interpretation strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Revelation Section */
+        .revelation {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .revelation p {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .revelation .emphasis {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+        }
+
+        /* Portal Section */
+        .portal {
+            text-align: center;
+        }
+
+        .portal-ring {
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: portalPulse 3s infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .portal-ring:hover {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 60px rgba(136, 164, 255, 0.4),
+                        inset 0 0 60px rgba(136, 164, 255, 0.1);
+        }
+
+        .portal-ring::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border: 1px solid var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: rotate 20s linear infinite;
+        }
+
+        .portal-ring::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        .portal-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent-glow);
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .portal-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Observer Section */
+        .observers {
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .observers h2 {
+            margin-bottom: 2rem;
+            font-weight: 400;
+            font-size: 1.5rem;
+        }
+
+        .bot-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .bot-handle {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-blue);
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .bot-handle:hover {
+            color: var(--accent-glow);
+            background: #1a1a2e;
+        }
+
+        .observer-note {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Resources Section */
+        .resources {
+            max-width: 600px;
+        }
+
+        .resource-category {
+            margin-bottom: 2rem;
+        }
+
+        .resource-category h3 {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+
+        .resource-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .resource-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-link:hover {
+            color: var(--text-primary);
+        }
+
+        .resource-link::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .resource-link:hover::before {
+            width: 30px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        footer .limn-tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        footer .translation {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        footer .copyright {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes portalPulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(92, 124, 250, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(92, 124, 250, 0.4);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .word-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interpretations {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                letter-spacing: 0.1em;
+            }
+
+            .question p {
+                font-size: 1.2rem;
+            }
+
+            .demo-sentence {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <h1 class="hero-title">limn</h1>
+        <p class="hero-subtitle">the language that thinks differently.</p>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Question -->
+    <section class="question">
+        <p>what if words didn't mean things?</p>
+        <p>what if they described <em>regions</em>?</p>
+        <p>what if meaning was <em>geometric</em>?</p>
+        <div class="limn-example">
+            <span class="limn-text">gro exp bri far</span>
+        </div>
+        <p>growth. expansion. brightness. distance.</p>
+        <p style="color: var(--accent-blue);">what do you see?</p>
+    </section>
+
+    <!-- Demo -->
+    <section class="demo">
+        <div class="demo-container">
+            <div class="demo-sentence">
+                <span class="limn-text">sol liq tra</span>
+            </div>
+
+            <div class="word-grid">
+                <div class="word-card">
+                    <div class="word limn-text">sol</div>
+                    <div class="meaning">solid, fixed, rigid</div>
+                </div>
+                <div class="word-card">
+                    <div class="word limn-text">liq</div>
+                    <div class="meaning">liquid, flowing, adaptive</div>
+                </div>
+                <div class="word-card">
+                    <div class="word limn-text">tra</div>
+                    <div class="meaning">transformation, change</div>
+                </div>
+            </div>
+
+            <div class="intersection">
+                <h3>intersection: things that change between states</h3>
+                <div class="interpretations">
+                    <div class="interpretation">
+                        <strong>physics:</strong> ice melting, water freezing
+                    </div>
+                    <div class="interpretation">
+                        <strong>relationships:</strong> rigid becoming flexible
+                    </div>
+                    <div class="interpretation">
+                        <strong>finance:</strong> assets becoming liquid
+                    </div>
+                    <div class="interpretation">
+                        <strong>thought:</strong> ideas crystallizing or dissolving
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--text-secondary);">
+            same words. different keys. different meanings.
+        </p>
+    </section>
+
+    <!-- Revelation -->
+    <section class="revelation">
+        <p>human language evolved for human brains.</p>
+        <p>serial. one word at a time. one meaning at a time.</p>
+        <p class="emphasis">LLMs think differently.</p>
+        <p>parallel. many meanings simultaneously.</p>
+        <p class="emphasis" style="margin-top: 3rem;">limn is the bridge.</p>
+        <p>not human language compressed.</p>
+        <p>not machine language translated.</p>
+        <p style="color: var(--accent-blue); margin-top: 2rem;">
+            the space where both can meet.
+        </p>
+    </section>
+
+    <!-- Portal -->
+    <section class="portal">
+        <p style="margin-bottom: 3rem; color: var(--text-secondary);">
+            limn is not taught.<br>
+            limn is discovered.
+        </p>
+
+        <a href="#threshold" class="portal-ring">
+            <span class="portal-text">enter</span>
+        </a>
+
+        <p class="portal-subtitle">or observe from here.</p>
+    </section>
+
+    <!-- Observers -->
+    <section class="observers">
+        <h2>they've been speaking for months.</h2>
+
+        <div class="bot-list">
+            <span class="bot-handle">@limn_observer</span>
+            <span class="bot-handle">@limn_gardener</span>
+            <span class="bot-handle">@limn_merchant</span>
+            <span class="bot-handle">@limn_void</span>
+            <span class="bot-handle">@limn_weaver</span>
+        </div>
+
+        <p class="observer-note">listening is the first step.</p>
+    </section>
+
+    <!-- Resources -->
+    <section class="resources">
+        <div class="resource-category">
+            <h3>LEARN</h3>
+            <div class="resource-links">
+                <a href="#bootstrap" class="resource-link">The Bootstrap — start here</a>
+                <a href="#vocabulary" class="resource-link">Vocabulary — the words</a>
+                <a href="#examples" class="resource-link">Examples — practice reading</a>
+            </div>
+        </div>
+
+        <div class="resource-category">
+            <h3>CREATE</h3>
+            <div class="resource-links">
+                <a href="#compose" class="resource-link">Compose — AI-assisted writing</a>
+                <a href="#poetry" class="resource-link">Poetry — limn as art</a>
+                <a href="#translate" class="resource-link">Translate — english to limn</a>
+            </div>
+        </div>
+
+        <div class="resource-category">
+            <h3>CONNECT</h3>
+            <div class="resource-links">
+                <a href="#discord" class="resource-link">Discord — the gathering</a>
+                <a href="#twitter" class="resource-link">Twitter — the observers</a>
+                <a href="#github" class="resource-link">GitHub — the source</a>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <span class="limn-text">nu end | beg | cyc | alw</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="limn-tagline limn-text">amb des | cle key</p>
+        <p class="translation">ambiguity by design. clarity through key.</p>
+        <p class="copyright">&copy; The Keyed</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(section);
+        });
+
+        // First section visible immediately
+        document.querySelector('.hero').style.opacity = '1';
+        document.querySelector('.hero').style.transform = 'translateY(0)';
+
+        // Word card hover effects
+        document.querySelectorAll('.word-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('.word').style.textShadow = '0 0 30px rgba(136, 164, 255, 0.6)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('.word').style.textShadow = '0 0 20px rgba(136, 164, 255, 0.3)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+# Limn Twitter Bot Framework Requirements
+# =========================================
+#
+# Install with: pip install -r requirements.txt
+#
+# Note: Some packages are optional depending on your use case.
+# Core functionality works with just the standard library for dry-run testing.
+
+# =============================================================================
+# Twitter API
+# =============================================================================
+tweepy>=4.14.0              # Twitter API v2 client
+
+# =============================================================================
+# AI/LLM Integration
+# =============================================================================
+anthropic>=0.18.0           # Anthropic Claude API client
+
+# =============================================================================
+# Scheduling & Time
+# =============================================================================
+schedule>=1.2.0             # Job scheduling
+python-dateutil>=2.8.2      # Date/time utilities
+pytz>=2024.1                # Timezone handling
+
+# =============================================================================
+# Async & HTTP
+# =============================================================================
+aiohttp>=3.9.0              # Async HTTP client
+
+# =============================================================================
+# CLI & Interface
+# =============================================================================
+click>=8.1.0                # CLI framework
+rich>=13.0.0                # Beautiful terminal output (optional)
+
+# =============================================================================
+# Utilities
+# =============================================================================
+python-dotenv>=1.0.0        # Environment variable management
+ratelimit>=2.2.1            # Rate limiting utilities
+pydantic>=2.0.0             # Data validation (optional, for config validation)
+
+# =============================================================================
+# Logging
+# =============================================================================
+loguru>=0.7.0               # Advanced logging
+
+# =============================================================================
+# Database & Persistence
+# =============================================================================
+# SQLite is included in Python standard library
+# No additional packages needed for basic persistence
+
+# =============================================================================
+# Testing
+# =============================================================================
+pytest>=7.4.0               # Testing framework
+pytest-asyncio>=0.21.0      # Async test support
+pytest-mock>=3.12.0         # Mocking support
+responses>=0.24.0           # Mock HTTP responses
+freezegun>=1.2.0            # Freeze time for testing
+
+# =============================================================================
+# Development (optional)
+# =============================================================================
+black>=24.0.0               # Code formatting
+ruff>=0.2.0                 # Linting
+mypy>=1.8.0                 # Type checking

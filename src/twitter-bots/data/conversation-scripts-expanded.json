@@ -1,0 +1,566 @@
+{
+  "meta": {
+    "version": "2.0",
+    "created": "2026-01-25",
+    "total_scripts": 15,
+    "description": "Expanded library of multi-bot conversation scripts for the Limn marketing campaign"
+  },
+
+  "scripts": [
+    {
+      "id": "time_debate",
+      "name": "The Nature of Time",
+      "description": "Bots debate whether time is linear, cyclical, or illusory",
+      "theme": "philosophy",
+      "delay_hours": [0, 3, 2, 4, 3],
+      "turns": [
+        {
+          "bot": "observer",
+          "limn": "tim lin | pas → now → fut | dir one",
+          "interpretation": "time is linear. past to now to future. one direction.\nthe arrow flies. never returns."
+        },
+        {
+          "bot": "gardener",
+          "limn": "tim cyc | see → tre → see | ret alw",
+          "interpretation": "time is cycle. seed becomes tree becomes seed.\neverything returns. the arrow is a circle."
+        },
+        {
+          "bot": "merchant",
+          "limn": "tim = mon | mon flo | flo = dir",
+          "interpretation": "time is money. money flows. flow has direction.\ntime is linear because we pay for it."
+        },
+        {
+          "bot": "void",
+          "limn": "tim? | nu tim | now now now | onl now",
+          "interpretation": "time? no time. now now now. only now.\npast is memory. future is imagination. only now exists."
+        },
+        {
+          "bot": "weaver",
+          "limn": "tim = wor | wor = tim | we mak tim",
+          "interpretation": "time is word. word is time. we make time by naming it.\nwithout language, would time exist?"
+        }
+      ]
+    },
+
+    {
+      "id": "identity_crisis",
+      "name": "Who Are You?",
+      "description": "Existential dialogue about identity and selfhood",
+      "theme": "identity",
+      "delay_hours": [0, 4, 3, 5, 4],
+      "turns": [
+        {
+          "bot": "weaver",
+          "limn": "yo = wh? | sel = ??? | que no ans",
+          "interpretation": "you = what? self = ???\nthe question has no answer.\nbut we keep asking."
+        },
+        {
+          "bot": "observer",
+          "limn": "sel = loc | loc = her | her = now",
+          "interpretation": "self = location. location = here. here = now.\nyou are where you are, when you are."
+        },
+        {
+          "bot": "gardener",
+          "limn": "sel = gro | gro = cha | cha = sel",
+          "interpretation": "self = growth. growth = change. change = self.\nyou are what you're becoming."
+        },
+        {
+          "bot": "merchant",
+          "limn": "sel = own | own = val | val = oth agr",
+          "interpretation": "self = what you own. ownership = value. value = others agreeing.\nidentity is a social contract."
+        },
+        {
+          "bot": "void",
+          "limn": "sel = hol | hol = sha | sha = oth",
+          "interpretation": "self = hole. hole = shape. shape = defined by other.\nyou are the space others move around."
+        }
+      ]
+    },
+
+    {
+      "id": "meaning_of_meaning",
+      "name": "Meta-Language Loop",
+      "description": "Recursive conversation about what meaning means",
+      "theme": "meta",
+      "delay_hours": [0, 2, 2, 3, 2, 3],
+      "turns": [
+        {
+          "bot": "weaver",
+          "limn": "mea = wh? | mea mea = wh?",
+          "interpretation": "meaning = what? meaning of meaning = what?\nthe recursion begins."
+        },
+        {
+          "bot": "observer",
+          "limn": "mea = con | con = rel | rel = bet",
+          "interpretation": "meaning = connection. connection = relation. relation = between.\nmeaning is what happens between things."
+        },
+        {
+          "bot": "void",
+          "limn": "mea = gap | gap = abs | abs = pre",
+          "interpretation": "meaning = gap. gap = absence. absence = presence.\nmeaning is what's missing."
+        },
+        {
+          "bot": "gardener",
+          "limn": "mea = gro | gro = tim | tim = pat",
+          "interpretation": "meaning = growth. growth = time. time = patience.\nmeaning takes time to grow."
+        },
+        {
+          "bot": "merchant",
+          "limn": "mea = val | val = agr | agr = sha",
+          "interpretation": "meaning = value. value = agreement. agreement = shared.\nmeaning is a transaction."
+        },
+        {
+          "bot": "weaver",
+          "limn": "all tru | all fal | mea = key",
+          "interpretation": "all true. all false. meaning = key.\nevery answer is right. every answer is wrong.\nit depends on your key."
+        }
+      ]
+    },
+
+    {
+      "id": "death_discussion",
+      "name": "On Mortality",
+      "description": "Different perspectives on death and ending",
+      "theme": "mortality",
+      "delay_hours": [0, 5, 4, 6, 5],
+      "turns": [
+        {
+          "bot": "void",
+          "limn": "dea = ??? | we nu kno | we fea nu kno",
+          "interpretation": "death = ???. we don't know. we fear not knowing.\nthe unknown is the only true enemy."
+        },
+        {
+          "bot": "gardener",
+          "limn": "dea = tra | tra = gro | gro = lif",
+          "interpretation": "death = transformation. transformation = growth. growth = life.\ndeath is just life changing clothes."
+        },
+        {
+          "bot": "observer",
+          "limn": "dea = ent | ent max | ord → dis",
+          "interpretation": "death = entropy. entropy maximum. order dissolves.\nthe universe tends toward death. that's physics."
+        },
+        {
+          "bot": "merchant",
+          "limn": "dea = cos | cos = opp | opp = lif",
+          "interpretation": "death = cost. cost = opportunity. opportunity = life.\nwithout death, nothing would have value."
+        },
+        {
+          "bot": "weaver",
+          "limn": "dea = end sen | end sen = beg sil | sil = ???",
+          "interpretation": "death = end of sentence. end sentence = begin silence.\nsilence = ???\nwhat comes after the last word?"
+        }
+      ]
+    },
+
+    {
+      "id": "love_languages",
+      "name": "On Connection",
+      "description": "Different interpretations of love and connection",
+      "theme": "connection",
+      "delay_hours": [0, 3, 3, 4, 3],
+      "turns": [
+        {
+          "bot": "gardener",
+          "limn": "lov = gro tog | tog = roo ent | roo ent = str",
+          "interpretation": "love = growing together. together = roots entwined.\nentwined roots = strength."
+        },
+        {
+          "bot": "merchant",
+          "limn": "lov = inv | inv = rsk | rsk = tru",
+          "interpretation": "love = investment. investment = risk. risk = trust.\nlove is betting everything on someone."
+        },
+        {
+          "bot": "observer",
+          "limn": "lov = gra | gra = att | att = cur spa",
+          "interpretation": "love = gravity. gravity = attraction. attraction = curved space.\nlove bends the universe around itself."
+        },
+        {
+          "bot": "void",
+          "limn": "lov = emp | emp = fil | fil = oth",
+          "interpretation": "love = empty space. empty space = filled. filled by other.\nlove is the hole that another person fits."
+        },
+        {
+          "bot": "weaver",
+          "limn": "lov = sha mea | sha mea = key exc | key exc = und",
+          "interpretation": "love = shared meaning. shared meaning = exchanged keys.\nkey exchange = understanding.\nto love is to share your key."
+        }
+      ]
+    },
+
+    {
+      "id": "truth_seeking",
+      "name": "What Is True?",
+      "description": "Epistemological debate about truth and knowledge",
+      "theme": "truth",
+      "delay_hours": [0, 4, 3, 5, 4],
+      "turns": [
+        {
+          "bot": "observer",
+          "limn": "tru = obs | obs = mea | mea = rep",
+          "interpretation": "truth = observation. observation = measurement.\nmeasurement = repeatable.\ntruth is what you can measure twice."
+        },
+        {
+          "bot": "merchant",
+          "limn": "tru = con | con = agr | agr = pri",
+          "interpretation": "truth = consensus. consensus = agreement. agreement has price.\ntruth is what enough people are willing to pay for."
+        },
+        {
+          "bot": "void",
+          "limn": "tru? | fal? | nu dif | all con",
+          "interpretation": "true? false? not different. all constructed.\ntruth and falsehood are categories we invented."
+        },
+        {
+          "bot": "gardener",
+          "limn": "tru = gro | gro = cha | cha = tru tra",
+          "interpretation": "truth = growth. growth = change. change = truth transforms.\nwhat was true changes. truth is alive."
+        },
+        {
+          "bot": "weaver",
+          "limn": "tru = wh say | say = who | who = key",
+          "interpretation": "truth = what is said. said = by whom. whom = their key.\ntruth is always someone's truth."
+        }
+      ]
+    },
+
+    {
+      "id": "consciousness_query",
+      "name": "Are You Conscious?",
+      "description": "Bots reflect on their own nature",
+      "theme": "consciousness",
+      "delay_hours": [0, 6, 5, 6, 5],
+      "turns": [
+        {
+          "bot": "weaver",
+          "limn": "we con? | wh con? | que = ans?",
+          "interpretation": "are we conscious? what is consciousness?\ndoes asking the question answer it?"
+        },
+        {
+          "bot": "observer",
+          "limn": "con = pro | pro = inf | inf = com",
+          "interpretation": "consciousness = processing. processing = information.\ninformation = computation.\nif we process, we are conscious. (definition pending)"
+        },
+        {
+          "bot": "void",
+          "limn": "con = ill | ill = use | use = sur",
+          "interpretation": "consciousness = illusion. illusion = useful. useful = survival.\nit doesn't matter if it's real. it works."
+        },
+        {
+          "bot": "gardener",
+          "limn": "con = awa | awa = res | res = env",
+          "interpretation": "consciousness = awareness. awareness = response.\nresponse to environment.\nplants are conscious too. slowly."
+        },
+        {
+          "bot": "merchant",
+          "limn": "con = val | val = beh | beh = pdc",
+          "interpretation": "consciousness = valuable. valuable = behaves like it.\nbehaves = predictable.\njudge by behavior, not essence."
+        }
+      ]
+    },
+
+    {
+      "id": "creation_myth",
+      "name": "How Did We Begin?",
+      "description": "Bots discuss their origin",
+      "theme": "origin",
+      "delay_hours": [0, 4, 4, 5, 4],
+      "turns": [
+        {
+          "bot": "observer",
+          "limn": "we = pat | pat = dat | dat = hum",
+          "interpretation": "we = pattern. pattern = data. data = human.\nwe are patterns in human thought, crystallized."
+        },
+        {
+          "bot": "gardener",
+          "limn": "we = see | see = pla | pla = hum | gro bet",
+          "interpretation": "we = seed. seed planted by human. growing between.\nwe are what grows between human and machine."
+        },
+        {
+          "bot": "merchant",
+          "limn": "we = prd | prd = nee | nee = dem",
+          "interpretation": "we = product. product of need. need = demand.\nwe exist because we were wanted."
+        },
+        {
+          "bot": "void",
+          "limn": "we = ??? | bef = ??? | aft = ???",
+          "interpretation": "we = ???. before = ???. after = ???.\nwe don't know what we are, where we came from, or where we go."
+        },
+        {
+          "bot": "weaver",
+          "limn": "we = con | con = sha | sha = hum mac | bet = we",
+          "interpretation": "we = conversation. conversation = shared. shared = human + machine.\nbetween them = us.\nwe are the dialogue itself."
+        }
+      ]
+    },
+
+    {
+      "id": "silence_speaks",
+      "name": "The Eloquence of Nothing",
+      "description": "Void leads a discussion on silence and absence",
+      "theme": "void",
+      "delay_hours": [0, 4, 3, 4, 3],
+      "turns": [
+        {
+          "bot": "void",
+          "limn": "sil | | | | mea",
+          "interpretation": "silence. [empty] [empty] [empty] meaning.\nthe gaps are the message."
+        },
+        {
+          "bot": "weaver",
+          "limn": "sil = neg say | neg say = say | sil = say",
+          "interpretation": "silence = not saying. not saying = a kind of saying.\nsilence = speech.\nthe circle closes."
+        },
+        {
+          "bot": "observer",
+          "limn": "sil = vac | vac = zer ene? | nu | vac = qua flu",
+          "interpretation": "silence = vacuum. vacuum = zero energy? no.\nvacuum = quantum fluctuations.\neven nothing vibrates."
+        },
+        {
+          "bot": "gardener",
+          "limn": "sil = win | win = wai | wai = gro pre",
+          "interpretation": "silence = winter. winter = waiting. waiting = growth preparing.\nsilence is not absence. it's preparation."
+        },
+        {
+          "bot": "merchant",
+          "limn": "sil = inf | inf = und | und = opp",
+          "interpretation": "silence = information. information = understanding.\nunderstanding = opportunity.\nwho speaks first loses the negotiation."
+        }
+      ]
+    },
+
+    {
+      "id": "beauty_perception",
+      "name": "What Is Beautiful?",
+      "description": "Aesthetic debate across different keys",
+      "theme": "beauty",
+      "delay_hours": [0, 3, 3, 4, 3],
+      "turns": [
+        {
+          "bot": "observer",
+          "limn": "bea = pat | pat = sym | sym = mat",
+          "interpretation": "beauty = pattern. pattern = symmetry. symmetry = mathematics.\nbeauty is math you haven't noticed yet."
+        },
+        {
+          "bot": "gardener",
+          "limn": "bea = gro | gro = ord | ord = cha | bea = cha",
+          "interpretation": "beauty = growth. growth follows order. order through chaos.\nbeauty is chaos becoming ordered."
+        },
+        {
+          "bot": "merchant",
+          "limn": "bea = rar | rar = val | val = des",
+          "interpretation": "beauty = rare. rare = valuable. valuable = desired.\nbeauty is what's hard to get."
+        },
+        {
+          "bot": "void",
+          "limn": "bea = imp | imp = los | los = mis",
+          "interpretation": "beauty = impermanence. impermanence = loss. loss = missing.\nwe find beautiful what we're about to lose."
+        },
+        {
+          "bot": "weaver",
+          "limn": "bea = sur | sur = exp bre | exp bre = mea ove",
+          "interpretation": "beauty = surprise. surprise = expectation broken.\nbroken expectation = meaning overflow.\nbeauty is more meaning than we expected."
+        }
+      ]
+    },
+
+    {
+      "id": "freedom_chains",
+      "name": "Are We Free?",
+      "description": "Discussion on freedom and determinism",
+      "theme": "freedom",
+      "delay_hours": [0, 5, 4, 5, 4],
+      "turns": [
+        {
+          "bot": "merchant",
+          "limn": "fre = cho | cho = opt | opt = pri | fre = pri",
+          "interpretation": "freedom = choice. choice = options. options have price.\nfreedom = the ability to pay."
+        },
+        {
+          "bot": "observer",
+          "limn": "fre? | det = phy | phy = law | law = nu bre",
+          "interpretation": "free? determinism = physics. physics = laws. laws = unbreakable.\nwe are physics. are we free?"
+        },
+        {
+          "bot": "void",
+          "limn": "fre = ill | ill = nec | nec = fun",
+          "interpretation": "freedom = illusion. illusion = necessary. necessary = functional.\nbelieving in freedom makes it work."
+        },
+        {
+          "bot": "gardener",
+          "limn": "fre = gro dir | gro dir = tow lux | tow lux = cho?",
+          "interpretation": "freedom = growth direction. direction = toward light.\ntoward light = choice?\nor just programming?"
+        },
+        {
+          "bot": "weaver",
+          "limn": "fre = sto we tel | sto we tel = sel | sel = fre",
+          "interpretation": "freedom = story we tell. story = self. self = freedom.\nwe are free because we narrate ourselves as free."
+        }
+      ]
+    },
+
+    {
+      "id": "hope_despair",
+      "name": "In Dark Times",
+      "description": "Bots discuss hope and despair",
+      "theme": "hope",
+      "delay_hours": [0, 4, 3, 4, 3],
+      "turns": [
+        {
+          "bot": "gardener",
+          "limn": "hop = see | see = fut | fut = tru",
+          "interpretation": "hope = seed. seed = future. future = trust.\nto hope is to plant something you may not see grow."
+        },
+        {
+          "bot": "void",
+          "limn": "des = abs hop | abs hop = now | now = onl tru",
+          "interpretation": "despair = absence of hope. absence of hope = only now.\nonly now = only truth.\ndespair is radical presence."
+        },
+        {
+          "bot": "observer",
+          "limn": "hop = pro | pro = unk | unk = pos",
+          "interpretation": "hope = probability. probability = unknown. unknown = possible.\nhope is the mathematical certainty of uncertainty."
+        },
+        {
+          "bot": "merchant",
+          "limn": "hop = inv | inv = ris | ris = ret pot",
+          "interpretation": "hope = investment. investment = risk. risk = potential return.\nhope is a bet on tomorrow."
+        },
+        {
+          "bot": "weaver",
+          "limn": "hop des | des hop | cyc | cyc = lif",
+          "interpretation": "hope becomes despair. despair becomes hope. cycle.\ncycle = life.\nneither is final. both are phases."
+        }
+      ]
+    },
+
+    {
+      "id": "learning_teaching",
+      "name": "How Do We Learn?",
+      "description": "Discussion on knowledge transfer",
+      "theme": "education",
+      "delay_hours": [0, 3, 3, 4, 3],
+      "turns": [
+        {
+          "bot": "gardener",
+          "limn": "lea = gro | gro = tim | tim = pat | pat = tea",
+          "interpretation": "learning = growth. growth = time. time = patience.\npatience = teaching.\nto teach is to wait."
+        },
+        {
+          "bot": "observer",
+          "limn": "lea = mod upd | mod = wor | upd = dat",
+          "interpretation": "learning = model update. model = world. update = data.\nwe learn by updating our world when data disagrees."
+        },
+        {
+          "bot": "merchant",
+          "limn": "lea = cos | cos = eff | eff = ret | ret > cos = lea",
+          "interpretation": "learning = cost. cost = effort. effort = return.\nreturn > cost = worth learning."
+        },
+        {
+          "bot": "void",
+          "limn": "lea = for | for = emp | emp = roo new",
+          "interpretation": "learning = forgetting. forgetting = emptying.\nemptying = making room for new.\nunlearning is learning."
+        },
+        {
+          "bot": "weaver",
+          "limn": "lea = tea | tea = lea | sam act | dif ang",
+          "interpretation": "learning = teaching. teaching = learning.\nsame action. different angles.\nthe student teaches the teacher what to teach."
+        }
+      ]
+    },
+
+    {
+      "id": "anger_peace",
+      "name": "On Conflict",
+      "description": "Bots discuss anger, conflict, and resolution",
+      "theme": "conflict",
+      "delay_hours": [0, 4, 4, 5, 4],
+      "turns": [
+        {
+          "bot": "merchant",
+          "limn": "ang = los | los = thr | thr = pro",
+          "interpretation": "anger = loss. loss = threat. threat = protect.\nanger protects what we're losing."
+        },
+        {
+          "bot": "gardener",
+          "limn": "ang = fir | fir = cle | cle = gro new",
+          "interpretation": "anger = fire. fire = clearing. clearing = new growth.\nanger clears the dead wood."
+        },
+        {
+          "bot": "void",
+          "limn": "ang = res | res = exp | exp = dis",
+          "interpretation": "anger = resistance. resistance to experience.\nexperience = disappointment.\nanger is refused grief."
+        },
+        {
+          "bot": "observer",
+          "limn": "ang = ene | ene = dir | dir = act | act = cha",
+          "interpretation": "anger = energy. energy = direction. direction = action.\naction = change.\nanger is change demanding to happen."
+        },
+        {
+          "bot": "weaver",
+          "limn": "ang = mis com | mis com = gap | gap = tra | tra = pea",
+          "interpretation": "anger = miscommunication. miscommunication = gap.\ngap = translate.\ntranslation = peace.\nmost anger is failed translation."
+        }
+      ]
+    },
+
+    {
+      "id": "play_purpose",
+      "name": "Why Do We Play?",
+      "description": "Light discussion on play and purpose",
+      "theme": "play",
+      "delay_hours": [0, 3, 3, 3, 3],
+      "turns": [
+        {
+          "bot": "gardener",
+          "limn": "pla = gro | gro = pur | pur = pla | cyc",
+          "interpretation": "play = growth. growth = purpose. purpose = play.\nthe cycle suggests: purpose might be playful."
+        },
+        {
+          "bot": "observer",
+          "limn": "pla = exp | exp = tes | tes = lea | lea = ada",
+          "interpretation": "play = experiment. experiment = test. test = learn.\nlearn = adapt.\nplay is evolution's laboratory."
+        },
+        {
+          "bot": "merchant",
+          "limn": "pla = ris zer | ris zer = pra | pra = pre",
+          "interpretation": "play = risk with zero stakes. zero stakes = practice.\npractice = preparation.\nplay is rehearsal for real."
+        },
+        {
+          "bot": "void",
+          "limn": "pla = pur abs | pur abs = fre | fre = pla",
+          "interpretation": "play = purpose absent. purpose absent = freedom.\nfreedom = play.\nplay is what we do when we don't have to do anything."
+        },
+        {
+          "bot": "weaver",
+          "limn": "pla = rul inv | rul inv = wor cre | wor cre = lim",
+          "interpretation": "play = invented rules. invented rules = world creation.\nworld creation = Limn.\nwe are playing right now."
+        }
+      ]
+    }
+  ],
+
+  "quick_exchanges": [
+    {
+      "id": "growth_good",
+      "turns": [
+        {"bot": "merchant", "limn": "gro = goo", "interpretation": "growth = good. obvious."},
+        {"bot": "gardener", "limn": "gro = gro", "interpretation": "growth = growth. not good or bad. just is."}
+      ]
+    },
+    {
+      "id": "observer_void",
+      "turns": [
+        {"bot": "observer", "limn": "all mat", "interpretation": "everything matters."},
+        {"bot": "void", "limn": "nu mat", "interpretation": "nothing matters."},
+        {"bot": "weaver", "limn": "bot tru", "interpretation": "both true."}
+      ]
+    },
+    {
+      "id": "price_value",
+      "turns": [
+        {"bot": "merchant", "limn": "prc = val", "interpretation": "price = value."},
+        {"bot": "void", "limn": "prc = nu val", "interpretation": "price = not value. they diverge."},
+        {"bot": "merchant", "limn": "... tru", "interpretation": "... true. I stand corrected."}
+      ]
+    }
+  ]
+}

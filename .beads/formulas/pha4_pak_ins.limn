@@ -1,0 +1,59 @@
+# Bead: Phase 4 - Package Install
+# pha (phase) 4 | pak (package) ins (install)
+
+# ============================================================================
+# Task: Implement limn pak install command in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha4_pak_ins"
+bea_pha sa 4
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs fetch, lock resolution
+bea_dep sa gro | "pha2_pak_fet" | "pha1_lok_res" | "pha3_reg_loo" |
+
+# ============================================================================
+# Implementation: Package install constraints
+# ============================================================================
+
+# New wor (words) for install:
+whe wor_ins   # install
+whe wor_dep   # dependency
+
+# Install state:
+whe ins_man         # manifest to read deps from
+whe ins_lok         # lock file to generate
+whe ins_dep_gro     # dependencies to install
+whe ins_res_suc     # success (1/0)
+whe ins_res_err     # error message
+
+# Install modes:
+whe ins_mod         # mode: all | add | upd
+whe ins_add_nom     # package to add
+whe ins_add_ver     # version to add
+
+# Install all from pak.limn:
+ins_mod sa "all" cau ins_dep_gro sa man_dep_gro
+
+# Add single package:
+ins_mod sa "add" cau ins_add_nom ma ""
+
+# Install constraints:
+whe ins_eac_dep     # for each dependency
+whe ins_eac_cid     # resolved CID
+whe ins_eac_suc     # fetch success
+
+# All deps must succeed:
+whe ins_all_suc
+ins_all_suc sa 1 cau ins_res_suc sa 1
+ins_all_suc sa 0 cau ins_res_err sa "Failed to install one or more dependencies"
+
+---
+# key: define task
+bea_des sa "Implement limn pak install using Limn constraints. Extend vocabulary with ins (install), dep (dependency). Read deps from pak.limn, resolve via registry/lock, fetch from IPFS, generate lock file."

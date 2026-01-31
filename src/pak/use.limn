@@ -1,0 +1,113 @@
+# use (import) sys - Package import system
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Import syntax support:
+# use cid bafybei...           - import by CID (exact)
+# use nom "math-utils"         - import by name (latest from registry)
+# use nom "math-utils" ver 1 0 0  - import by name + version
+# use cid bafybei... | get add | get mul  - selective imports
+# ============================================================================
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe use_typ       # import type: cid | nom
+whe use_cid_val   # CID value (if direct import)
+whe use_nom_val   # name value (if registry lookup)
+whe use_ver_maj   # version major (optional)
+whe use_ver_min   # version minor (optional)
+whe use_ver_pat   # version patch (optional)
+whe use_get_gro   # specific exports to get (optional)
+
+# ============================================================================
+# State variables
+# ============================================================================
+
+whe use_res_cid   # resolved CID
+whe use_res_dir   # resolved package directory
+whe use_res_exp   # resolved exports (group)
+whe use_res_suc   # success
+whe use_res_err   # error
+
+# ============================================================================
+# Resolution flow
+# ============================================================================
+
+# Step 1: Resolve to CID
+
+# Direct CID import
+use_typ sa "cid" cau use_res_cid sa use_cid_val
+
+# Name import -> lookup in registry
+use_typ sa "nom" cau reg_loo cau use_nom_val eff loo_res
+whe loo_res
+whe reg_loo
+
+# Name + version import -> lookup specific version
+use_typ sa "nom" cau use_ver_maj ma 0 cau reg_loo_ver cau use_nom_val use_ver_maj use_ver_min use_ver_pat eff ver_res
+whe ver_res
+whe reg_loo_ver
+
+# Set resolved CID from lookup
+loo_res ma "" cau use_res_cid sa loo_res
+ver_res ma "" cau use_res_cid sa ver_res
+
+# Step 2: Fetch package
+
+# Check cache first
+whe cac_dir
+cac_dir sa "~/.limn/pak/"
+
+whe cac_pat
+cac_pat sa cac_dir joi use_res_cid
+
+exi cau cac_pat eff cac_hit
+whe cac_hit
+
+# Use cache if available
+cac_hit sa tru cau use_res_dir sa cac_pat cau use_res_suc sa tru
+
+# Fetch from IPFS if not cached
+cac_hit sa fal cau ipfs_get cau use_res_cid eff fet_dir
+whe fet_dir
+fet_dir ma "" cau use_res_dir sa fet_dir cau use_res_suc sa tru
+fet_dir sa hol cau use_res_suc sa fal cau use_res_err sa "Failed to fetch package"
+
+# Step 3: Load exports
+
+# Read package manifest
+use_res_suc sa tru cau rea cau use_res_dir joi "/pak.limn" eff man_con
+whe man_con
+
+# Parse manifest to get entry file
+use_res_suc sa tru cau pak_par cau man_con eff man_res
+whe man_res
+
+# Read entry file
+whe ent_pat
+ent_pat sa use_res_dir joi "/" joi man_res
+use_res_suc sa tru cau rea cau ent_pat eff ent_con
+whe ent_con
+
+# Parse entry to get exports
+# (In full implementation: execute entry file and collect exported definitions)
+
+# Step 4: Selective imports (if use_get_gro specified)
+
+who use_get_gro sa get_cnt
+whe get_cnt
+get_cnt ma 0 cau use_sel sa tru
+get_cnt sa 0 cau use_sel sa fal
+whe use_sel
+
+# Filter exports to only selected ones
+use_sel sa tru cau use_res_exp sa use_get_gro
+use_sel sa fal cau use_res_exp sa ent_exp
+whe ent_exp
+
+---
+# key: Example import by CID
+use_typ sa "cid"
+use_cid_val sa "bafybeiabc123..."

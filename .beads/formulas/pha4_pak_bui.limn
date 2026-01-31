@@ -1,0 +1,57 @@
+# Bead: Phase 4 - Package Build
+# pha (phase) 4 | pak (package) bui (build)
+
+# ============================================================================
+# Task: Implement limn pak build command in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha4_pak_bui"
+bea_pha sa 4
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs validation
+bea_dep sa gro | "pha1_pak_val" |
+
+# ============================================================================
+# Implementation: Package build constraints
+# ============================================================================
+
+# New wor (words) for build:
+whe wor_bui   # build
+whe wor_bun   # bundle
+whe wor_min   # minify (optional)
+
+# Build state:
+whe bui_dir         # source directory
+whe bui_out         # output bundle
+whe bui_fil_gro     # files to include
+whe bui_exc_gro     # files to exclude
+whe bui_res_suc     # success (1/0)
+whe bui_res_err     # error message
+
+# Exclude patterns:
+whe exc_git         # .git/
+whe exc_nod         # node_modules/
+whe exc_prt         # __pycache__/
+whe exc_env         # .env
+
+bui_exc_gro sa gro | ".git" | "node_modules" | "__pycache__" | ".env" | ".limn-pkg" |
+
+# Build constraints:
+whe bui_pre_val     # pre: validation passed
+bui_pre_val sa 1 cau bui_res_suc sa 1
+bui_pre_val sa 0 cau bui_res_err sa "Validation failed, cannot build"
+
+# Output location:
+whe bui_out_dir     # .limn-pkg/
+whe bui_out_arc     # archive file
+
+---
+# key: define task
+bea_des sa "Implement limn pak build using Limn constraints. Extend vocabulary with bui (build), bun (bundle), min (minify). Collect files, exclude patterns, create bundle in .limn-pkg/."

@@ -1,0 +1,12 @@
+# Limn-PL: Bidirectional Solving
+# pro (program): x joi 5 sa 12, solve for x
+
+# var (variables)
+whe x
+
+# cns (constraints)
+x joi 5 sa 12
+
+---
+# key (input values)
+# (nu key - solve x from constraint)

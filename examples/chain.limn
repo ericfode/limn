@@ -1,0 +1,21 @@
+# Limn-PL: Simple Arithmetic
+# (Group operations require special input format)
+# pro (program): chain of operations
+
+# var (variables)
+whe a
+whe b
+whe c
+whe d
+
+# cns (constraints)
+# a joi b sa c (a + b = c)
+a joi b sa c
+
+# c exp 2 sa d (c * 2 = d)
+c exp 2 sa d
+
+---
+# key (input values)
+a sa 5
+b sa 3

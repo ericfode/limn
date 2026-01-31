@@ -1,0 +1,228 @@
+# Limn Package Manager - Written in Limn
+# pak man (package manager) | sol pro cns
+# Extends Limn with I/O, IPFS, and package management
+
+# ============================================================================
+# PART 1: Extended Vocabulary (Primitives)
+# ============================================================================
+
+# I/O primitives (implemented by host):
+# rea fil nom eff con    - read file content
+# wri fil nom con        - write file content
+# exi pat eff res        - check path exists
+# lis dir eff gro        - list directory
+# cre dir nom            - create directory
+# exe cmd eff out        - execute command
+
+# IPFS primitives (implemented by host):
+# ipfs add pat eff cid   - add to IPFS
+# ipfs get cid eff pat   - get from IPFS
+# ipfs pin cid           - pin content
+# ipns res nam eff cid   - resolve IPNS
+# ipns pub nam cid       - publish to IPNS
+
+# ============================================================================
+# PART 2: Package Manifest Parsing
+# ============================================================================
+
+whe man_con       # manifest content
+whe man_lin_gro   # lines
+whe man_res       # parsed result
+
+# Parse pak.limn manifest:
+whe par_man_nom
+whe par_man_ver_maj
+whe par_man_ver_min
+whe par_man_ver_pat
+whe par_man_aut
+whe par_man_des
+whe par_man_ent
+whe par_man_dep_gro
+
+# Constraint: manifest must have name
+par_man_nom ma "" cau man_val sa 1
+par_man_nom sa "" cau man_val sa 0
+whe man_val
+
+# ============================================================================
+# PART 3: Package Validation
+# ============================================================================
+
+whe val_dir       # directory to validate
+whe val_man_exi   # pak.limn exists
+whe val_ent_exi   # entry file exists
+whe val_src_exi   # src/ exists
+whe val_res       # validation result
+whe val_err       # validation errors
+
+# Validation constraints:
+val_man_exi sa 1 cau val_ent_exi sa 1 cau val_res sa 1
+val_man_exi sa 0 cau val_res sa 0 cau val_err sa "Missing pak.limn"
+val_ent_exi sa 0 cau val_res sa 0 cau val_err sa "Missing entry file"
+
+# ============================================================================
+# PART 4: IPFS Integration
+# ============================================================================
+
+whe ipfs_dae_run  # daemon running
+whe ipfs_api_end  # API endpoint
+
+# Detection:
+whe ipfs_det_cmd
+whe ipfs_det_res
+ipfs_det_cmd sa "ipfs id"
+ipfs_det_res sa 0 cau ipfs_dae_run sa 1
+ipfs_det_res ma 0 cau ipfs_dae_run sa 0
+
+# Add package:
+whe ipfs_add_dir
+whe ipfs_add_cid
+whe ipfs_add_suc
+
+ipfs_dae_run sa 1 cau ipfs_add_dir ma "" cau ipfs_add_suc sa 1
+ipfs_dae_run sa 0 cau ipfs_add_suc sa 0
+
+# Fetch package:
+whe ipfs_fet_cid
+whe ipfs_fet_dir
+whe ipfs_fet_suc
+
+# Cache check:
+whe cac_dir
+whe cac_hit
+cac_dir sa "~/.limn/pak/"
+cac_hit sa 1 cau ipfs_fet_suc sa 1
+cac_hit sa 0 cau ipfs_dae_run sa 1 cau ipfs_fet_suc sa 1
+cac_hit sa 0 cau ipfs_dae_run sa 0 cau ipfs_fet_suc sa 0
+
+# ============================================================================
+# PART 5: Registry
+# ============================================================================
+
+whe reg_ipns      # registry IPNS name
+whe reg_cid       # registry CID
+whe reg_con       # registry content
+whe reg_pak_gro   # packages in registry
+
+reg_ipns sa "limn.pkg"
+
+# Lookup:
+whe loo_nom       # package name to lookup
+whe loo_ver       # version (optional)
+whe loo_res_cid   # result CID
+whe loo_res_fnd   # found
+
+# ============================================================================
+# PART 6: Commands
+# ============================================================================
+
+# pak ini (init):
+whe cmd
+whe cmd_arg
+whe cmd_res
+
+whe ini_nom       # package name
+whe ini_dir       # directory
+whe ini_suc
+
+cmd sa "ini" cau ini_nom ma "" cau ini_suc sa 1
+
+# pak che (check):
+whe che_dir
+whe che_suc
+
+cmd sa "che" cau val_res sa 1 cau che_suc sa 1
+cmd sa "che" cau val_res sa 0 cau che_suc sa 0
+
+# pak bui (build):
+whe bui_dir
+whe bui_out
+whe bui_suc
+
+cmd sa "bui" cau val_res sa 1 cau bui_suc sa 1
+cmd sa "bui" cau val_res sa 0 cau bui_suc sa 0
+
+# pak pub (publish):
+whe pub_dir
+whe pub_cid
+whe pub_suc
+
+cmd sa "pub" cau bui_suc sa 1 cau ipfs_dae_run sa 1 cau pub_suc sa 1
+cmd sa "pub" cau bui_suc sa 0 cau pub_suc sa 0
+cmd sa "pub" cau ipfs_dae_run sa 0 cau pub_suc sa 0
+
+# pak ins (install):
+whe ins_lok       # from lock file
+whe ins_all       # all deps
+whe ins_suc
+
+cmd sa "ins" cau ipfs_dae_run sa 1 cau ins_suc sa 1
+cmd sa "ins" cau ipfs_dae_run sa 0 cau cac_hit sa 1 cau ins_suc sa 1
+
+# pak sea (search):
+whe sea_que       # search query
+whe sea_res_gro   # results
+whe sea_suc
+
+cmd sa "sea" cau sea_que ma "" cau sea_suc sa 1
+
+# ============================================================================
+# PART 7: Lock File Resolution
+# ============================================================================
+
+whe lok_fil       # lock file path
+whe lok_con       # lock file content
+whe lok_dep_gro   # locked dependencies
+
+# Each locked dep:
+whe lok_dep_nom
+whe lok_dep_cid
+
+# Resolution:
+whe res_dep_gro   # dependencies to resolve
+whe res_lok_gro   # resolved locks
+whe res_con_gro   # conflicts detected
+
+# Conflict: same name, different CID
+whe con_a_nom
+whe con_a_cid
+whe con_b_nom
+whe con_b_cid
+whe con_det
+
+con_a_nom sa con_b_nom cau con_a_cid sa con_b_cid cut con_det sa 1
+
+# ============================================================================
+# PART 8: Import System
+# ============================================================================
+
+# use cid bafybei... (direct)
+# use nom "math-utils" (registry)
+# use nom "math-utils" ver 1 0 0 (versioned)
+
+whe use_typ       # cid | nom
+whe use_cid_val   # CID if direct
+whe use_nom_val   # name if registry
+whe use_ver_maj   # version if specified
+whe use_ver_min
+whe use_ver_pat
+
+whe use_res_cid   # resolved CID
+whe use_res_pak   # resolved package
+
+# Direct CID:
+use_typ sa "cid" cau use_res_cid sa use_cid_val
+
+# Registry lookup:
+use_typ sa "nom" cau use_res_cid sa loo_res_cid
+
+---
+# key: Run package manager
+
+# Example: Check a package
+cmd sa "che"
+val_dir sa "."
+
+# Example: Initialize a package
+# cmd sa "ini"
+# ini_nom sa "my-package"

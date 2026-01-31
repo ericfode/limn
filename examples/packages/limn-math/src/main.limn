@@ -1,0 +1,100 @@
+# limn-math - Mathematical utilities for Limn
+# Exports: add, sub, mul, div, pow, circle_area, rect_area, c_to_f, f_to_c
+
+# ============================================================================
+# Basic Arithmetic (bidirectional)
+# ============================================================================
+
+# add: a joi b sa result
+# Given any two, compute the third
+whe add_a
+whe add_b
+whe add_result
+add_a joi add_b sa add_result
+
+# sub: a cut b sa result
+# Given any two, compute the third
+whe sub_a
+whe sub_b
+whe sub_result
+sub_a cut sub_b sa sub_result
+
+# mul: a exp b sa result
+# Given any two, compute the third
+whe mul_a
+whe mul_b
+whe mul_result
+mul_a exp mul_b sa mul_result
+
+# div: a con b sa result
+# Given any two, compute the third
+whe div_a
+whe div_b
+whe div_result
+div_a con div_b sa div_result
+
+# ============================================================================
+# Geometry
+# ============================================================================
+
+# Circle area: pi * r^2
+whe circle_radius
+whe circle_area
+whe pi
+pi sa 3.14159265359
+circle_radius exp circle_radius exp pi sa circle_area
+
+# Rectangle area: width * height
+whe rect_width
+whe rect_height
+whe rect_area
+rect_width exp rect_height sa rect_area
+
+# Triangle area: (base * height) / 2
+whe tri_base
+whe tri_height
+whe tri_area
+tri_base exp tri_height con 2 sa tri_area
+
+# ============================================================================
+# Temperature Conversions (bidirectional)
+# ============================================================================
+
+# Celsius to Fahrenheit: F = C * 9/5 + 32
+# Fahrenheit to Celsius: C = (F - 32) * 5/9
+whe temp_c
+whe temp_f
+whe temp_t1
+whe temp_t2
+
+# C * 9 = t1
+temp_c exp 9 sa temp_t1
+
+# t1 / 5 = t2
+temp_t1 con 5 sa temp_t2
+
+# t2 + 32 = F
+temp_t2 joi 32 sa temp_f
+
+# ============================================================================
+# Distance Conversions
+# ============================================================================
+
+# Kilometers to Miles: miles = km * 0.621371
+whe dist_km
+whe dist_miles
+dist_km exp 0.621371 sa dist_miles
+
+# ============================================================================
+# Percentage
+# ============================================================================
+
+# percent of value = result
+whe pct_value
+whe pct_percent
+whe pct_result
+pct_value exp pct_percent con 100 sa pct_result
+
+---
+# key: Example - compute circle area with radius 5
+circle_radius sa 5

@@ -1,0 +1,103 @@
+# pak reg (registry) - Decentralized package registry
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Registry format: A Limn program that stores package metadata
+# The registry is itself published to IPFS with IPNS for updates
+# ============================================================================
+
+# ============================================================================
+# Registry configuration
+# ============================================================================
+
+whe reg_ipns      # registry IPNS name
+whe reg_cid       # current registry CID
+whe reg_con       # registry content
+
+# Default registry
+reg_ipns sa "limn.pkg"
+
+# ============================================================================
+# Package entries (stored as variables in registry)
+# ============================================================================
+
+# Each package gets a set of variables:
+# whe pak_{name}_lat     - latest CID
+# whe pak_{name}_1_0_0   - version 1.0.0 CID
+# whe pak_{name}_aut     - author
+# whe pak_{name}_des     - description
+
+# Example package entry:
+whe pak_math_utils_lat
+whe pak_math_utils_1_0_0
+whe pak_math_utils_aut
+whe pak_math_utils_des
+
+# ============================================================================
+# Registry operations
+# ============================================================================
+
+whe reg_op        # operation: loo (lookup) | add | upd | sea (search)
+
+# --- Lookup ---
+whe loo_nom       # package name to lookup
+whe loo_ver       # version (optional)
+whe loo_res_cid   # result CID
+whe loo_res_fnd   # found (tru/fal)
+
+# Lookup by name -> get latest
+reg_op sa "loo" cau loo_ver sa hol cau loo_res_cid sa pak_lat
+whe pak_lat       # placeholder for dynamic lookup
+
+# Lookup by name + version -> get specific
+reg_op sa "loo" cau loo_ver ma "" cau loo_res_cid sa pak_ver
+whe pak_ver       # placeholder for dynamic lookup
+
+# --- Add ---
+whe add_nom       # package name to add
+whe add_cid       # CID to add
+whe add_ver_maj   # version
+whe add_ver_min
+whe add_ver_pat
+whe add_aut       # author
+whe add_des       # description
+whe add_res_suc   # success
+
+# Add operation updates registry variables
+reg_op sa "add" cau add_nom ma "" cau add_cid ma "" cau add_res_suc sa tru
+
+# --- Search ---
+whe sea_que       # search query
+whe sea_res_gro   # results (group of matches)
+whe sea_res_cnt   # count
+
+# Search matches in name, description, author
+reg_op sa "sea" cau sea_que ma "" cau sea_res_suc sa tru
+whe sea_res_suc
+
+# ============================================================================
+# Registry sync (IPNS)
+# ============================================================================
+
+whe syn_dir       # direction: pul (pull) | pus (push)
+whe syn_res_suc   # success
+
+# Pull: resolve IPNS -> fetch registry
+syn_dir sa "pul" cau ipns_res cau reg_ipns eff res_cid
+whe res_cid
+res_cid ma "" cau ipfs_get cau res_cid eff reg_pat
+whe reg_pat
+reg_pat ma "" cau rea cau reg_pat eff reg_con
+
+# Push: publish new registry to IPNS
+syn_dir sa "pus" cau wri cau ".limn-reg/registry.limn" reg_con eff wri_res
+whe wri_res
+wri_res sa tru cau ipfs_add cau ".limn-reg/" eff new_cid
+whe new_cid
+new_cid ma "" cau ipns_pub cau reg_ipns new_cid eff pub_res
+whe pub_res
+pub_res sa tru cau syn_res_suc sa tru
+
+---
+# key: Initialize empty registry
+reg_op sa "ini"

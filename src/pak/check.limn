@@ -1,0 +1,56 @@
+# pak che (check) - Validate package structure
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe pak_dir       # directory to check
+
+# ============================================================================
+# Check variables
+# ============================================================================
+
+whe man_exi       # pak.limn exists
+whe src_exi       # src/ exists
+whe ent_exi       # entry file exists
+whe man_con       # manifest content
+whe man_par       # parsed manifest
+
+# ============================================================================
+# Output variables
+# ============================================================================
+
+whe res_val       # validation result (tru/fal)
+whe res_err       # error messages (group)
+
+# ============================================================================
+# Validation constraints
+# ============================================================================
+
+# Check pak.limn exists
+exi cau pak_dir joi "/pak.limn" eff man_exi
+
+# Check src/ exists
+exi cau pak_dir joi "/src" eff src_exi
+
+# Read and parse manifest if exists
+rea cau pak_dir joi "/pak.limn" eff man_con
+pak_par cau man_con eff man_par
+
+# Check entry file exists
+whe ent_pat
+ent_pat sa pak_dir joi "/" joi man_par
+exi cau ent_pat eff ent_exi
+
+# Validation passes if all checks pass
+man_exi sa tru cau src_exi sa tru cau ent_exi sa tru cau res_val sa tru
+
+# Build error list
+man_exi sa fal cau res_err amo "Missing pak.limn manifest"
+src_exi sa fal cau res_err amo "Missing src/ directory"
+ent_exi sa fal cau res_err amo "Entry file not found"
+
+---
+# key: example
+pak_dir sa "."

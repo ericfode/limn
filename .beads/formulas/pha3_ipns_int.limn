@@ -1,0 +1,57 @@
+# Bead: Phase 3 - IPNS Integration
+# pha (phase) 3 | ipns int (integration)
+
+# ============================================================================
+# Task: Implement IPNS for mutable registry in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha3_ipns_int"
+bea_pha sa 3
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs registry format and IPFS
+bea_dep sa gro | "pha3_reg_for" | "pha2_ipfs_det" |
+
+# ============================================================================
+# Implementation: IPNS integration constraints
+# ============================================================================
+
+# New wor (words) for IPNS:
+whe wor_ipns   # IPNS
+whe wor_nam    # name (IPNS name)
+whe wor_upd    # update
+whe wor_res    # resolve
+
+# IPNS state:
+whe ipns_nam        # IPNS name/key
+whe ipns_cid_cur    # current CID it points to
+whe ipns_cid_new    # new CID to publish
+whe ipns_res_suc    # operation success (1/0)
+whe ipns_res_err    # error message
+
+# IPNS operations:
+whe ipns_op         # operation type: res (resolve) | pub (publish)
+
+# Resolve: IPNS name -> CID
+ipns_op sa "res" cau ipns_cid_cur ma ""
+
+# Publish: update IPNS name to point to new CID
+ipns_op sa "pub" cau ipns_cid_new ma ""
+
+# Registry IPNS name:
+whe reg_ipns_nam
+reg_ipns_nam sa "limn.pkg"  # default registry IPNS
+
+# DNS link support:
+whe dns_lin         # DNS link name
+whe dns_res_ipns    # resolved IPNS name
+
+---
+# key: define task
+bea_des sa "Implement IPNS integration using Limn constraints. Extend vocabulary with ipns, nam (name), upd (update), res (resolve). Resolve IPNS to CID, publish new CID to IPNS, support DNS link."

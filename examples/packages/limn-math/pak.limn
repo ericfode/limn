@@ -1,0 +1,20 @@
+# pak.limn - Package manifest for limn-math
+# A mathematical utilities package for Limn
+
+# Package info
+whe pak_nom
+whe pak_ver_maj
+whe pak_ver_min
+whe pak_ver_pat
+whe pak_aut
+whe pak_des
+whe pak_ent
+
+---
+pak_nom sa "limn-math"
+pak_ver_maj sa 1
+pak_ver_min sa 0
+pak_ver_pat sa 0
+pak_aut sa "limn-community"
+pak_des sa "Mathematical utilities including arithmetic, geometry, and conversions"
+pak_ent sa "src/main.limn"

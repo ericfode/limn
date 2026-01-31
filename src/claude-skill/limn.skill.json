@@ -1,0 +1,151 @@
+{
+  "name": "limn",
+  "version": "1.0.0",
+  "description": "Limn Language Interpreter - A constraint-based language where words are regions and meaning is their intersection",
+  "author": "Limn Land",
+  "license": "MIT",
+  "repository": "https://github.com/gastowns/linga-land",
+
+  "commands": {
+    "limn": {
+      "description": "Interpret, compose, and learn Limn",
+      "usage": "/limn <subcommand> [arguments]",
+      "handler": "limn_interpreter.py",
+      "bootstrap": "bootstrap_prompt.md",
+      "vocabulary": "vocabulary.json",
+      "subcommands": {
+        "interpret": {
+          "description": "Interpret a Limn sentence",
+          "usage": "/limn interpret <sentence> [--key=\"context\"]",
+          "arguments": {
+            "sentence": {
+              "type": "string",
+              "required": true,
+              "description": "The Limn sentence to interpret (space-separated words)"
+            },
+            "key": {
+              "type": "string",
+              "required": false,
+              "description": "Context key to collapse ambiguity"
+            }
+          },
+          "examples": [
+            "/limn interpret sol liq tra",
+            "/limn interpret gro exp bri --key=\"astronomy\"",
+            "/limn interpret hum lif gro joi soc --key=\"history\""
+          ]
+        },
+        "compose": {
+          "description": "Create Limn sentences from English concepts",
+          "usage": "/limn compose \"<english description>\"",
+          "arguments": {
+            "description": {
+              "type": "string",
+              "required": true,
+              "description": "English description of the concept to express"
+            }
+          },
+          "examples": [
+            "/limn compose \"a hidden truth slowly becoming known\"",
+            "/limn compose \"water becoming ice\"",
+            "/limn compose \"the joy of reunion after separation\""
+          ]
+        },
+        "teach": {
+          "description": "Enter interactive teaching mode",
+          "usage": "/limn teach [--level=<1-5>]",
+          "arguments": {
+            "level": {
+              "type": "integer",
+              "required": false,
+              "default": 1,
+              "description": "Starting difficulty level (1-5)"
+            }
+          },
+          "examples": [
+            "/limn teach",
+            "/limn teach --level=3"
+          ]
+        },
+        "validate": {
+          "description": "Check if a Limn sentence is valid",
+          "usage": "/limn validate <sentence>",
+          "arguments": {
+            "sentence": {
+              "type": "string",
+              "required": true,
+              "description": "The Limn sentence to validate"
+            }
+          },
+          "examples": [
+            "/limn validate sol liq hot",
+            "/limn validate slow gro hot"
+          ]
+        },
+        "poetry": {
+          "description": "Generate Limn poetry with annotations",
+          "usage": "/limn poetry theme: <theme>",
+          "arguments": {
+            "theme": {
+              "type": "string",
+              "required": true,
+              "description": "Theme for the poetry"
+            }
+          },
+          "examples": [
+            "/limn poetry theme: grief",
+            "/limn poetry theme: hope",
+            "/limn poetry theme: transformation"
+          ]
+        },
+        "converse": {
+          "description": "Enter conversation mode with Limn responses",
+          "usage": "/limn converse --key=\"<context>\"",
+          "arguments": {
+            "key": {
+              "type": "string",
+              "required": true,
+              "description": "Interpretive lens for the conversation"
+            }
+          },
+          "examples": [
+            "/limn converse --key=\"late night thoughts about meaning\"",
+            "/limn converse --key=\"a friendship growing distant\""
+          ]
+        }
+      }
+    }
+  },
+
+  "configuration": {
+    "default_interpretations": 10,
+    "min_interpretations": 8,
+    "max_interpretations": 12,
+    "response_style": "poetic",
+    "embrace_ambiguity": true,
+    "lowercase_limn": true
+  },
+
+  "resources": {
+    "bootstrap_prompt": "bootstrap_prompt.md",
+    "vocabulary": "vocabulary.json",
+    "skill_spec": "limn-skill.md"
+  },
+
+  "capabilities": [
+    "interpretation",
+    "composition",
+    "teaching",
+    "validation",
+    "poetry_generation",
+    "conversation"
+  ],
+
+  "language_properties": {
+    "word_structure": "CV or CVC syllables",
+    "grammar": "constraint intersection",
+    "order_independence": true,
+    "operators": ["nu", "ve", "so", "yo", "an", "|", "(", ")"],
+    "key_mechanism": "context-based disambiguation"
+  }
+}

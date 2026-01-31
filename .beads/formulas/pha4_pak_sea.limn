@@ -1,0 +1,55 @@
+# Bead: Phase 4 - Package Search
+# pha (phase) 4 | pak (package) sea (search)
+
+# ============================================================================
+# Task: Implement limn pak search command in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha4_pak_sea"
+bea_pha sa 4
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs registry lookup
+bea_dep sa gro | "pha3_reg_loo" |
+
+# ============================================================================
+# Implementation: Package search constraints
+# ============================================================================
+
+# Search state:
+whe sea_que         # search query
+whe sea_reg_src     # registry to search
+whe sea_res_gro     # result packages
+whe sea_res_cnt     # result count
+whe sea_res_suc     # success (1/0)
+
+# Search constraints:
+whe sea_mat_nom     # match in name
+whe sea_mat_des     # match in description
+whe sea_mat_aut     # match in author
+
+# Match any field:
+sea_mat_nom sa 1 cau sea_inc sa 1
+sea_mat_des sa 1 cau sea_inc sa 1
+sea_mat_aut sa 1 cau sea_inc sa 1
+
+whe sea_inc         # include in results
+
+# Result formatting:
+whe res_pak_nom
+whe res_pak_ver
+whe res_pak_des
+whe res_pak_aut
+
+# Sort results:
+whe sea_sor         # sort by: rel (relevance) | nom | dow (downloads)
+
+---
+# key: define task
+bea_des sa "Implement limn pak search using Limn constraints. Search registry by query, match in name/description/author, format and sort results."

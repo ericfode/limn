@@ -1,0 +1,53 @@
+# Bead: Phase 2 - CID Verification
+# pha (phase) 2 | cid ver (verification)
+
+# ============================================================================
+# Task: Implement CID verification in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha2_cid_ver"
+bea_pha sa 2
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs package fetching
+bea_dep sa gro | "pha2_pak_fet" |
+
+# ============================================================================
+# Implementation: CID verification constraints
+# ============================================================================
+
+# New wor (words) for verification:
+whe wor_ver   # verify
+whe wor_has   # hash
+whe wor_mat   # match
+
+# Verification state:
+whe ver_cid_exp     # expected CID
+whe ver_con_dir     # content directory
+whe ver_cid_cal     # calculated CID
+whe ver_res_mat     # match result (1/0)
+whe ver_res_err     # error if mismatch
+
+# Verification constraints:
+ver_cid_exp sa ver_cid_cal cau ver_res_mat sa 1
+ver_cid_exp sa ver_cid_cal cut ver_res_mat sa 0 cau ver_res_err sa "CID mismatch: content corrupted or tampered"
+
+# CID format validation:
+whe cid_for_val     # format valid (1/0)
+whe cid_pre         # CID prefix (bafy, Qm, etc)
+whe cid_len         # CID length
+
+# Valid CID prefixes:
+cid_pre sa "bafy" cau cid_for_val sa 1
+cid_pre sa "Qm" cau cid_for_val sa 1
+cid_for_val sa 0 cau ver_res_err sa "Invalid CID format"
+
+---
+# key: define task
+bea_des sa "Implement CID verification using Limn constraints. Extend vocabulary with ver (verify), has (hash), mat (match). Calculate content hash, compare with expected CID, detect tampering."

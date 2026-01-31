@@ -1,0 +1,70 @@
+# Edge Cases for Limn Constraint Solver
+# Created by swarm bot validator-beta, iteration 2
+
+# ============================================================================
+# TEST 1: Circular dependency
+# ============================================================================
+# x sa y | y sa x - should resolve if one is keyed
+
+whe circular_x
+whe circular_y
+
+circular_x sa circular_y
+
+# ============================================================================
+# TEST 2: Overdetermined system
+# ============================================================================
+# a joi b sa 10 | a joi b sa 20 - contradiction?
+
+whe over_a
+whe over_b
+whe over_sum1
+whe over_sum2
+
+over_a joi over_b sa over_sum1
+over_a joi over_b sa over_sum2
+
+# ============================================================================
+# TEST 3: Complex chain
+# ============================================================================
+# a -> b -> c -> d -> e with various operations
+
+whe chain_a
+whe chain_b
+whe chain_c
+whe chain_d
+whe chain_e
+
+chain_a exp 2 sa chain_b
+chain_b joi 5 sa chain_c
+chain_c con 3 sa chain_d
+chain_d cut 1 sa chain_e
+
+# ============================================================================
+# TEST 4: Bidirectional with division
+# ============================================================================
+# x con y sa z - solve for x given y and z
+
+whe bid_x
+whe bid_y
+whe bid_z
+
+bid_x con bid_y sa bid_z
+
+# ============================================================================
+# TEST 5: Multiple paths to same variable
+# ============================================================================
+# a joi b sa sum | c joi d sa sum
+
+whe multi_a
+whe multi_b
+whe multi_c
+whe multi_d
+whe multi_sum
+
+multi_a joi multi_b sa multi_sum
+multi_c joi multi_d sa multi_sum
+
+---
+# key: Test circular with one value
+circular_x sa 42

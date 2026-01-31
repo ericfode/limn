@@ -1,0 +1,78 @@
+# Limn Self - Self-Interpreting Limn
+# sol pro cns | nu eng | sol Limn
+
+# ============================================================================
+# This file demonstrates Limn interpreting Limn
+# The key principle: constraints are the program AND the interpreter
+# ============================================================================
+
+# ============================================================================
+# Part 1: Encoding
+# ============================================================================
+# In Limn, we encode programs as data using groups:
+# - A literal value: gro | 1 | val |
+# - A variable ref:  gro | 2 | nom |
+# - A binary op:     gro | 3 | ope | lef | rig |
+# - A constraint:    gro | 4 | rel | lef | rig |
+
+# Operation codes:
+# JOI sa 1, CUT sa 2, EXP sa 3, CON sa 4
+
+# ============================================================================
+# Part 2: Environment Functions
+# ============================================================================
+
+# env_joi: add binding to environment
+# cau env_joi | whe nom | whe val | whe env | whe eff |
+# cns | eff sa gro | nom | val | env |
+
+# env_sol: solve variable in environment
+# cau env_sol | whe nom | whe env | whe eff |
+# cns |
+#   if par 0 env sa nom
+#   the par 1 env sa eff
+#   oth env_sol nom par 2 env sa eff
+
+# ============================================================================
+# Part 3: Evaluation Function
+# ============================================================================
+
+# eva: evaluate node in environment
+# cau eva | whe nod | whe env | whe eff |
+# cns |
+#   par 0 nod sa nod_type |
+#   if nod_type sa 1 the par 1 nod sa eff |     # literal
+#   if nod_type sa 2 the env_sol par 1 nod env sa eff |  # variable
+#   if nod_type sa 3 the eva_bin nod env sa eff    # binary
+
+# eva_bin: evaluate binary operation
+# cau eva_bin | whe nod | whe env | whe eff |
+# cns |
+#   par 1 nod sa ope |
+#   eva par 2 nod env sa lef_val |
+#   eva par 3 nod env sa rig_val |
+#   if ope sa 1 the lef_val joi rig_val sa eff |
+#   if ope sa 2 the lef_val cut rig_val sa eff |
+#   if ope sa 3 the lef_val exp rig_val sa eff |
+#   if ope sa 4 the lef_val con rig_val sa eff
+
+# ============================================================================
+# Part 4: Demonstration
+# ============================================================================
+
+# Program to interpret: 3 joi 5
+# Encoded as: gro | 3 | 1 | gro | 1 | 3 | | gro | 1 | 5 | |
+#             type=3(bin), ope=1(joi), lef=lit(3), rig=lit(5)
+
+# Simplified demo using direct constraints:
+whe lit_a
+whe lit_b
+whe bin_result
+
+# This IS the interpreter: the constraint IS the evaluation
+lit_a joi lit_b sa bin_result
+
+---
+# key: interpret 3 joi 5
+lit_a sa 3
+lit_b sa 5

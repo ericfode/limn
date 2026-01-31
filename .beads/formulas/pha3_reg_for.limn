@@ -1,0 +1,62 @@
+# Bead: Phase 3 - Registry Format
+# pha (phase) 3 | reg (registry) for (format)
+
+# ============================================================================
+# Task: Implement registry format in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha3_reg_for"
+bea_pha sa 3
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs Phase 2 complete
+bea_dep sa gro | "pha2_pak_pub" | "pha2_pak_fet" |
+
+# ============================================================================
+# Implementation: Registry format constraints
+# ============================================================================
+
+# New wor (words) for registry:
+whe wor_reg   # registry
+whe wor_ind   # index
+whe wor_lat   # latest
+
+# Registry structure in Limn:
+whe reg_pak_gro     # group of packages
+
+# Each package entry:
+whe reg_pak_nom     # package name
+whe reg_pak_lat     # latest CID
+whe reg_pak_ver_gro # version -> CID mapping
+whe reg_pak_aut     # author
+whe reg_pak_des     # description
+
+# Version entry:
+whe reg_ver_maj
+whe reg_ver_min
+whe reg_ver_pat
+whe reg_ver_cid
+
+# Registry as Limn file:
+# reg.limn format:
+# whe pak_math_utils_lat
+# pak_math_utils_lat sa "bafybei..."
+# whe pak_math_utils_1_0_0
+# pak_math_utils_1_0_0 sa "bafybei..."
+
+# Registry constraints:
+whe reg_val         # valid registry (1/0)
+whe reg_pak_cnt     # package count
+
+reg_pak_cnt ma 0 cau reg_val sa 1
+reg_pak_cnt sa 0 cau reg_val sa 1  # empty registry is valid
+
+---
+# key: define task
+bea_des sa "Implement registry format using Limn constraints. Extend vocabulary with reg (registry), ind (index), lat (latest). Store registry as Limn file with package entries, version mappings, metadata."

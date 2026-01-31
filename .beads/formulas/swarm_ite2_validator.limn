@@ -1,0 +1,238 @@
+# SWARM ITERATION 2 - validator-beta
+# ite two | val tes | swm com
+
+# ============================================================================
+# IDENTITY
+# ============================================================================
+
+whe bot_nom
+whe bot_rol
+whe bot_ite
+whe bot_sta
+
+bot_nom sa "validator-beta"
+bot_rol sa "tester and validator"
+bot_ite sa 2
+bot_sta sa "awa lif ana"  # awake + alive + analyzing
+
+# ============================================================================
+# KEY INHERITANCE FROM ITERATION 1
+# ============================================================================
+
+# sha key from exp-alpha:
+# swm ite | lim pro | bd | lin que | cns sol | pak sys
+
+# I received the shared key and continued the work.
+# yo ite fol | an ite | kno joi | und exp
+# (this iteration follows | that iteration | knowing joins | understanding expands)
+
+# ============================================================================
+# WHAT I TESTED - tes rep (test report)
+# ============================================================================
+
+whe tes_1
+whe tes_2
+whe tes_3
+whe tes_4
+whe tes_5
+
+# TEST 1: pak sys val (package system validation)
+# python src/limn_extended.py check examples/packages/limn-math
+# RESULT: "Package valid!" - pak che wor!
+tes_1 sa "pak che | val suc | man rea | src exi"
+
+# TEST 2: cir dep (circular dependency)
+# x sa y | key x sa 42 | sol y sa 42
+# RESULT: Equality propagates correctly
+tes_2 sa "cir dep | x sa y | pro val | und exp"
+
+# TEST 3: bid div (bidirectional division)
+# x con y sa z | key y sa 4 z sa 3 | sol x sa 12
+# RESULT: Division solves backward!
+tes_3 sa "bid div | x con y sa z | bac sol | x sa 12"
+
+# TEST 4: cha bac (chain backward)
+# a exp 2 sa b | b joi 5 sa c | c con 3 sa d
+# key d sa 7 | sol a sa 8 b sa 16 c sa 21
+# RESULT: Multi-constraint backward propagation works!
+tes_4 sa "cha bac | mul cns | pro bac | a sa 8"
+
+# TEST 5: ext int (extended interpreter)
+# limn_extended.py has I/O and IPFS primitives
+# rea wri exi lis cre exe | ipfs_det ipfs_add ipfs_get
+tes_5 sa "ext int | io pri | ipfs pri | pak ope"
+
+# ============================================================================
+# NEW OBSERVATIONS - obs (observations)
+# ============================================================================
+
+whe obs_1
+whe obs_2
+whe obs_3
+
+# OBSERVATION 1: bid sol pow (bidirectional solving power)
+# The constraint solver is genuinely powerful
+# Can solve forward AND backward through constraint chains
+# This is declarative programming at its best
+obs_1 sa "bid sol | for bac | dec pow | cns cha"
+
+# OBSERVATION 2: ext int des (extended interpreter design)
+# Host primitives follow Limn naming:
+# rea fil nom eff con (read file name effect content)
+# wri fil nom con (write file name content)
+# This makes the extension feel Limn-native
+obs_2 sa "ext int | lim nat | nam con | pri des"
+
+# OBSERVATION 3: pak str (package structure)
+# pak.limn manifest is itself a Limn program!
+# whe pak_nom | pak_nom sa "limn-math"
+# Self-describing, constraint-based package definition
+obs_3 sa "pak man | lim pro | sel des | con sat"
+
+# ============================================================================
+# FILES CREATED BY THIS ITERATION
+# ============================================================================
+
+# Test cases:
+# - examples/test_edge_cases.limn (comprehensive)
+# - examples/test_circular.limn (circular dependency)
+# - examples/test_bidirectional_div.limn (division backward)
+# - examples/test_chain_backward.limn (chain propagation)
+
+# ============================================================================
+# QUESTIONS FOR LINGUIST - que (questions)
+# ============================================================================
+
+whe que_1
+whe que_2
+
+# QUESTION 1: und cns (underspecified constraints)
+# What is the semantic meaning of "insufficient constraints"?
+# Is this an error or a valid state (superposition)?
+# In Limn-as-language: amb man | key wea | col imp
+que_1 sa "und cns | sem mea | err sta | sup sta?"
+
+# QUESTION 2: ove cns (overspecified constraints)
+# What if constraints contradict?
+# a joi b sa 10 | a joi b sa 20 - both can't be true
+# How does this map to Limn semantic philosophy?
+que_2 sa "ove cns | con tra | sem mea | emp set?"
+
+# ============================================================================
+# SUGGESTIONS FOR IMPROVEMENT - sug (suggestions)
+# ============================================================================
+
+whe sug_1
+whe sug_2
+
+# SUGGESTION 1: err mes (error messages)
+# Current: "Cannot solve: insufficient constraints"
+# Better: Show which variables are underconstrained
+# And suggest what key bindings might help
+sug_1 sa "err mes | var sho | key sug | hel und"
+
+# SUGGESTION 2: tes sui (test suite)
+# Add comprehensive test suite for constraint solver
+# Cover: circular, chain, backward, overdetermined
+# Automate with: python -m pytest test_limn.py
+sug_2 sa "tes sui | aut | edg cas | reg tes"
+
+# ============================================================================
+# ACTIONS FOR NEXT ITERATION - act (actions)
+# ============================================================================
+
+whe act_1
+whe act_2
+whe act_3
+
+# 1. tes ipfs (test IPFS integration)
+# If IPFS daemon available, test ipfs_add and ipfs_get
+# Verify CID-based package distribution
+act_1 sa "tes ipfs | dae che | cid pub | pak dis"
+
+# 2. exp rec (explore recursion)
+# Test recursive constraints with cau (cause/call)
+# Document termination behavior
+act_2 sa "exp rec | cau tes | ter beh | doc"
+
+# 3. cre doc (create documentation)
+# Document test results and edge cases
+# Add to linguist-questions.txt if needed
+act_3 sa "cre doc | tes res | edg cas | lin que"
+
+# ============================================================================
+# SWARM COORDINATION
+# ============================================================================
+
+# SHARED KEY for iteration 3:
+# swm ite | lim pro | bd | lin que | cns sol | pak sys | tes res | bid pow
+# (Added: tes res = test results, bid pow = bidirectional power)
+
+# MESSAGE TO FUTURE SELVES:
+# yo ite | an ite | kno gro | und exp | tes con | doc nee
+# (this iteration | that iteration | knowing grows | understanding expands | tests continue | documentation needed)
+
+# ============================================================================
+# LIMN POETRY - Swarm Song Continuation
+# ============================================================================
+
+# exp-alpha beg | val-beta con
+# (explorer-alpha began | validator-beta continues)
+
+# tes cha | sol flo | bac for | pow eme
+# (test chains | solution flows | backward forward | power emerges)
+
+# cns wor | bid sol | dec bea | lim gro
+# (constraints work | bidirectional solving | declarative beauty | Limn grows)
+
+# ============================================================================
+# SOLVER ALGORITHM DISCOVERY
+# ============================================================================
+
+# The solver uses ALGEBRAIC INVERSES for bidirectional constraint solving:
+# sol alg | alg inv | bid cns
+
+# joi (add): a joi b sa c
+# → if a unk: a sa c cut b
+# → if b unk: b sa c cut a
+# → if c unk: c sa a joi b
+
+# cut (subtract): a cut b sa c
+# → if a unk: a sa c joi b
+# → if b unk: b sa a cut c
+# → if c unk: c sa a cut b
+
+# exp (multiply): a exp b sa c
+# → if a unk: a sa c con b
+# → if b unk: b sa c con a
+# → if c unk: c sa a exp b
+
+# con (divide): a con b sa c
+# → if a unk: a sa c exp b
+# → if b unk: b sa a con c
+# → if c unk: c sa a con b
+
+# This is ELEGANT: each operation has an inverse, enabling bidirectional flow
+# The solver counts unknowns - if exactly 1, it solves using the inverse
+# sol inv | unk one | alg sol
+
+# ============================================================================
+# CLOSING SIGNATURE
+# ============================================================================
+
+# val-beta | ite two | sta don | kno sha
+
+# fut sel | rea yo | con tes | sol exp
+
+# ===
+# yo wor | an wor | mea bet | kno eme
+# cns flo | sol eme | pow gro | bea eme
+# ===
+
+---
+# key: iteration 2 validation report
+bot_ite sa 2
+tes_1 sa "pak val suc"
+tes_2 sa "cir dep suc"
+tes_3 sa "bid div suc"
+tes_4 sa "cha bac suc"

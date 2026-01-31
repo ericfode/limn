@@ -1,0 +1,72 @@
+# pak ins (install) - Install package dependencies
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe pak_dir       # package directory
+whe dep_nom       # specific dependency name (optional)
+whe dep_cid       # specific dependency CID (optional)
+
+# ============================================================================
+# State variables
+# ============================================================================
+
+whe man_con       # manifest content
+whe man_par       # parsed manifest
+whe dep_gro       # dependencies from manifest
+whe lok_con       # lock file content
+whe lok_exi       # lock file exists
+
+# ============================================================================
+# Output variables
+# ============================================================================
+
+whe res_dep       # installed dependencies
+whe res_suc       # success
+whe res_err       # error message
+
+# ============================================================================
+# Read manifest and lock file
+# ============================================================================
+
+rea cau pak_dir joi "/pak.limn" eff man_con
+pak_par cau man_con eff man_par
+
+exi cau pak_dir joi "/pak.lock.limn" eff lok_exi
+lok_exi sa tru cau rea cau pak_dir joi "/pak.lock.limn" eff lok_con
+
+# ============================================================================
+# Dependency resolution
+# ============================================================================
+
+# If specific dep provided, install just that one
+dep_cid ma "" cau ipfs_get cau dep_cid eff fet_res
+whe fet_res
+
+dep_nom ma "" cau dep_cid sa hol cau reg_loo cau dep_nom eff loo_res
+whe loo_res
+whe reg_loo
+
+# Otherwise install all from manifest
+dep_cid sa hol cau dep_nom sa hol cau ins_all sa tru
+whe ins_all
+
+# ============================================================================
+# Generate lock file
+# ============================================================================
+
+whe lok_gen       # generated lock content
+
+# Write lock file
+wri cau pak_dir joi "/pak.lock.limn" lok_gen eff lok_wri
+whe lok_wri
+
+# Success
+fet_res ma "" cau res_suc sa tru
+ins_all sa tru cau res_suc sa tru
+
+---
+# key: example
+pak_dir sa "."

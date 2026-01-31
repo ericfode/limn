@@ -1,0 +1,63 @@
+# Limn Full - Metacircular Interpreter
+# sol pro cns | nu eng
+
+# ============================================================================
+# The key insight: In Limn, the constraint IS the computation
+# Writing `a joi b sa c` IS the interpreter for addition
+# The constraint solver IS the evaluation engine
+# ============================================================================
+
+# This file demonstrates Limn interpreting Limn:
+# - Program 1: Forward evaluation (a + b = ?)
+# - Program 2: Chained evaluation (x + 5 = y, y * 2 = z)
+# - Program 3: Bidirectional solving (? + 7 = 15)
+
+# ============================================================================
+# Program 1: Arithmetic
+# ============================================================================
+
+whe prog1_a
+whe prog1_b
+whe prog1_sum
+whe prog1_prod
+
+# The constraints ARE the interpreter
+prog1_a joi prog1_b sa prog1_sum
+prog1_a exp prog1_b sa prog1_prod
+
+# ============================================================================
+# Program 2: Chained constraints
+# ============================================================================
+
+whe prog2_x
+whe prog2_y
+whe prog2_z
+
+# Chain: x + 5 = y, then y * 2 = z
+prog2_x joi 5 sa prog2_y
+prog2_y exp 2 sa prog2_z
+
+# ============================================================================
+# Program 3: Bidirectional solving
+# ============================================================================
+
+whe bwd_a
+whe bwd_b
+whe bwd_c
+
+# This constraint works in ANY direction
+bwd_a joi bwd_b sa bwd_c
+
+---
+# key: Run the interpreter
+
+# Arithmetic: 7 + 3 = ?, 7 * 3 = ?
+prog1_a sa 7
+prog1_b sa 3
+
+# Chain: solve z when x = 10
+prog2_x sa 10
+
+# Bidirectional: solve a when b = 7, c = 15
+bwd_b sa 7
+bwd_c sa 15

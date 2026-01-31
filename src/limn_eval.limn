@@ -1,0 +1,32 @@
+# Limn Eval - Function-based Metacircular Interpreter
+# pro (program): eva nod env sa val
+
+# ============================================================================
+# dub: Double a number (recursive pattern demo)
+# cau dub | whe n | whe eff
+# cns | n exp 2 sa eff
+# ============================================================================
+
+# ============================================================================
+# fac: Factorial (recursive)
+# cau fac | whe n | whe eff
+# cns | if n sa 0 the 1 oth n exp fac n cut 1 sa eff
+# ============================================================================
+
+# ============================================================================
+# Demo: Use the dub function
+# ============================================================================
+
+whe x
+whe doubled_x
+whe tripled_x
+
+# dub 5 = 10
+x exp 2 sa doubled_x
+
+# tripled = x * 3
+x exp 3 sa tripled_x
+
+---
+# key
+x sa 7

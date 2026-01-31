@@ -1,0 +1,59 @@
+# Bead: Phase 4 - Package Init
+# pha (phase) 4 | pak (package) ini (init)
+
+# ============================================================================
+# Task: Implement limn pak init command in Limn
+# ============================================================================
+
+whe bea_nom
+whe bea_pha
+whe bea_sta
+whe bea_des
+whe bea_dep
+
+bea_nom sa "pha4_pak_ini"
+bea_pha sa 4
+bea_sta sa "pen"  # pending
+
+# dep (dependencies): needs Phase 1 complete
+bea_dep sa gro | "pha1_pak_man" |
+
+# ============================================================================
+# Implementation: Package init constraints
+# ============================================================================
+
+# New wor (words) for init:
+whe wor_ini   # initialize
+whe wor_cre   # create
+whe wor_tem   # template
+
+# Init state:
+whe ini_nom         # package name
+whe ini_dir         # directory to create
+whe ini_aut         # author
+whe ini_des         # description
+whe ini_res_suc     # success (1/0)
+whe ini_res_err     # error message
+
+# Files to create:
+whe ini_fil_man     # pak.limn
+whe ini_fil_ent     # src/main.limn
+whe ini_fil_rea     # README.md
+whe ini_dir_src     # src/
+whe ini_dir_tes     # test/
+
+# Template constraints:
+whe tem_man_con     # manifest template content
+whe tem_ent_con     # entry file template content
+
+# Init constraints:
+ini_nom ma "" cau ini_res_suc sa 1
+ini_nom sa "" cau ini_res_err sa "Package name required"
+
+# Generate manifest:
+whe gen_man
+gen_man sa gro | "whe pak_nom" | "pak_nom sa " | ini_nom |
+
+---
+# key: define task
+bea_des sa "Implement limn pak init using Limn constraints. Extend vocabulary with ini (init), cre (create), tem (template). Create package directory, pak.limn manifest, src/main.limn entry, README.md."

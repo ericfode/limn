@@ -1,0 +1,165 @@
+# Limn pak (package) sol (system) pro (design)
+# IPFS sat (based) | dec (decentralized) | dis (distribution)
+
+# ============================================================================
+# 1. ove (overview)
+# ============================================================================
+
+# LPMS (Limn Package Management System)
+# use IPFS for dec pak dis
+
+# Key pri (principles):
+# - con (content) adr (addressing): pak adr by CID
+# - imm (immutable): CID alw (always) sa sam (same) con
+# - dec (decentralized): nu cen (central) ser (server) nec (needed)
+# - rep (reproducible): sam CID sa sam pak alw
+# - Limn nat (native): use Limn wor thr (throughout)
+
+# ============================================================================
+# 2. pak str (structure)
+# ============================================================================
+
+# dir (directory) lay (layout):
+whe pak_nom
+whe pak_dir
+
+# pak_dir sa gro | pak.limn | src/ | test/ | README.md |
+
+# 2.1 pak.limn (manifest) for (format):
+whe pak_ver_maj
+whe pak_ver_min
+whe pak_ver_pat
+whe pak_aut
+whe pak_des
+whe pak_dep
+whe pak_ent
+
+# ============================================================================
+# 3. use (import) sys (system)
+# ============================================================================
+
+# use syn (syntax):
+whe use_cid
+whe use_nom
+whe use_ver
+
+# use cid bafybei... (exact)
+# use nom "math-utils" (registry)
+# use nom "math-utils" ver 1 0 0 (version)
+
+# ============================================================================
+# 4. pub (publish) wor (workflow)
+# ============================================================================
+
+# ste (steps):
+# 1. cre (create) pak dir wit pak.limn
+# 2. run limn pak che (check) - val (validate) str
+# 3. run limn pak bui (build) - cre bun (bundle)
+# 4. run limn pak pub - pub to IPFS
+# 5. get CID for sha (sharing)
+
+# ============================================================================
+# 5. reg (registry) des (design)
+# ============================================================================
+
+# dec reg sto (stored) on IPFS
+# upd (updated) via IPNS
+
+whe reg_pak_nom
+whe reg_pak_lat
+whe reg_pak_ver
+whe reg_pak_aut
+whe reg_pak_des
+
+# ============================================================================
+# 6. dep (dependency) res (resolution)
+# ============================================================================
+
+# loc (lock) fil (file): pak.lock.limn
+whe lok_dep_nom
+whe lok_dep_cid
+
+# res alg (algorithm):
+# 1. rea (read) pak.limn dep
+# 2. for eac dep:
+#    - if CID: use dir (directly)
+#    - if nom: loo (lookup) in reg
+#    - if nom+ver: loo spe (specific) ver
+# 3. rec (recursively) res tra (transitive) dep
+# 4. det (detect) con (conflicts)
+# 5. gen (generate) pak.lock.limn
+
+# ============================================================================
+# 7. cac (cache) sys (system)
+# ============================================================================
+
+whe cac_dir
+whe cac_pak_cid
+whe cac_reg
+
+# loc cac str:
+# ~/.limn/pak/    (pak cac)
+# ~/.limn/reg/    (reg cac)
+# ~/.limn/con.limn (con fig)
+
+# ============================================================================
+# 8. imp (implementation) pla (plan)
+# ============================================================================
+
+# pha (phase) 1: cor (core) inf (infrastructure)
+whe pha1_pak_man
+whe pha1_pak_val
+whe pha1_lok_res
+whe pha1_use_sys
+
+# pha 2: IPFS int (integration)
+whe pha2_ipfs_det
+whe pha2_pak_pub
+whe pha2_pak_fet
+whe pha2_cid_ver
+
+# pha 3: reg
+whe pha3_reg_for
+whe pha3_reg_loo
+whe pha3_ipns_int
+whe pha3_ver_res
+
+# pha 4: dev (developer) too (tools)
+whe pha4_pak_ini
+whe pha4_pak_bui
+whe pha4_pak_pub
+whe pha4_pak_ins
+whe pha4_pak_sea
+
+# ============================================================================
+# 9. sec (security) con (considerations)
+# ============================================================================
+
+# con ver (verification):
+# - CID cry (cryptographically) ver con
+# - nu MITM att (attacks) pos (possible)
+# - sup (supply) cha (chain) sec bui (built-in)
+
+# sig (signing) opt (optional):
+whe pak_sig
+
+# ============================================================================
+# 10. Limn wor ext (extensions)
+# ============================================================================
+
+# New wor for pak man:
+whe wor_pak   # package
+whe wor_use   # import/use
+whe wor_pub   # publish
+whe wor_dep   # dependency
+whe wor_ver   # version
+whe wor_cid   # content id
+whe wor_nom   # name
+whe wor_ent   # entry
+
+---
+# key: des doc
+pak_nom sa "limn-pkg"
+pak_ver_maj sa 1
+pak_ver_min sa 0
+pak_ver_pat sa 0

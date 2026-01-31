@@ -1,0 +1,58 @@
+# pak sea (search) - Search registry for packages
+# sol pro cns | use ext pri (extended primitives)
+
+# ============================================================================
+# Input variables
+# ============================================================================
+
+whe sea_que       # search query
+whe reg_src       # registry source (optional, defaults to default registry)
+
+# ============================================================================
+# State variables
+# ============================================================================
+
+whe reg_ipns      # registry IPNS name
+whe reg_cid       # resolved registry CID
+whe reg_con       # registry content
+whe reg_pak       # packages in registry
+
+# ============================================================================
+# Output variables
+# ============================================================================
+
+whe res_gro       # search results (group of packages)
+whe res_cnt       # result count
+whe res_suc       # success
+
+# ============================================================================
+# Default registry
+# ============================================================================
+
+reg_src sa hol cau reg_ipns sa "limn.pkg"
+reg_src ma "" cau reg_ipns sa reg_src
+
+# ============================================================================
+# Resolve registry
+# ============================================================================
+
+ipns_res cau reg_ipns eff reg_cid
+reg_cid ma "" cau ipfs_get cau reg_cid eff reg_pat
+whe reg_pat
+reg_pat ma "" cau rea cau reg_pat eff reg_con
+
+# ============================================================================
+# Search logic
+# ============================================================================
+
+# Parse registry and search
+# (In full implementation: parse JSON/Limn registry, filter by query)
+
+# For now, placeholder success
+res_suc sa tru
+res_cnt sa 0
+res_gro sa gro | |
+
+---
+# key: example
+sea_que sa "math"
