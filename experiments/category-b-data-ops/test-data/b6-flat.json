@@ -1,0 +1,4 @@
+[
+  {"user_name": "Alice", "user_age": 30, "city_name": "Boston", "city_pop": 700000},
+  {"user_name": "Bob", "user_age": 25, "city_name": "Seattle", "city_pop": 750000}
+]
