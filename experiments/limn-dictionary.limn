@@ -1,0 +1,275 @@
+# Limn Dictionary: Limn Defined in Limn
+# Bootstrap: Define all Limn words using only Limn
+
+## Layer 1: Primitives (Hardest to Define)
+
+# Existence & Being
+bei: sta of exi
+exi: to bei
+sta: way thi bei
+thi: wha bei or can bei
+
+# Possession & Relations
+hav: bei wit thi in rel to you
+rel: way two thi con to eac oth
+con: tou or lin bet two thi
+wit: hav in sam pla or tim
+
+# Actions (Primitive Verbs)
+act: do som
+do: mak cha hap
+mak: cau thi to bec or cha
+hap: bec rea or tak pla
+bec: cha fro one sta to oth sta
+
+# Change & Causation
+cha: dif bet old sta and new sta
+cau: wha mak eff hap
+eff: wha hap bec of cau
+old: bef now in tim
+new: aft now in tim or nu bef
+
+# Time Primitives
+now: tim tha bei at thi mom
+tim: flo of eve fro pas to fut
+pas: tim bef now
+fut: tim aft now
+mom: ver sho tim
+
+# Space Primitives
+pla: whe thi bei
+whe: at wha pla
+her: at thi pla
+the: at oth pla (nu her)
+nea: pla clo to thi pla
+far: pla nu clo, lon dis awa
+
+## Layer 2: Basic Properties (Use Layer 1)
+
+# Size
+big: hav mor spa tha sma thi
+sma: hav les spa tha big thi
+mor: gre in amo or siz
+les: sma in amo or siz
+spa: amo of pla thi tak
+
+# Quantity
+amo: how muc of thi bei
+muc: gre amo
+few: sma amo
+one: sin thi
+man: mor tha one, lot of thi
+all: eve thi in gro, nu thi lef out
+non: zer thi, nu any thi
+
+# Direction & Motion
+mov: cha of pla ove tim
+go: mov fro her to the
+com: mov fro the to her
+ris: mov up
+fal: mov dow
+up: dir awa fro gro or dow
+dow: dir tow gro, opp of up
+
+# Basic States of Matter
+sol: sta of mat tha har and kep sha
+liq: sta of mat tha flo and tak sha of con
+gas: sta of mat tha fil spa and no fix sha
+mat: wha thi mad of, phy stu
+
+## Layer 3: Physical World (Use Layers 1-2)
+
+# Elements
+aqu: liq tha flo in riv and oce and fal as rai
+pyr: hot lux tha bur and giv war
+ter: sol mat of gro and mou
+aer: gas tha we bre and fil ski
+lux: wha mak thi vis, bri ene fro sun or pyr
+nox: abs of lux, whe thi nu vis
+
+# Properties
+hot: hav hig ene, fee war, opp of col
+col: hav low ene, fee chi, opp of hot
+war: sta bet hot and col, com for
+chi: ver col, mak bod sti
+bri: giv muc lux
+dim: giv lit lux
+
+# Physical Actions
+bur: cha to pyr, con wit pyr, mak hot and lux
+fre: cha to ver col, bec sol fro col
+mel: cha fro sol to liq fro hot
+flo: mov smo lik liq in riv
+mix: joi dif thi to mak one thi
+cut: div one thi int two or mor par
+
+## Layer 4: Life & Biology
+
+# Life Basics
+liv: sta of bei tha gro, mov, fee, and cha
+die: end of liv, bec nu liv
+gro: bec big ove tim
+bod: phy par of liv thi
+hea: sta of bod bei wel, nu sic
+sic: sta of bod bei bad, nu hea
+
+# Senses & Perception
+see: use eye to kno wha thi bei by lux
+hea: use ear to kno sou
+fee: kno thr bod or emo
+tou: fee wit par of bod on sur
+tas: fee fla wit ton
+
+# Biology
+bir: beg of liv, com int exi
+eat: tak foo int bod for ene
+foo: wha liv thi eat to sta liv
+bre: tak aer int bod, giv out aer
+sle: sta of res whe bod and min res
+
+## Layer 5: Mind & Cognition
+
+# Thought
+thi: USE DIFFERENT WORD - COLLISION!
+# VOCABULARY GAP: "think" needs new word, "thi" already means "thing"
+
+min: par of you tha thi, fee, kno
+kno: hav inf in min, und tru
+und: kno mea of thi or why thi bei
+mea: wha thi try to say or sho
+tru: wha rea bei, nu fal
+
+# Memory & Learning
+rem: kep in min fro pas
+for: los fro min, nu rem
+lea: com to kno new thi thr stu or exp
+stu: try to lea by rea or pra
+exp: wha hap to you, giv you kno
+
+# Communication
+say: mak wor wit mou to tel oth
+tel: giv inf to oth thr wor
+wor: sou or sym tha hav mea
+ask: say que to get inf
+ans: say wha you kno aft ask
+
+# Emotion
+lov: str fee of car and wan to be wit
+hat: str fee of nu wan and wan awa
+joy: fee hap and goo
+sad: fee bad and dow, opp of joy
+fea: fee of dan mak you wan run
+ang: str fee of mad, wan to fig or yel
+
+## VOCABULARY GAPS FOUND:
+
+# GAP 1: "think" (verb) - "thi" already means "thing"
+# Need: new 3-letter word for the act of thinking
+# Suggestion: "cog" (cognition), "pon" (ponder), "rea" (reason)?
+
+# GAP 2: "reason" (verb) vs "reason" (noun/cause)
+# "rea" could mean "read" OR "reason" - ambiguous
+# Need: distinct words for "read text" vs "think logically"
+
+# GAP 3: "want" vs "need" - both very primitive concepts
+# wan: des to hav or do
+# nee: mus hav to liv or fun
+# But these feel like they need more primitive definitions
+
+# GAP 4: Abstract concepts without physical basis
+# How to define "good", "bad", "true", "false" in purely Limn terms?
+# "goo: wha you wan" - but this is circular
+# "tru: wha rea bei" - but "rea" (real) needs definition
+
+# GAP 5: Modal verbs (can, must, should, may)
+# can: bei abl to do
+# mus: hav to do, no cho
+# sho: wha goo to do
+# But "abl" (able) needs definition, "cho" (choice) needs definition
+
+## Layer 6: Social & Human
+
+# Relationships
+fri: per you lov and tru
+foe: per you hat or fig
+fam: gro of per rel by bir or mar
+mar: joi of two per in lov and lif
+
+# Social Actions
+hel: do act tha mak oth thi bet
+hur: do act tha mak oth thi wor
+giv: mak oth per hav thi you hav
+tak: mak you hav thi oth per hav
+sha: let oth use thi you hav, hol tog
+
+# Power & Status
+pow: abi to mak cha or con oth
+rul: hav pow ove gro, mak dec
+fol: go wit oth per dec, nu lea
+lea: go bef oth, mak pat or dec
+
+## CRITICAL GAPS FOUND:
+
+# GAP 6: "person" - how do you define in Limn?
+# per: liv thi tha thi, tal, and...
+# But this requires "thi" (think) which we don't have!
+
+# GAP 7: Circular definitions everywhere
+# "lov: str fee of car" - but "car" (care) needs "lov" to define!
+# "und: kno mea" - but "kno: und tru"! Circular!
+
+# GAP 8: Psychological states without physical referents
+# "tru" (trust), "hop" (hope), "bel" (believe) - all require complex mental concepts
+# These may be indefinable at this bootstrap level
+
+## Layer 7: Philosophy (Testing the Limits)
+
+# Buddhist Terms
+kar: act wit cau tha lea to eff in fut lif
+dha: tru of how thi rea bei, cos law
+sam: cyc of bir, die, bir aga wit nu end
+nir: sta of end suf, fre fro sam, pea bey wan
+
+# MAJOR GAP FOUND:
+# GAP 9: "suffering" - no Limn word!
+# suf: fee of pai, sad, or bad tha las
+# But "pai" (pain) - how to define without "hur" (hurt)?
+# "pai: fee in bod or min tha bad and wan to sto"
+# But this uses "bad" which is undefined, "wan" which is undefined!
+
+# Greek Terms
+eud: sta of liv wel, flo of all par of hum lif
+aret: exc in act, bei goo at wha per sho do
+telo: end or pur of thi, why thi exi
+
+# GAP 10: "purpose" vs "end" (both meanings of telo)
+# How do you distinguish "the end of the story" from "the purpose of life"?
+# Both use same concept of endpoint/goal
+
+# Daoist Terms
+tao: way of nat, pat of har tha all thi fol
+wuw: act wit no for, flo wit nat, no try har
+zir: spo way thi bei, nat wit no mak
+
+# GAP 11: "natural" vs "artificial" - deep distinction
+# nat: how thi bei wit no per mak
+# But this requires "per" (person) which requires "thi" (think) which we can't define!
+
+## STOPPING POINT: Circular Dependency Detected
+
+# Cannot proceed without resolving fundamental gaps:
+# 1. No word for "think" (verb) - "thi" is "thing"
+# 2. Cannot define "person" without "think"
+# 3. Cannot define abstract values (good, bad, true, false) without circular logic
+# 4. Cannot define mental states (want, need, believe, hope) at this primitive level
+# 5. Modal verbs (can, must, should) require undefined concepts (ability, obligation)
+
+# BOOTSTRAP PARADOX IDENTIFIED:
+# To define complex concepts, you need simpler concepts
+# But the "simpler" concepts often require the complex ones!
+# Example: "understand" requires "know", but "know" requires "understand"
+
+# CONCLUSION:
+# Successfully defined ~100 words using Limn-only definitions
+# Hit fundamental limits at abstract/mental/social concepts
+# Need vocabulary expansion or accept some primitives as undefined axioms
