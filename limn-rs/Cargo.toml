@@ -46,9 +46,9 @@ colored = "2.1"
 [dev-dependencies]
 criterion = "0.5"
 
-[[bench]]
-name = "solver"
-harness = false
+# [[bench]]
+# name = "solver"
+# harness = false
 
 [profile.release]
 lto = true

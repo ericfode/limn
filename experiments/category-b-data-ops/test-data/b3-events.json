@@ -1,0 +1,6 @@
+[
+  {"event": "Meeting", "date": "2026-01-20", "priority": "high"},
+  {"event": "Review", "date": "2026-01-15", "priority": "medium"},
+  {"event": "Launch", "date": "2026-02-01", "priority": "high"},
+  {"event": "Training", "date": "2026-01-10", "priority": "low"}
+]
