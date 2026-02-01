@@ -1,0 +1,18 @@
+#!/bin/bash
+# Run CYOA QuickCheck Tests
+# =========================================================
+# tes cyo | qck prp | val gen
+# *Test CYOA. QuickCheck properties. Validate generator.*
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
+echo "Running CYOA QuickCheck Test Suite..."
+echo
+
+# Run all tests
+exec scryer-prolog -g "
+    consult('generate.pl'),
+    consult('cyoa_qc_test.pl'),
+    run_all_tests,
+    halt"
