@@ -8,9 +8,9 @@ next: ["oracle-003"]
 # Daily Oracle
 
 ```limn
-bri dim bet
+lux dim lim
 ```
-*twilight. the space between bright and dim.*
+*twilight. the boundary between light and dim.*
 
 Neither day nor night.
 The boundary where both are true.
