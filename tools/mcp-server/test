@@ -1,0 +1,9 @@
+#!/bin/bash
+# Run JSON library tests
+# =========================================================
+# tes jso | pro val | exh gen
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
+exec scryer-prolog -g "consult('json.pl'), consult('json_test.pl'), run_tests, halt"
