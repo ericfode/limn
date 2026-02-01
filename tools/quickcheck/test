@@ -1,0 +1,26 @@
+#!/bin/bash
+# Run all QuickCheck tests
+# =========================================================
+# tes qck | all mod | pur prl
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
+echo "Running QuickCheck Test Suite..."
+echo
+
+# Run all tests
+exec scryer-prolog -g "
+    consult('prng.pl'),
+    consult('gen.pl'),
+    consult('shrink.pl'),
+    consult('quickcheck.pl'),
+    consult('test_prng.pl'),
+    consult('test_gen.pl'),
+    consult('test_shrink.pl'),
+    consult('test_prop.pl'),
+    run_prng_tests, nl,
+    run_gen_tests, nl,
+    run_shrink_tests, nl,
+    run_prop_tests,
+    halt"
