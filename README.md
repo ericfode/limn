@@ -124,11 +124,21 @@ dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
 
 ## Implementation
 
-**Limn is implemented in Prolog exclusively** (engineer-approved).
+**IMPORTANT: Implementation Language Policy**
 
-All interpreters, tools, and language infrastructure use Prolog. This decision leverages Prolog's natural fit for constraint-based semantics and maintains implementation coherence.
+**Limn uses Prolog exclusively.** All code contributions must be in Prolog.
 
-**For developers:** See [CONTRIBUTING.md](CONTRIBUTING.md) for implementation guidelines.
+- ✅ Accepted: Prolog implementations (Scryer Prolog preferred, SWI-Prolog compatible)
+- ❌ Not accepted: Python, JavaScript, or other language implementations
+
+**Why Prolog?** Limn's objective execution layer requires logic programming. Prolog's unification, constraint solving, and predicate-based reasoning embody the deterministic half of Limn's superposition. The LLM provides subjective interpretation; Prolog provides objective grounding.
+
+**Running Limn code:**
+```bash
+swipl -s tools/lmn/lmn_runtime.pl -g "eval_file('examples/addition.lmn')"
+```
+
+**For developers:** See [CONTRIBUTING.md](CONTRIBUTING.md) for implementation guidelines and [docs/philosophy/PROLOG-WHY.md](docs/philosophy/PROLOG-WHY.md) for the philosophical rationale.
 
 ## Phases
 

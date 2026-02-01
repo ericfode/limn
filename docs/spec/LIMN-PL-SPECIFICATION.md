@@ -4,6 +4,10 @@
 
 ---
 
+> **IMPLEMENTATION POLICY:** Limn uses **Prolog exclusively**. All implementations must be in Prolog (Scryer Prolog preferred, SWI-Prolog compatible). See `docs/philosophy/PROLOG-WHY.md` for rationale.
+
+---
+
 ## Abstract
 
 Limn-PL is a programming language based on Limn principles. Where traditional languages think in **sequences** (do this, then that), Limn-PL thinks in **spaces** (define constraints, find intersections). Programs don't compute results—they collapse regions of possibility into specific values through context.
