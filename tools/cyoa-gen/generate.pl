@@ -120,7 +120,11 @@ html_head(Title, Head) :-
     % Choice blocks
     atom_concat(P15, '.choice{background:#0f0f0f;border-left:3px solid var(--amber);margin:1rem 0;padding:1rem}', P16),
     atom_concat(P16, '.choice a{color:var(--amber);text-decoration:none;font-weight:bold}', P17),
-    atom_concat(P17, '</style></head>', Head).
+    % Images
+    atom_concat(P17, '.chapter-img{max-width:100%;height:auto;margin:1.5rem 0;border:1px solid var(--amber-dim);opacity:0.9}', P18),
+    % Visited links (for navigation clarity)
+    atom_concat(P18, 'a:visited{color:#666}blockquote a:visited{color:#997a00}', P19),
+    atom_concat(P19, '</style></head>', Head).
 
 html_body(Body, IdUp, BodyHtml) :-
     atom_concat('<body><article>', Body, P1),
@@ -343,6 +347,19 @@ convert_inline_md(In, Out) :-
 
 %% DCG for inline markdown conversion
 %% Process character by character, detecting patterns
+
+%% Images: ![alt](src)
+inline_md(Out) -->
+    "![", chars_until_close_bracket(Alt), "](", chars_until_close_paren(Src), ")",
+    !,
+    { append("<img src=\"", Src, T1),
+      append(T1, "\" alt=\"", T2),
+      append(T2, Alt, T3),
+      append(T3, "\" class=\"chapter-img\">", Img) },
+    inline_md(Rest),
+    { append(Img, Rest, Out) }.
+
+%% Links: [text](#id) or [text](url)
 inline_md(Out) -->
     "[", chars_until_close_bracket(Text), "](#", chars_until_close_paren(Id), ")",
     !,
