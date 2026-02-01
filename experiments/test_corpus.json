@@ -1,0 +1,128 @@
+[
+  {
+    "word_a": "sol",
+    "word_b": "aqu",
+    "composition": "sol aqu",
+    "expected_meaning": "ice, frozen water",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "liq",
+    "word_b": "aqu",
+    "composition": "liq aqu",
+    "expected_meaning": "liquid water",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "gas",
+    "word_b": "aqu",
+    "composition": "gas aqu",
+    "expected_meaning": "steam, water vapor",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "hot",
+    "word_b": "dry",
+    "composition": "hot dry",
+    "expected_meaning": "desert, arid",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "col",
+    "word_b": "wet",
+    "composition": "col wet",
+    "expected_meaning": "cold rain, snow",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "joy",
+    "word_b": "lov",
+    "composition": "joy lov",
+    "expected_meaning": "happiness, bliss",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "sad",
+    "word_b": "wan",
+    "composition": "sad wan",
+    "expected_meaning": "longing, yearning",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "big",
+    "word_b": "str",
+    "composition": "big str",
+    "expected_meaning": "powerful, mighty",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "sma",
+    "word_b": "bri",
+    "composition": "sma bri",
+    "expected_meaning": "small bright object, star",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "old",
+    "word_b": "kno",
+    "composition": "old kno",
+    "expected_meaning": "wisdom, ancient knowledge",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "you",
+    "word_b": "gro",
+    "composition": "you gro",
+    "expected_meaning": "growing child, development",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "bri",
+    "word_b": "lux",
+    "composition": "bri lux",
+    "expected_meaning": "bright light, sunlight",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "dim",
+    "word_b": "nox",
+    "composition": "dim nox",
+    "expected_meaning": "twilight, dusk",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "mov",
+    "word_b": "aqu",
+    "composition": "mov aqu",
+    "expected_meaning": "flowing water, river",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "res",
+    "word_b": "aqu",
+    "composition": "res aqu",
+    "expected_meaning": "still water, pond",
+    "test_type": "valid"
+  },
+  {
+    "word_a": "hot",
+    "word_b": "col",
+    "composition": "hot col",
+    "expected_meaning": "contradiction, impossible",
+    "test_type": "contradiction"
+  },
+  {
+    "word_a": "sol",
+    "word_b": "gas",
+    "composition": "sol gas",
+    "expected_meaning": "contradiction",
+    "test_type": "contradiction"
+  },
+  {
+    "word_a": "bri",
+    "word_b": "nox",
+    "composition": "bri nox",
+    "expected_meaning": "contradiction, paradox",
+    "test_type": "contradiction"
+  }
+]

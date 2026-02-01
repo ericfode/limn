@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spy Limn Glossary | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        <h1>Spy Limn Glossary</h1>
+
+<em>Field vocabulary for operational Limn</em>
+
+<hr>
+
+<h2>Agents & Roles</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `age` | agent (generic) | operative |
+| `han` | hand | handler |
+| `eye` | eye | surveillance |
+| `ear` | ear | signals intelligence |
+| `mou` | mouth | informant |
+| `hed` | head | station chief |
+| `foo` | foot | ground asset |
+| `hrt` | heart | trusted inner circle |
+| `bra` | brain | analyst |
+</p>
+
+<h2>Locations</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `loc` | location | safe house |
+| `nes` | nest | surveillance post |
+| `hom` | home | headquarters |
+| `for` | foreign | enemy territory |
+| `nea` | near | friendly territory |
+| `bri` | bridge | border crossing |
+| `dep` | deep | undercover position |
+| `hig` | high | elevated risk zone |
+</p>
+
+<h2>Actions</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `mov` | move | relocate/extract |
+| `res` | rest | go dark |
+| `see` | see | conduct surveillance |
+| `lis` | listen | intercept comms |
+| `spe` | speak | transmit |
+| `hid` | hide | establish cover |
+| `sho` | show | expose/reveal |
+| `cut` | cut | terminate contact |
+| `joi` | join | make contact |
+| `flo` | flow | maintain routine |
+| `blo` | blood | casualties/violence |
+| `bur` | burn | compromised/blown |
+</p>
+
+<h2>Status</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `saf` | safe | secure |
+| `dan` | danger | compromised |
+| `hot` | hot | active pursuit |
+| `col` | cold | dormant/safe |
+| `bri` | bright | visible/exposed |
+| `nox` | dark | covert/hidden |
+| `cle` | clear | unmonitored |
+| `wat` | watched | under surveillance |
+</p>
+
+<h2>Time</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `now` | now | immediate action |
+| `soo` | soon | within hours |
+| `lat` | later | within days |
+| `lon` | long | extended operation |
+| `sho` | short | time critical |
+| `end` | end | mission complete |
+| `beg` | begin | operation start |
+</p>
+
+<h2>Priority/Urgency</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `ve` | very | critical priority |
+| `so` | somewhat | standard priority |
+| `mus` | must | mandatory |
+| `may` | may | optional |
+| `nu` | not | abort/negative |
+</p>
+
+<h2>Trust Levels</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `tru` | trust | verified asset |
+| `dou` | doubt | unverified |
+| `fak` | fake | known hostile |
+| `unk` | unknown | unassessed |
+| `tur` | turn | doubled agent |
+</p>
+
+<h2>Message Types</h2>
+
+<p>
+| Limn | Surface Reading | True Reading |
+|------|-----------------|--------------|
+| `rep` | report | intelligence report |
+| `ord` | order | operational directive |
+| `war` | warning | threat alert |
+| `req` | request | resource request |
+| `con` | confirm | acknowledgment |
+| `den` | deny | negative response |
+</p>
+
+<hr>
+
+<h2>Key Markers</h2>
+
+<p>
+In operational Limn, keys are never transmitted with messages. Keys are:
+</p>
+<li>Pre-arranged by codebook</li>
+<li>Derived from date/time</li>
+<li>Based on relationship context</li>
+<li>Sometimes embedded in message structure</li>
+
+<strong>Key Types:</strong>
+
+<p>
+| Key Level | Who Has It | Purpose |
+|-----------|------------|---------|
+| SURFACE | Everyone | Innocuous reading |
+| COVER | Allied services | Plausible deniability |
+| TRUE | Your network | Actual orders |
+| GHOST | Sender + recipient only | Deniable even to allies |
+</p>
+
+<hr>
+
+<h2>Sample Operational Messages</h2>
+
+<h3>Example 1: Routine Check-in</h3>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>age flo <span class="limn-pipe">│</span> loc cle <span class="limn-pipe">│</span> tim reg
+</code></pre>
+</div>
+
+<strong>SURFACE</strong>: "Personnel flowing. Location clear. Time regular."
+<p>
+= Normal office activity
+</p>
+
+<strong>COVER</strong>: "Asset maintaining routine. Site unmonitored. Standard schedule."
+<p>
+= Nothing unusual
+</p>
+
+<strong>TRUE</strong>: "Operative in position. Safe house secure. On schedule."
+<p>
+= Mission proceeding
+</p>
+
+<hr>
+
+<h3>Example 2: Emergency</h3>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>age mov ve fas <span class="limn-pipe">│</span> loc bur <span class="limn-pipe">│</span> req ext now
+</code></pre>
+</div>
+
+<strong>SURFACE</strong>: "Person moving very fast. Place busy. Requesting exit now."
+<p>
+= Someone leaving a crowded venue
+</p>
+
+<strong>COVER</strong>: "Asset relocating urgently. Position busy. Needs extraction window."
+<p>
+= Cover blown, needs pickup
+</p>
+
+<strong>TRUE</strong>: "Operative fleeing. Safe house compromised. Emergency extraction immediate."
+<p>
+= Life or death
+</p>
+
+<hr>
+
+<h3>Example 3: Ambiguous (Requires Right Key)</h3>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>eye see bri <span class="limn-pipe">│</span> han mov beh <span class="limn-pipe">│</span> res
+</code></pre>
+</div>
+
+<strong>KEY: FRIENDLY</strong> → "Surveillance spotted. Handler moving behind. Rest."
+<p>
+= Abort, you're being watched, handler will contact you
+</p>
+
+<strong>KEY: HOSTILE</strong> → "We see the target. Move in from behind. Execute."
+<p>
+= Attack order
+</p>
+
+<p>
+Same words. Opposite meanings. The key is everything.
+</p>
+
+<hr>
+
+<h2>Common Patterns</h2>
+
+<h3>Negation Flip</h3>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>nu dan        # SURFACE: "not dangerous" / TRUE: "abort, danger"
+<p>
+dan nu        # SURFACE: "danger not" (awkward) / TRUE: "danger negated, proceed"
+</p>
+</code></pre>
+</div>
+
+<h3>Scope Split</h3>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>A <span class="limn-pipe">│</span> B         # Topic A, comment B
+<p>
+A B <span class="limn-pipe">│</span> C D     # (A ∩ B) beside (C ∩ D) - two separate statements
+</p>
+</code></pre>
+</div>
+
+<h3>Ghost Layer</h3>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>age mov <span class="limn-pipe">│</span> loc cha <span class="limn-pipe">│</span> ???
+</code></pre>
+</div>
+<p>
+If you know the Ghost key, there's a third segment you can read.
+If you don't, you don't even see the `???`.
+</p>
+
+<hr>
+
+<h2>Tone Operators</h2>
+
+<em>Critical for spy communications - tone changes everything</em>
+
+<p>
+| Operator | Meaning | Spy Usage |
+|----------|---------|-----------|
+| `frm` | formal | Official channel, by-the-book |
+| `cas` | casual | Informal, trusted contact |
+| `iro` | ironic | Opposite meaning, double-speak |
+| `sin` | sincere | Genuine, no deception layer |
+| `urj` | urgent | Time-critical, life-or-death |
+| `hes` | hesitant | Uncertain, possibly coerced |
+| `te` | question (?) | Requesting confirmation |
+| `we` | imperative (!) | Direct order |
+</p>
+
+<h3>Tone in Operations</h3>
+
+<strong>Urgent dead drop:</strong>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">urj</span> age mov now <span class="limn-pipe">│</span> loc bur <span class="limn-pipe">│</span> we ext
+</code></pre>
+</div>
+<em>URGENT: Agent move now. Location burned. EXTRACT!</em>
+
+<strong>Ironic double-meaning:</strong>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">iro</span> tru fri <span class="limn-pipe">│</span> joi din
+</code></pre>
+</div>
+<em>SURFACE: "Truly a friend, join for dinner"</em>
+<em>TRUE (with iro): Enemy asset, do NOT meet</em>
+
+<strong>Hesitant (possibly coerced):</strong>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">hes</span> saf <span class="limn-pipe">│</span> <span class="limn-tone">hes</span> loc cle <span class="limn-pipe">│</span> <span class="limn-tone">hes</span> con
+</code></pre>
+</div>
+<em>If asset sends hesitant confirms, assume compromise</em>
+
+<strong>Formal vs Casual:</strong>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>frm req ext <span class="limn-pipe">│</span> pro 7         # Official extraction request, protocol 7
+<p>
+cas nee out <span class="limn-pipe">│</span> fas            # Casual: "Need out, fast" - trusted contact
+</p>
+</code></pre>
+</div>
+
+<strong>Question markers:</strong>
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>te loc saf                   # Is location safe?
+<p>
+te age tru                   # Is agent trustworthy?
+</p>
+</code></pre>
+</div>
+
+<h3>Tone as Key Layer</h3>
+
+<p>
+Tone operators can function as a hidden key layer:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">iro</span> goo new <span class="limn-pipe">│</span> fri com
+</code></pre>
+</div>
+
+<strong>Without IRO key</strong>: "Good news! Friend coming."
+<strong>With IRO key</strong>: Bad news. Enemy incoming.
+
+<p>
+The `iro` operator inverts the entire message. If you don't recognize it as a key, you read the opposite of truth.
+</p>
+
+<hr>
+
+<h2>Vocabulary Notes</h2>
+
+<li>`shr` = share (not `sha` which = shame)</li>
+<li>`dam` = block/dam (not `blo` which = blood)</li>
+<li>`sim` = simple (not `eas` which = east)</li>
+<li>`nar` = narrow/thin (not `thi` which = think)</li>
+
+<hr>
+
+<em>In the field, vocabulary mistakes get people killed. Know your words. Know your tone.</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="index.html">← Start</a></span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: GLOSSARY | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

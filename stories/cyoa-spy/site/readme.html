@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE COLLAPSE - THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0f;
+    --fg: #e0e0e0;
+    --accent: #ff4444;
+    --accent2: #44ff88;
+    --muted: #666;
+    --code-bg: #1a1a2e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', monospace;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+
+h1, h2, h3 {
+    color: var(--accent);
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 0.5rem;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; color: var(--accent2); }
+
+.limn-code {
+    background: var(--code-bg);
+    border-left: 3px solid var(--accent);
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+.limn-code code {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+}
+
+.limn-pipe { color: var(--accent); font-weight: bold; }
+.limn-tone { color: var(--accent2); font-style: italic; }
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+.choices {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid var(--accent);
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.choices h3 {
+    margin-top: 0;
+    border: none;
+}
+
+.choice-link {
+    display: block;
+    color: var(--accent2);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--muted);
+}
+
+.choice-link:hover {
+    color: var(--accent);
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.choice-link:last-child {
+    border-bottom: none;
+}
+
+.nav {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.nav a {
+    color: var(--muted);
+}
+
+.ending {
+    border: 2px solid var(--accent2);
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.ending.victory { border-color: var(--accent2); }
+.ending.failure { border-color: var(--accent); }
+</style>
+</head>
+<body>
+    <article class="">
+        <h1>THE COLLAPSE</h1>
+
+<em>A Limn Spy Thriller</em>
+
+<hr>
+
+<h2>Premise</h2>
+
+<p>
+In a world where surveillance is total, spies discovered Limn - a language where meaning exists in superposition until collapsed by a key. The same message reads differently depending on what key you bring. Intercept all you want. Without the key, you see only what they want you to see.
+</p>
+
+<p>
+You are Agent YUKI, handler codename for a network of field operatives. Messages arrive in Limn. You must apply the correct key to collapse their true meaning. Wrong key = wrong orders = dead agents.
+</p>
+
+<p>
+The enemy has captured one of your operatives. They're trying to break the key system. You have 48 hours before your entire network is compromised.
+</p>
+
+<hr>
+
+<h2>How To Play</h2>
+
+<p>
+At each chapter, you receive a Limn message. You choose which <strong>key</strong> to apply. Your choice collapses the superposition into a specific meaning, which determines what happens next.
+</p>
+
+<strong>Example:</strong>
+
+<pre class="limn-code"><code>age mov nox <span class="limn-pipe">|</span> loc cha <span class="limn-pipe">|</span> tim sho
+</code></pre>
+
+<p>
+- <strong>Key: EXTRACT</strong> → "Agent moving in darkness. Location changing. Time short." = Operative fleeing, needs pickup
+- <strong>Key: HOSTILE</strong> → "Enemy moving at night. Position shifting. Window closing." = Attack imminent
+- <strong>Key: ROUTINE</strong> → "Personnel in transit after hours. Site rotating. Brief window." = Normal shift change
+</p>
+
+<p>
+Same words. Different reality. Choose wrong, people die.
+</p>
+
+<hr>
+
+<h2>File Structure</h2>
+
+<p>
+```
+cyoa-spy/
+├── README.md           # This file
+├── glossary.md         # Spy Limn vocabulary
+├── chapters/
+│   ├── 00-prologue.md
+│   ├── 01-first-contact.md
+│   ├── 02-*.md         # Branch chapters
+│   └── ...
+├── endings/
+│   ├── victory-*.md
+│   ├── failure-*.md
+│   └── ...
+└── assets/
+    └── branch-map.md   # Visual of all paths
+```
+</p>
+
+<hr>
+
+<h2>The Key System (In-Universe)</h2>
+
+<p>
+Your organization uses a <strong>layered key protocol</strong>:
+</p>
+
+<p>
+1. <strong>Surface Key</strong> - What civilians/enemies see (innocuous)
+2. <strong>Cover Key</strong> - What friendly intelligence sees (plausible deniability)
+3. <strong>True Key</strong> - What your network sees (actual meaning)
+</p>
+
+<p>
+Some messages have a <strong>4th layer</strong> - the <strong>Ghost Key</strong> - known only to the sender and intended recipient. If you don't have it, you don't even know it exists.
+</p>
+
+<p>
+The enemy has broken Surface and Cover. They're working on True. If they get Ghost, the network dies.
+</p>
+
+<hr>
+
+<h2>Characters</h2>
+
+<strong>You (YUKI)</strong> - Handler. Never in the field. Your weapon is interpretation.
+
+<strong>CARDINAL</strong> - Your best field operative. Currently captured.
+
+<strong>ROOK</strong> - New recruit. Promising but untested. Currently in position.
+
+<strong>BISHOP</strong> - Double agent. You think. Unless they're triple.
+
+<strong>THE ARCHITECT</strong> - Enemy spymaster. Has been one step ahead. Why?
+
+<hr>
+
+<h2>Themes</h2>
+
+<p>
+- <strong>Language as weapon</strong> - Limn's ambiguity is strategic advantage
+- <strong>Trust as key</strong> - Relationships determine interpretation
+- <strong>Identity in superposition</strong> - Who are you when meaning isn't fixed?
+- <strong>The cost of clarity</strong> - Sometimes not knowing is safer
+</p>
+
+<hr>
+
+<h2>Technical Notes</h2>
+
+<p>
+- All Limn uses v3-natural vocabulary
+- Keys are shown as `[KEY: NAME]`
+- Branch points marked with `→ [Chapter X]`
+- ~100k tokens total across all paths
+- Designed for static HTML deployment
+</p>
+
+<hr>
+
+<em>In Limn, the truth isn't hidden. It's held in superposition, waiting for the right key to collapse it. Your job is to have the right key. Every time.</em>
+
+<pre class="limn-code"><code>tru nu hid <span class="limn-pipe">|</span> tru sup <span class="limn-pipe">|</span> key col <span class="limn-pipe">|</span> you key <span class="limn-pipe">|</span> you tru
+</code></pre>
+
+<em>Truth isn't hidden. Truth is superposed. Keys collapse. You are the key. You are the truth.</em>
+
+        
+    </article>
+    <nav class="nav">
+        <a href="index.html">← Return to start</a> |
+        <a href="glossary.html">Glossary</a>
+    </nav>
+</body>
+</html>

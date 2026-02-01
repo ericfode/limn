@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYOA Spec for Engineer | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        <h1>CYOA Spec for Engineer</h1>
+
+<h2>Chapter File Format</h2>
+
+<p>
+```markdown
+</p>
+<hr>
+<p>
+id: "01a"
+title: "The Rookie"
+type: "chapter"  # chapter | ending-victory | ending-failure | ending-ambiguous
+prev: ["00"]
+next: ["02a", "02b", "02c", "02d"]
+</p>
+<hr>
+
+<h1>Chapter Title</h1>
+
+<p>
+Narrative text here...
+</p>
+
+<h2>The Message</h2>
+
+<p>
+\`\`\`limn
+hes lis | eye man | mov nu saf | te ord
+\`\`\`
+</p>
+
+<p>
+Interpretation and context...
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [Choice A Title](#02a)</strong>
+
+<p>
+\`\`\`limn
+frm con | res loc | eye pas | rep wh see
+\`\`\`
+</p>
+
+<p>
+Brief description of what this choice means.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [Choice B Title](#02b)</strong>
+
+<p>
+\`\`\`limn
+urj mov nea car loc | cas hid | rep det
+\`\`\`
+</p>
+
+<p>
+Brief description.
+</p>
+</blockquote>
+<hr>
+
+<strong>Navigation:</strong>
+<li>← Back: [Previous Chapter](#00)</li>
+<p>
+```
+</p>
+
+<h2>Branch Map (Current)</h2>
+
+<p>
+```
+                            [00-prologue]
+                                  |
+                    +-------------+-------------+
+                    |             |             |
+              [01a-rookie]  [01b-doubt]  [01c-trap]
+                    |             |             |
+          +---------+------+      |        +----+----+
+          |    |    |      |      |        |         |
+        [02a][02b][02c]  [02d]  [02e]    [02f]     [02g]
+          |    |    |      |      |        |         |
+         ...  ...  ...    ...    ...      ...       ...
+                    |
+              [converge points]
+                    |
+            +-------+-------+
+            |       |       |
+      [victory] [failure] [ambiguous]
+```
+</p>
+
+<h3>Detailed Graph (what I'm building)</h3>
+
+<p>
+```
+00-prologue
+├── 01a-rookie (KEY: ROOK-TRUE)
+│   ├── 02a-watcher (stay put, observe)
+│   ├── 02b-risk (move closer)
+│   ├── 02c-retreat (extract Rook)
+│   └── 02d-test (verify identity)
+├── 01b-doubt (KEY: BISHOP-TRUE)
+│   ├── 02e-trust (work with Bishop)
+│   └── 02f-suspect (test Bishop)
+└── 01c-trap (KEY: HOSTILE-INTERCEPT)
+    ├── 02g-silence (don't respond)
+    └── 02h-counter (feed disinformation)
+```
+</p>
+
+<h2>Endings List</h2>
+
+<h3>Victory</h3>
+<li>`victory-extraction.md` - Cardinal rescued, network intact</li>
+<li>`victory-turncoat.md` - Turned enemy asset, intel bonanza</li>
+<li>`victory-ghost.md` - Network burned but you survived, ready to rebuild</li>
+
+<h3>Failure</h3>
+<li>`failure-captured.md` - You're compromised, game over</li>
+<li>`failure-cardinal.md` - Cardinal dies, network exposed</li>
+<li>`failure-betrayed.md` - Double agent wins</li>
+
+<h3>Ambiguous</h3>
+<li>`ambiguous-cold.md` - Everyone goes dark, uncertain outcome</li>
+<li>`ambiguous-trade.md` - You trade Cardinal for something else</li>
+
+<h2>Styling Preferences</h2>
+
+<strong>Aesthetic: Dark spy terminal</strong>
+<li>Dark background (#0a0a0a or similar)</li>
+<li>Monospace font for Limn code blocks</li>
+<li>Accent color: amber/gold (#d4a017) or green terminal (#00ff00)</li>
+<li>Minimal chrome, focus on text</li>
+<li>Subtle scan lines or CRT effect optional (but don't overdo)</li>
+
+<strong>Limn blocks</strong>:
+<li>Distinct styling - maybe bordered, slight background difference</li>
+<li>Should feel like intercepted transmissions</li>
+
+<strong>Choices</strong>:
+<li>Clear visual separation</li>
+<li>Hover state</li>
+<li>Maybe redacted/classified document aesthetic?</li>
+
+<strong>Mobile</strong>: Should work, but optimize for desktop reading
+
+<h2>Sample Chapters in Consistent Format</h2>
+
+<p>
+I'll update `00-prologue.md` and `01a-rookie.md` to match this spec now.
+</p>
+
+<h2>What I'll Deliver</h2>
+
+<p>
+1. ✅ This spec
+2. 🔄 Reformatted prologue + ch01a (next)
+3. 📋 Full branch map as I write more chapters
+4. 📋 All endings when story complete
+</p>
+
+<p>
+Target: ~30 chapters + ~8 endings for full playthrough coverage
+</p>
+
+    </article>
+    <nav class="nav">
+        <span><a href="index.html">← Start</a></span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: SPEC | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rookie | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>Chapter 1A: The Rookie</h1>
+
+<p>
+You applied <strong>[KEY: ROOK-TRUE]</strong>.
+</p>
+
+<p>
+The message collapses:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">hes</span> lis <span class="limn-pipe">│</span> eye man <span class="limn-pipe">│</span> mov nu saf <span class="limn-pipe">│</span> te ord
+</code></pre>
+</div>
+
+<blockquote class="choice-block">"I'm listening. Heavy surveillance. Movement not safe. Requesting orders?"
+</blockquote>
+<p>
+It's Rook. The hesitance isn't coercion—it's fear. They've never been in a hot zone when it went hot. They're frozen, waiting for you to tell them what to do.
+</p>
+
+<hr>
+
+<h2>Intel: ROOK</h2>
+
+<li><strong>Cover:</strong> Freelance journalist, cultural magazine</li>
+<li><strong>Position:</strong> Hotel near Cardinal's last known location</li>
+<li><strong>Training:</strong> Basic tradecraft, signals, no wetwork</li>
+<li><strong>Psych:</strong> Eager, idealistic, tends to overthink</li>
+
+<p>
+Rook is three blocks from where Cardinal was taken. They might have seen something. They might be able to gather intel. But they're green, and the area is crawling with surveillance.
+</p>
+
+<p>
+You have to respond. In Limn, of course. And you have to choose your tone carefully—Rook needs confidence, not panic.
+</p>
+
+<hr>
+
+<h2>Incoming Intel</h2>
+
+<p>
+While you consider your response, another message arrives on a different channel:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>bis <span class="limn-pipe">│</span> col <span class="limn-pipe">│</span> loc dep <span class="limn-pipe">│</span> req joi
+</code></pre>
+</div>
+
+<p>
+Bishop. Coming out of the cold. Deep position. Requesting contact.
+</p>
+
+<p>
+You note it but don't respond yet. One crisis at a time. Rook first.
+</p>
+
+<p>
+But the timing bothers you. Cardinal taken, and suddenly Bishop surfaces?
+</p>
+
+<p>
+Coincidence? Or coordination?
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [The Watcher](#02a)</strong>
+
+<strong>Calm and direct.</strong> Tell Rook to stay put and observe.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; frm con <span class="limn-pipe">│</span> res loc <span class="limn-pipe">│</span> eye pas <span class="limn-pipe">│</span> rep wh see
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Formal: Confirmed. Stay in location. Watch passively. Report what you see.</em>
+
+<p>
+Safe play. Low risk, low reward. Rook gathers intel without exposure.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [The Risk](#02b)</strong>
+
+<strong>Urgent tasking.</strong> Send Rook closer to the action.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; <span class="limn-tone">urj</span> mov nea car loc <span class="limn-pipe">│</span> cas hid <span class="limn-pipe">│</span> rep det
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Urgent: Move near Cardinal's location. Stay hidden casual. Report details.</em>
+
+<p>
+Risky, but Rook might learn where Cardinal was taken.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [The Retreat](#02c)</strong>
+
+<strong>Activate escape protocol.</strong> Pull Rook out entirely.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; we ext pro 3 <span class="limn-pipe">│</span> loc bur <span class="limn-pipe">│</span> nu con unt saf
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Imperative: Execute extraction protocol 3. Location burned. No contact until safe.</em>
+
+<p>
+Cardinal is lost. You won't lose another. But you lose eyes on the ground.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [The Test](#02d)</strong>
+
+<strong>Verify identity.</strong> Make sure this is really Rook.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; te car sta <span class="limn-pipe">│</span> te loc kno <span class="limn-pipe">│</span> sin rep
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Question: Cardinal's status? Location known? Sincere report.</em>
+
+<p>
+The `sin` marker demands genuine response—hard to fake under coercion. But it delays action.
+</p>
+</blockquote>
+<hr>
+
+<h2>The Weight</h2>
+
+<p>
+Every choice has cost:
+</p>
+
+<li><strong>Watch</strong> = Safe but passive. Cardinal's clock keeps ticking.</li>
+<li><strong>Risk</strong> = Intel but exposure. Rook might get burned.</li>
+<li><strong>Retreat</strong> = Rook survives but you're blind. Network contracts.</li>
+<li><strong>Test</strong> = Prudent but slow. Time is the enemy.</li>
+
+<p>
+You type your response. Your finger hovers over send.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>ord sen <span class="limn-pipe">│</span> fut cha <span class="limn-pipe">│</span> nu ret
+</code></pre>
+</div>
+
+<em>Orders sent. Future changes. No return.</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="00.html">← Back</a> </span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 01A | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

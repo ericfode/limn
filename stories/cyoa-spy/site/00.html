@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Language of Shadows | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>THE COLLAPSE</h1>
+
+<h2>Prologue: The Language of Shadows</h2>
+
+<p>
+The message arrived at 03:47 UTC.
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>car tak <span class="limn-pipe">│</span> loc unk <span class="limn-pipe">│</span> tim sho <span class="limn-pipe">│</span> <span class="limn-tone">urj</span>
+</code></pre>
+</div>
+
+<p>
+You stare at the screen. Four constraint clusters. One tone marker. Infinite readings until you apply a key.
+</p>
+
+<p>
+This is your job. You are YUKI - not a name, a designation. Handler for the Ninth Network. You never go into the field. You sit in a room with no windows, reading Limn, and your interpretations keep people alive.
+</p>
+
+<p>
+Or kill them.
+</p>
+
+<hr>
+
+<h2>The First Lesson</h2>
+
+<p>
+Before the networks adopted Limn, spies used codes. Codes can be broken. A code has one meaning, encrypted. Find the cipher, find the meaning.
+</p>
+
+<p>
+Limn doesn't work that way.
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>car tak <span class="limn-pipe">│</span> loc unk <span class="limn-pipe">│</span> tim sho <span class="limn-pipe">│</span> <span class="limn-tone">urj</span>
+</code></pre>
+</div>
+
+<p>
+This isn't encrypted. It's <strong>superpositional</strong>. Right now, it means:
+</p>
+
+<li>"Cardinal taken. Location unknown. Time short. Urgent." (Your operative is captured)</li>
+<li>"Car taken. Place unknown. Brief time. Urgent." (Someone stole a vehicle)</li>
+<li>"Card taken. Site unknown. Short duration. Urgent." (Access badge compromised)</li>
+<li>"Care taken. Position unclear. Moment brief. Urgent." (Caution advised, situation fluid)</li>
+
+<p>
+All of these are <strong>true readings</strong>. The words define constraint regions in semantic space. Where they overlap, meaning exists. But <em>which</em> meaning?
+</p>
+
+<p>
+That depends on the <strong>key</strong>.
+</p>
+
+<hr>
+
+<h2>Keys</h2>
+
+<p>
+A key is not a password. It's a <strong>context</strong> - a lens that collapses superposition into specificity.
+</p>
+
+<p>
+Your organization uses layered keys:
+</p>
+
+<li><strong>SURFACE</strong> - What anyone sees. Innocent reading.</li>
+<li><strong>COVER</strong> - What allied services see. Plausible deniability.</li>
+<li><strong>TRUE</strong> - What your network sees. Operational meaning.</li>
+<li><strong>GHOST</strong> - What only sender and recipient see. Deniable even to allies.</li>
+
+<p>
+The message on your screen:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>car tak <span class="limn-pipe">│</span> loc unk <span class="limn-pipe">│</span> tim sho <span class="limn-pipe">│</span> <span class="limn-tone">urj</span>
+</code></pre>
+</div>
+
+<p>
+You have the TRUE key for Cardinal's communications. You apply it:
+</p>
+
+<strong>[KEY: CARDINAL-TRUE]</strong>
+
+<p>
+The superposition collapses:
+</p>
+
+<blockquote class="choice-block">CARDINAL captured. Location unknown. Window closing. URGENT.
+</blockquote>
+<p>
+Your blood goes cold.
+</p>
+
+<p>
+Cardinal is your best operative. They were running an extraction in hostile territory. Now they're in enemy hands.
+</p>
+
+<p>
+And they know things. Network things. Key things.
+</p>
+
+<hr>
+
+<h2>The Clock</h2>
+
+<p>
+You have 48 hours.
+</p>
+
+<p>
+That's how long it takes to break someone, even someone trained. After that, Cardinal will give up keys. Maybe not the Ghost keys - those exist only in memory, compartmentalized. But the TRUE keys? The cover identities? The safe house locations?
+</p>
+
+<p>
+48 hours, and your network dies.
+</p>
+
+<hr>
+
+<h2>Your Assets</h2>
+
+<p>
+You have three operatives in region:
+</p>
+
+<strong>ROOK</strong> - New. Eager. Untested in crisis. Currently maintaining cover as a journalist.
+
+<strong>BISHOP</strong> - Experienced. Careful. You've suspected them of being doubled, but never proven it. Currently dark.
+
+<strong>KNIGHT</strong> - Retired. Owes you. Has local contacts. Currently civilian, no cover.
+
+<p>
+You also have:
+</p>
+
+<li>Emergency extraction protocols (risky, loud)</li>
+<li>A contact in local intelligence (unreliable, possibly compromised)</li>
+<li>Cardinal's last known location (probably under surveillance)</li>
+<li>Your own judgment (the only thing you trust)</li>
+
+<hr>
+
+<h2>The Message</h2>
+
+<p>
+Your screen flashes. Another message. Different sender signature.
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">hes</span> lis <span class="limn-pipe">│</span> eye man <span class="limn-pipe">│</span> mov nu saf <span class="limn-pipe">│</span> te ord
+</code></pre>
+</div>
+
+<p>
+The `hes` prefix. Hesitant. Your training screams: <em>possible coercion</em>.
+</p>
+
+<p>
+Someone is asking for orders. But are they asking freely? Or is someone watching them type?
+</p>
+
+<p>
+You need to respond. But first, you need to understand.
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [The Rookie](#01a)</strong>
+
+<p>
+Apply <strong>[KEY: ROOK-TRUE]</strong>
+</p>
+
+<p>
+You recognize Rook's signature cadence. They're asking if they should move. The hesitance is nerves - they've never been in a hot situation.
+</p>
+
+<em>Reading: "Listening. Many eyes. Movement unsafe. Requesting orders?"</em>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [The Doubt](#01b)</strong>
+
+<p>
+Apply <strong>[KEY: BISHOP-TRUE]</strong>
+</p>
+
+<p>
+Bishop, finally breaking silence. But why hesitant? Bishop is never hesitant. Unless...
+</p>
+
+<em>Reading: "I'm listening. Surveillance heavy. Can't move safely. What are my orders?"</em>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [The Trap](#01c)</strong>
+
+<p>
+Apply <strong>[KEY: HOSTILE-INTERCEPT]</strong>
+</p>
+
+<p>
+This isn't from your network at all. It's a probe. The enemy has captured Cardinal's communication channel and is fishing.
+</p>
+
+<em>Reading: "We're listening. Many watchers. Your move isn't safe. What will you order?"</em>
+</blockquote>
+<hr>
+
+<h2>Before You Choose</h2>
+
+<p>
+Remember: In Limn, all readings are valid until collapsed. You're not guessing which is "right" - you're choosing which reality to enter.
+</p>
+
+<p>
+Once you apply a key, you act on that interpretation. Your actions make it true.
+</p>
+
+<p>
+Choose carefully. Lives depend on it.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>tim beg <span class="limn-pipe">│</span> key you <span class="limn-pipe">│</span> tru you mak
+</code></pre>
+</div>
+
+<em>Time begins. The key is yours. The truth is what you make.</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="index.html">← Start</a></span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 00 | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

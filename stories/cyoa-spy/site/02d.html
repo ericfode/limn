@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Test | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>Chapter 2D: The Test</h1>
+
+<p>
+You sent:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>te car sta <span class="limn-pipe">│</span> te loc kno <span class="limn-pipe">│</span> sin rep
+</code></pre>
+</div>
+
+<blockquote class="choice-block"><em>Question: Cardinal's status? Location known? Sincere report.</em>
+</blockquote>
+<p>
+Before you give orders, you verify. The `sin` marker demands genuine response.
+</p>
+
+<hr>
+
+<h2>Hour 2</h2>
+
+<p>
+Response arrives:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>sin <span class="limn-pipe">│</span> car sta unk <span class="limn-pipe">│</span> loc nu kno <span class="limn-pipe">│</span> sel nea onl <span class="limn-pipe">│</span> fea
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Sincere. Cardinal status unknown. Location not known. Self nearby only. Fear.
+</blockquote>
+<p>
+It's Rook. The fear is real—you can feel it through the words. They don't know where Cardinal is. They're just close and scared.
+</p>
+
+<p>
+The `sin` marker worked. A coerced response would have given false confidence. Rook gave honest uncertainty.
+</p>
+
+<hr>
+
+<h2>Hour 3</h2>
+
+<p>
+But now you've lost an hour on verification. The clock didn't stop while you tested.
+</p>
+
+<p>
+And Rook is still waiting for orders. Still scared. Still useless until you point them somewhere.
+</p>
+
+<p>
+Your screen shows the other messages:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>bis <span class="limn-pipe">│</span> col <span class="limn-pipe">│</span> loc dep <span class="limn-pipe">│</span> req joi
+</code></pre>
+</div>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>kni <span class="limn-pipe">│</span> loc kno <span class="limn-pipe">│</span> off hel <span class="limn-pipe">│</span> tim lim
+</code></pre>
+</div>
+
+<p>
+Bishop and Knight. Both waiting. Both potential resources. Both potential problems.
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [Task Rook Now](#03g)</strong>
+
+<strong>You've verified. Now deploy.</strong>
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; frm con <span class="limn-pipe">│</span> mov nea car las loc <span class="limn-pipe">│</span> eye rep <span class="limn-pipe">│</span> cas
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Formal: Confirmed. Move near Cardinal's last known location. Watch and report. Stay casual.</em>
+
+<p>
+You trust Rook. Time to use them.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [Expand the Network](#03h)</strong>
+
+<strong>Rook alone isn't enough. Activate everyone.</strong>
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; bis con joi <span class="limn-pipe">│</span> kni con joi <span class="limn-pipe">│</span> roo sta <span class="limn-pipe">│</span> coo
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Bishop confirm join. Knight confirm join. Rook stay. Coordinate.</em>
+
+<p>
+Three assets. Three perspectives. More capability, but more exposure. And you still don't fully trust Bishop.
+</p>
+</blockquote>
+<hr>
+
+<h2>The Verification Paradox</h2>
+
+<p>
+You tested Rook. The test passed. But:
+</p>
+
+<li>An hour lost to testing is an hour lost to action</li>
+<li>A test that passes tells you what you already suspected</li>
+<li>A test that fails might come too late to matter</li>
+
+<p>
+Trust is faster than verification. But verification is safer than trust.
+</p>
+
+<p>
+In this work, you're always trading one for the other.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>tes pas <span class="limn-pipe">│</span> tim los <span class="limn-pipe">│</span> tru ear <span class="limn-pipe">│</span> saf lat <span class="limn-pipe">│</span> wh bet
+</code></pre>
+</div>
+
+<em>Test passed. Time lost. Trust earned. Safety later. Which is better?</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="01a.html">← Back</a> </span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 02D | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

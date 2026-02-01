@@ -63,6 +63,28 @@ limn-land/
 | [Operator Interactions](docs/theory/operator-interaction-analysis.md) | How operators combine |
 | [Quantifier Semantics](docs/theory/quantifier-semantics.md) | al, ex, on behavior |
 
+## Vocabulary Database
+
+The vocabulary is stored in a Dolt database at `data/vocabulary/` for:
+- **Collision prevention** - UNIQUE constraint on word column
+- **Queryable vocabulary** - SQL access for tools
+- **Version control** - Git-like branching for vocabulary changes
+
+**Quick queries:**
+```bash
+./scripts/vocab.sh stats           # Vocabulary statistics
+./scripts/vocab.sh search light    # Search words
+./scripts/vocab.sh check xyz       # Check if word available
+./scripts/vocab.sh domain 1        # List words in domain
+./scripts/vocab.sh operators       # List all operators
+./scripts/vocab.sh collisions      # Show resolved collisions
+```
+
+**Direct SQL:**
+```bash
+dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
+```
+
 ## Phases
 
 1. **Theoretical Foundation** - Formalize the math
