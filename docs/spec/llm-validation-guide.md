@@ -157,6 +157,62 @@ Response:
 
 ---
 
+## LLM-Native Vocabulary
+
+Limn includes vocabulary designed for how LLMs naturally process meaning:
+
+### Epistemic Precision
+Express confidence levels precisely:
+
+| Word | Meaning | Confidence |
+|------|---------|------------|
+| crt | certain, verified | 95-100% |
+| prb | probable, likely | 70-95% |
+| lik | likely, probably | 60-80% |
+| dub | doubt, uncertain | 30-60% |
+| unl | unlikely, doubtful | 5-30% |
+
+**Example:** `crt sol hea` (certainly the solution is healthy)
+
+### Evidence Types
+Mark how you know something:
+
+| Word | Meaning | Source |
+|------|---------|--------|
+| obs | observed directly | Empirical |
+| ded | deduced logically | Deductive |
+| hyp | hypothesized | Speculative |
+
+**Example:** `obs sol bri` (observed: the sun is bright)
+
+### Reasoning Primitives
+Express logical relationships:
+
+| Word | Meaning | Logic |
+|------|---------|-------|
+| iff | if-then | Conditional |
+| bec | because | Causal |
+| ergo | therefore | Consequent |
+| gvn | given that | Premise |
+| alt | alternatively | Disjunction |
+| cnt | contradicts | Opposition |
+| neg | negate | Negation |
+
+**Example:** `gvn hot ergo swt` (given hot, therefore sweat)
+
+### Limn-Native Concepts
+Express superposition and collapse:
+
+| Word | Meaning |
+|------|---------|
+| sup | superposition, multiple meanings active |
+| clp | collapse, resolve ambiguity |
+| amb | ambiguous, many readings |
+
+**Example:** `sup hot col` (superposition of hot and cold - liminal)
+
+---
+
 ## Best Practices for LLMs
 
 1. **Query before generating** - Check words exist
@@ -164,6 +220,8 @@ Response:
 3. **Embrace ambiguity** - It's a feature, not a bug
 4. **Respect commutativity** - `A B = B A` (except with operators)
 5. **Flag uncertainty** - Mark generated words as provisional
+6. **Use epistemic markers** - Express confidence with crt/prb/dub/unl
+7. **Mark evidence type** - Use obs/ded/hyp when source matters
 
 ---
 
