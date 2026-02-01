@@ -231,7 +231,7 @@ The temporal cognition state vocabulary is **validated for inclusion in Limn**. 
 **Database status:** ✓ Added to Limn vocabulary database (domain: Agent/AI, 2026-02-01)
 
 **Next steps:**
-1. Add to Dolt vocabulary database
+1. ✓ ~~Add to Dolt vocabulary database~~ (completed)
 2. Cross-model validation experiment
 3. Practical application testing
 
