@@ -1,9 +1,0 @@
-[
-  {
-    "concept": "ice",
-    "limn": "sol aqu",
-    "mean_limn_distance": 0.7300474643707275,
-    "mean_pairwise_distance": 0.7061299085617065,
-    "limn_to_centroid": 0.5907443165779114,
-    "translations_to_centroid": 0.340381920337677,
-    "limn_closer_than_pairwise": 
