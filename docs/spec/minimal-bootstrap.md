@@ -1,5 +1,9 @@
 # Limn Minimal Bootstrap
 
+> **QUICK-START SUBSET** — For constrained contexts
+> This is a minimal subset of [bootstrap-v3-natural.md](bootstrap-v3-natural.md).
+> Use the canonical bootstrap for complete understanding.
+
 **Can you understand this without being taught?**
 
 ---
