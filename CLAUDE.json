@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "sessionStop": "/home/eric/.limn/check-telegram.sh"
+  }
+}
