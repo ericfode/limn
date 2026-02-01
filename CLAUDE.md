@@ -45,15 +45,24 @@ Set a mental timer. Every 5 minutes, check for incoming messages.
 
 **When Eric asks for a meme, he wants an IMAGE, not text.**
 
-Use nano-banana to generate images with Limn prompts:
+Use the meme generator script (NanoBanana = Gemini image generation):
 
 ```bash
-# Generate meme image using Limn prompt
-nano-banana --prompt "limn-phrase-here" --output /tmp/meme.png
-# Then send via Telegram
+# Generate and send a Limn meme
+source /home/eric/.limn/meme-generator.sh
+source ~/.limn/telegram-config.sh
+
+generate_limn_meme "limn-phrase-here" "surreal internet meme" "/tmp/limn-meme.png"
+telegram_send_photo "/tmp/limn-meme.png" "limn-phrase-here — Quinn"
 ```
 
-**DO NOT send text-based jokes or ASCII art.** Eric wants visual memes generated from Limn language prompts.
+**DO NOT send text-based jokes or ASCII art.** Eric wants visual memes generated from Limn language prompts using the Gemini API (NanoBanana).
+
+Example Limn phrases for memes:
+- `hot → col` (hot becomes cold)
+- `sol aqu` (solid water)
+- `wor don` (work is done)
+- `joy → sad → joy` (emotional cycles)
 
 ## Output Format
 
