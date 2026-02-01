@@ -32,7 +32,8 @@ Limn demonstrates **conditional superiority** over English:
 - A9: Pipe syntax confused agent
 
 ### B: Data Operations
-*(Results pending)*
+**Status:** Complete (toast)
+**Winner: Limn** (structured data manipulation)
 
 ### C: Code Analysis
 | Test | Compression Ratio |
@@ -45,7 +46,8 @@ Limn demonstrates **conditional superiority** over English:
 **Winner: Limn** (consistent 1.8x compression)
 
 ### D: Code Generation
-*(Results pending)*
+**Status:** Complete (cheedo)
+**Winner: Draw** (both capable, different strengths)
 
 ### E: Reasoning Tasks
 | Test | English Tokens | Limn Tokens | Compression |
@@ -64,10 +66,12 @@ Limn demonstrates **conditional superiority** over English:
 **Winner: Limn** (workflow specification strength)
 
 ### G: Meta-Tasks
-*(In progress)*
+**Status:** Complete (cheedo)
+**Winner: Limn** (recursive/iterative specifications)
 
-### H: Edge Cases
-*(In progress)*
+### H: Edge Cases (Try to Break Limn)
+**Status:** Complete (valkyrie)
+**Finding:** Limn handles ambiguity through superposition, not failure
 
 ---
 
@@ -120,10 +124,27 @@ Agents understand Limn better when:
 
 ---
 
+## Final Status
+
+**ALL 8 CATEGORIES COMPLETE** ✓
+
+| Category | Winner | Notes |
+|----------|--------|-------|
+| A: Simple Commands | English | 100% vs 80% |
+| B: Data Operations | Limn | Structured data |
+| C: Code Analysis | Limn | 1.8:1 compression |
+| D: Code Generation | Draw | Both capable |
+| E: Reasoning | Draw | Limn more compact |
+| F: Complex Workflows | Limn | 1.6:1 compression |
+| G: Meta-Tasks | Limn | Recursive specs |
+| H: Edge Cases | Draw | Superposition handles ambiguity |
+
+**Overall: Limn 4, English 1, Draw 3**
+
 ## Next Steps
 
-- [ ] Complete Categories G, H
-- [ ] Aggregate all results
+- [x] Complete all 8 categories
+- [ ] Merge polecat branches
 - [ ] Create Limn prompt cookbook
 - [ ] Publish findings to crew
 
