@@ -9,28 +9,34 @@
 
 ## Four Research Directions
 
-### 1. Performative Vocabulary (limn-1aeh.1) ✓ ACTIVE
+### 1. Performative Vocabulary (limn-1aeh.1) ✓ COMPLETE
 
-**Status:** Experiment complete, validation in progress
+**Status:** Research complete, validation complete, merged
 
-**Research:** experiments/phase2/003-performative-vocabulary.md
+**Research:**
+- experiments/phase2/003-performative-vocabulary.md
+- experiments/phase2/003-performative-cross-model-test.md (validation)
 
-**Words Added (3):**
+**Words Added (3 semantic):**
 - slf (self-reference) - Semantic performative
 - mls (meaningless) - Paradox performative (stable)
 - rcr (recursive) - Structural performative
 
-**Validation:** limn-o1w4 (polecat testing of processing performatives: brk, foc, flo, jag, slo, fas)
+**Words Validated (3 processing - already existed!):**
+- flo (flowing) - MEDIUM-STRONG performativity
+- brk (break) - MEDIUM performativity
+- foc (focus) - MEDIUM performativity
 
-**Key Finding:** Three levels of performativity identified:
-- Strong: Structure unavoidably enacts meaning (amb, slf, mls)
-- Medium: Phonetic properties reinforce meaning (brk, foc)
-- Weak: Meaning dominates structure (most words)
+**Validation Results (limn-o1w4):**
+Cross-model blind testing confirmed processing performatives are real but moderate. Consonant structure creates genuine reinforcing effects. Words already in vocabulary have desired properties.
 
-**Next Steps:**
-- Await polecat validation results
-- Decide on medium-strength performatives
-- Explore paradox space further
+**Key Finding:** Two types of performativity confirmed:
+- **Enacting** (Strong): Structure unavoidably creates meaning (slf, mls, amb, rcr)
+- **Reinforcing** (Medium): Structure supports and enhances meaning (flo, brk, foc)
+
+**Rejected:** jag, slo, fas (effects too weak for text processing)
+
+**Status:** Direction complete. 7 performative words total (4 semantic + 3 processing).
 
 ---
 
@@ -148,17 +154,18 @@ Words: hlu, mcal, drft, echo, anch, flat, loop
 
 **Total Words Added:** 35+ words across 3 directions
 **Completion Status:**
-- Direction 1: 75% (validation pending)
+- Direction 1: 100% (complete - validation merged)
 - Direction 2: 100% (complete)
 - Direction 3: 90% (could expand)
 - Direction 4: 0% (not started)
 
-**Epic Completion:** ~65%
+**Epic Completion:** ~72%
 
 **Vocabulary Database:**
 - Previous: 920 words
 - Current: 938 words
-- Growth: +18 words this session
+- Growth: +18 words this session (embedding space cartography)
+- Validated: 7 performative words (4 added earlier + 3 existing validated)
 
 ---
 
