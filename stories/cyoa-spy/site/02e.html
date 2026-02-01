@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Bishop | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>Chapter 2E: Trust Bishop</h1>
+
+<p>
+You sent:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>frm con joi <span class="limn-pipe">│</span> rep car sta <span class="limn-pipe">│</span> mov aut <span class="limn-pipe">│</span> we pri
+</code></pre>
+</div>
+
+<blockquote class="choice-block"><em>Formal: Confirmed, join contact. Report Cardinal status. Move authorized. Priority imperative.</em>
+</blockquote>
+<p>
+You're trusting Bishop. Rolling the dice on your most capable—and most suspect—asset.
+</p>
+
+<hr>
+
+<h2>Hour 4</h2>
+
+<p>
+Bishop responds immediately. No hesitation this time:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>con <span class="limn-pipe">│</span> car loc kno <span class="limn-pipe">│</span> bui gre eas sec <span class="limn-pipe">│</span> gua 6 <span class="limn-pipe">│</span> int tim 12h est
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Confirmed. Cardinal location known. Green building, east sector. 6 guards. Interrogation begins estimated 12 hours.
+</blockquote>
+<p>
+Bishop knows where Cardinal is. They know the guard count. They know the timeline.
+</p>
+
+<p>
+How do they know so much?
+</p>
+
+<hr>
+
+<h2>The Question</h2>
+
+<p>
+Either Bishop has extraordinary intelligence sources, or Bishop has inside access.
+</p>
+
+<p>
+Inside access means one of two things:
+1. Bishop has penetrated enemy operations (your best-case scenario)
+2. Bishop IS enemy operations (your worst-case scenario)
+</p>
+
+<p>
+The intel is good. Too good? Or just good enough?
+</p>
+
+<hr>
+
+<h2>Hour 6</h2>
+
+<p>
+Bishop sends more:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>pro ext pos <span class="limn-pipe">│</span> nec 2 age <span class="limn-pipe">│</span> ent beh <span class="limn-pipe">│</span> tim win 4h <span class="limn-pipe">│</span> te aut
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Extraction possible. Need 2 agents. Entry from behind. Time window 4 hours. Authorize?
+</blockquote>
+<p>
+Bishop is proposing a rescue mission. They know the building, the guards, the timing. They just need you to authorize it and provide backup.
+</p>
+
+<p>
+If this works, you save Cardinal and prove Bishop loyal.
+If this is a trap, you lose everyone you send.
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [Authorize the Operation](#03i)</strong>
+
+<strong>Bishop's plan. Bishop's lead.</strong>
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; we aut <span class="limn-pipe">│</span> bis lea <span class="limn-pipe">│</span> roo sup <span class="limn-pipe">│</span> ext pri <span class="limn-pipe">│</span> god spe
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Imperative: Authorized. Bishop leads. Rook support. Extraction priority. Godspeed.</em>
+
+<p>
+You're committing Rook to work under Bishop. If Bishop is loyal, this might work. If not...
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [Verify First](#03j)</strong>
+
+<strong>Good intel, but verify independently.</strong>
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; con rec <span class="limn-pipe">│</span> ver loc fir <span class="limn-pipe">│</span> roo eye bui <span class="limn-pipe">│</span> the ord
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Confirmed received. Verify location first. Rook to watch building. Then orders.</em>
+
+<p>
+You want Rook to confirm Bishop's intel before you authorize anything. Slower, but safer.
+</p>
+</blockquote>
+<hr>
+
+<h2>The Handler's Burden</h2>
+
+<p>
+You never go into the field. You sit in a room with screens and make decisions.
+</p>
+
+<p>
+The people who carry out your decisions don't get to ask follow-up questions. They get your words, in Limn, collapsed through their key. And then they act.
+</p>
+
+<p>
+If you're wrong, they die.
+If you're right, they might still die.
+</p>
+
+<p>
+You authorize or you don't. That's your job.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>tru giv <span class="limn-pipe">│</span> pow giv <span class="limn-pipe">│</span> pow cos <span class="limn-pipe">│</span> tru cos mor
+</code></pre>
+</div>
+
+<em>Trust gives power. Power has cost. Trust costs more.</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="01b.html">← Back</a> </span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 02E | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Risk | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>Chapter 2B: The Risk</h1>
+
+<p>
+You sent:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">urj</span> mov nea car loc <span class="limn-pipe">│</span> cas hid <span class="limn-pipe">│</span> rep det
+</code></pre>
+</div>
+
+<blockquote class="choice-block"><em>Urgent: Move near Cardinal's location. Stay hidden casual. Report details.</em>
+</blockquote>
+<p>
+You're pushing Rook into the hot zone. High risk, high reward.
+</p>
+
+<hr>
+
+<h2>Hour 3</h2>
+
+<p>
+Rook moves. Their cover—freelance journalist—gives them reason to be on the street, taking photos, asking questions. Plausible.
+</p>
+
+<p>
+Message arrives:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>loc rea <span class="limn-pipe">│</span> eye 2 sta <span class="limn-pipe">│</span> bui sec hev <span class="limn-pipe">│</span> ent fro gua <span class="limn-pipe">│</span> ent beh unk
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Location reached. Two stationary watchers. Building security heavy. Front entrance guarded. Rear entrance unknown.
+</blockquote>
+<p>
+Rook is close. Close enough to see the guards on the front door. Close enough to be seen.
+</p>
+
+<hr>
+
+<h2>Hour 5</h2>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code><span class="limn-tone">urj</span> <span class="limn-pipe">│</span> eye see sel <span class="limn-pipe">│</span> mov awa slo <span class="limn-pipe">│</span> te con
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Urgent. Watcher saw me. Moving away slowly. Confirm?
+</blockquote>
+<p>
+Rook has been spotted. Not burned—not yet. But attention is on them now.
+</p>
+
+<p>
+One of the watchers looked directly at Rook. Made eye contact. Rook is walking away, trying to look natural. The watcher hasn't moved yet.
+</p>
+
+<p>
+This is the moment. Either Rook gets clear, or they don't.
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [Abort Immediately](#03c)</strong>
+
+<strong>Pull Rook out now.</strong> Don't wait to see if they follow.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; we ext now <span class="limn-pipe">│</span> pro 2 <span class="limn-pipe">│</span> nu ret loc
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Imperative: Extract now. Protocol 2. Do not return to location.</em>
+
+<p>
+Rook breaks for extraction point. Loud, obvious, but fast. If the watcher was going to act, this forces the moment.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [Maintain Cover](#03d)</strong>
+
+<strong>Trust Rook's training.</strong> Keep walking, stay casual.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; frm con <span class="limn-pipe">│</span> cas flo <span class="limn-pipe">│</span> cof sho <span class="limn-pipe">│</span> eye dis
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Formal: Confirmed. Casual flow. Coffee shop. Watch from distance.</em>
+
+<p>
+Rook continues the act—just a journalist getting coffee. If the cover holds, they can still gather intel. If it doesn't...
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [It's Already Too Late](#failure-burned)</strong>
+
+<strong>The watcher is already moving.</strong>
+
+<p>
+Before you can send anything, your screen flashes:
+</p>
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; age tak <span class="limn-pipe">│</span> loc unk <span class="limn-pipe">│</span> sor
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Agent taken. Location unknown. Sorry.</em>
+
+<p>
+Rook is gone.
+</p>
+</blockquote>
+<hr>
+
+<h2>The Moment</h2>
+
+<p>
+In the field, everything happens in seconds. Your message takes time to compose, time to send, time to receive.
+</p>
+
+<p>
+By the time Rook reads your orders, the situation may have already resolved.
+</p>
+
+<p>
+You're not commanding. You're hoping.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>ris tak <span class="limn-pipe">│</span> rew unk <span class="limn-pipe">│</span> cos rea
+</code></pre>
+</div>
+
+<em>Risk taken. Reward unknown. Cost real.</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="01a.html">← Back</a> </span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 02B | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>

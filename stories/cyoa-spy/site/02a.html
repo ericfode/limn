@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Watcher | THE COLLAPSE</title>
+    <style>
+:root {
+    --bg: #0a0a0a;
+    --fg: #c0c0c0;
+    --amber: #d4a017;
+    --amber-dim: #8b6914;
+    --amber-glow: #ffd700;
+    --green: #00cc66;
+    --red: #cc3333;
+    --muted: #404040;
+    --code-bg: #0f0f0f;
+}
+
+@font-face {
+    font-family: 'Terminal';
+    src: local('Courier New'), local('Consolas'), local('monospace');
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Courier New', Consolas, monospace;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* CRT scanline effect - subtle */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+}
+
+h1, h2, h3 {
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--amber-dim);
+    padding-bottom: 0.5rem;
+    text-shadow: 0 0 10px var(--amber-dim);
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; margin-top: 2rem; }
+h3 { font-size: 1.1rem; color: var(--green); }
+
+/* Intercepted Transmission blocks */
+.transmission {
+    background: var(--code-bg);
+    border: 1px solid var(--amber-dim);
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.transmission-header {
+    background: var(--amber-dim);
+    color: var(--bg);
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.limn-code {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+}
+
+.limn-code code {
+    font-family: 'Courier New', Consolas, monospace;
+    color: var(--amber);
+}
+
+.limn-pipe {
+    color: var(--amber-glow);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--amber);
+}
+
+.limn-tone {
+    color: var(--green);
+    font-style: italic;
+    text-shadow: 0 0 5px var(--green);
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed var(--muted);
+    margin: 2rem 0;
+}
+
+/* Choice blocks - classified document aesthetic */
+.choice-block {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    border-left: 3px solid var(--amber);
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    position: relative;
+}
+
+.choice-block::before {
+    content: "◢ OPTION";
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    color: var(--amber-dim);
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    letter-spacing: 2px;
+}
+
+.choice-block a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.choice-block a:hover {
+    color: var(--amber-glow);
+    text-shadow: 0 0 10px var(--amber);
+}
+
+.choice-block .transmission {
+    margin: 0.5rem 0;
+    border-color: var(--muted);
+}
+
+.choice-block .transmission-header {
+    background: var(--muted);
+    font-size: 0.7rem;
+}
+
+/* Navigation */
+.nav {
+    margin-top: 3rem;
+    padding: 1rem;
+    border-top: 1px solid var(--muted);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav a {
+    color: var(--amber-dim);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--amber);
+}
+
+/* Status bar */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--amber-dim);
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
+    color: var(--amber-dim);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Endings */
+.ending {
+    border: 2px solid;
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+.ending-victory { border-color: var(--green); }
+.ending-failure { border-color: var(--red); }
+.ending-ambiguous { border-color: var(--amber); }
+
+strong { color: var(--amber); }
+em { color: var(--fg); font-style: italic; }
+
+/* Lists */
+li {
+    list-style: none;
+    padding-left: 1.5rem;
+    position: relative;
+}
+li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--amber-dim);
+}
+</style>
+</head>
+<body>
+    <article class="">
+        
+
+<h1>Chapter 2A: The Watcher</h1>
+
+<p>
+You sent:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>frm con <span class="limn-pipe">│</span> res loc <span class="limn-pipe">│</span> eye pas <span class="limn-pipe">│</span> rep wh see
+</code></pre>
+</div>
+
+<blockquote class="choice-block"><em>Formal: Confirmed. Stay in location. Watch passively. Report what you see.</em>
+</blockquote>
+<p>
+Safe play. Rook stays hidden, gathers intel. No exposure.
+</p>
+
+<hr>
+
+<h2>Hour 4</h2>
+
+<p>
+Rook's report arrives:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>eye car loc <span class="limn-pipe">│</span> veh bla 3 <span class="limn-pipe">│</span> age man mov <span class="limn-pipe">│</span> bui tal gre dor <span class="limn-pipe">│</span> ent beh
+</code></pre>
+</div>
+
+<blockquote class="choice-block">Watching Cardinal's location. Three black vehicles. Many agents moving. Tall green building, dormant. Entry from behind.
+</blockquote>
+<p>
+They've identified where Cardinal is being held. A converted warehouse, green facade, rear entrance. Heavy security presence.
+</p>
+
+<p>
+This is actionable intel. But Rook can't do anything with it—they're just watching.
+</p>
+
+<hr>
+
+<h2>Hour 8</h2>
+
+<p>
+Another report:
+</p>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>veh 1 lev <span class="limn-pipe">│</span> age ins <span class="limn-pipe">│</span> mov nor <span class="limn-pipe">│</span> pos tra
+</code></pre>
+</div>
+
+<blockquote class="choice-block">One vehicle leaving. Agents inside. Moving north. Possible transfer.
+</blockquote>
+<p>
+They're moving something. Or someone.
+</p>
+
+<p>
+If it's Cardinal, the window is now. Transfer means new location, new security, possibly worse conditions.
+</p>
+
+<p>
+If it's not Cardinal, chasing it burns resources and tips your hand.
+</p>
+
+<hr>
+
+<h2>Choices</h2>
+
+<blockquote class="choice-block"><strong>→ [Track the Vehicle](#03a)</strong>
+
+<strong>Task Rook to follow.</strong> Break passive observation.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; we fol veh <span class="limn-pipe">│</span> dis saf <span class="limn-pipe">│</span> rep loc con
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Imperative: Follow vehicle. Keep safe distance. Report location continuously.</em>
+
+<p>
+If it's Cardinal, you might find the new holding site. If it's a decoy, Rook gets burned.
+</p>
+</blockquote>
+<blockquote class="choice-block"><strong>→ [Hold Position](#03b)</strong>
+
+<strong>Keep watching the building.</strong> Don't chase shadows.
+
+<div class="transmission">
+</blockquote><div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>&gt; frm con <span class="limn-pipe">│</span> res <span class="limn-pipe">│</span> eye bui <span class="limn-pipe">│</span> veh sec
+<p>
+&gt; </code></pre>
+</p>
+</div>
+<blockquote class="choice-block">
+<em>Formal: Confirmed. Stay. Watch building. Vehicle is secondary.</em>
+
+<p>
+If Cardinal is still in the building, you maintain eyes. If they were in that vehicle, you just watched them disappear.
+</p>
+</blockquote>
+<hr>
+
+<h2>The Clock</h2>
+
+<strong>Hour 8 of 48.</strong> Cardinal has been in custody for eight hours.
+
+<p>
+The first eight hours are disorientation. Sensory deprivation. Breaking routine. No real interrogation yet.
+</p>
+
+<p>
+You have time. But not much.
+</p>
+
+<hr>
+
+<div class="transmission">
+<div class="transmission-header">▌ INTERCEPTED TRANSMISSION ▐</div>
+<pre class="limn-code"><code>eye see <span class="limn-pipe">│</span> han dec <span class="limn-pipe">│</span> wh fol <span class="limn-pipe">│</span> wh sta
+</code></pre>
+</div>
+
+<em>Eyes see. Handler decides. What follows? What stays?</em>
+
+    </article>
+    <nav class="nav">
+        <span><a href="01a.html">← Back</a> </span>
+        <span><a href="glossary.html">◈ Glossary</a></span>
+    </nav>
+    <div class="status-bar">
+        <span>CHAPTER: 02A | STATUS: ACTIVE | NETWORK: NINTH</span>
+        <span>▌THE COLLAPSE▐</span>
+    </div>
+</body>
+</html>
