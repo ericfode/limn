@@ -23,6 +23,9 @@ All production Limn code is in Prolog. See `/tools` and `/src` for canonical imp
 - `populate-bootstrap-db.py` - Bootstrap dictionary parser
 - `run_tests.py` - Test runner (category B data operations)
 
+**ML Tools (ml-tools/):**
+- `semantic_search.py` - ML-based semantic search using ChromaDB. Archived due to Prolog-only policy. If semantic search needed: Use LMN oracle (~) for semantic queries instead.
+
 ## Why Prolog?
 
 Limn's objective execution layer requires logic programming. Prolog's unification, constraint solving, and predicate-based reasoning embody the deterministic half of Limn's superposition. The LLM provides subjective interpretation; Prolog provides objective grounding.
