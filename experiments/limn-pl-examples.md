@@ -402,25 +402,31 @@ Reads as: "A program about movement, with unknowns distance, speed, and time, co
 
 ## 9. Running Examples
 
-To run these examples, use the Python interpreter:
+**Note:** Limn uses Prolog exclusively (engineer-approved). Python implementation is deprecated.
 
-```python
-from src.limn_pl_interpreter import run_limn_pl
+To run these examples, use the Prolog interpreter:
 
-source = """
+```prolog
+% Load Limn-PL interpreter
+:- ['src/limn_pl.pl'].
+
+% Example program
+Source = "
 pro joi-demo |
 var | whe a | whe b | whe c |
 cns | a joi b sa c
-"""
+",
 
-# Forward computation
-result = run_limn_pl(source, {"a": 3, "b": 5})
-print(result)  # {'a': 3, 'b': 5, 'c': 8}
+% Forward computation
+run_limn_pl(Source, [a=3, b=5], Result1),
+% Result1 = [a=3, b=5, c=8]
 
-# Backward computation
-result = run_limn_pl(source, {"a": 3, "c": 10})
-print(result)  # {'a': 3, 'c': 10, 'b': 7}
+% Backward computation
+run_limn_pl(Source, [a=3, c=10], Result2).
+% Result2 = [a=3, c=10, b=7]
 ```
+
+**Note:** Prolog syntax is illustrative. Consult actual implementation for exact predicates.
 
 ## 10. Comparison with programming-v1.md
 

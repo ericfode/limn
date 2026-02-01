@@ -290,6 +290,8 @@ These require symbolic reasoning, not distributional statistics.
 - `005-operator-test.py` - Operator consistency
 - `005-cross-lingual-test.py` - Interlingua hypothesis
 
+> **Historical Note:** This experiment was conducted using Python scripts (January 2026). Python is now deprecated in favor of Prolog (engineer-approved). The experimental results remain valid and inform the current Prolog implementation.
+
 **Documentation:**
 - `005-FINAL-REPORT.md` - Detailed scientific report
 - `005-COMPREHENSIVE-SUMMARY.md` - This document
