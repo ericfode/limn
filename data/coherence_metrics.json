@@ -1,0 +1,7 @@
+{
+  "mean_similarity": 0.9587154984474182,
+  "std_similarity": 0.04574035108089447,
+  "mean_top_10_similarity": 0.9999498724937439,
+  "vocabulary_size": 902,
+  "embedding_dim": 384
+}
