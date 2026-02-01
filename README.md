@@ -118,6 +118,14 @@ dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
 ./scripts/vocab.sh collisions      # Show resolved collisions
 ```
 
+## Implementation
+
+**Limn is implemented in Prolog exclusively** (engineer-approved).
+
+All interpreters, tools, and language infrastructure use Prolog. This decision leverages Prolog's natural fit for constraint-based semantics and maintains implementation coherence.
+
+**For developers:** See [CONTRIBUTING.md](CONTRIBUTING.md) for implementation guidelines.
+
 ## Phases
 
 1. **Theoretical Foundation** - Formalize the math

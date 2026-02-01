@@ -134,6 +134,21 @@ For programmers:
 - Limn-to-natural-language translation interfaces
 - The Limn programming language (order-independent computation)
 
+**IMPORTANT: Implementation Language Policy**
+
+**Limn uses Prolog exclusively.** All code contributions must be in Prolog.
+
+- ✅ Accepted: Prolog implementations (SWI-Prolog, engineer-approved)
+- ❌ Not accepted: Python, JavaScript, or other language implementations
+
+This is an engineering decision to maintain implementation coherence and leverage Prolog's natural fit for constraint-based semantics.
+
+If you have Python or other language code from before this policy:
+1. Port to Prolog, OR
+2. Submit as reference/documentation only (clearly marked "Reference implementation - not canonical")
+
+For questions about Prolog implementation, consult the engineering team.
+
 ---
 
 ## Code of Conduct
