@@ -308,33 +308,11 @@ md_line(Html) -->
 %% Limn block with optional hidden translation
 %% Format: ```limn\ncode\n```\n*translation*  OR  <!-- translation -->
 md_line(Html) -->
-    "```limn\n", chars_to_triple_backtick(Code), "```\n",
-    optional_translation(Trans),
+    "```limn\n",
+    !,  % commit to this rule once we match opening
+    chars_to_triple_backtick(Code),  % this consumes the closing ```
+    optional_newline_translation(Trans),
     { build_limn_block(Code, Trans, Html) }.
-md_line(Html) -->
-    "```limn\n", chars_to_triple_backtick(Code), "```",
-    { build_limn_block(Code, [], Html) }.
-
-%% Optional translation after limn block
-optional_translation(Trans) -->
-    "*", chars_to_newline(Trans), "*\n", !.
-optional_translation(Trans) -->
-    "<!-- ", chars_until_close_comment(Trans), " -->\n", !.
-optional_translation([]) --> [].
-
-chars_until_close_comment([]) --> " -->", !.
-chars_until_close_comment([C|Cs]) --> [C], chars_until_close_comment(Cs).
-
-%% Build limn block HTML with hidden translation
-build_limn_block(Code, [], Html) :-
-    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
-    append(T1, "</code></pre></div>\n", Html).
-build_limn_block(Code, Trans, Html) :-
-    Trans \= [],
-    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
-    append(T1, "</code></pre><div class=\"translation\">", T2),
-    append(T2, Trans, T3),
-    append(T3, "</div></div>\n", Html).
 md_line(Html) -->
     "---\n",
     { Html = "<hr>\n" }.
@@ -356,9 +334,40 @@ md_line([C|Rest]) -->
 md_line([C]) -->
     [C].
 
-chars_to_newline([]) --> ['\n'], !.
+%% Helper for limn blocks with/without newline before translation
+optional_newline_translation(Trans) --> "\n", optional_translation(Trans).
+optional_newline_translation([]) --> [].
+
+%% Optional translation after limn block
+optional_translation(Trans) -->
+    "*", chars_until_asterisk(Trans), "*\n", !.
+optional_translation(Trans) -->
+    "<!-- ", chars_until_close_comment(Trans), " -->\n", !.
+optional_translation([]) --> [].
+
+%% Collect chars until * (for translation parsing) - does NOT consume *
+chars_until_asterisk([C|Cs]) --> [C], { not_asterisk(C) }, chars_until_asterisk(Cs).
+chars_until_asterisk([]) --> [].
+
+not_asterisk(C) :- char_code(C, Code), Code =\= 42.
+
+chars_until_close_comment([]) --> " -->", !.
+chars_until_close_comment([C|Cs]) --> [C], chars_until_close_comment(Cs).
+
+%% Build limn block HTML with hidden translation
+build_limn_block(Code, [], Html) :-
+    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
+    append(T1, "</code></pre></div>\n", Html).
+build_limn_block(Code, Trans, Html) :-
+    Trans \= [],
+    append("<div class=\"transmission\"><div class=\"transmission-header\">▌ INTERCEPTED ▐</div><pre class=\"limn-code\"><code>", Code, T1),
+    append(T1, "</code></pre><div class=\"translation\">", T2),
+    append(T2, Trans, T3),
+    append(T3, "</div></div>\n", Html).
+
+%% Collect chars until newline WITHOUT consuming the newline
+chars_to_newline([C|Cs]) --> [C], { C \= '\n' }, !, chars_to_newline(Cs).
 chars_to_newline([]) --> [].
-chars_to_newline([C|Cs]) --> [C], { C \= '\n' }, chars_to_newline(Cs).
 
 chars_to_triple_backtick([]) --> "```", !.
 chars_to_triple_backtick([C|Cs]) --> [C], chars_to_triple_backtick(Cs).
