@@ -35,14 +35,14 @@ frm con | sta | eye onl | rep cha
 
 ## Choice Format
 
-> **→ [Trust](#choice-a)**
+> **→ [Trust](#test-render)** *(loops back to test)*
 >
 > ```limn
 > frm tru giv | mov aut | god spe
 > ```
 > *Formal: Trust given. Movement authorized. Godspeed.*
 
-> **→ [Doubt](#choice-b)**
+> **→ [Doubt](#test-render)** *(loops back to test)*
 >
 > ```limn
 > te ver fir | sin rep | wai
