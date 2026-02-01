@@ -6,8 +6,12 @@ This document captures an experiment in translating concepts into **Limn**, both
 
 A classic functional programming example, but with Limn's bidirectional twist.
 
-### Source (Python)
+### Source (Reference Implementation)
+
+**Note:** Python shown for comparison only. Limn uses Prolog exclusively.
+
 ```python
+# Reference only - not canonical implementation
 def celsius_to_fahrenheit(c):
     return (c * 9/5) + 32
 
