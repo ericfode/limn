@@ -88,7 +88,7 @@ limn-land/
 |----------|---------|
 | [Experiment 005 - Final Report](experiments/005-FINAL-REPORT.md) | Compositional semantics study (52% advantage) |
 | [Experiment 005 - Comprehensive Summary](experiments/005-COMPREHENSIVE-SUMMARY.md) | All six tests with statistical analysis |
-| [Student Experiments](experiments/) | 17+ experiments testing Limn properties |
+| [Experiment Index](experiments/INDEX.md) | Complete catalog of 49 experiments (2 validated) |
 
 ## Vocabulary Database
 
@@ -119,6 +119,8 @@ dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
 ```
 
 **Database is the source of truth:** All vocabulary lookups should query the Dolt database via `vocab.sh`. Markdown documentation may lag behind database updates.
+
+**For vocabulary management:** See [Vocabulary Management Guide](docs/guides/VOCAB-MANAGEMENT.md) for complete guidance on adding words, resolving collisions, and maintaining the database.
 
 ## Implementation
 
