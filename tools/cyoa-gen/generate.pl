@@ -491,9 +491,24 @@ generate_index(OutputDir) :-
     close(S),
     write('  ✓ index.html'), nl.
 
+%% Validate all links point to existing chapters
+validate_links :-
+    nl, write('◢ VALIDATING LINKS'), nl,
+    findall(To, (links_to(_, To), \+ chapter(To, _, _, _)), DeadLinks),
+    sort(DeadLinks, UniqueDeadLinks),
+    ( UniqueDeadLinks = [] ->
+        write('  ✓ All links valid'), nl
+    ;
+        write('  ✗ DEAD LINKS FOUND:'), nl,
+        forall(member(D, UniqueDeadLinks), (write('    → '), write(D), write('.html'), nl)),
+        write('  ⚠ These chapters are referenced but not loaded!'), nl,
+        fail
+    ).
+
 %% Full site generation entry point
 generate_site(OutputDir) :-
     nl, write('▌ PROLOG CYOA GENERATOR ▐'), nl, nl,
     show_graph,
+    validate_links,
     generate_all(OutputDir),
     generate_index(OutputDir).
