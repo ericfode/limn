@@ -110,13 +110,15 @@ dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
 
 **Quick queries:**
 ```bash
-./scripts/vocab.sh stats           # Vocabulary statistics (460 words, 16 operators)
+./scripts/vocab.sh stats           # Vocabulary statistics (784 words, 26 domains, 16 operators)
 ./scripts/vocab.sh search light    # Search words
 ./scripts/vocab.sh check xyz       # Check if word available
 ./scripts/vocab.sh domain 1        # List words in domain
 ./scripts/vocab.sh operators       # List all operators
 ./scripts/vocab.sh collisions      # Show resolved collisions
 ```
+
+**Database is the source of truth:** All vocabulary lookups should query the Dolt database via `vocab.sh`. Markdown documentation may lag behind database updates.
 
 ## Implementation
 
