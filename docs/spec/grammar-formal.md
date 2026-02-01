@@ -524,5 +524,14 @@ hes - hesitant
 
 ---
 
-*This specification provides the formal foundation for Limn implementation.*
-*For semantic details, see theory documents. For vocabulary, see vocabulary-v2.md.*
+## See Also
+
+- **[Limn-PL Grammar](limn-pl-grammar.md)** - Programming language extensions (variables, constraints, functions)
+- **[Vocabulary Database](../../data/vocabulary/)** - Complete word list (784 words, 26 domains) - query via `vocab.sh`
+- **[Vocabulary Management Guide](../guides/VOCAB-MANAGEMENT.md)** - How to add words and manage the database
+- **[Theory Documents](../theory/)** - Semantic foundations
+
+---
+
+*This specification provides the formal foundation for **core Limn** (natural constraint language).*
+*For programming language extensions, see limn-pl-grammar.md.*
