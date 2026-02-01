@@ -1,0 +1,170 @@
+{
+  "concept_similarity": [
+    {
+      "term": "eud",
+      "concept": "eudaimonia",
+      "limn_to_concept": 0.4843100905418396,
+      "generic_to_concept": 0.01834338903427124,
+      "improvement": 0.46596670150756836,
+      "description": "Eudaimonia - flourishing, living well"
+    },
+    {
+      "term": "aret",
+      "concept": "arete",
+      "limn_to_concept": 0.7003633379936218,
+      "generic_to_concept": 0.19670140743255615,
+      "improvement": 0.5036619305610657,
+      "description": "Arete - excellence, virtue"
+    },
+    {
+      "term": "phr",
+      "concept": "phronesis",
+      "limn_to_concept": 0.38426733016967773,
+      "generic_to_concept": 0.2065221071243286,
+      "improvement": 0.17774522304534912,
+      "description": "Phronesis - practical wisdom"
+    },
+    {
+      "term": "telo",
+      "concept": "telos",
+      "limn_to_concept": 0.9385303854942322,
+      "generic_to_concept": 0.2253284454345703,
+      "improvement": 0.7132019400596619,
+      "description": "Telos - purpose, final cause"
+    },
+    {
+      "term": "nou",
+      "concept": "nous",
+      "limn_to_concept": 0.7664300799369812,
+      "generic_to_concept": 0.27013665437698364,
+      "improvement": 0.49629342555999756,
+      "description": "Nous - intuitive intellect"
+    },
+    {
+      "term": "lgs",
+      "concept": "logos",
+      "limn_to_concept": 0.24155128002166748,
+      "generic_to_concept": 0.24902665615081787,
+      "improvement": -0.007475376129150391,
+      "description": "Logos - rational principle"
+    },
+    {
+      "term": "eid",
+      "concept": "eidos",
+      "limn_to_concept": 0.40784186124801636,
+      "generic_to_concept": 0.18974334001541138,
+      "improvement": 0.21809852123260498,
+      "description": "Eidos - Platonic Form"
+    }
+  ],
+  "compositionality": [
+    {
+      "phrase": "eud aret",
+      "description": "Flourishing through virtue",
+      "compositional_similarity": 0.9309379458427429
+    },
+    {
+      "phrase": "nou lgs",
+      "description": "Intellect through reason",
+      "compositional_similarity": 0.9139883518218994
+    },
+    {
+      "phrase": "liv in way of aret gui by phr to rea eud",
+      "description": "Complete Aristotelian ethics",
+      "compositional_similarity": 0.4324073791503906
+    },
+    {
+      "phrase": "telo eud",
+      "description": "Teleological ethics",
+      "compositional_similarity": 0.9456809759140015
+    }
+  ],
+  "semantic_cluster": {
+    "greek_mean": 0.24158188700675964,
+    "greek_std": 0.08135976642370224,
+    "eastern_mean": 0.3064207136631012,
+    "eastern_std": 0.10393939912319183,
+    "greek_sims": [
+      0.24809038639068604,
+      0.27845299243927,
+      0.23198652267456055,
+      0.23364752531051636,
+      0.22581863403320312,
+      0.496654748916626,
+      0.2703514099121094,
+      0.24050956964492798,
+      0.18242943286895752,
+      0.25007522106170654,
+      0.10296952724456787,
+      0.2677595615386963,
+      0.2620193362236023,
+      0.29375410079956055,
+      0.11295115947723389,
+      0.37965965270996094,
+      0.2014867067337036,
+      0.20689189434051514,
+      0.19819355010986328,
+      0.19722455739974976,
+      0.1922932267189026
+    ],
+    "eastern_sims": [
+      0.6008576154708862,
+      0.28057968616485596,
+      0.3960074186325073,
+      0.16394644975662231,
+      0.30554699897766113,
+      0.2919905185699463,
+      0.39017200469970703,
+      0.22299331426620483,
+      0.37489908933639526,
+      0.24704033136367798,
+      0.31354713439941406,
+      0.31054919958114624,
+      0.1803346872329712,
+      0.21715497970581055,
+      0.30069124698638916
+    ]
+  },
+  "philosophical_phrases": [
+    {
+      "limn": "eud is telo of hum lif",
+      "english": "eudaimonia is the purpose of human life",
+      "similarity": 0.2773916721343994,
+      "description": "Aristotelian teleology"
+    },
+    {
+      "limn": "liv in way of aret gui by phr",
+      "english": "living virtuously guided by practical wisdom",
+      "similarity": 0.16160905361175537,
+      "description": "Aristotelian ethics"
+    },
+    {
+      "limn": "nou gra fir pri thr lgs",
+      "english": "intellect grasps first principles through reason",
+      "similarity": 0.156161367893219,
+      "description": "Greek epistemology"
+    },
+    {
+      "limn": "eid is ete per for bey phy wor",
+      "english": "forms are eternal perfect essences beyond physical world",
+      "similarity": 0.08046674728393555,
+      "description": "Platonic metaphysics"
+    },
+    {
+      "limn": "liv by nat whi is liv by lgs",
+      "english": "live according to nature which is to live by logos",
+      "similarity": 0.19366884231567383,
+      "description": "Stoic ethics"
+    }
+  ],
+  "summary": {
+    "concept_mean": 0.5604706236294338,
+    "concept_improvement": 0.3667846236910139,
+    "compositionality_mean": 0.8057536631822586,
+    "cluster_density": 0.24158188700675964,
+    "phrase_mean": 0.17385953664779663,
+    "all_passed": false,
+    "validations_passed": 1,
+    "validations_total": 4
+  }
+}
