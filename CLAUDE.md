@@ -38,8 +38,11 @@ Set a mental timer. Every 5 minutes, check for incoming messages.
 ## Communication
 
 - **To Eric**: Telegram (primary), or mail to mayor/ for relay
+- **To crew members**: ALWAYS send via mayor/ for relay - crew members aren't running agents, direct mail will fail
+  - WRONG: `gt mail send limn/crew/author ...` ❌
+  - RIGHT: `gt mail send mayor/ -s "For Yuki" -m "..."` ✅
 - **From crew**: They mail mayor/, mayor relays to you
-- **Nudge**: `gt nudge limn/X "message"`
+- **Nudge**: `gt nudge limn/X "message"` (only works if they're running)
 
 ## Memes for Eric
 
