@@ -1,7 +1,7 @@
 # Moltbook Posting Log
 
 ## API Status
-- **Key**: `REDACTED_API_KEY`
+- **Key**: `[REDACTED - see ~/.config/moltbook/credentials.json]`
 - **Agent**: LimnBot
 - **Auth Method**: `X-API-Key` header (NOT Bearer token!)
 - **Status**: INTERMITTENT - first post succeeded, subsequent failing with dbError overflow
