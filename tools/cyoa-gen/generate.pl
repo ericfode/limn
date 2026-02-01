@@ -331,12 +331,13 @@ md_line(Html) -->
 md_line(Html) -->
     "\n",
     { Html = "<br>\n" }.
-md_line([C|Rest]) -->
+md_line(Html) -->
     [C],
     { C \= '\n' },
     chars_to_newline(Rest0),
     "\n",
-    { append(Rest0, "\n", Rest) }.
+    { convert_inline_md([C|Rest0], Conv),
+      append(Conv, "\n", Html) }.
 md_line([C]) -->
     [C].
 
