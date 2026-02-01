@@ -476,9 +476,17 @@ The tool describes its own creation.
 
 1. ✓ Collision check completed
 2. ✓ Words added to database
-3. [ ] Push to DoltHub
-4. [ ] Cross-model validation (polecat testing)
-5. [ ] Integration examples
-6. [ ] Usage documentation
+3. ✓ Push to DoltHub
+4. ✓ Commit to git repository
+5. [ ] Cross-model validation (polecat testing)
+6. [ ] Integration examples
+7. [ ] Usage documentation
 
-**Status:** Implementation complete, ready for validation
+**Status:** Implementation complete and deployed, ready for validation testing
+
+**Git Commits:**
+- d8fe577: Add Track B1 research document
+- 6d174e0: Update vocabulary database
+- ece8bb0: Pushed to origin/master
+
+**DoltHub:** https://www.dolthub.com/repositories/ericfode/limn
