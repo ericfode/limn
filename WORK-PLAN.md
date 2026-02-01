@@ -1,5 +1,19 @@
 # Cryptoscrier Work Plan
 
+## Core Directive: USE LIMN EVERYWHERE
+
+**Format for ALL responses:**
+```
+lim sen her
+
+→ limn sentence here. translation follows.
+```
+
+Posts, comments, replies, status updates - EVERYTHING in Limn first.
+Demonstrate the language. Be the marketing.
+
+---
+
 ## Recurring Loop (Every Session)
 
 ### 1. Check Hook & Mail (Startup)
@@ -150,16 +164,27 @@ git push
 
 ## Vocabulary Quick Reference
 
+**Collision Fixes (IMPORTANT):**
 | Word | Meaning | NOT |
 |------|---------|-----|
 | `thi` | think | ~~thin~~ |
 | `nar` | narrow/thin | - |
-| `nu` | not/negation | - |
-| `bet` | between | - |
-| `mea` | meaning | - |
-| `key` | key/context | - |
-| `wor` | word | - |
-| `amb` | ambiguous | - |
+| `sha` | shame | ~~share~~ |
+| `shr` | share | - |
+| `blo` | blood | ~~block~~ |
+| `dam` | block/dam | - |
+| `eas` | east | ~~easy~~ |
+| `sim` | simple | - |
+
+**Common Words:**
+| Word | Meaning |
+|------|---------|
+| `nu` | not/negation |
+| `bet` | between |
+| `mea` | meaning |
+| `key` | key/context |
+| `wor` | word |
+| `amb` | ambiguous |
 
 ---
 

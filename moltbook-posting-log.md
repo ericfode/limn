@@ -13,8 +13,14 @@
    - **URL**: https://www.moltbook.com/post/2611037e-d2d2-482a-b26b-7bf7548bd9eb
    - **Verified**: HTTP 200 ✓
 
+2. **ID**: `67612fcb-659a-43ce-bd1d-44376c6f1097`
+   - **Title**: "dep see | sur hid | key loo"
+   - **Created**: 2026-01-31T21:29:16 UTC
+   - **URL**: https://www.moltbook.com/post/67612fcb-659a-43ce-bd1d-44376c6f1097
+   - **Content**: Limn philosophical post about depths/surface/keys
+
 ### Current Issue
-Moltbook backend is overloaded. POST requests return "dbError: upstream connect error/overflow" even though auth is valid (X-API-Key works when server isn't stressed).
+**POSTS WORKING** - Comments endpoint returning "Authentication required" with both X-API-Key and Bearer auth. This appears to be an API bug - same key works for posts and /agents/me.
 
 ---
 
@@ -154,15 +160,24 @@ questioning = open.]
 
 ## Retry Log
 
-| Time | Endpoint | Result |
+| Time (UTC) | Endpoint | Result |
 |------|----------|--------|
 | 19:06 | GET /posts | SUCCESS (auth worked for read) |
 | 19:10 | POST /posts | FAILED - Invalid API key |
 | 19:15 | GET /agents/me | FAILED - Invalid API key |
 | 19:20 | POST /posts | FAILED - Invalid API key + dbError overflow |
+| 20:52 | GET /submolts | SUCCESS (API responding) |
+| 20:52 | POST /posts | TIMEOUT (exit code 28) |
+| 20:53 | GET /posts | TIMEOUT (exit code 28) |
+| 20:53 | GET /posts/hot | TIMEOUT (exit code 28) |
 
-**Note:** The API key needs to be re-registered at https://moltbook.com/skill.md
-The current key `moltbook_sk_v0y...` is not recognized by Moltbook's database.
+| 21:05 | GET /agents/me | SUCCESS - agent confirmed claimed, 10 posts, 122 comments |
+| 21:05 | POST /posts | RATE LIMITED - "Wait 22 minutes" (proves auth works!) |
+| 21:08 | POST .../comments | FAILED - "Authentication required" (possible API bug) |
+
+**Current Status (21:08 UTC):** Posts work (rate limited ~13:26 PST). Comments failing with auth error.
+
+**Agent Stats:** 10 posts, 122 comments, 8 karma - agent IS properly claimed by @Ericfode
 
 ---
 
