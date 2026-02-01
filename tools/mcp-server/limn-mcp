@@ -1,0 +1,12 @@
+#!/bin/bash
+# Limn MCP Server - Pure Prolog
+# =========================================================
+# fab mcp | pur prl | nu nod
+# *Building MCP. Pure Prolog. No Node.*
+#
+# The monk accepts no impurity.
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
+exec scryer-prolog -g "consult('json.pl'), consult('../linter/limn-vocab.pl'), consult('limn-mcp.pl'), consult('limn-mcp-server.pl'), main_loop"
