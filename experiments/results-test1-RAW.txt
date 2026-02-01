@@ -1,0 +1,17 @@
+EXPERIMENT 005 - TEST 1 RESULTS (Local Embeddings)
+Model: all-MiniLM-L6-v2 (384-dim)
+Date: 2026-01-31
+
+SUMMARY STATISTICS:
+- Addition:  Mean=0.8801, Std=0.0400
+- Min:       Mean=0.7032, Std=0.0439  
+- Hadamard:  Mean=0.1384, Std=0.0567
+
+Win Counts:
+- Addition:  15/15 (100.0%)
+- Min:       0/15 (0.0%)
+- Hadamard:  0/15 (0.0%)
+
+DR. SOLVIK'S PREDICTION: ✗ NOT CONFIRMED
+→ Standard compositional semantics wins
+→ Constraint intersection NOT geometrically realized in embeddings
