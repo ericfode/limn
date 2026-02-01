@@ -138,16 +138,17 @@ For programmers:
 
 **Limn uses Prolog exclusively.** All code contributions must be in Prolog.
 
-- ✅ Accepted: Prolog implementations (SWI-Prolog, engineer-approved)
+- ✅ Accepted: Prolog implementations (Scryer Prolog preferred, SWI-Prolog compatible)
 - ❌ Not accepted: Python, JavaScript, or other language implementations
 
-This is an engineering decision to maintain implementation coherence and leverage Prolog's natural fit for constraint-based semantics.
+**Why Prolog?** Limn's objective execution layer requires logic programming. Prolog's unification, constraint solving, and predicate-based reasoning embody the deterministic half of Limn's superposition. The LLM provides subjective interpretation; Prolog provides objective grounding.
 
-If you have Python or other language code from before this policy:
-1. Port to Prolog, OR
-2. Submit as reference/documentation only (clearly marked "Reference implementation - not canonical")
+See `docs/philosophy/PROLOG-WHY.md` for the complete philosophical rationale.
 
-For questions about Prolog implementation, consult the engineering team.
+If you have Python code from before this policy:
+1. Port unique logic to Prolog, OR
+2. Archive as reference/documentation (clearly marked "Historical reference - not canonical")
+3. Delete if duplicate or superseded
 
 ---
 
