@@ -66,10 +66,16 @@ class LimnSemanticSearch:
                 metadata={"description": "Limn bootstrap vocabulary embeddings"}
             )
 
-        # Load Limn embedder
-        print(f"Loading Limn embedder from {self.embedder_path}...")
+        # Load BOTH embedders:
+        # - Base model for English meanings (better semantic differentiation)
+        # - Limn model for queries (can handle both Limn and English)
+        print(f"Loading base embedder for vocabulary...")
+        self.base_embedder = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        print("✓ Base embedder loaded")
+
+        print(f"Loading Limn embedder for queries from {self.embedder_path}...")
         self.embedder = SentenceTransformer(str(self.embedder_path))
-        print("✓ Embedder loaded")
+        print("✓ Limn embedder loaded")
 
     def load_vocabulary(self) -> List[Dict]:
         """Load all vocabulary from Dolt database."""
@@ -111,7 +117,7 @@ class LimnSemanticSearch:
         """
         print("Embedding vocabulary...")
 
-        # Prepare texts to embed: use meaning alone for better semantic space
+        # Prepare texts to embed: use English meanings
         texts = []
         word_ids = []
 
@@ -119,13 +125,14 @@ class LimnSemanticSearch:
             word = entry['word']
             meaning = entry['meaning']
 
-            # Embed just the meaning to get semantic differentiation
-            # The Limn embedder was trained on simple Limn-English pairs
+            # Embed the English meaning using base model for semantic differentiation
+            # Queries can be in either Limn or English - the Limn embedder handles both
             texts.append(meaning)
             word_ids.append(word)
 
-        # Embed all texts using Limn embedder
-        embeddings = self.embedder.encode(
+        # Embed all texts using BASE embedder (not Limn embedder)
+        # This ensures good semantic differentiation in the vocabulary
+        embeddings = self.base_embedder.encode(
             texts,
             batch_size=32,
             show_progress_bar=True,
@@ -225,27 +232,39 @@ class LimnSemanticSearch:
 
     def query(self, query_text: str, n_results: int = 10) -> Dict:
         """
-        Query the semantic search index.
+        Query the semantic search index using manual similarity computation.
 
         Args:
-            query_text: Query string (Limn or English)
+            query_text: Query string (English - Limn queries coming soon)
             n_results: Number of results to return
 
         Returns:
             Query results with words and similarities
         """
-        # Embed query
-        query_embedding = self.embedder.encode(query_text, convert_to_numpy=True)
+        # Embed query using base embedder (same as vocabulary)
+        # TODO: Add support for Limn queries using the Limn embedder
+        query_embedding = self.base_embedder.encode(query_text, convert_to_numpy=True)
 
-        # Debug: print embedding stats
-        print(f"Debug: Query embedding shape: {query_embedding.shape}")
-        print(f"Debug: Query embedding norm: {np.linalg.norm(query_embedding):.4f}")
+        # Get all stored embeddings
+        all_data = self.collection.get(include=['embeddings', 'metadatas'])
+        all_embeddings = np.array(all_data['embeddings'])
+        all_ids = all_data['ids']
+        all_metadatas = all_data['metadatas']
 
-        # Search ChromaDB
-        results = self.collection.query(
-            query_embeddings=[query_embedding.tolist()],
-            n_results=n_results
-        )
+        # Compute cosine similarities (embeddings are already normalized)
+        similarities = all_embeddings @ query_embedding
+
+        # Get top-k results
+        top_indices = np.argsort(similarities)[::-1][:n_results]
+
+        # Format results
+        results = {
+            'ids': [[all_ids[i] for i in top_indices]],
+            'distances': [[float(1 - similarities[i]) for i in top_indices]],  # Convert to distance
+            'metadatas': [[all_metadatas[i] for i in top_indices]],
+            'documents': [[]],  # Not needed for display
+            'similarities': [[float(similarities[i]) for i in top_indices]]  # Add actual similarities
+        }
 
         return results
 
@@ -306,13 +325,11 @@ def main():
         print(f"\nQuery: {args.query}")
         print("-" * 80)
 
-        for i, (word_id, document, metadata, distance) in enumerate(zip(
+        for i, (word_id, metadata, similarity) in enumerate(zip(
             results['ids'][0],
-            results['documents'][0],
             results['metadatas'][0],
-            results['distances'][0]
+            results['similarities'][0]
         )):
-            similarity = 1 - distance  # Convert distance to similarity
             print(f"\n{i+1}. {metadata['word']} (similarity: {similarity:.3f})")
             print(f"   {metadata['meaning']}")
 
