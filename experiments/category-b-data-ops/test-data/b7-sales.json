@@ -1,0 +1,6 @@
+[
+  {"product": "Widget", "sales": 150, "revenue": 1500.00},
+  {"product": "Gadget", "sales": 200, "revenue": 3000.00},
+  {"product": "Doohickey", "sales": 100, "revenue": 800.00},
+  {"product": "Thingamabob", "sales": 175, "revenue": 2100.00}
+]
