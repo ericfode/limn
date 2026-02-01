@@ -85,6 +85,51 @@ mcp_tools([
                 domain-json([type-string, description-'Domain to browse'])
             ])
         ])
+    ]),
+    json([
+        name-garden_create,
+        description-'Create a new Garden reading session. Returns a unique garden ID.',
+        inputSchema-json([
+            type-object,
+            properties-json([])
+        ])
+    ]),
+    json([
+        name-garden_read,
+        description-'Record a reading event in a Garden. Tracks path traversal and meaning collapses.',
+        inputSchema-json([
+            type-object,
+            properties-json([
+                gardenId-json([type-string, description-'Garden ID']),
+                readerId-json([type-string, description-'Reader identifier']),
+                key-json([type-string, description-'Context key used']),
+                path-json([type-array, description-'List of seed indices traversed']),
+                collapses-json([type-array, description-'List of [seedIdx, meaning] pairs'])
+            ]),
+            required-[gardenId, readerId, key, path, collapses]
+        ])
+    ]),
+    json([
+        name-garden_query,
+        description-'Query ripples for a Garden. Shows how meanings propagated.',
+        inputSchema-json([
+            type-object,
+            properties-json([
+                gardenId-json([type-string, description-'Garden ID to query'])
+            ]),
+            required-[gardenId]
+        ])
+    ]),
+    json([
+        name-garden_clear,
+        description-'Clear all state for a Garden.',
+        inputSchema-json([
+            type-object,
+            properties-json([
+                gardenId-json([type-string, description-'Garden ID to clear'])
+            ]),
+            required-[gardenId]
+        ])
     ])
 ]).
 
@@ -146,6 +191,38 @@ lesson_text(1, 'Lesson 1: Intersection. Words define REGIONS. hot col = lukewarm
 lesson_text(2, 'Lesson 2: Order Independence. sol liq = liq sol = ice, slush, phase boundary.').
 lesson_text(3, 'Lesson 3: Operators. nu negates NEXT word. nu sol liq vs sol nu liq.').
 lesson_text(_, 'Lessons 1-3 available.').
+
+%% ============================================================
+%% GARDEN TOOL HANDLERS
+%% ============================================================
+
+handle_tool(garden_create, _, Result) :-
+    create_garden(GardenID),
+    atom_concat('Created garden: ', GardenID, Text),
+    Result = json([content-[json([type-text, text-Text])]]).
+
+handle_tool(garden_read, Args, Result) :-
+    json_get(Args, gardenId, GardenID),
+    json_get(Args, readerId, ReaderID),
+    json_get(Args, key, Key),
+    json_get(Args, path, Path),
+    json_get(Args, collapses, Collapses),
+    record_reading(GardenID, ReaderID, Key, Path, Collapses),
+    format(atom(Text), 'Recorded reading in garden ~w by reader ~w', [GardenID, ReaderID]),
+    Result = json([content-[json([type-text, text-Text])]]).
+
+handle_tool(garden_query, Args, Result) :-
+    json_get(Args, gardenId, GardenID),
+    query_ripples(GardenID, Ripples),
+    length(Ripples, Count),
+    format(atom(Text), 'Garden ~w has ~w ripples: ~w', [GardenID, Count, Ripples]),
+    Result = json([content-[json([type-text, text-Text])]]).
+
+handle_tool(garden_clear, Args, Result) :-
+    json_get(Args, gardenId, GardenID),
+    clear_garden(GardenID),
+    atom_concat('Cleared garden: ', GardenID, Text),
+    Result = json([content-[json([type-text, text-Text])]]).
 
 %% ============================================================
 %% JSON-RPC HANDLER
