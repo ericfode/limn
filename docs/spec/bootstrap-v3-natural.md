@@ -1,5 +1,9 @@
 # Limn Bootstrap Document v3 (Natural Extensions Edition)
 
+> **CANONICAL BOOTSTRAP** — Validated 2026-01-31
+> Zero-bootstrap testing achieved 77-85% comprehension.
+> This is THE authoritative bootstrap for teaching Limn to LLMs.
+
 **Purpose:** Teach Limn to a fresh LLM through in-context learning and structural inference.
 **Core Principle:** The vocabulary is designed so that meaning emerges from structure—an LLM reading enough Limn should detect meaning without explicit definitions.
 **Target:** Self-documenting language where the "first thing that pops into your head" IS the meaning.
