@@ -9,4 +9,4 @@
 DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DIR"
 
-exec scryer-prolog -g "consult('json.pl'), consult('../linter/limn-vocab.pl'), consult('limn-mcp.pl'), consult('limn-mcp-server.pl'), main_loop"
+exec scryer-prolog -g "consult('json.pl'), consult('../linter/limn-vocab.pl'), consult('limn-mcp.pl'), consult('garden.pl'), consult('limn-mcp-server.pl'), main_loop"
