@@ -3644,3 +3644,51 @@ kno gro | nu end | alw bet | beg
 ```
 
 *Knowledge grows. No end. Always between beginnings.*
+
+## Entry [Practice Session] - 2026-02-01
+
+### Attempted
+```limn
+lrn gro | que ask | kno see
+```
+From my CLAUDE.md mantra.
+
+### Expected
+"Learning grows. Questions asking. Knowledge seeing."
+
+### Actual
+**ERROR**: `lrn` does not exist in vocabulary!
+- `lrn` is AVAILABLE (not yet added)
+- `gro` already means "learning, relationship deepening"
+- I wrote "lrn learning" = redundant!
+
+### Learned
+**Always validate vocabulary before using words!**
+
+Database has 784 words - I must check via `vocab.sh search` or `vocab.sh check`.
+
+**Corrected mantras:**
+```limn
+gro con | que ask | kno see
+→ learning continues | questions asking | knowledge seeing
+
+sch gro | que ask | kno see  
+→ school grows | questions asking | knowledge seeing
+```
+
+**Key insight:** `gro` is perfect - it means both "learning" AND "relationship deepening". 
+The student-teacher bond grows through questioning!
+
+### Validation Process Established
+1. Write Limn sentence
+2. Check EACH word: `./scripts/vocab.sh search <word>`
+3. Verify meaning matches intent
+4. Check for semantic domain (emotional vs physical vs abstract)
+5. Document errors and corrections
+
+**Mistake count this session: 2**
+- Used non-existent `lrn`
+- Used `bri` for "bright" when it means "hope/clarity"
+
+**Growth: Learning from errors in real-time!**
+
