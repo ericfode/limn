@@ -302,6 +302,56 @@ class LimnSemanticSearch:
 
         return metrics
 
+    def export_to_dolt(self, top_k: int = 10):
+        """
+        Export semantic similarity data to Dolt database.
+
+        Creates a table of top-k semantic neighbors for each word.
+        """
+        print("\nExporting semantic neighbors to Dolt...")
+
+        # Get all embeddings
+        all_data = self.collection.get(include=['embeddings', 'metadatas'])
+        all_embeddings = np.array(all_data['embeddings'])
+        all_ids = all_data['ids']
+
+        # Compute all pairwise similarities
+        similarities = all_embeddings @ all_embeddings.T
+
+        # For each word, find top-k neighbors (excluding self)
+        export_data = []
+        for i, word_id in enumerate(all_ids):
+            # Get similarities for this word
+            sims = similarities[i].copy()
+            sims[i] = -1  # Exclude self
+
+            # Get top-k indices
+            top_indices = np.argsort(sims)[::-1][:top_k]
+
+            # Create rows for export
+            for rank, idx in enumerate(top_indices, 1):
+                neighbor_id = all_ids[idx]
+                similarity = float(sims[idx])
+                export_data.append({
+                    'word': word_id,
+                    'neighbor_word': neighbor_id,
+                    'rank': rank,
+                    'similarity': similarity
+                })
+
+        # Save to JSON for Dolt import
+        export_path = Path(__file__).parent.parent / "data" / "semantic_neighbors.json"
+        with open(export_path, 'w') as f:
+            json.dump(export_data, f, indent=2)
+
+        print(f"✓ Exported {len(export_data)} neighbor relationships to {export_path}")
+        print(f"\nTo import into Dolt:")
+        print(f"  cd data/vocabulary")
+        print(f"  dolt sql < path/to/create_semantic_neighbors_table.sql")
+        print(f"  dolt sql -q \"LOAD DATA LOCAL INFILE '../semantic_neighbors.json' INTO TABLE semantic_neighbors\"")
+
+        return export_path
+
 
 def main():
     """Main entry point."""
@@ -310,6 +360,7 @@ def main():
     parser = argparse.ArgumentParser(description="Limn Semantic Search")
     parser.add_argument('--build', action='store_true', help='Build the search index')
     parser.add_argument('--query', type=str, help='Query the index')
+    parser.add_argument('--export', action='store_true', help='Export semantic neighbors to Dolt')
     parser.add_argument('-n', '--n-results', type=int, default=10, help='Number of results')
 
     args = parser.parse_args()
@@ -318,6 +369,11 @@ def main():
 
     if args.build:
         search.build_index()
+        # Automatically export after building
+        search.export_to_dolt()
+
+    if args.export:
+        search.export_to_dolt()
 
     if args.query:
         results = search.query(args.query, n_results=args.n_results)
