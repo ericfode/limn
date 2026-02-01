@@ -318,10 +318,12 @@ md_line(Html) -->
     { Html = "<hr>\n" }.
 md_line(Html) -->
     "- ", chars_to_newline(Item), "\n",
-    { append("<li>", Item, T1), append(T1, "</li>\n", Html) }.
+    { convert_inline_md(Item, ConvItem),
+      append("<li>", ConvItem, T1), append(T1, "</li>\n", Html) }.
 md_line(Html) -->
     "> ", chars_to_newline(Quote), "\n",
-    { append("<blockquote>", Quote, T1), append(T1, "</blockquote>\n", Html) }.
+    { convert_inline_md(Quote, ConvQuote),
+      append("<blockquote>", ConvQuote, T1), append(T1, "</blockquote>\n", Html) }.
 md_line(Html) -->
     "\n",
     { Html = "<br>\n" }.
@@ -333,6 +335,52 @@ md_line([C|Rest]) -->
     { append(Rest0, "\n", Rest) }.
 md_line([C]) -->
     [C].
+
+%% Convert inline markdown (links, bold) to HTML
+convert_inline_md(In, Out) :-
+    phrase(inline_md(OutChars), In),
+    append(OutChars, [], Out).
+
+%% DCG for inline markdown conversion
+%% Process character by character, detecting patterns
+inline_md(Out) -->
+    "[", chars_until_close_bracket(Text), "](#", chars_until_close_paren(Id), ")",
+    !,
+    { append("<a href=\"", Id, T1),
+      append(T1, ".html\">", T2),
+      append(T2, Text, T3),
+      append(T3, "</a>", Link) },
+    inline_md(Rest),
+    { append(Link, Rest, Out) }.
+inline_md(Out) -->
+    "**",
+    !,
+    chars_until_double_star(Inner),
+    { convert_inline_md(Inner, ConvInner),
+      append("<strong>", ConvInner, T1),
+      append(T1, "</strong>", Bold) },
+    inline_md(Rest),
+    { append(Bold, Rest, Out) }.
+inline_md([C|Rest]) -->
+    [C],
+    inline_md(Rest).
+inline_md([]) --> [].
+
+%% Helper DCGs for inline parsing
+chars_until_close_bracket([C|Cs]) --> [C], { not_close_bracket(C) }, chars_until_close_bracket(Cs).
+chars_until_close_bracket([]) --> [].
+
+chars_until_close_paren([C|Cs]) --> [C], { not_close_paren(C) }, chars_until_close_paren(Cs).
+chars_until_close_paren([]) --> [].
+
+not_close_bracket(C) :- char_code(C, Code), Code =\= 93.  % ]
+not_close_paren(C) :- char_code(C, Code), Code =\= 41.    % )
+
+chars_until_double_star([]) --> "**", !.
+chars_until_double_star([C|Cs]) --> [C], chars_until_double_star(Cs).
+
+chars_until_single_star([]) --> "*", !.
+chars_until_single_star([C|Cs]) --> [C], { not_asterisk(C) }, chars_until_single_star(Cs).
 
 %% Helper for limn blocks with/without newline before translation
 optional_newline_translation(Trans) --> "\n", optional_translation(Trans).
