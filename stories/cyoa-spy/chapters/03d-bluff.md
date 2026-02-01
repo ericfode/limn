@@ -8,6 +8,8 @@ next: ["victory-extraction", "failure-captured"]
 
 # Chapter 3D: The Bluff
 
+![bluff](images/03d-bluff.webp)
+
 You sent:
 
 ```limn

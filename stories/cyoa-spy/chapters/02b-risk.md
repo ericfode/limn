@@ -8,6 +8,8 @@ next: ["03c", "03d", "failure-burned"]
 
 # Chapter 2B: The Risk
 
+![rook motion](images/02b-rook-motion.webp)
+
 You sent:
 
 ```limn

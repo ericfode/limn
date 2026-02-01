@@ -8,6 +8,8 @@ next: ["victory-teamwork", "failure-setup"]
 
 # Chapter 3K: Extend Trust
 
+![trust test](images/03k-trust-test.webp)
+
 You sent:
 
 ```limn

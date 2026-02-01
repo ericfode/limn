@@ -8,6 +8,8 @@ next: ["02a", "02b", "02c", "02d"]
 
 # Chapter 1A: The Rookie
 
+![orders reality](images/01a-orders-reality.webp)
+
 You applied **[KEY: ROOK-TRUE]**.
 
 The message collapses:

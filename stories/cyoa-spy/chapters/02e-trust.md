@@ -8,6 +8,8 @@ next: ["03i", "03j"]
 
 # Chapter 2E: Trust Bishop
 
+![bishop cover](images/02e-bishop-cover.webp)
+
 You sent:
 
 ```limn
