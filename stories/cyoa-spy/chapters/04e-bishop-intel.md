@@ -8,6 +8,8 @@ next: ["victory-trust-repaid", "ending-double-cross"]
 
 # Chapter 4E: Bishop's Intel
 
+![bishop truth](images/04e-bishop-truth.webp)
+
 You sent:
 
 ```limn

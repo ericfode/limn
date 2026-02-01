@@ -8,6 +8,8 @@ next: ["03o", "03p", "victory-turncoat"]
 
 # Chapter 2H: Counter-Intelligence
 
+![architect move](images/02h-architect-move.webp)
+
 You sent:
 
 ```limn

@@ -8,6 +8,8 @@ next: ["02e", "02f"]
 
 # Chapter 1B: The Doubt
 
+![bishop signal](images/01b-bishop-signal.webp)
+
 You applied **[KEY: BISHOP-TRUE]**.
 
 The message collapses:

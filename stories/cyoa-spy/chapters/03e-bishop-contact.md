@@ -8,6 +8,8 @@ next: ["04f", "ending-betrayal"]
 
 # Chapter 3E: Bishop Contact
 
+![bishop choice](images/03e-bishop-choice.webp)
+
 You sent:
 
 ```limn

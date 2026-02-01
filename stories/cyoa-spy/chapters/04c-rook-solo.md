@@ -8,6 +8,8 @@ next: ["victory-lone-wolf", "ending-overwhelmed"]
 
 # Chapter 4C: Rook Solo
 
+![rook solo](images/04c-rook-solo.webp)
+
 You sent:
 
 ```limn

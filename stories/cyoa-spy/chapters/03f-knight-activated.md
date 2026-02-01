@@ -8,6 +8,8 @@ next: ["04g", "ending-sacrifice"]
 
 # Chapter 3F: Knight Activated
 
+![knight contacts](images/03f-knight-contacts.webp)
+
 You sent:
 
 ```limn

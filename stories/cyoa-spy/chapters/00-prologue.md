@@ -8,6 +8,8 @@ next: ["01a", "01b", "01c"]
 
 # THE COLLAPSE
 
+![clock 48](images/00-clock-48.webp)
+
 ## Prologue: The Language of Shadows
 
 The message arrived at 03:47 UTC.

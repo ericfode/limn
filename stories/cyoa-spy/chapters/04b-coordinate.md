@@ -8,6 +8,8 @@ next: ["victory-precision", "ending-friendly-fire"]
 
 # Chapter 4B: Coordinate Strike
 
+![team coordinated](images/04b-team-coordinated.webp)
+
 You sent:
 
 ```limn

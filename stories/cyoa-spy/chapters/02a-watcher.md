@@ -8,6 +8,8 @@ next: ["03a", "03b"]
 
 # Chapter 2A: The Watcher
 
+![surveillance](images/02a-surveillance.webp)
+
 You sent:
 
 ```limn

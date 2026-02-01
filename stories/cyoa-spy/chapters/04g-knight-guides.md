@@ -8,6 +8,8 @@ next: ["victory-memory", "ending-rust"]
 
 # Chapter 4G: Knight Guides
 
+![knight sacrifice](images/04g-knight-sacrifice.webp)
+
 You sent:
 
 ```limn

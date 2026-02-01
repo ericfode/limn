@@ -8,6 +8,8 @@ next: ["ending-stalemate", "ending-cold-war"]
 
 # Chapter 4O: Counter Offer
 
+![yuki confronts](images/04o-yuki-confronts.webp)
+
 You sent:
 
 ```limn

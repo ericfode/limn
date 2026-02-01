@@ -8,6 +8,8 @@ next: ["victory-shadow", "failure-overreach"]
 
 # Chapter 3P: Use the Distraction
 
+![distraction](images/03p-distraction.webp)
+
 You sent:
 
 ```limn
