@@ -1,0 +1,8 @@
+[
+  {"item": "Apple", "type": "fruit", "price": 1.20},
+  {"item": "Carrot", "type": "vegetable", "price": 0.80},
+  {"item": "Banana", "type": "fruit", "price": 0.90},
+  {"item": "Broccoli", "type": "vegetable", "price": 1.50},
+  {"item": "Orange", "type": "fruit", "price": 1.00},
+  {"item": "Spinach", "type": "vegetable", "price": 1.30}
+]
