@@ -55,6 +55,10 @@ logs/
 *.temp
 .cache/
 
+# Rust
+target/
+Cargo.lock
+
 # Gas Town (added by gt)
 .runtime/
 .claude/
