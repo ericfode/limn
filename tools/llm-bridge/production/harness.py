@@ -37,6 +37,17 @@ import psutil
 import signal
 import configparser
 
+try:
+    from oracle_plugin import (
+        load_plugins,
+        get_plugin_patterns,
+        extract_plugin_params,
+        execute_plugin
+    )
+    PLUGIN_SUPPORT = True
+except ImportError:
+    PLUGIN_SUPPORT = False
+
 
 class OracleType(Enum):
     """All supported oracle types."""
@@ -142,7 +153,8 @@ class ProductionHarness:
         bend_binary: str = "bend",
         enable_real_llm: bool = False,
         anthropic_api_key: Optional[str] = None,
-        cache_dir: Optional[Path] = None
+        cache_dir: Optional[Path] = None,
+        plugin_paths: Optional[List[str]] = None
     ):
         """Initialize production harness.
 
@@ -151,6 +163,7 @@ class ProductionHarness:
             enable_real_llm: Use real Claude API
             anthropic_api_key: Claude API key (or from ANTHROPIC_API_KEY env)
             cache_dir: Directory for persistent cache
+            plugin_paths: List of paths to plugin files/directories
         """
         self.bend_binary = bend_binary
         self.enable_real_llm = enable_real_llm
@@ -164,6 +177,15 @@ class ProductionHarness:
 
         # Memory store
         self.memory = {}
+
+        # Plugin registry
+        self._plugins = {}
+
+        # Load plugins
+        if plugin_paths and PLUGIN_SUPPORT:
+            plugin_count = load_plugins(self, plugin_paths)
+            if plugin_count > 0:
+                print(f"[Plugin] Loaded {plugin_count} plugin(s)")
 
         # Performance stats
         self.stats = {
@@ -321,6 +343,18 @@ class ProductionHarness:
                 params = self._extract_params(oracle_type, match)
                 oracles.append(OracleRequest(type=oracle_type, params=params))
 
+        # Check plugin patterns
+        if PLUGIN_SUPPORT and self._plugins:
+            plugin_patterns = get_plugin_patterns(self)
+            for oracle_type, pattern in plugin_patterns.items():
+                for match in re.finditer(pattern, output):
+                    params = extract_plugin_params(self, oracle_type, match)
+                    # Use a special marker for plugin oracles
+                    oracles.append(OracleRequest(
+                        type=f"PLUGIN_{oracle_type}",
+                        params=params
+                    ))
+
         return oracles
 
     def _extract_params(self, oracle_type: OracleType, match) -> Dict[str, Any]:
@@ -418,6 +452,22 @@ class ProductionHarness:
             )
 
         try:
+            # Check if this is a plugin oracle
+            if isinstance(oracle.type, str) and oracle.type.startswith("PLUGIN_"):
+                oracle_type = oracle.type[7:]  # Remove "PLUGIN_" prefix
+                result = execute_plugin(self, oracle_type, oracle.params)
+                duration = (time.time() - start) * 1000
+                self.stats["total_time_ms"] += duration
+
+                # Cache result
+                self._cache_set(cache_key, result)
+
+                return OracleResponse(
+                    success=True,
+                    result=result,
+                    duration_ms=duration
+                )
+
             # Dispatch to handler
             handlers = {
                 OracleType.SEMANTIC: self._exec_semantic,
