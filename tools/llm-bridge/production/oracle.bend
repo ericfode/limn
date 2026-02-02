@@ -33,6 +33,50 @@ type Oracle:
   MemoryStore { key, value }
   MemoryRetrieve { key }
 
+  # Process (∎ system control)
+  ProcessSpawn { command, args }
+  ProcessKill { pid }
+  ProcessStatus { pid }
+
+  # System (∎ system state)
+  SystemCPU
+  SystemMemory
+  SystemDisk { path }
+
+  # Crypto (∎ cryptographic operations)
+  CryptoHash { algorithm, data }
+  CryptoSign { algorithm, data, key }
+  CryptoVerify { algorithm, data, signature, key }
+
+  # ML (~ intelligent processing)
+  MLEmbed { text, model }
+  MLClassify { text, categories }
+  MLPredict { input, model }
+
+  # Audio/Video (∎ media processing)
+  AudioInfo { path }
+  VideoInfo { path }
+  AudioTranscode { path, format }
+  VideoTranscode { path, format }
+
+  # Environment (∎ configuration)
+  EnvGet { key }
+  EnvSet { key, value }
+  ConfigRead { path, key }
+  ConfigWrite { path, key, value }
+
+  # Git (∎ version control)
+  GitCommit { message, files }
+  GitDiff { ref1, ref2 }
+  GitLog { count }
+  GitStatus
+
+  # Docker (∎ containerization)
+  DockerRun { image, command }
+  DockerStop { container }
+  DockerStatus { container }
+  DockerLogs { container }
+
 # Core oracle function - generates request
 def oracle(req):
   return req
@@ -100,6 +144,98 @@ def remember(key, value):
 
 def recall(key):
   return oracle(Oracle/MemoryRetrieve { key: key })
+
+# Process oracles
+def spawn(command, args):
+  return oracle(Oracle/ProcessSpawn { command: command, args: args })
+
+def kill(pid):
+  return oracle(Oracle/ProcessKill { pid: pid })
+
+def proc_status(pid):
+  return oracle(Oracle/ProcessStatus { pid: pid })
+
+# System oracles
+def cpu():
+  return oracle(Oracle/SystemCPU)
+
+def memory():
+  return oracle(Oracle/SystemMemory)
+
+def disk(path):
+  return oracle(Oracle/SystemDisk { path: path })
+
+# Crypto oracles
+def hash(algorithm, data):
+  return oracle(Oracle/CryptoHash { algorithm: algorithm, data: data })
+
+def sign(algorithm, data, key):
+  return oracle(Oracle/CryptoSign { algorithm: algorithm, data: data, key: key })
+
+def verify(algorithm, data, signature, key):
+  return oracle(Oracle/CryptoVerify { algorithm: algorithm, data: data, signature: signature, key: key })
+
+# ML oracles
+def embed(text, model):
+  return oracle(Oracle/MLEmbed { text: text, model: model })
+
+def classify(text, categories):
+  return oracle(Oracle/MLClassify { text: text, categories: categories })
+
+def predict(input, model):
+  return oracle(Oracle/MLPredict { input: input, model: model })
+
+# Audio/Video oracles
+def audio_info(path):
+  return oracle(Oracle/AudioInfo { path: path })
+
+def video_info(path):
+  return oracle(Oracle/VideoInfo { path: path })
+
+def audio_transcode(path, format):
+  return oracle(Oracle/AudioTranscode { path: path, format: format })
+
+def video_transcode(path, format):
+  return oracle(Oracle/VideoTranscode { path: path, format: format })
+
+# Environment oracles
+def env_get(key):
+  return oracle(Oracle/EnvGet { key: key })
+
+def env_set(key, value):
+  return oracle(Oracle/EnvSet { key: key, value: value })
+
+def config_read(path, key):
+  return oracle(Oracle/ConfigRead { path: path, key: key })
+
+def config_write(path, key, value):
+  return oracle(Oracle/ConfigWrite { path: path, key: key, value: value })
+
+# Git oracles
+def git_commit(message, files):
+  return oracle(Oracle/GitCommit { message: message, files: files })
+
+def git_diff(ref1, ref2):
+  return oracle(Oracle/GitDiff { ref1: ref1, ref2: ref2 })
+
+def git_log(count):
+  return oracle(Oracle/GitLog { count: count })
+
+def git_status():
+  return oracle(Oracle/GitStatus)
+
+# Docker oracles
+def docker_run(image, command):
+  return oracle(Oracle/DockerRun { image: image, command: command })
+
+def docker_stop(container):
+  return oracle(Oracle/DockerStop { container: container })
+
+def docker_status(container):
+  return oracle(Oracle/DockerStatus { container: container })
+
+def docker_logs(container):
+  return oracle(Oracle/DockerLogs { container: container })
 
 # Example: Simple arithmetic
 def example_arithmetic():
