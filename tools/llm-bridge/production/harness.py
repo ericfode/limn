@@ -217,48 +217,104 @@ class ProductionHarness:
         """Parse oracle requests from Bend output."""
         oracles = []
 
-        # Patterns for each oracle type
+        # Patterns for each oracle type (both structured and /tag format)
         patterns = {
-            # Semantic
-            OracleType.SEMANTIC: r'Oracle/Semantic[^{]*\{\s*prompt:\s*"([^"]+)",\s*context:\s*"([^"]+)"\s*\}',
+            # Semantic (both formats)
+            OracleType.SEMANTIC: [
+                r'Oracle/Semantic[^{]*\{\s*prompt:\s*"([^"]+)",\s*context:\s*"([^"]+)"\s*\}',
+                r'Oracle/Semantic/tag\s+"([^"]+)"(?:\s+"([^"]+)")?',
+            ],
 
             # Arithmetic
-            OracleType.ARITH: r'Oracle/Arith[^{]*\{\s*op:\s*"([^"]+)",\s*a:\s*(\d+),\s*b:\s*(\d+)\s*\}',
+            OracleType.ARITH: [
+                r'Oracle/Arith[^{]*\{\s*op:\s*"([^"]+)",\s*a:\s*(\d+),\s*b:\s*(\d+)\s*\}',
+                r'Oracle/Arith/tag\s+"([^"]+)"\s+(\d+)\s+(\d+)',
+            ],
 
             # Filesystem
-            OracleType.FILE_READ: r'Oracle/FileRead[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
-            OracleType.FILE_WRITE: r'Oracle/FileWrite[^{]*\{\s*path:\s*"([^"]+)",\s*content:\s*"([^"]+)"\s*\}',
-            OracleType.FILE_EXISTS: r'Oracle/FileExists[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+            OracleType.FILE_READ: [
+                r'Oracle/FileRead[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+                r'Oracle/FileRead/tag\s+"([^"]+)"',
+            ],
+            OracleType.FILE_WRITE: [
+                r'Oracle/FileWrite[^{]*\{\s*path:\s*"([^"]+)",\s*content:\s*"([^"]+)"\s*\}',
+                r'Oracle/FileWrite/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
+            OracleType.FILE_EXISTS: [
+                r'Oracle/FileExists[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+                r'Oracle/FileExists/tag\s+"([^"]+)"',
+            ],
 
             # Temporal
-            OracleType.TIME_NOW: r'Oracle/TimeNow(?:\s|,|\))',
-            OracleType.TIME_AT: r'Oracle/TimeAt[^{]*\{\s*timestamp:\s*(\d+)\s*\}',
-            OracleType.TIME_DELTA: r'Oracle/TimeDelta[^{]*\{\s*seconds:\s*(\d+)\s*\}',
+            OracleType.TIME_NOW: [
+                r'Oracle/TimeNow(?:\s|,|\))',
+            ],
+            OracleType.TIME_AT: [
+                r'Oracle/TimeAt[^{]*\{\s*timestamp:\s*(\d+)\s*\}',
+                r'Oracle/TimeAt/tag\s+(\d+)',
+            ],
+            OracleType.TIME_DELTA: [
+                r'Oracle/TimeDelta[^{]*\{\s*seconds:\s*(\d+)\s*\}',
+                r'Oracle/TimeDelta/tag\s+(\d+)',
+            ],
 
             # Database
-            OracleType.DB_QUERY: r'Oracle/DbQuery[^{]*\{\s*sql:\s*"([^"]+)",\s*db:\s*"([^"]+)"\s*\}',
-            OracleType.DB_WRITE: r'Oracle/DbWrite[^{]*\{\s*sql:\s*"([^"]+)",\s*db:\s*"([^"]+)"\s*\}',
+            OracleType.DB_QUERY: [
+                r'Oracle/DbQuery[^{]*\{\s*sql:\s*"([^"]+)",\s*db:\s*"([^"]+)"\s*\}',
+                r'Oracle/DbQuery/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
+            OracleType.DB_WRITE: [
+                r'Oracle/DbWrite[^{]*\{\s*sql:\s*"([^"]+)",\s*db:\s*"([^"]+)"\s*\}',
+                r'Oracle/DbWrite/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
 
             # Network
-            OracleType.HTTP_GET: r'Oracle/HttpGet[^{]*\{\s*url:\s*"([^"]+)"\s*\}',
-            OracleType.HTTP_POST: r'Oracle/HttpPost[^{]*\{\s*url:\s*"([^"]+)",\s*data:\s*"([^"]+)"\s*\}',
+            OracleType.HTTP_GET: [
+                r'Oracle/HttpGet[^{]*\{\s*url:\s*"([^"]+)"\s*\}',
+                r'Oracle/HttpGet/tag\s+"([^"]+)"',
+            ],
+            OracleType.HTTP_POST: [
+                r'Oracle/HttpPost[^{]*\{\s*url:\s*"([^"]+)",\s*data:\s*"([^"]+)"\s*\}',
+                r'Oracle/HttpPost/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
 
             # Memory
-            OracleType.MEMORY_STORE: r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
-            OracleType.MEMORY_RETRIEVE: r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
+            OracleType.MEMORY_STORE: [
+                r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
+                r'Oracle/MemoryStore/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
+            OracleType.MEMORY_RETRIEVE: [
+                r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
+                r'Oracle/MemoryRetrieve/tag\s+"([^"]+)"',
+            ],
+
+            # Context
+            OracleType.CTX_COMPRESS: [
+                r'Oracle/CtxCompress/tag\s+(\d+)',
+            ],
+
+            # Model
+            OracleType.MODEL_DERIVE: [
+                r'Oracle/ModelDerive/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
+            OracleType.MODEL_TRANSFORM: [
+                r'Oracle/ModelTransform/tag\s+"([^"]+)"\s+"([^"]+)"',
+            ],
         }
 
-        for oracle_type, pattern in patterns.items():
-            for match in re.finditer(pattern, output):
-                params = self._extract_params(oracle_type, match)
-                oracles.append(OracleRequest(type=oracle_type, params=params))
+        for oracle_type, pattern_list in patterns.items():
+            for pattern in pattern_list:
+                for match in re.finditer(pattern, output):
+                    params = self._extract_params(oracle_type, match)
+                    oracles.append(OracleRequest(type=oracle_type, params=params))
 
         return oracles
 
     def _extract_params(self, oracle_type: OracleType, match) -> Dict[str, Any]:
         """Extract parameters from regex match."""
         if oracle_type == OracleType.SEMANTIC:
-            return {"prompt": match.group(1), "context": match.group(2)}
+            context = match.group(2) if match.lastindex >= 2 and match.group(2) else "general"
+            return {"prompt": match.group(1), "context": context}
         elif oracle_type == OracleType.ARITH:
             return {"op": match.group(1), "a": int(match.group(2)), "b": int(match.group(3))}
         elif oracle_type == OracleType.FILE_READ:
@@ -283,6 +339,12 @@ class ProductionHarness:
             return {"key": match.group(1), "value": match.group(2)}
         elif oracle_type == OracleType.MEMORY_RETRIEVE:
             return {"key": match.group(1)}
+        elif oracle_type == OracleType.CTX_COMPRESS:
+            return {"target_size": int(match.group(1))}
+        elif oracle_type == OracleType.MODEL_DERIVE:
+            return {"source_state": match.group(1), "model_type": match.group(2)}
+        elif oracle_type == OracleType.MODEL_TRANSFORM:
+            return {"source_state": match.group(1), "transformation": match.group(2)}
         return {}
 
     # =========================================================================
@@ -750,6 +812,7 @@ class ProductionHarness:
 
 def main():
     """Main entry point."""
+    import sys
     script_dir = Path(__file__).parent
 
     # Setup
@@ -759,11 +822,17 @@ def main():
 
     harness = ProductionHarness(
         bend_binary=str(bend_binary),
-        enable_real_llm=False  # Set to True to use real Claude API
+        enable_real_llm=True  # Enable real LLM (will try claude CLI)
     )
 
-    # Run example
-    oracle_file = script_dir / "oracle.bend"
+    # Get file from command line or use default
+    if len(sys.argv) > 1:
+        oracle_file = Path(sys.argv[1])
+        if not oracle_file.is_absolute():
+            oracle_file = script_dir / oracle_file
+    else:
+        oracle_file = script_dir / "oracle.bend"
+
     if not oracle_file.exists():
         print(f"Error: {oracle_file} not found")
         return 1
