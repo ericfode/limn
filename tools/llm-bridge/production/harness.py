@@ -29,6 +29,7 @@ from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 
 
@@ -104,7 +105,8 @@ class ProductionHarness:
         bend_binary: str = "bend",
         enable_real_llm: bool = False,
         anthropic_api_key: Optional[str] = None,
-        cache_dir: Optional[Path] = None
+        cache_dir: Optional[Path] = None,
+        max_concurrency: int = 4
     ):
         """Initialize production harness.
 
@@ -113,10 +115,12 @@ class ProductionHarness:
             enable_real_llm: Use real Claude API
             anthropic_api_key: Claude API key (or from ANTHROPIC_API_KEY env)
             cache_dir: Directory for persistent cache
+            max_concurrency: Maximum concurrent oracle executions (default: 4)
         """
         self.bend_binary = bend_binary
         self.enable_real_llm = enable_real_llm
         self.api_key = anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY")
+        self.max_concurrency = max_concurrency
 
         # Cache setup
         self.cache_dir = cache_dir or Path("/tmp/lmn-oracle-cache")
@@ -421,6 +425,53 @@ class ProductionHarness:
                 error=str(e),
                 duration_ms=duration
             )
+
+    def execute_oracles_batch(
+        self,
+        oracles: List[OracleRequest],
+        parallel: bool = True
+    ) -> List[OracleResponse]:
+        """Execute multiple oracles, optionally in parallel.
+
+        Args:
+            oracles: List of oracle requests to execute
+            parallel: If True, execute concurrently (default: True)
+
+        Returns:
+            List of oracle responses in the same order as requests
+        """
+        if not oracles:
+            return []
+
+        if not parallel or len(oracles) == 1:
+            # Sequential execution
+            return [self.execute_oracle(oracle) for oracle in oracles]
+
+        # Parallel execution using ThreadPoolExecutor
+        responses = [None] * len(oracles)
+
+        with ThreadPoolExecutor(max_workers=self.max_concurrency) as executor:
+            # Submit all oracle executions
+            future_to_index = {
+                executor.submit(self.execute_oracle, oracle): idx
+                for idx, oracle in enumerate(oracles)
+            }
+
+            # Collect results as they complete
+            for future in as_completed(future_to_index):
+                idx = future_to_index[future]
+                try:
+                    responses[idx] = future.result()
+                except Exception as e:
+                    # If thread execution fails, create error response
+                    responses[idx] = OracleResponse(
+                        success=False,
+                        result=None,
+                        error=f"Batch execution error: {str(e)}",
+                        duration_ms=0
+                    )
+
+        return responses
 
     # =========================================================================
     # Oracle Handlers (The Conscious Actions)
@@ -734,11 +785,24 @@ class ProductionHarness:
     # Main Execution
     # =========================================================================
 
-    def execute(self, bend_file: Path, verbose: bool = True) -> Dict[str, Any]:
-        """Execute Bend program with full oracle support."""
+    def execute(
+        self,
+        bend_file: Path,
+        verbose: bool = True,
+        parallel: bool = False
+    ) -> Dict[str, Any]:
+        """Execute Bend program with full oracle support.
+
+        Args:
+            bend_file: Path to Bend program
+            verbose: Print execution details
+            parallel: Execute oracles in parallel when possible (default: False)
+        """
         if verbose:
             print("=" * 70)
             print("Production LMN Oracle Harness")
+            if parallel:
+                print(f"(Parallel mode: max {self.max_concurrency} concurrent oracles)")
             print("=" * 70)
             print(f"\n[Conscious] Executing: {bend_file.name}")
             print("[Conscious] Running subconscious (Bend/HVM)...\n")
@@ -763,27 +827,48 @@ class ProductionHarness:
             return result
 
         if verbose:
-            print(f"[Conscious] Found {len(oracles)} oracle(s)\n")
+            print(f"[Conscious] Found {len(oracles)} oracle(s)")
+            if parallel and len(oracles) > 1:
+                print(f"[Conscious] Executing in parallel (up to {self.max_concurrency} concurrent)")
+            print()
 
-        # Execute each oracle
-        responses = []
-        for i, oracle in enumerate(oracles, 1):
+        # Execute oracles (parallel or sequential)
+        if parallel and len(oracles) > 1:
+            # Batch parallel execution
+            responses = self.execute_oracles_batch(oracles, parallel=True)
+
+            # Print results after completion
             if verbose:
-                print(f"[Conscious] Oracle {i}/{len(oracles)}: {oracle.type.value}")
-                print(f"[Conscious]   Params: {oracle.params}")
+                for i, (oracle, response) in enumerate(zip(oracles, responses), 1):
+                    print(f"[Conscious] Oracle {i}/{len(oracles)}: {oracle.type.value}")
+                    print(f"[Conscious]   Params: {oracle.params}")
+                    if response.success:
+                        cache_marker = " (cached)" if response.cached else ""
+                        print(f"[Conscious]   ✓ Result: {response.result}{cache_marker}")
+                        print(f"[Conscious]   ⏱ {response.duration_ms:.2f}ms")
+                    else:
+                        print(f"[Conscious]   ✗ Error: {response.error}")
+                    print()
+        else:
+            # Sequential execution (original behavior)
+            responses = []
+            for i, oracle in enumerate(oracles, 1):
+                if verbose:
+                    print(f"[Conscious] Oracle {i}/{len(oracles)}: {oracle.type.value}")
+                    print(f"[Conscious]   Params: {oracle.params}")
 
-            response = self.execute_oracle(oracle)
+                response = self.execute_oracle(oracle)
 
-            if verbose:
-                if response.success:
-                    cache_marker = " (cached)" if response.cached else ""
-                    print(f"[Conscious]   ✓ Result: {response.result}{cache_marker}")
-                    print(f"[Conscious]   ⏱ {response.duration_ms:.2f}ms")
-                else:
-                    print(f"[Conscious]   ✗ Error: {response.error}")
-                print()
+                if verbose:
+                    if response.success:
+                        cache_marker = " (cached)" if response.cached else ""
+                        print(f"[Conscious]   ✓ Result: {response.result}{cache_marker}")
+                        print(f"[Conscious]   ⏱ {response.duration_ms:.2f}ms")
+                    else:
+                        print(f"[Conscious]   ✗ Error: {response.error}")
+                    print()
 
-            responses.append(response)
+                responses.append(response)
 
         # Stats
         if verbose:
