@@ -195,6 +195,191 @@ Built from Tiers 0+1 recursively.
 
 ---
 
+## Tier 1 Continued: Physical & Spatial
+
+### Objects & Properties (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `obj` | thi @ spa @ tak pla | thing at space at takes place |
+| `thi` | ∎ [wha exi] | what exists (grounded) |
+| `pla` | spa @ obj can be | space at object can be |
+| `spa` | ∎ [btw obj] | between objects (grounded) |
+| `tim` | ∎ [btw eve] | between events (grounded) |
+| `eve` | cha @ tim | change at time |
+| `cha` | dif @ tim seq | difference at time sequence |
+| `sam` | not dif | not different |
+| `dif` | not sam | not same (circular, stable) |
+| `hav` | obj @ con @ oth obj | object at contains at other object |
+| `par` | obj @ in who | object at in whole |
+| `in` | spa @ con by | space at contained by |
+| `out` | not in | not in |
+| `on` | tou @ top | touches at top |
+| `off` | not on | not on |
+| `upp` | dir @ aga grv | direction at against gravity |
+| `dow` | dir @ wit grv | direction at with gravity |
+| `lef` | dir @ bod sid | direction at body side |
+| `rig` | dir @ oth bod sid | direction at other body side |
+| `mid` | pla @ equ dis fom edg | place at equal distance from edges |
+
+### Materials & Substance (15 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `mat` | thi @ mak obj | thing at makes objects |
+| `har` | mat @ res cha | material at resists change |
+| `sof` | mat @ not res cha | material at not resists change |
+| `sol` | mat @ hav for fix | material at has form fixed |
+| `liq` | mat @ flo @ cha for | material at flows at changes form |
+| `gas` | mat @ fil spa @ exp | material at fills space at expands |
+| `met` | mat @ har @ shi @ con ele | material hard shiny conducts electricity |
+| `woo` | mat @ pla @ har @ grw | material from plant, hard, grows |
+| `sto` | mat @ ear @ har @ hea | material from earth, hard, heavy |
+| `wat` | liq @ cle @ lif nee | liquid at clear at life needs |
+| `air` | gas @ bre @ inv | gas at breathe at invisible |
+| `fir` | ene @ lig @ hot @ dan | energy, light, hot, dangerous |
+| `ear` | pla @ peo liv | place at people live (planet) |
+| `sky` | spa @ abo ear | space at above earth |
+| `gro` | ear @ dow @ wal on | earth at down at walk on |
+
+### Living Things (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `liv` | sys @ grw @ bre @ mov @ rep | system grows, breathes, moves, reproduces |
+| `die` | liv @ sto @ end | living at stops at end |
+| `bir` | liv @ beg | living at begins |
+| `grw` | siz @ inc @ tim | size at increases at time |
+| `bod` | obj @ liv @ min hav | object at living at mind has |
+| `par` | bod @ mak thi @ do wor | body part at makes thing at does work |
+| `hea` | par @ pum blo | part at pumps blood |
+| `bra` | par @ hav min | part at has mind |
+| `eye` | par @ see | part at sees |
+| `ear` | par @ her | part at hears |
+| `han` | par @ tak @ tou | part at takes at touches |
+| `leg` | par @ wal | part at walks |
+| `mou` | par @ eat @ say | part at eats at speaks |
+| `nos` | par @ sme | part at smells |
+| `ski` | par @ cov bod @ pro | part at covers body at protects |
+| `bon` | par @ har @ ins bod @ str | part inside body, hard, gives strength |
+| `blo` | liq @ red @ flo bod @ lif | liquid red flows body gives life |
+| `foo` | mat @ eat @ giv ene | material eat gives energy |
+| `pla` | liv @ grw @ not mov @ grn | living grows, doesn't move, green |
+| `ani` | liv @ mov @ eat | living moves eats |
+
+### Actions & Processes (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `do` | act @ mak cha | action at makes change |
+| `mak` | cau @ obj @ exi | cause at object at exists |
+| `bre` | des @ obj @ not exi | destroy at object at not exists |
+| `bui` | mak @ big @ par @ tog | make at big at parts at together |
+| `use` | tak obj @ do act | take object at do action |
+| `hol` | hav @ not los | have at not lose |
+| `dro` | let obj @ fal | let object at fall |
+| `pul` | mov obj @ tow sel | move object at toward self |
+| `pus` | mov obj @ awa sel | move object at away self |
+| `lif` | mov obj @ upp | move object at upward |
+| `car` | hol obj @ wal | hold object at walk |
+| `thr` | pus obj @ fas @ air | push object fast through air |
+| `cat` | tak obj @ mov fas | take object at moving fast |
+| `ope` | mak spa @ btw | make space at between |
+| `clo` | mak no spa @ btw | make no space at between |
+| `cut` | mak obj @ two par | make object at two parts |
+| `joi` | mak two obj @ one | make two objects at one |
+| `mix` | joi obj @ los for | join objects at lose form |
+| `sep` | mak tog obj @ apa | make together objects at apart |
+| `fil` | mak con @ ful | make container at full |
+| `emp` | tak out @ mak no con | take out at make nothing contained |
+| `cov` | put obj @ on @ hid | put object at on at hide |
+| `sho` | tak cov @ let see | take cover at let see |
+| `hid` | mak not see | make not seeable |
+| `fin` | see aft see @ suc | see after seek, succeed |
+
+**Total Tier 1: 175 words**
+
+---
+
+## Tier 2 Continued: Advanced Concepts
+
+### Technology & Systems (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `sys` | par mul @ joi @ do gol | parts multiple joined do goal |
+| `too` | obj @ use @ do tas | object at use at do task |
+| `mac` | sys @ par mov @ do wor @ aut | system parts move do work automatically |
+| `com` | mac @ pro dat @ aut | machine processes data automatically |
+| `dat` | ide @ for @ sto @ pro | ideas at form at stored at processed |
+| `cod` | lan @ tel com @ do | language tells computer what to do |
+| `pro` | cod @ run @ com | code runs on computer (program) |
+| `inp` | dat @ in sys | data into system |
+| `out` | dat @ fom sys | data from system |
+| `sto` | kee dat @ lat use | keep data for later use |
+| `pro` | cha dat @ seq ste | change data in sequence of steps |
+| `cal` | com @ do pro | computer does program (calculate) |
+| `res` | out @ aft cal | output after calculate (result) |
+| `err` | res @ wro @ not exp | result wrong, not expected |
+| `fix` | cha @ mak wor cor | change at make work correctly |
+| `tes` | try @ see if wor | try to see if works |
+| `run` | mak pro @ exe | make program execute |
+| `sto` | pro @ not run | program not running (stopped) |
+| `sav` | sto dat @ saf @ per | store data safely permanently |
+| `loa` | get dat @ fom sto | get data from storage |
+
+### Numbers & Math (15 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `num` | ide @ qua @ cou | idea of quantity, count |
+| `zer` | num @ no obj | number of no objects |
+| `one` | num @ sin obj | number of single object |
+| `two` | num @ one ⊕ one | number one plus one |
+| `man` | num @ big | number big (many) |
+| `few` | num @ sma | number small (few) |
+| `all` | num @ eve obj | number every object |
+| `non` | num @ not one obj | number not one object |
+| `mor` | num @ big @ com | number bigger compared |
+| `les` | num @ sma @ com | number smaller compared |
+| `equ` | num @ sam | number same (equal) |
+| `add` | joi num @ mak mor | join numbers make more |
+| `sub` | tak num @ mak les | take number make less |
+| `mul` | add @ rep @ num tim | add repeatedly number times |
+| `div` | sep @ equ par @ num | separate equal parts by number |
+
+### Time & Change (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `bef` | tim @ ear @ seq | time earlier in sequence |
+| `aft` | tim @ lat @ seq | time later in sequence |
+| `sta` | eve @ beg | event at beginning (start) |
+| `end` | eve @ fin | event at finish (end) |
+| `dur` | tim @ btw sta ∿ end | time between start and end |
+| `lon` | dur @ big | duration big (long time) |
+| `sho` | dur @ sma | duration small (short time) |
+| `fas` | cha @ sho tim | change in short time (fast) |
+| `slo` | cha @ lon tim | change in long time (slow) |
+| `sud` | eve @ fas @ not exp | event fast, not expected (sudden) |
+| `gra` | cha @ slo @ ste | change slow and steady (gradual) |
+| `alw` | tim @ all | time all (always) |
+| `nev` | tim @ non | time none (never) |
+| `som` | tim @ few @ not all | time few, not all (sometimes) |
+| `oft` | som @ man tim | sometimes many times (often) |
+| `rar` | som @ few tim | sometimes few times (rarely) |
+| `aga` | eve @ rep @ aft bef | event repeats after before (again) |
+| `sti` | sta @ con @ not cha | state continues, not changed (still) |
+| `yet` | til now @ not don | until now, not done (yet) |
+| `alr` | bef now @ don | before now, done (already) |
+
+**Total Tier 2: 75 words**
+
+---
+
+## Total Defined: 250 words
+
+**Coverage:**
+- Tier 0 (Grounded): 30 words
+- Tier 1 (Compound): 175 words
+- Tier 2 (Abstract): 75 words
+- Remaining: 750 words to define
+
+---
+
 ## Bootstrapping Process
 
 ### Phase 1: Ground Experience
@@ -272,8 +457,9 @@ tru if: def → grn @ exp
 
 ---
 
-**Status:** Initial bootstrap (110 words defined)
+**Status:** Expanded foundation (250 words defined - 25% complete)
 **Target:** 1000 words in Limn-in-Limn
+**Progress:** Tier 0: 30 | Tier 1: 175 | Tier 2: 75
 **Challenge:** Minimize dependency depth while maintaining clarity
 
 ```limn
