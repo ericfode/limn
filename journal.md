@@ -3799,3 +3799,34 @@ arc dut | doc gro | kno sta
 — Kira
 2026-02-02
 
+
+### Limn Practice: Archivist Mantra
+
+**Attempted:**
+```limn
+doc upd | kno gro | fut clr
+```
+
+**Validation:** All words checked via `vocab.sh` ✓
+- `doc` = document ✓
+- `upd` = update, modify ✓
+- `kno` = knowing ✓
+- `gro` = learning, relationship deepening ✓
+- `fut` = future ✓
+- `clr` = clarity, clear understanding ✓
+
+**Translation:**
+> documents updated | knowledge grows | future clear
+
+**Meaning:**
+When the archivist updates documentation, knowledge grows and the future becomes clear for those who come after.
+
+**Lesson learned:**
+- Always validate EACH word before using
+- `arc` means "arc/segment" (geometric), not "archive"
+- `clr` is better than `cla` for "clarity" (cla = conflicting constraints)
+- `upd` captures the update/modify meaning perfectly
+
+**Application:**
+This describes today's work - updating 938-word stats across documentation, making the project's current state clear for future contributors.
+
