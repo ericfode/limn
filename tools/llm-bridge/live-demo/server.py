@@ -303,7 +303,7 @@ def init_harness():
 
     harness = LiveHarness(
         bend_binary=str(bend_binary),
-        enable_real_llm=False  # Set to True if you have ANTHROPIC_API_KEY
+        enable_real_llm=True  # Claude Code authentication available
     )
 
     # Initialize semantic visualizer with bootstrap
