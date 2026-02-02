@@ -385,6 +385,12 @@ def context_view():
     return render_template('context_view.html')
 
 
+@app.route('/network')
+def semantic_network():
+    """Serve semantic network visualization."""
+    return render_template('semantic_network.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
