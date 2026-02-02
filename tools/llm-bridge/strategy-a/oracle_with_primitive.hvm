@@ -1,0 +1,109 @@
+
+// Oracle primitive (would be implemented as FFI in real version)
+// This would yield to host with (prompt, context)
+// Host provides response, execution continues
+@oracle/primitive = (prompt (context result))
+  & @oracle/yield ~ (prompt (context result))
+
+@OracleRequest/Ask = (a (b ((@OracleRequest/Ask/tag (a (b c))) c)))
+
+@OracleRequest/Ask/tag = 0
+
+@OracleRequest/Response = (a ((@OracleRequest/Response/tag (a b)) b))
+
+@OracleRequest/Response/tag = 1
+
+@String/Cons = (a (b ((@String/Cons/tag (a (b c))) c)))
+
+@String/Cons/tag = 1
+
+@String/Nil = ((@String/Nil/tag a) a)
+
+@String/Nil/tag = 0
+
+@lmn_program = w
+  & @oracle ~ (v (@lmn_program__C0 w))
+  & @String/Cons ~ (116 (u v))
+  & @String/Cons ~ (114 (t u))
+  & @String/Cons ~ (97 (s t))
+  & @String/Cons ~ (110 (r s))
+  & @String/Cons ~ (115 (q r))
+  & @String/Cons ~ (108 (p q))
+  & @String/Cons ~ (97 (o p))
+  & @String/Cons ~ (116 (n o))
+  & @String/Cons ~ (101 (m n))
+  & @String/Cons ~ (58 (l m))
+  & @String/Cons ~ (32 (k l))
+  & @String/Cons ~ (99 (j k))
+  & @String/Cons ~ (111 (i j))
+  & @String/Cons ~ (100 (h i))
+  & @String/Cons ~ (32 (g h))
+  & @String/Cons ~ (102 (f g))
+  & @String/Cons ~ (108 (e f))
+  & @String/Cons ~ (111 (d e))
+  & @String/Cons ~ (32 (c d))
+  & @String/Cons ~ (108 (b c))
+  & @String/Cons ~ (111 (a b))
+  & @String/Cons ~ (103 (@String/Nil a))
+
+@lmn_program__C0 = o
+  & @String/Cons ~ (76 (n o))
+  & @String/Cons ~ (105 (m n))
+  & @String/Cons ~ (109 (l m))
+  & @String/Cons ~ (110 (k l))
+  & @String/Cons ~ (32 (j k))
+  & @String/Cons ~ (118 (i j))
+  & @String/Cons ~ (111 (h i))
+  & @String/Cons ~ (99 (g h))
+  & @String/Cons ~ (97 (f g))
+  & @String/Cons ~ (98 (e f))
+  & @String/Cons ~ (117 (d e))
+  & @String/Cons ~ (108 (c d))
+  & @String/Cons ~ (97 (b c))
+  & @String/Cons ~ (114 (a b))
+  & @String/Cons ~ (121 (@String/Nil a))
+
+@main = lb
+  & @oracle ~ (v (kb lb))
+  & @String/Cons ~ (116 (u v))
+  & @String/Cons ~ (114 (t u))
+  & @String/Cons ~ (97 (s t))
+  & @String/Cons ~ (110 (r s))
+  & @String/Cons ~ (115 (q r))
+  & @String/Cons ~ (108 (p q))
+  & @String/Cons ~ (97 (o p))
+  & @String/Cons ~ (116 (n o))
+  & @String/Cons ~ (101 (m n))
+  & @String/Cons ~ (58 (l m))
+  & @String/Cons ~ (32 (k l))
+  & @String/Cons ~ (99 (j k))
+  & @String/Cons ~ (111 (i j))
+  & @String/Cons ~ (100 (h i))
+  & @String/Cons ~ (32 (g h))
+  & @String/Cons ~ (102 (f g))
+  & @String/Cons ~ (108 (e f))
+  & @String/Cons ~ (111 (d e))
+  & @String/Cons ~ (32 (c d))
+  & @String/Cons ~ (108 (b c))
+  & @String/Cons ~ (111 (a b))
+  & @String/Cons ~ (103 (@String/Nil a))
+  & @String/Cons ~ (76 (jb kb))
+  & @String/Cons ~ (105 (ib jb))
+  & @String/Cons ~ (109 (hb ib))
+  & @String/Cons ~ (110 (gb hb))
+  & @String/Cons ~ (32 (fb gb))
+  & @String/Cons ~ (118 (eb fb))
+  & @String/Cons ~ (111 (db eb))
+  & @String/Cons ~ (99 (cb db))
+  & @String/Cons ~ (97 (bb cb))
+  & @String/Cons ~ (98 (ab bb))
+  & @String/Cons ~ (117 (z ab))
+  & @String/Cons ~ (108 (y z))
+  & @String/Cons ~ (97 (x y))
+  & @String/Cons ~ (114 (w x))
+  & @String/Cons ~ (121 (@String/Nil w))
+
+@oracle = (a (b c))
+  & @OracleRequest/Ask ~ (a (b c))
+
+
