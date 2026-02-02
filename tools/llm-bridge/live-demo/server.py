@@ -434,6 +434,12 @@ def controls_view():
     return render_template('controls.html')
 
 
+@app.route('/debug')
+def debug_view():
+    """Serve debug console."""
+    return render_template('debug.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
