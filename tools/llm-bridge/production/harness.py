@@ -367,40 +367,6 @@ class ProductionHarness:
             ],
 
             # Memory
-<<<<<<< HEAD
-            OracleType.MEMORY_STORE: [
-                r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
-                r'Oracle/MemoryStore/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-            OracleType.MEMORY_RETRIEVE: [
-                r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
-                r'Oracle/MemoryRetrieve/tag\s+"([^"]+)"',
-            ],
-
-            # Context
-            OracleType.CTX_COMPRESS: [
-                r'Oracle/CtxCompress/tag\s+(\d+)',
-            ],
-
-            # Model
-            OracleType.MODEL_DERIVE: [
-                r'Oracle/ModelDerive/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-            OracleType.MODEL_TRANSFORM: [
-                r'Oracle/ModelTransform/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-
-            # Vocabulary
-            OracleType.VOC_QUERY_DOMAIN: [
-                r'Oracle/VocQueryDomain/tag\s+"([^"]+)"',
-            ],
-            OracleType.VOC_QUERY_MEANING: [
-                r'Oracle/VocQueryMeaning/tag\s+"([^"]+)"',
-            ],
-            OracleType.VOC_EXPAND: [
-                r'Oracle/VocExpand/tag\s+"([^"]+)"\s+\[([^\]]+)\]',
-            ],
-=======
             OracleType.MEMORY_STORE: r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
             OracleType.MEMORY_RETRIEVE: r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
 
@@ -447,7 +413,6 @@ class ProductionHarness:
             OracleType.DOCKER_STOP: r'Oracle/DockerStop[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
             OracleType.DOCKER_STATUS: r'Oracle/DockerStatus[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
             OracleType.DOCKER_LOGS: r'Oracle/DockerLogs[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         }
 
         for oracle_type, pattern_list in patterns.items():
@@ -499,21 +464,6 @@ class ProductionHarness:
             return {"key": match.group(1), "value": match.group(2)}
         elif oracle_type == OracleType.MEMORY_RETRIEVE:
             return {"key": match.group(1)}
-<<<<<<< HEAD
-        elif oracle_type == OracleType.CTX_COMPRESS:
-            return {"target_size": int(match.group(1))}
-        elif oracle_type == OracleType.MODEL_DERIVE:
-            return {"source_state": match.group(1), "model_type": match.group(2)}
-        elif oracle_type == OracleType.MODEL_TRANSFORM:
-            return {"source_state": match.group(1), "transformation": match.group(2)}
-        elif oracle_type == OracleType.VOC_QUERY_DOMAIN:
-            return {"domain": match.group(1)}
-        elif oracle_type == OracleType.VOC_QUERY_MEANING:
-            return {"meaning": match.group(1)}
-        elif oracle_type == OracleType.VOC_EXPAND:
-            concepts = [c.strip().strip('"') for c in match.group(2).split(',')]
-            return {"domain": match.group(1), "concepts": concepts}
-=======
         elif oracle_type == OracleType.PROCESS_SPAWN:
             return {"command": match.group(1), "args": match.group(2)}
         elif oracle_type == OracleType.PROCESS_KILL:
@@ -556,7 +506,6 @@ class ProductionHarness:
             return {"image": match.group(1), "command": match.group(2)}
         elif oracle_type in [OracleType.DOCKER_STOP, OracleType.DOCKER_STATUS, OracleType.DOCKER_LOGS]:
             return {"container": match.group(1)}
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         return {}
 
     # =========================================================================
@@ -614,19 +563,6 @@ class ProductionHarness:
                 OracleType.HTTP_POST: self._exec_http_post,
                 OracleType.MEMORY_STORE: self._exec_memory_store,
                 OracleType.MEMORY_RETRIEVE: self._exec_memory_retrieve,
-<<<<<<< HEAD
-                OracleType.CTX_REDUCE: self._exec_ctx_reduce,
-                OracleType.CTX_MERGE: self._exec_ctx_merge,
-                OracleType.CTX_FILTER: self._exec_ctx_filter,
-                OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
-                OracleType.CTX_COMPRESS: self._exec_ctx_compress,
-                OracleType.MODEL_DERIVE: self._exec_model_derive,
-                OracleType.MODEL_TRANSFORM: self._exec_model_transform,
-                OracleType.MODEL_GENERATE: self._exec_model_generate,
-                OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
-                OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
-                OracleType.VOC_EXPAND: self._exec_voc_expand,
-=======
                 OracleType.PROCESS_SPAWN: self._exec_process_spawn,
                 OracleType.PROCESS_KILL: self._exec_process_kill,
                 OracleType.PROCESS_STATUS: self._exec_process_status,
@@ -655,7 +591,6 @@ class ProductionHarness:
                 OracleType.DOCKER_STOP: self._exec_docker_stop,
                 OracleType.DOCKER_STATUS: self._exec_docker_status,
                 OracleType.DOCKER_LOGS: self._exec_docker_logs,
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
             }
 
             handler = handlers.get(oracle.type)
@@ -951,204 +886,6 @@ Pure Limn response:"""
         key = params["key"]
         return self.memory.get(key)
 
-<<<<<<< HEAD
-    def _exec_ctx_reduce(self, params: Dict) -> Dict:
-        """Context reduce oracle - compress by removing low-frequency patterns."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        threshold = params.get("threshold", 0.5)
-        reduced = self.context_engine.reduce(threshold=threshold)
-
-        return {
-            "original_size": len(self.context_engine.context),
-            "reduced_size": len(reduced),
-            "compression_ratio": len(reduced) / len(self.context_engine.context) if self.context_engine.context else 0
-        }
-
-    def _exec_ctx_merge(self, params: Dict) -> Dict:
-        """Context merge oracle - combine similar patterns."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        threshold = params.get("threshold", 0.7)
-        merged = self.context_engine.merge(similarity_threshold=threshold)
-
-        return {
-            "original_size": len(self.context_engine.context),
-            "merged_size": len(merged),
-            "merge_ratio": len(merged) / len(self.context_engine.context) if self.context_engine.context else 0
-        }
-
-    def _exec_ctx_filter(self, params: Dict) -> Dict:
-        """Context filter oracle - select matching items."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        predicate = params.get("predicate", "")
-        filtered = self.context_engine.filter(predicate)
-
-        return {
-            "total_items": len(self.context_engine.context),
-            "filtered_items": len(filtered),
-            "predicate": predicate
-        }
-
-    def _exec_ctx_aggregate(self, params: Dict) -> Dict:
-        """Context aggregate oracle - group by attribute."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        group_by = params.get("group_by", "type")
-        groups = self.context_engine.aggregate(group_by=group_by)
-
-        return {
-            "groups": len(groups),
-            "group_sizes": {k: len(v) for k, v in groups.items()}
-        }
-
-    def _exec_ctx_compress(self, params: Dict) -> Dict:
-        """Context compress oracle - reduce to target size."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        target_size = params.get("target_size")
-        compressed = self.context_engine.compress(target_size=target_size)
-
-        return {
-            "original_size": len(self.context_engine.context),
-            "compressed_size": len(compressed),
-            "compression_ratio": len(compressed) / len(self.context_engine.context) if self.context_engine.context else 0
-        }
-
-    def _exec_model_derive(self, params: Dict) -> Dict:
-        """Model derive oracle - derive new model from state."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        source_state = params.get("source_state", "")
-        model_type = params.get("model_type")
-
-        model = self.model_engine.derive_model(source_state, model_type)
-
-        return {
-            "type": model.type.value,
-            "structure": model.structure,
-            "limn_repr": model.limn_repr,
-            "complexity": model.metadata.get("complexity", 0)
-        }
-
-    def _exec_model_transform(self, params: Dict) -> Dict:
-        """Model transform oracle - transform existing model."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        # Get source state and derive model first
-        source_state = params.get("source_state", "")
-        transformation = params.get("transformation", "simplify")
-        transform_params = params.get("params", {})
-
-        # Derive model from state
-        model = self.model_engine.derive_model(source_state)
-
-        # Transform it
-        transformed = self.model_engine.transform_model(
-            model,
-            transformation,
-            **transform_params
-        )
-
-        return {
-            "type": transformed.type.value,
-            "structure": transformed.structure,
-            "limn_repr": transformed.limn_repr,
-            "transformation": transformation
-        }
-
-    def _exec_model_generate(self, params: Dict) -> Dict:
-        """Model generate oracle - generate new model from spec."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        spec = {
-            "type": params.get("type", "graph"),
-            "params": params.get("params", {})
-        }
-
-        model = self.model_engine.generate_model(spec)
-
-        return {
-            "type": model.type.value,
-            "structure": model.structure,
-            "limn_repr": model.limn_repr,
-            "generated": True
-        }
-
-    def _exec_voc_query_domain(self, params: Dict) -> Dict:
-        """Vocabulary query by domain oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        domain = params.get("domain", "general")
-        entries = self.vocab_engine.query_domain(domain)
-
-        return {
-            "domain": domain,
-            "count": len(entries),
-            "vocabulary": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning,
-                    "usage": e.usage
-                }
-                for e in entries[:50]  # Limit to first 50
-            ]
-        }
-
-    def _exec_voc_query_meaning(self, params: Dict) -> Dict:
-        """Vocabulary query by meaning oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        meaning = params.get("meaning", "")
-        entries = self.vocab_engine.query_meaning(meaning)
-
-        return {
-            "query": meaning,
-            "count": len(entries),
-            "matches": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning,
-                    "domain": e.domain
-                }
-                for e in entries[:20]  # Limit to first 20
-            ]
-        }
-
-    def _exec_voc_expand(self, params: Dict) -> Dict:
-        """Vocabulary expansion oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        domain = params.get("domain", "general")
-        concepts = params.get("concepts", [])
-
-        new_entries = self.vocab_engine.expand_vocabulary(domain, concepts)
-
-        return {
-            "domain": domain,
-            "added": len(new_entries),
-            "new_words": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning
-                }
-                for e in new_entries
-            ]
-        }
-
-=======
     def _exec_process_spawn(self, params: Dict) -> Dict[str, Any]:
         """Process spawn oracle (∎ system control)."""
         command = params["command"]
@@ -1524,7 +1261,6 @@ Pure Limn response:"""
 
         return result.stdout
 
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
     # =========================================================================
     # Main Execution
     # =========================================================================
