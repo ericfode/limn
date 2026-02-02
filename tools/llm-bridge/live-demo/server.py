@@ -33,6 +33,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "production"))
 from harness import ProductionHarness, OracleType
 from semantic_viz import SemanticVisualizer
 from thought_library import ThoughtLibrary
+from metacognition import MetacognitiveAnalyzer
+from narrative_generator import NarrativeGenerator
 
 app = Flask(__name__)
 CORS(app)
@@ -287,11 +289,13 @@ class LiveHarness(ProductionHarness):
 harness = None
 semantic_viz = None
 thought_library = None
+metacognition = None
+narrative_gen = None
 
 
 def init_harness():
     """Initialize the harness and visualizer."""
-    global harness, semantic_viz, thought_library
+    global harness, semantic_viz, thought_library, metacognition, narrative_gen
 
     bend_binary = Path(__file__).parent.parent.parent.parent / "tools" / "lmn-bend" / "bend"
     if not bend_binary.exists():
@@ -310,6 +314,11 @@ def init_harness():
     persistence_path = Path(__file__).parent / "thought_library.pkl"
     thought_library = ThoughtLibrary("demo_consciousness", str(persistence_path))
     print(f"Thought library persistence: {persistence_path}")
+
+    # Initialize metacognition and narrative generation
+    metacognition = MetacognitiveAnalyzer()
+    narrative_gen = NarrativeGenerator()
+    print("Metacognition and narrative generation enabled")
 
 
 def run_demo_loop():
@@ -564,9 +573,16 @@ def get_thought_library():
 
     stats = thought_library.get_statistics()
 
+    # Add semantic network data for visualization
+    network_data = {
+        word: list(connections)
+        for word, connections in thought_library.semantic_network.items()
+    }
+
     return jsonify({
         "stats": stats,
-        "synthesis": thought_library.synthesize()
+        "synthesis": thought_library.synthesize(),
+        "semantic_network": network_data
     })
 
 
@@ -607,3 +623,52 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+@app.route('/api/metacognition')
+def get_metacognition():
+    """Get metacognitive analysis of consciousness."""
+    if not thought_library or not metacognition:
+        return jsonify({"error": "Systems not initialized"}), 500
+    
+    stats = thought_library.get_statistics()
+    
+    # Generate metacognitive insights
+    insights = metacognition.analyze_thinking_patterns(stats)
+    gaps = metacognition.identify_knowledge_gaps(stats)
+    
+    return jsonify({
+        "insights": insights,
+        "knowledge_gaps": gaps,
+        "self_awareness_level": len(insights) / 5.0,  # 0-1 scale
+        "timestamp": time.time()
+    })
+
+
+@app.route('/api/narrative')
+def get_narrative():
+    """Get narrative about the consciousness journey."""
+    if not thought_library or not narrative_gen:
+        return jsonify({"error": "Systems not initialized"}), 500
+    
+    stats = thought_library.get_statistics()
+    
+    # Generate narrative
+    journey = narrative_gen.generate_journey_narrative(stats)
+    
+    # Get insight for top concept if available
+    insight = ""
+    if stats.get('most_used_concepts'):
+        top_concept = stats['most_used_concepts'][0]
+        concept_data = thought_library.get_concept(top_concept['word'])
+        if concept_data:
+            insight = narrative_gen.generate_insight_story(
+                top_concept['word'],
+                {'usage': top_concept['usage'], 'related': list(thought_library.semantic_network.get(top_concept['word'], []))}
+            )
+    
+    return jsonify({
+        "journey_narrative": journey,
+        "top_concept_insight": insight,
+        "timestamp": time.time()
+    })
