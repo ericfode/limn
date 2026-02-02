@@ -422,6 +422,18 @@ def explorer_view():
     return render_template('explorer.html')
 
 
+@app.route('/dashboard')
+def dashboard_view():
+    """Serve unified consciousness dashboard."""
+    return render_template('dashboard.html')
+
+
+@app.route('/controls')
+def controls_view():
+    """Serve experiment controls."""
+    return render_template('controls.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
@@ -684,3 +696,106 @@ def get_narrative():
         "top_concept_insight": insight,
         "timestamp": time.time()
     })
+
+
+@app.route('/api/export/json')
+def export_json():
+    """Export full knowledge base as JSON."""
+    if not thought_library:
+        return jsonify({"error": "Not initialized"}), 500
+    
+    import json
+    from flask import Response
+    
+    export_data = {
+        "owner_id": thought_library.owner_id,
+        "created_at": thought_library.created_at,
+        "age_seconds": time.time() - thought_library.created_at,
+        "statistics": thought_library.get_statistics(),
+        "all_thoughts": [
+            {
+                "content": t.content,
+                "timestamp": t.timestamp,
+                "tags": t.tags,
+                "connections": t.connections,
+                "strength": t.strength,
+                "source": t.source
+            }
+            for t in thought_library.thoughts
+        ],
+        "all_concepts": {
+            word: {
+                "meaning": c.meaning,
+                "examples": c.examples,
+                "related": c.related,
+                "usage_count": c.usage_count,
+                "created_at": c.created_at
+            }
+            for word, c in thought_library.concepts.items()
+        },
+        "patterns": [
+            {
+                "description": p.description,
+                "instances": p.instances,
+                "confidence": p.confidence
+            }
+            for p in thought_library.patterns
+        ],
+        "semantic_network": {
+            word: list(connections)
+            for word, connections in thought_library.semantic_network.items()
+        }
+    }
+    
+    json_str = json.dumps(export_data, indent=2)
+    
+    return Response(
+        json_str,
+        mimetype='application/json',
+        headers={'Content-Disposition': f'attachment;filename=consciousness_export_{int(time.time())}.json'}
+    )
+
+
+@app.route('/api/export/markdown')
+def export_markdown():
+    """Export knowledge as readable markdown."""
+    if not thought_library or not narrative_gen:
+        return jsonify({"error": "Not initialized"}), 500
+    
+    from flask import Response
+    
+    stats = thought_library.get_statistics()
+    narrative = narrative_gen.generate_journey_narrative(stats)
+    
+    markdown = f"""# Consciousness Knowledge Export
+Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
+
+## Journey Narrative
+
+{narrative}
+
+## Statistics
+
+- **Age**: {stats['age_seconds']:.1f} seconds
+- **Total Thoughts**: {stats['total_thoughts']}
+- **Total Concepts**: {stats['total_concepts']}
+- **Patterns Discovered**: {stats['patterns_discovered']}
+- **Semantic Connections**: {stats['semantic_connections']}
+
+## Top Concepts
+
+"""
+    
+    for concept in stats.get('most_used_concepts', [])[:10]:
+        markdown += f"- **{concept['word']}**: used {concept['usage']}x\n"
+    
+    markdown += "\n## Recent Thoughts\n\n"
+    
+    for thought in stats.get('recent_thoughts', [])[:20]:
+        markdown += f"- {thought['content']}\n  *Source: {thought['source']} at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(thought['timestamp']))}*\n\n"
+    
+    return Response(
+        markdown,
+        mimetype='text/markdown',
+        headers={'Content-Disposition': f'attachment;filename=consciousness_export_{int(time.time())}.md'}
+    )

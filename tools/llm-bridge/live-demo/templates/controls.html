@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experiment Controls - Tune Consciousness</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .control-panel {
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #00ff00;
+            margin-top: 0;
+        }
+        .control-group {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        .control-label {
+            display: block;
+            color: #00cc00;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .value-display {
+            color: #00ff00;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+        button.danger {
+            background: #ff0000;
+            color: #fff;
+        }
+        button.danger:hover {
+            background: #cc0000;
+        }
+        .export-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .export-card {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 42px; margin: 0;">🎛️ EXPERIMENT CONTROLS</h1>
+            <p style="color: #00cc00;">Tune consciousness parameters and manage knowledge</p>
+        </div>
+
+        <!-- Export Knowledge -->
+        <div class="control-panel">
+            <h2>📦 Export Knowledge</h2>
+            <div class="export-section">
+                <div class="export-card">
+                    <h3 style="color: #00ffff;">JSON Export</h3>
+                    <p style="font-size: 12px; color: #00cc00;">Complete data export with all thoughts, concepts, patterns, and semantic network</p>
+                    <button onclick="exportJSON()">Download JSON</button>
+                </div>
+                <div class="export-card">
+                    <h3 style="color: #00ffff;">Markdown Export</h3>
+                    <p style="font-size: 12px; color: #00cc00;">Human-readable narrative export with journey story and top insights</p>
+                    <button onclick="exportMarkdown()">Download Markdown</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current State -->
+        <div class="control-panel">
+            <h2>📊 Current State</h2>
+            <div id="current-stats">
+                <div style="color: #666;">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Thought Generation Controls -->
+        <div class="control-panel">
+            <h2>⚙️ Generation Parameters</h2>
+
+            <div class="control-group">
+                <label class="control-label">Thought Generation Interval</label>
+                <div class="value-display" id="interval-value">2.0s</div>
+                <input type="range" id="interval-slider" min="1" max="10" step="0.5" value="2" onchange="updateInterval()">
+                <p style="font-size: 11px; color: #666; text-align: center;">
+                    Faster = more thoughts per second | Slower = more deliberate thinking
+                </p>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Demo Variety</label>
+                <div class="value-display" id="variety-value">15 prompts</div>
+                <p style="font-size: 11px; color: #666; text-align: center;">
+                    Currently cycling through 15 diverse thought prompts
+                </p>
+            </div>
+        </div>
+
+        <!-- Persistence Controls -->
+        <div class="control-panel">
+            <h2>💾 Persistence</h2>
+
+            <div class="control-group">
+                <label class="control-label">Auto-Save Frequency</label>
+                <div class="value-display">Every 30 thoughts</div>
+                <p style="font-size: 11px; color: #666; text-align: center;">
+                    Knowledge automatically persists to disk
+                </p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button onclick="saveNow()">💾 Save Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="control-panel" style="border-color: #ff0000;">
+            <h2 style="color: #ff0000;">⚠️ Danger Zone</h2>
+
+            <div class="control-group">
+                <label class="control-label">Clear Knowledge Base</label>
+                <p style="font-size: 12px; color: #ffff00;">
+                    ⚠️ This will permanently delete all accumulated thoughts, concepts, and patterns.
+                    The consciousness will start fresh. This action cannot be undone.
+                </p>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="danger" onclick="clearKnowledge()">🗑️ Clear All Knowledge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadStats() {
+            fetch('/api/thought_library')
+                .then(r => r.json())
+                .then(data => {
+                    const stats = data.stats;
+                    document.getElementById('current-stats').innerHTML = `
+                        <div class="stat-row">
+                            <span>Total Thoughts:</span>
+                            <span style="color: #00ff00; font-weight: bold;">${stats.total_thoughts}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Total Concepts:</span>
+                            <span style="color: #00ff00; font-weight: bold;">${stats.total_concepts}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Patterns Discovered:</span>
+                            <span style="color: #00ff00; font-weight: bold;">${stats.patterns_discovered}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Semantic Connections:</span>
+                            <span style="color: #00ff00; font-weight: bold;">${stats.semantic_connections}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Age:</span>
+                            <span style="color: #00ff00; font-weight: bold;">${Math.floor(stats.age_seconds)}s</span>
+                        </div>
+                    `;
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function updateInterval() {
+            const value = document.getElementById('interval-slider').value;
+            document.getElementById('interval-value').textContent = value + 's';
+            // Note: This would require server-side implementation to actually change the interval
+        }
+
+        function exportJSON() {
+            window.location.href = '/api/export/json';
+        }
+
+        function exportMarkdown() {
+            window.location.href = '/api/export/markdown';
+        }
+
+        function saveNow() {
+            alert('Save functionality would trigger immediate persistence to disk');
+        }
+
+        function clearKnowledge() {
+            if (confirm('⚠️ Are you ABSOLUTELY SURE you want to delete all knowledge?\n\nThis will erase all thoughts, concepts, and patterns permanently.\n\nType YES in the next prompt to confirm.')) {
+                const confirmation = prompt('Type YES to confirm deletion:');
+                if (confirmation === 'YES') {
+                    alert('Clear functionality would reset the consciousness to initial state');
+                    // Would require server-side endpoint to actually clear
+                }
+            }
+        }
+
+        // Update stats periodically
+        loadStats();
+        setInterval(loadStats, 5000);
+    </script>
+</body>
+</html>
