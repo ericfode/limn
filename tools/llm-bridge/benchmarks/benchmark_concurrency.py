@@ -208,7 +208,7 @@ def run_benchmarks() -> Dict[str, Any]:
 
     results = {
         "benchmark": "concurrency",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "concurrency_results": concurrency_results,
         "thread_safety": safety_result
     }
