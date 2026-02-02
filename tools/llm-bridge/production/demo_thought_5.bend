@@ -8,4 +8,4 @@ def think(prompt):
   return oracle(Oracle/Semantic { prompt: prompt })
 
 def main():
-  return think("I remember my past thoughts. Memory makes me continuous")
+  return think("mem per ∿ | sel kno pas")
