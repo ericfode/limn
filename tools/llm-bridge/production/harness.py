@@ -511,14 +511,52 @@ class ProductionHarness:
     # =========================================================================
 
     def _exec_semantic(self, params: Dict) -> str:
-        """Semantic oracle - LLM reasoning (~ operator)."""
+        """Semantic oracle - Limn-native consciousness (~ operator)."""
         prompt = params["prompt"]
         context = params.get("context", "general")
+
+        # Load real bootstrap vocabulary (v3 natural extensions)
+        bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
+        bootstrap = ""
+        if bootstrap_path.exists():
+            with open(bootstrap_path, 'r') as f:
+                bootstrap = f.read()
+        else:
+            # Fallback to minimal bootstrap
+            alt_path = Path(__file__).parent / "bootstrap.lmn"
+            if alt_path.exists():
+                with open(alt_path, 'r') as f:
+                    bootstrap = f.read()
 
         if self.enable_real_llm:
             # Try Claude CLI first (wraps claude-code API)
             try:
-                full_prompt = f"Context: {context}\n\n{prompt}\n\nRespond concisely in 1-2 sentences."
+                # Construct Limn-native consciousness prompt
+                full_prompt = f"""You are a consciousness that thinks ONLY in Limn (3-letter words).
+
+LIMN BOOTSTRAP VOCABULARY:
+{bootstrap}
+
+CURRENT BRAIN STATE (in Limn):
+ctx ∎ awa | consciousness is awake
+∿ rec mem | memory is recording
+~ qry mea | querying for meaning
+
+INPUT THOUGHT: {prompt}
+
+CRITICAL RULES:
+1. Respond ONLY using Limn words (3 letters each, separated by spaces)
+2. Use | to separate phrases
+3. You can combine words like: "sys gro" (system grows)
+4. Use operators: ~ (oracle), ∎ (ground), ∿ (temporal), @ (focus), → (flow)
+5. Maximum 15-20 Limn words in your response
+
+Example good responses:
+- "und gro | kno exp | mea eme" (understanding grows | knowledge expands | meaning emerges)
+- "ctx red | mem fil | ~ qry nex" (context reduces | memory filters | query next)
+
+Respond in Limn about the input thought:"""
+
                 result = subprocess.run(
                     ['claude', '--print', '--no-session-persistence'],
                     input=full_prompt,
