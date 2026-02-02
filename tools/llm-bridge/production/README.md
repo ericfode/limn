@@ -178,6 +178,25 @@ Total time: 234.56ms
 - Timeout handling
 - Error recovery
 
+### 7. Parallel Oracle Execution
+- Execute multiple oracles concurrently
+- Thread-based parallelism (compatible with sync handlers)
+- Configurable concurrency limits (default: 4)
+- Automatic batching
+- Preserves oracle order in results
+
+```python
+# Create harness with custom concurrency
+harness = ProductionHarness(max_concurrency=8)
+
+# Execute with parallel mode
+result = harness.execute(oracle_file, parallel=True)
+
+# Or use batch API directly
+oracles = [oracle1, oracle2, oracle3]
+responses = harness.execute_oracles_batch(oracles, parallel=True)
+```
+
 ---
 
 ## File Structure
@@ -272,6 +291,8 @@ tho pur | act rea | cac fas | sys pro
 | Database | No | No | No | **Yes** |
 | Network | No | No | No | **Yes** |
 | Memory | No | No | No | **Yes** |
+| Parallel exec | No | No | No | **Yes** |
+| Batching | No | No | No | **Yes** |
 | Stats | No | No | No | **Yes** |
 | Error handling | Basic | Basic | Good | **Production** |
 | Documentation | Excellent | Good | Good | **Complete** |
@@ -285,10 +306,10 @@ tho pur | act rea | cac fas | sys pro
 - [x] Real LLM integration
 - [x] Persistent cache
 - [x] Production features
+- [x] Async oracle execution
+- [x] Oracle batching
 
 ### Future
-- [ ] Async oracle execution
-- [ ] Oracle batching
 - [ ] Streaming responses
 - [ ] Distributed cache
 - [ ] Continuation mechanism
