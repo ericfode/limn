@@ -110,7 +110,7 @@ dolt sql -q "SELECT word, meaning FROM words WHERE domain_id = 5"
 
 **Quick queries:**
 ```bash
-./scripts/vocab.sh stats           # Vocabulary statistics (784 words, 26 domains, 16 operators)
+./scripts/vocab.sh stats           # Vocabulary statistics (938 words, 26 domains, 23 operators)
 ./scripts/vocab.sh search light    # Search words
 ./scripts/vocab.sh check xyz       # Check if word available
 ./scripts/vocab.sh domain 1        # List words in domain
