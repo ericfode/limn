@@ -31,6 +31,12 @@ from enum import Enum
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
+import hashlib
+import hmac
+import shutil
+import psutil
+import signal
+import configparser
 
 
 class OracleType(Enum):
@@ -79,6 +85,50 @@ class OracleType(Enum):
     VOC_QUERY_DOMAIN = "VocQueryDomain"
     VOC_QUERY_MEANING = "VocQueryMeaning"
     VOC_EXPAND = "VocExpand"
+
+    # Process
+    PROCESS_SPAWN = "ProcessSpawn"
+    PROCESS_KILL = "ProcessKill"
+    PROCESS_STATUS = "ProcessStatus"
+
+    # System
+    SYSTEM_CPU = "SystemCPU"
+    SYSTEM_MEMORY = "SystemMemory"
+    SYSTEM_DISK = "SystemDisk"
+
+    # Crypto
+    CRYPTO_HASH = "CryptoHash"
+    CRYPTO_SIGN = "CryptoSign"
+    CRYPTO_VERIFY = "CryptoVerify"
+
+    # ML
+    ML_EMBED = "MLEmbed"
+    ML_CLASSIFY = "MLClassify"
+    ML_PREDICT = "MLPredict"
+
+    # Audio/Video
+    AUDIO_INFO = "AudioInfo"
+    VIDEO_INFO = "VideoInfo"
+    AUDIO_TRANSCODE = "AudioTranscode"
+    VIDEO_TRANSCODE = "VideoTranscode"
+
+    # Environment
+    ENV_GET = "EnvGet"
+    ENV_SET = "EnvSet"
+    CONFIG_READ = "ConfigRead"
+    CONFIG_WRITE = "ConfigWrite"
+
+    # Git
+    GIT_COMMIT = "GitCommit"
+    GIT_DIFF = "GitDiff"
+    GIT_LOG = "GitLog"
+    GIT_STATUS = "GitStatus"
+
+    # Docker
+    DOCKER_RUN = "DockerRun"
+    DOCKER_STOP = "DockerStop"
+    DOCKER_STATUS = "DockerStatus"
+    DOCKER_LOGS = "DockerLogs"
 
 
 @dataclass
@@ -295,6 +345,7 @@ class ProductionHarness:
             ],
 
             # Memory
+<<<<<<< HEAD
             OracleType.MEMORY_STORE: [
                 r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
                 r'Oracle/MemoryStore/tag\s+"([^"]+)"\s+"([^"]+)"',
@@ -327,6 +378,54 @@ class ProductionHarness:
             OracleType.VOC_EXPAND: [
                 r'Oracle/VocExpand/tag\s+"([^"]+)"\s+\[([^\]]+)\]',
             ],
+=======
+            OracleType.MEMORY_STORE: r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
+            OracleType.MEMORY_RETRIEVE: r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
+
+            # Process
+            OracleType.PROCESS_SPAWN: r'Oracle/ProcessSpawn[^{]*\{\s*command:\s*"([^"]+)",\s*args:\s*"([^"]+)"\s*\}',
+            OracleType.PROCESS_KILL: r'Oracle/ProcessKill[^{]*\{\s*pid:\s*(\d+)\s*\}',
+            OracleType.PROCESS_STATUS: r'Oracle/ProcessStatus[^{]*\{\s*pid:\s*(\d+)\s*\}',
+
+            # System
+            OracleType.SYSTEM_CPU: r'Oracle/SystemCPU(?:\s|,|\))',
+            OracleType.SYSTEM_MEMORY: r'Oracle/SystemMemory(?:\s|,|\))',
+            OracleType.SYSTEM_DISK: r'Oracle/SystemDisk[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+
+            # Crypto
+            OracleType.CRYPTO_HASH: r'Oracle/CryptoHash[^{]*\{\s*algorithm:\s*"([^"]+)",\s*data:\s*"([^"]+)"\s*\}',
+            OracleType.CRYPTO_SIGN: r'Oracle/CryptoSign[^{]*\{\s*algorithm:\s*"([^"]+)",\s*data:\s*"([^"]+)",\s*key:\s*"([^"]+)"\s*\}',
+            OracleType.CRYPTO_VERIFY: r'Oracle/CryptoVerify[^{]*\{\s*algorithm:\s*"([^"]+)",\s*data:\s*"([^"]+)",\s*signature:\s*"([^"]+)",\s*key:\s*"([^"]+)"\s*\}',
+
+            # ML
+            OracleType.ML_EMBED: r'Oracle/MLEmbed[^{]*\{\s*text:\s*"([^"]+)",\s*model:\s*"([^"]+)"\s*\}',
+            OracleType.ML_CLASSIFY: r'Oracle/MLClassify[^{]*\{\s*text:\s*"([^"]+)",\s*categories:\s*"([^"]+)"\s*\}',
+            OracleType.ML_PREDICT: r'Oracle/MLPredict[^{]*\{\s*input:\s*"([^"]+)",\s*model:\s*"([^"]+)"\s*\}',
+
+            # Audio/Video
+            OracleType.AUDIO_INFO: r'Oracle/AudioInfo[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+            OracleType.VIDEO_INFO: r'Oracle/VideoInfo[^{]*\{\s*path:\s*"([^"]+)"\s*\}',
+            OracleType.AUDIO_TRANSCODE: r'Oracle/AudioTranscode[^{]*\{\s*path:\s*"([^"]+)",\s*format:\s*"([^"]+)"\s*\}',
+            OracleType.VIDEO_TRANSCODE: r'Oracle/VideoTranscode[^{]*\{\s*path:\s*"([^"]+)",\s*format:\s*"([^"]+)"\s*\}',
+
+            # Environment
+            OracleType.ENV_GET: r'Oracle/EnvGet[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
+            OracleType.ENV_SET: r'Oracle/EnvSet[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
+            OracleType.CONFIG_READ: r'Oracle/ConfigRead[^{]*\{\s*path:\s*"([^"]+)",\s*key:\s*"([^"]+)"\s*\}',
+            OracleType.CONFIG_WRITE: r'Oracle/ConfigWrite[^{]*\{\s*path:\s*"([^"]+)",\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
+
+            # Git
+            OracleType.GIT_COMMIT: r'Oracle/GitCommit[^{]*\{\s*message:\s*"([^"]+)",\s*files:\s*"([^"]+)"\s*\}',
+            OracleType.GIT_DIFF: r'Oracle/GitDiff[^{]*\{\s*ref1:\s*"([^"]+)",\s*ref2:\s*"([^"]+)"\s*\}',
+            OracleType.GIT_LOG: r'Oracle/GitLog[^{]*\{\s*count:\s*(\d+)\s*\}',
+            OracleType.GIT_STATUS: r'Oracle/GitStatus(?:\s|,|\))',
+
+            # Docker
+            OracleType.DOCKER_RUN: r'Oracle/DockerRun[^{]*\{\s*image:\s*"([^"]+)",\s*command:\s*"([^"]+)"\s*\}',
+            OracleType.DOCKER_STOP: r'Oracle/DockerStop[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
+            OracleType.DOCKER_STATUS: r'Oracle/DockerStatus[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
+            OracleType.DOCKER_LOGS: r'Oracle/DockerLogs[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
+>>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         }
 
         for oracle_type, pattern_list in patterns.items():
@@ -366,6 +465,7 @@ class ProductionHarness:
             return {"key": match.group(1), "value": match.group(2)}
         elif oracle_type == OracleType.MEMORY_RETRIEVE:
             return {"key": match.group(1)}
+<<<<<<< HEAD
         elif oracle_type == OracleType.CTX_COMPRESS:
             return {"target_size": int(match.group(1))}
         elif oracle_type == OracleType.MODEL_DERIVE:
@@ -379,6 +479,50 @@ class ProductionHarness:
         elif oracle_type == OracleType.VOC_EXPAND:
             concepts = [c.strip().strip('"') for c in match.group(2).split(',')]
             return {"domain": match.group(1), "concepts": concepts}
+=======
+        elif oracle_type == OracleType.PROCESS_SPAWN:
+            return {"command": match.group(1), "args": match.group(2)}
+        elif oracle_type == OracleType.PROCESS_KILL:
+            return {"pid": int(match.group(1))}
+        elif oracle_type == OracleType.PROCESS_STATUS:
+            return {"pid": int(match.group(1))}
+        elif oracle_type in [OracleType.SYSTEM_CPU, OracleType.SYSTEM_MEMORY]:
+            return {}
+        elif oracle_type == OracleType.SYSTEM_DISK:
+            return {"path": match.group(1)}
+        elif oracle_type == OracleType.CRYPTO_HASH:
+            return {"algorithm": match.group(1), "data": match.group(2)}
+        elif oracle_type == OracleType.CRYPTO_SIGN:
+            return {"algorithm": match.group(1), "data": match.group(2), "key": match.group(3)}
+        elif oracle_type == OracleType.CRYPTO_VERIFY:
+            return {"algorithm": match.group(1), "data": match.group(2), "signature": match.group(3), "key": match.group(4)}
+        elif oracle_type in [OracleType.ML_EMBED, OracleType.ML_CLASSIFY, OracleType.ML_PREDICT]:
+            return {"text" if oracle_type != OracleType.ML_PREDICT else "input": match.group(1), "model" if oracle_type != OracleType.ML_CLASSIFY else "categories": match.group(2)}
+        elif oracle_type in [OracleType.AUDIO_INFO, OracleType.VIDEO_INFO]:
+            return {"path": match.group(1)}
+        elif oracle_type in [OracleType.AUDIO_TRANSCODE, OracleType.VIDEO_TRANSCODE]:
+            return {"path": match.group(1), "format": match.group(2)}
+        elif oracle_type == OracleType.ENV_GET:
+            return {"key": match.group(1)}
+        elif oracle_type == OracleType.ENV_SET:
+            return {"key": match.group(1), "value": match.group(2)}
+        elif oracle_type == OracleType.CONFIG_READ:
+            return {"path": match.group(1), "key": match.group(2)}
+        elif oracle_type == OracleType.CONFIG_WRITE:
+            return {"path": match.group(1), "key": match.group(2), "value": match.group(3)}
+        elif oracle_type == OracleType.GIT_COMMIT:
+            return {"message": match.group(1), "files": match.group(2)}
+        elif oracle_type == OracleType.GIT_DIFF:
+            return {"ref1": match.group(1), "ref2": match.group(2)}
+        elif oracle_type == OracleType.GIT_LOG:
+            return {"count": int(match.group(1))}
+        elif oracle_type == OracleType.GIT_STATUS:
+            return {}
+        elif oracle_type == OracleType.DOCKER_RUN:
+            return {"image": match.group(1), "command": match.group(2)}
+        elif oracle_type in [OracleType.DOCKER_STOP, OracleType.DOCKER_STATUS, OracleType.DOCKER_LOGS]:
+            return {"container": match.group(1)}
+>>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         return {}
 
     # =========================================================================
@@ -420,6 +564,7 @@ class ProductionHarness:
                 OracleType.HTTP_POST: self._exec_http_post,
                 OracleType.MEMORY_STORE: self._exec_memory_store,
                 OracleType.MEMORY_RETRIEVE: self._exec_memory_retrieve,
+<<<<<<< HEAD
                 OracleType.CTX_REDUCE: self._exec_ctx_reduce,
                 OracleType.CTX_MERGE: self._exec_ctx_merge,
                 OracleType.CTX_FILTER: self._exec_ctx_filter,
@@ -431,6 +576,36 @@ class ProductionHarness:
                 OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
                 OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
                 OracleType.VOC_EXPAND: self._exec_voc_expand,
+=======
+                OracleType.PROCESS_SPAWN: self._exec_process_spawn,
+                OracleType.PROCESS_KILL: self._exec_process_kill,
+                OracleType.PROCESS_STATUS: self._exec_process_status,
+                OracleType.SYSTEM_CPU: self._exec_system_cpu,
+                OracleType.SYSTEM_MEMORY: self._exec_system_memory,
+                OracleType.SYSTEM_DISK: self._exec_system_disk,
+                OracleType.CRYPTO_HASH: self._exec_crypto_hash,
+                OracleType.CRYPTO_SIGN: self._exec_crypto_sign,
+                OracleType.CRYPTO_VERIFY: self._exec_crypto_verify,
+                OracleType.ML_EMBED: self._exec_ml_embed,
+                OracleType.ML_CLASSIFY: self._exec_ml_classify,
+                OracleType.ML_PREDICT: self._exec_ml_predict,
+                OracleType.AUDIO_INFO: self._exec_audio_info,
+                OracleType.VIDEO_INFO: self._exec_video_info,
+                OracleType.AUDIO_TRANSCODE: self._exec_audio_transcode,
+                OracleType.VIDEO_TRANSCODE: self._exec_video_transcode,
+                OracleType.ENV_GET: self._exec_env_get,
+                OracleType.ENV_SET: self._exec_env_set,
+                OracleType.CONFIG_READ: self._exec_config_read,
+                OracleType.CONFIG_WRITE: self._exec_config_write,
+                OracleType.GIT_COMMIT: self._exec_git_commit,
+                OracleType.GIT_DIFF: self._exec_git_diff,
+                OracleType.GIT_LOG: self._exec_git_log,
+                OracleType.GIT_STATUS: self._exec_git_status,
+                OracleType.DOCKER_RUN: self._exec_docker_run,
+                OracleType.DOCKER_STOP: self._exec_docker_stop,
+                OracleType.DOCKER_STATUS: self._exec_docker_status,
+                OracleType.DOCKER_LOGS: self._exec_docker_logs,
+>>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
             }
 
             handler = handlers.get(oracle.type)
@@ -726,6 +901,7 @@ Pure Limn response:"""
         key = params["key"]
         return self.memory.get(key)
 
+<<<<<<< HEAD
     def _exec_ctx_reduce(self, params: Dict) -> Dict:
         """Context reduce oracle - compress by removing low-frequency patterns."""
         if not self.context_engine:
@@ -922,6 +1098,383 @@ Pure Limn response:"""
             ]
         }
 
+=======
+    def _exec_process_spawn(self, params: Dict) -> Dict[str, Any]:
+        """Process spawn oracle (∎ system control)."""
+        command = params["command"]
+        args = params["args"].split() if params["args"] else []
+
+        proc = subprocess.Popen(
+            [command] + args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        return {
+            "pid": proc.pid,
+            "command": command,
+            "args": args
+        }
+
+    def _exec_process_kill(self, params: Dict) -> str:
+        """Process kill oracle (∎ system control)."""
+        pid = params["pid"]
+        try:
+            os.kill(pid, signal.SIGTERM)
+            return f"Killed process {pid}"
+        except ProcessLookupError:
+            return f"Process {pid} not found"
+        except PermissionError:
+            return f"Permission denied to kill process {pid}"
+
+    def _exec_process_status(self, params: Dict) -> Dict[str, Any]:
+        """Process status oracle (∎ system control)."""
+        pid = params["pid"]
+        try:
+            proc = psutil.Process(pid)
+            return {
+                "pid": pid,
+                "name": proc.name(),
+                "status": proc.status(),
+                "cpu_percent": proc.cpu_percent(),
+                "memory_percent": proc.memory_percent()
+            }
+        except psutil.NoSuchProcess:
+            return {"pid": pid, "status": "not_found"}
+
+    def _exec_system_cpu(self, params: Dict) -> Dict[str, Any]:
+        """System CPU oracle (∎ system state)."""
+        return {
+            "percent": psutil.cpu_percent(interval=0.1),
+            "count": psutil.cpu_count(),
+            "freq": psutil.cpu_freq()._asdict() if psutil.cpu_freq() else None
+        }
+
+    def _exec_system_memory(self, params: Dict) -> Dict[str, Any]:
+        """System memory oracle (∎ system state)."""
+        mem = psutil.virtual_memory()
+        return {
+            "total": mem.total,
+            "available": mem.available,
+            "percent": mem.percent,
+            "used": mem.used,
+            "free": mem.free
+        }
+
+    def _exec_system_disk(self, params: Dict) -> Dict[str, Any]:
+        """System disk oracle (∎ system state)."""
+        path = params["path"]
+        usage = psutil.disk_usage(path)
+        return {
+            "total": usage.total,
+            "used": usage.used,
+            "free": usage.free,
+            "percent": usage.percent
+        }
+
+    def _exec_crypto_hash(self, params: Dict) -> str:
+        """Crypto hash oracle (∎ cryptographic operations)."""
+        algorithm = params["algorithm"].lower()
+        data = params["data"].encode()
+
+        if algorithm == "sha256":
+            return hashlib.sha256(data).hexdigest()
+        elif algorithm == "sha512":
+            return hashlib.sha512(data).hexdigest()
+        elif algorithm == "md5":
+            return hashlib.md5(data).hexdigest()
+        elif algorithm == "sha1":
+            return hashlib.sha1(data).hexdigest()
+        else:
+            raise ValueError(f"Unsupported hash algorithm: {algorithm}")
+
+    def _exec_crypto_sign(self, params: Dict) -> str:
+        """Crypto sign oracle (∎ cryptographic operations)."""
+        algorithm = params["algorithm"].lower()
+        data = params["data"].encode()
+        key = params["key"].encode()
+
+        if algorithm == "hmac-sha256":
+            return hmac.new(key, data, hashlib.sha256).hexdigest()
+        elif algorithm == "hmac-sha512":
+            return hmac.new(key, data, hashlib.sha512).hexdigest()
+        else:
+            raise ValueError(f"Unsupported signing algorithm: {algorithm}")
+
+    def _exec_crypto_verify(self, params: Dict) -> bool:
+        """Crypto verify oracle (∎ cryptographic operations)."""
+        algorithm = params["algorithm"].lower()
+        data = params["data"].encode()
+        signature = params["signature"]
+        key = params["key"].encode()
+
+        # Compute expected signature
+        if algorithm == "hmac-sha256":
+            expected = hmac.new(key, data, hashlib.sha256).hexdigest()
+        elif algorithm == "hmac-sha512":
+            expected = hmac.new(key, data, hashlib.sha512).hexdigest()
+        else:
+            raise ValueError(f"Unsupported verification algorithm: {algorithm}")
+
+        return hmac.compare_digest(expected, signature)
+
+    def _exec_ml_embed(self, params: Dict) -> List[float]:
+        """ML embed oracle (~ intelligent processing)."""
+        text = params["text"]
+        model = params["model"]
+
+        # Mock implementation - returns simple hash-based embedding
+        # In production, would call actual embedding model
+        hash_val = hashlib.sha256(text.encode()).digest()
+        embedding = [float(b) / 255.0 for b in hash_val[:16]]
+
+        return embedding
+
+    def _exec_ml_classify(self, params: Dict) -> Dict[str, float]:
+        """ML classify oracle (~ intelligent processing)."""
+        text = params["text"]
+        categories = params["categories"].split(",")
+
+        # Mock implementation - returns random-ish scores
+        # In production, would call actual classifier
+        text_hash = sum(ord(c) for c in text)
+        scores = {}
+        for i, cat in enumerate(categories):
+            scores[cat.strip()] = ((text_hash + i * 17) % 100) / 100.0
+
+        return scores
+
+    def _exec_ml_predict(self, params: Dict) -> Any:
+        """ML predict oracle (~ intelligent processing)."""
+        input_data = params["input"]
+        model = params["model"]
+
+        # Mock implementation
+        # In production, would call actual model
+        return f"[Mock prediction for '{input_data}' using {model}]"
+
+    def _exec_audio_info(self, params: Dict) -> Dict[str, Any]:
+        """Audio info oracle (∎ media processing)."""
+        path = Path(params["path"])
+        if not path.exists():
+            raise FileNotFoundError(f"Audio file not found: {path}")
+
+        # Mock implementation - returns file metadata
+        stat = path.stat()
+        return {
+            "path": str(path),
+            "size": stat.st_size,
+            "format": path.suffix[1:] if path.suffix else "unknown"
+        }
+
+    def _exec_video_info(self, params: Dict) -> Dict[str, Any]:
+        """Video info oracle (∎ media processing)."""
+        path = Path(params["path"])
+        if not path.exists():
+            raise FileNotFoundError(f"Video file not found: {path}")
+
+        # Mock implementation - returns file metadata
+        stat = path.stat()
+        return {
+            "path": str(path),
+            "size": stat.st_size,
+            "format": path.suffix[1:] if path.suffix else "unknown"
+        }
+
+    def _exec_audio_transcode(self, params: Dict) -> str:
+        """Audio transcode oracle (∎ media processing)."""
+        path = params["path"]
+        format = params["format"]
+
+        # Mock implementation
+        return f"[Mock transcode: {path} -> {format}]"
+
+    def _exec_video_transcode(self, params: Dict) -> str:
+        """Video transcode oracle (∎ media processing)."""
+        path = params["path"]
+        format = params["format"]
+
+        # Mock implementation
+        return f"[Mock transcode: {path} -> {format}]"
+
+    def _exec_env_get(self, params: Dict) -> Optional[str]:
+        """Environment get oracle (∎ configuration)."""
+        key = params["key"]
+        return os.environ.get(key)
+
+    def _exec_env_set(self, params: Dict) -> str:
+        """Environment set oracle (∎ configuration)."""
+        key = params["key"]
+        value = params["value"]
+        os.environ[key] = value
+        return f"Set {key}={value}"
+
+    def _exec_config_read(self, params: Dict) -> Optional[str]:
+        """Config read oracle (∎ configuration)."""
+        path = Path(params["path"])
+        key = params["key"]
+
+        if not path.exists():
+            raise FileNotFoundError(f"Config file not found: {path}")
+
+        # Support JSON and INI formats
+        if path.suffix == ".json":
+            data = json.loads(path.read_text())
+            return data.get(key)
+        elif path.suffix == ".ini":
+            config = configparser.ConfigParser()
+            config.read(path)
+            section, option = key.split(".") if "." in key else ("DEFAULT", key)
+            return config.get(section, option, fallback=None)
+        else:
+            raise ValueError(f"Unsupported config format: {path.suffix}")
+
+    def _exec_config_write(self, params: Dict) -> str:
+        """Config write oracle (∎ configuration)."""
+        path = Path(params["path"])
+        key = params["key"]
+        value = params["value"]
+
+        # Support JSON format
+        if path.suffix == ".json":
+            data = json.loads(path.read_text()) if path.exists() else {}
+            data[key] = value
+            path.write_text(json.dumps(data, indent=2))
+            return f"Wrote {key}={value} to {path}"
+        else:
+            raise ValueError(f"Unsupported config format: {path.suffix}")
+
+    def _exec_git_commit(self, params: Dict) -> str:
+        """Git commit oracle (∎ version control)."""
+        message = params["message"]
+        files = params["files"]
+
+        # Execute git add and commit
+        result = subprocess.run(
+            ["git", "add"] + files.split(),
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"git add failed: {result.stderr}")
+
+        result = subprocess.run(
+            ["git", "commit", "-m", message],
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"git commit failed: {result.stderr}")
+
+        return result.stdout
+
+    def _exec_git_diff(self, params: Dict) -> str:
+        """Git diff oracle (∎ version control)."""
+        ref1 = params["ref1"]
+        ref2 = params["ref2"]
+
+        result = subprocess.run(
+            ["git", "diff", ref1, ref2],
+            capture_output=True,
+            text=True
+        )
+
+        return result.stdout
+
+    def _exec_git_log(self, params: Dict) -> str:
+        """Git log oracle (∎ version control)."""
+        count = params["count"]
+
+        result = subprocess.run(
+            ["git", "log", f"-{count}", "--oneline"],
+            capture_output=True,
+            text=True
+        )
+
+        return result.stdout
+
+    def _exec_git_status(self, params: Dict) -> str:
+        """Git status oracle (∎ version control)."""
+        result = subprocess.run(
+            ["git", "status", "--short"],
+            capture_output=True,
+            text=True
+        )
+
+        return result.stdout
+
+    def _exec_docker_run(self, params: Dict) -> Dict[str, Any]:
+        """Docker run oracle (∎ containerization)."""
+        image = params["image"]
+        command = params["command"]
+
+        result = subprocess.run(
+            ["docker", "run", "-d", image] + command.split(),
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"docker run failed: {result.stderr}")
+
+        container_id = result.stdout.strip()
+        return {
+            "container_id": container_id,
+            "image": image,
+            "command": command
+        }
+
+    def _exec_docker_stop(self, params: Dict) -> str:
+        """Docker stop oracle (∎ containerization)."""
+        container = params["container"]
+
+        result = subprocess.run(
+            ["docker", "stop", container],
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"docker stop failed: {result.stderr}")
+
+        return f"Stopped container {container}"
+
+    def _exec_docker_status(self, params: Dict) -> Dict[str, Any]:
+        """Docker status oracle (∎ containerization)."""
+        container = params["container"]
+
+        result = subprocess.run(
+            ["docker", "inspect", container],
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode != 0:
+            raise RuntimeError(f"docker inspect failed: {result.stderr}")
+
+        data = json.loads(result.stdout)[0]
+        return {
+            "id": data["Id"],
+            "status": data["State"]["Status"],
+            "running": data["State"]["Running"]
+        }
+
+    def _exec_docker_logs(self, params: Dict) -> str:
+        """Docker logs oracle (∎ containerization)."""
+        container = params["container"]
+
+        result = subprocess.run(
+            ["docker", "logs", container],
+            capture_output=True,
+            text=True
+        )
+
+        return result.stdout
+
+>>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
     # =========================================================================
     # Main Execution
     # =========================================================================

@@ -71,6 +71,8 @@ Synthesizes the best from all three prototypes into one production-ready system.
 
 ## Oracle Types
 
+### Core Oracles
+
 | Oracle | Operator | Purpose | Example |
 |--------|----------|---------|---------|
 | **Semantic** | `~` | LLM reasoning | `llm("add 1 1", "math")` |
@@ -87,6 +89,74 @@ Synthesizes the best from all three prototypes into one production-ready system.
 | **HttpPost** | `∎` | HTTP POST | `post("url", "{...}")` |
 | **MemoryStore** | `∿` | Store value | `remember("key", "value")` |
 | **MemoryRetrieve** | `∿` | Recall value | `recall("key")` |
+
+### Process Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **ProcessSpawn** | `∎` | Spawn process | `spawn("ls", "-la")` |
+| **ProcessKill** | `∎` | Kill process | `kill(12345)` |
+| **ProcessStatus** | `∎` | Process info | `proc_status(12345)` |
+
+### System Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **SystemCPU** | `∎` | CPU metrics | `cpu()` |
+| **SystemMemory** | `∎` | Memory metrics | `memory()` |
+| **SystemDisk** | `∎` | Disk usage | `disk("/")` |
+
+### Crypto Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **CryptoHash** | `∎` | Hash data | `hash("sha256", "data")` |
+| **CryptoSign** | `∎` | Sign data | `sign("hmac-sha256", "data", "key")` |
+| **CryptoVerify** | `∎` | Verify signature | `verify("hmac-sha256", "data", "sig", "key")` |
+
+### ML Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **MLEmbed** | `~` | Text embedding | `embed("hello", "model")` |
+| **MLClassify** | `~` | Text classification | `classify("text", "cat1,cat2")` |
+| **MLPredict** | `~` | Model prediction | `predict("input", "model")` |
+
+### Audio/Video Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **AudioInfo** | `∎` | Audio metadata | `audio_info("song.mp3")` |
+| **VideoInfo** | `∎` | Video metadata | `video_info("video.mp4")` |
+| **AudioTranscode** | `∎` | Audio convert | `audio_transcode("in.wav", "mp3")` |
+| **VideoTranscode** | `∎` | Video convert | `video_transcode("in.mov", "mp4")` |
+
+### Environment Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **EnvGet** | `∎` | Get env var | `env_get("PATH")` |
+| **EnvSet** | `∎` | Set env var | `env_set("VAR", "value")` |
+| **ConfigRead** | `∎` | Read config | `config_read("app.json", "key")` |
+| **ConfigWrite** | `∎` | Write config | `config_write("app.json", "key", "value")` |
+
+### Git Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **GitCommit** | `∎` | Commit changes | `git_commit("message", "file.txt")` |
+| **GitDiff** | `∎` | Show diff | `git_diff("HEAD", "main")` |
+| **GitLog** | `∎` | Show log | `git_log(10)` |
+| **GitStatus** | `∎` | Show status | `git_status()` |
+
+### Docker Oracles
+
+| Oracle | Operator | Purpose | Example |
+|--------|----------|---------|---------|
+| **DockerRun** | `∎` | Run container | `docker_run("ubuntu", "echo hi")` |
+| **DockerStop** | `∎` | Stop container | `docker_stop("container_id")` |
+| **DockerStatus** | `∎` | Container status | `docker_status("container_id")` |
+| **DockerLogs** | `∎` | Container logs | `docker_logs("container_id")` |
 
 ---
 
@@ -229,7 +299,7 @@ production/
 ## Why This Is Best
 
 ### 1. Complete
-- 14 oracle types vs 4-5 in prototypes
+- 50+ oracle types vs 4-5 in prototypes
 - All major categories covered
 - Production-ready features
 
@@ -285,7 +355,7 @@ tho pur | act rea | cac fas | sys pro
 
 | Feature | Reference | HVM4 | HVM2 | **Production** |
 |---------|-----------|------|------|----------------|
-| Oracle types | 5 | 3 | 4 | **14** |
+| Oracle types | 5 | 3 | 4 | **50+** |
 | Real LLM | No | No | No | **Yes** |
 | Cache | Memory | No | No | **SQLite** |
 | Database | No | No | No | **Yes** |
