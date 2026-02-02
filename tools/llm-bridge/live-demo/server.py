@@ -32,6 +32,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent.parent / "production"))
 from harness import ProductionHarness, OracleType
 from semantic_viz import SemanticVisualizer
+from thought_library import ThoughtLibrary
 
 app = Flask(__name__)
 CORS(app)
@@ -217,10 +218,47 @@ class LiveHarness(ProductionHarness):
         current_state["recent_oracles"].insert(0, recent)
         current_state["recent_oracles"] = current_state["recent_oracles"][:20]
 
+        # Add thought to library
+        if thought_library:
+            thought_content = self._format_thought(oracle, response)
+            tags = [oracle.type.value]
+            source = "oracle" if not response.cached else "cached"
+            thought_library.add_thought(thought_content, tags=tags, source=source)
+
         current_state["phase"] = "idle"
         current_state["current_oracle"] = None
 
         return response
+
+    def _format_thought(self, oracle, response):
+        """Format an oracle execution as a thought."""
+        oracle_type = oracle.type.value
+
+        # Different formats for different oracle types
+        if oracle_type == "Semantic":
+            prompt = oracle.params.get("prompt", "")
+            result = str(response.result)[:200]
+            return f"Thought: {prompt} → {result}"
+        elif oracle_type == "TimeNow":
+            return f"Time awareness: {response.result}"
+        elif oracle_type == "Arith":
+            op = oracle.params.get("op", "?")
+            a = oracle.params.get("a", "?")
+            b = oracle.params.get("b", "?")
+            return f"Computation: {a} {op} {b} = {response.result}"
+        elif oracle_type == "MemoryStore":
+            key = oracle.params.get("key", "?")
+            value = oracle.params.get("value", "?")
+            return f"Memory stored: {key} = {value}"
+        elif oracle_type == "MemoryRetrieve":
+            key = oracle.params.get("key", "?")
+            return f"Memory recalled: {key} → {response.result}"
+        elif oracle_type.startswith("Voc"):
+            return f"Knowledge query: {oracle_type} → {len(str(response.result))} bytes"
+        elif oracle_type == "ModelDerive":
+            return f"Self-reflection: modeling {oracle.params.get('source_state', '?')}"
+        else:
+            return f"{oracle_type}: {str(oracle.params)[:50]} → {str(response.result)[:50]}"
 
     def execute(self, bend_file, verbose=False):
         """Override to add execution tracking."""
@@ -248,11 +286,12 @@ class LiveHarness(ProductionHarness):
 # Global instances
 harness = None
 semantic_viz = None
+thought_library = None
 
 
 def init_harness():
     """Initialize the harness and visualizer."""
-    global harness, semantic_viz
+    global harness, semantic_viz, thought_library
 
     bend_binary = Path(__file__).parent.parent.parent.parent / "tools" / "lmn-bend" / "bend"
     if not bend_binary.exists():
@@ -267,20 +306,34 @@ def init_harness():
     bootstrap_path = Path(__file__).parent.parent / "production" / "bootstrap.lmn"
     semantic_viz = SemanticVisualizer(bootstrap_path if bootstrap_path.exists() else None)
 
+    # Initialize thought library
+    thought_library = ThoughtLibrary("demo_consciousness")
+
 
 def run_demo_loop():
     """Continuously run demo oracles."""
-    oracle_file = Path(__file__).parent.parent / "production" / "demo_consciousness.bend"
+    # Cycle through different thought demos to build diverse library
+    demo_files = [
+        Path(__file__).parent.parent / "production" / f"demo_thought_{i}.bend"
+        for i in range(1, 6)
+    ]
 
-    if not oracle_file.exists():
-        print(f"Warning: {oracle_file} not found")
+    # Filter to only existing files
+    demo_files = [f for f in demo_files if f.exists()]
+
+    if not demo_files:
+        print("Warning: No demo files found")
         return
 
+    iteration = 0
     while True:
         try:
             if harness:
+                # Cycle through different demos
+                oracle_file = demo_files[iteration % len(demo_files)]
                 harness.execute(oracle_file)
-                time.sleep(5)  # Wait between executions
+                iteration += 1
+                time.sleep(3)  # Execute every 3 seconds
         except Exception as e:
             print(f"Error in demo loop: {e}")
             time.sleep(10)
@@ -484,6 +537,20 @@ def get_metrics():
             {"oracle_type": "TimeNow", "count": 100, "success_rate": "100.0%", "cache_hit_rate": "100.0%", "p50_ms": "0.50", "p95_ms": "0.80", "p99_ms": "1.20"},
             {"oracle_type": "Semantic", "count": 50, "success_rate": "98.0%", "cache_hit_rate": "20.0%", "p50_ms": "95.00", "p95_ms": "150.00", "p99_ms": "200.00"},
         ]
+    })
+
+
+@app.route('/api/thought_library')
+def get_thought_library():
+    """Get thought library statistics and data."""
+    if not thought_library:
+        return jsonify({"error": "Thought library not initialized"}), 500
+
+    stats = thought_library.get_statistics()
+
+    return jsonify({
+        "stats": stats,
+        "synthesis": thought_library.synthesize()
     })
 
 
