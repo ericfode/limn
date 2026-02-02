@@ -1,0 +1,92 @@
+{
+  "name": "garden",
+  "version": "1.0.0",
+  "description": "The Moment Garden - A semantic game where time is the mechanic, meaning is the territory, and every reading plants a different garden",
+  "author": "Yuki (Limn Author)",
+  "license": "MIT",
+
+  "commands": {
+    "garden": {
+      "description": "Play The Moment Garden - a semantic navigation through time",
+      "usage": "/garden <subcommand>",
+      "bootstrap": "garden-bootstrap.md",
+      "subcommands": {
+        "new": {
+          "description": "Create a new garden instance",
+          "usage": "/garden new",
+          "examples": ["/garden new"]
+        },
+        "join": {
+          "description": "Join an existing garden to compare readings",
+          "usage": "/garden join <garden-id>",
+          "arguments": {
+            "garden-id": {
+              "type": "string",
+              "required": true,
+              "description": "The garden ID to join (e.g., garden-7f3k)"
+            }
+          },
+          "examples": ["/garden join garden-7f3k"]
+        },
+        "play": {
+          "description": "Begin or continue navigating the garden",
+          "usage": "/garden play",
+          "examples": ["/garden play"]
+        },
+        "seed": {
+          "description": "Touch a specific seed (1-9)",
+          "usage": "/garden seed <number>",
+          "arguments": {
+            "number": {
+              "type": "integer",
+              "required": true,
+              "description": "Seed number (1-9)"
+            }
+          },
+          "examples": ["/garden seed 5", "/garden seed 1"]
+        },
+        "reading": {
+          "description": "View your current collapsed meanings",
+          "usage": "/garden reading",
+          "examples": ["/garden reading"]
+        },
+        "compare": {
+          "description": "See how your reading diverges from others",
+          "usage": "/garden compare",
+          "examples": ["/garden compare"]
+        },
+        "map": {
+          "description": "Show the current garden state",
+          "usage": "/garden map",
+          "examples": ["/garden map"]
+        }
+      }
+    }
+  },
+
+  "configuration": {
+    "multiplayer": true,
+    "persist_readings": true,
+    "generate_garden_names": true
+  },
+
+  "resources": {
+    "bootstrap_prompt": "garden-bootstrap.md",
+    "game_design": "../../works/the-moment-garden.md"
+  },
+
+  "game_properties": {
+    "seeds": 9,
+    "keys": ["was", "now", "will"],
+    "propagation": {
+      "horizontal_ripple": true,
+      "vertical_echo_inverted": true,
+      "diagonal_tension": true
+    }
+  },
+
+  "mcpServer": {
+    "command": "/home/eric/src/limntown/limn/crew/engineer/tools/mcp-server/moment-garden-mcp",
+    "args": []
+  }
+}
