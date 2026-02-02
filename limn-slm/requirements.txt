@@ -1,0 +1,17 @@
+# Limn-SLM Requirements
+
+# Core ML framework
+torch>=2.0.0
+transformers>=4.30.0
+
+# Optional: for ONNX export
+# onnx>=1.14.0
+# onnxruntime>=1.15.0
+
+# Optional: for quantization
+# optimum>=1.8.0
+
+# Optional: for training
+# datasets>=2.12.0
+# accelerate>=0.20.0
+# wandb>=0.15.0  # for experiment tracking
