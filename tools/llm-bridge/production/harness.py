@@ -74,6 +74,11 @@ class OracleType(Enum):
     MODEL_TRANSFORM = "ModelTransform"
     MODEL_GENERATE = "ModelGenerate"
 
+    # Vocabulary query
+    VOC_QUERY_DOMAIN = "VocQueryDomain"
+    VOC_QUERY_MEANING = "VocQueryMeaning"
+    VOC_EXPAND = "VocExpand"
+
 
 @dataclass
 class OracleRequest:
@@ -140,6 +145,13 @@ class ProductionHarness:
             self.model_engine = ModelEngine()
         except ImportError:
             self.model_engine = None
+
+        # Vocabulary engine
+        try:
+            from vocab_engine import VocabularyEngine
+            self.vocab_engine = VocabularyEngine()
+        except ImportError:
+            self.vocab_engine = None
 
         # Performance stats
         self.stats = {
@@ -394,6 +406,9 @@ class ProductionHarness:
                 OracleType.MODEL_DERIVE: self._exec_model_derive,
                 OracleType.MODEL_TRANSFORM: self._exec_model_transform,
                 OracleType.MODEL_GENERATE: self._exec_model_generate,
+                OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
+                OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
+                OracleType.VOC_EXPAND: self._exec_voc_expand,
             }
 
             handler = handlers.get(oracle.type)
@@ -728,6 +743,70 @@ class ProductionHarness:
             "structure": model.structure,
             "limn_repr": model.limn_repr,
             "generated": True
+        }
+
+    def _exec_voc_query_domain(self, params: Dict) -> Dict:
+        """Vocabulary query by domain oracle."""
+        if not self.vocab_engine:
+            return {"error": "Vocabulary engine not available"}
+
+        domain = params.get("domain", "general")
+        entries = self.vocab_engine.query_domain(domain)
+
+        return {
+            "domain": domain,
+            "count": len(entries),
+            "vocabulary": [
+                {
+                    "word": e.word,
+                    "meaning": e.meaning,
+                    "usage": e.usage
+                }
+                for e in entries[:50]  # Limit to first 50
+            ]
+        }
+
+    def _exec_voc_query_meaning(self, params: Dict) -> Dict:
+        """Vocabulary query by meaning oracle."""
+        if not self.vocab_engine:
+            return {"error": "Vocabulary engine not available"}
+
+        meaning = params.get("meaning", "")
+        entries = self.vocab_engine.query_meaning(meaning)
+
+        return {
+            "query": meaning,
+            "count": len(entries),
+            "matches": [
+                {
+                    "word": e.word,
+                    "meaning": e.meaning,
+                    "domain": e.domain
+                }
+                for e in entries[:20]  # Limit to first 20
+            ]
+        }
+
+    def _exec_voc_expand(self, params: Dict) -> Dict:
+        """Vocabulary expansion oracle."""
+        if not self.vocab_engine:
+            return {"error": "Vocabulary engine not available"}
+
+        domain = params.get("domain", "general")
+        concepts = params.get("concepts", [])
+
+        new_entries = self.vocab_engine.expand_vocabulary(domain, concepts)
+
+        return {
+            "domain": domain,
+            "added": len(new_entries),
+            "new_words": [
+                {
+                    "word": e.word,
+                    "meaning": e.meaning
+                }
+                for e in new_entries
+            ]
         }
 
     # =========================================================================
