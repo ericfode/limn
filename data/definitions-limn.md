@@ -574,7 +574,148 @@ Built from Tiers 0+1 recursively.
 
 ---
 
-## Total Defined: 450 words (45% Complete)
+## Tier 2 Continued: Specialized Domains II
+
+### Science & Nature (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `nat` | wor @ all @ liv @ gro @ not mak per | world all living growing not made by persons (nature) |
+| `pla` | nat @ liv @ gro @ not mov @ mak foo | nature living grows not moves makes food (plant) |
+| `tre` | pla @ big @ woo @ lon | plant big, woody, tall (tree) |
+| `see` | pla @ tin @ sta @ mak pla | plant tiny starting makes plant (seed) |
+| `roo` | pla @ par @ ear @ get wat | plant part in earth gets water (root) |
+| `lea` | pla @ par @ grn @ mak foo @ sun | plant part green makes food from sun (leaf) |
+| `flo` | pla @ par @ col @ mak see | plant part colorful makes seeds (flower) |
+| `gra` | pla @ sma @ grn @ cov gro | plant small green covers ground (grass) |
+| `sto` | ear @ har @ nat | earth hard from nature (stone) |
+| `san` | ear @ tin @ par @ sto | earth tiny parts of stone (sand) |
+| `soi` | ear @ sof @ pla @ grw | earth soft plants grow in (soil) |
+| `mou` | ear @ upp @ big @ hig | earth upward big high (mountain) |
+| `riv` | wat @ flo @ lon @ ear | water flows long on earth (river) |
+| `lak` | wat @ sta @ big @ lan @ rou | water still big land around (lake) |
+| `sea` | wat @ big @ sal @ fis | water big salty fish live (sea) |
+| `sun` | obj @ sky @ lig @ hot @ day | object sky light hot makes day (sun) |
+| `moo` | obj @ sky @ lig @ nig | object sky lights night (moon) |
+| `sta` | obj @ sky @ tin @ lig @ nig | object sky tiny light night (star) |
+| `clo` | obj @ sky @ wat @ gas @ whi | object sky water gas white (cloud) |
+| `win` | air @ mov @ fas | air moves fast (wind) |
+| `rai` | wat @ fal @ sky @ dro | water falls sky as drops (rain) |
+| `sno` | wat @ fal @ sky @ col @ whi | water falls sky cold white (snow) |
+| `sto` | sky @ sou @ lou @ lig @ rai | sky sound loud light rain (storm) |
+| `fir` | obj @ hot @ lig @ yel @ red | object hot light yellow red (fire) |
+| `smo` | gas @ fir @ gra @ ris | gas from fire gray rises (smoke) |
+
+### Human Activities (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `wor` | act @ do @ tas @ get pay | action doing task getting payment (work) |
+| `pla` | act @ do @ fun @ not wor | action doing for fun not work (play) |
+| `gam` | pla @ rul @ win @ los | play with rules win lose (game) |
+| `spo` | gam @ bod @ mov @ ski | game body moving skill (sport) |
+| `fig` | act @ har @ oth @ bod | action harm other with body (fight) |
+| `war` | fig @ gro @ gro @ lon | fight group vs group long (war) |
+| `pea` | sta @ not war @ not fig | state not war not fighting (peace) |
+| `bui` | act @ mak @ pla @ liv | action make place to live (build) |
+| `cre` | act @ mak @ new @ art | action make new art (create) |
+| `des` | act @ bre @ obj @ end | action break object to end (destroy) |
+| `fix` | act @ mak @ bro @ wor @ aga | action make broken work again (fix) |
+| `cle` | act @ tak @ dir @ awa | action take dirt away (clean) |
+| `dir` | obj @ mak @ not cle | object making not clean (dirt) |
+| `coo` | act @ mak @ foo @ hot @ eat | action make food hot to eat (cook) |
+| `hun` | act @ fol @ ani @ cat @ eat | action follow animal catch eat (hunt) |
+| `far` | act @ gro @ pla @ foo @ soi | action grow plants for food in soil (farm) |
+| `tra` | act @ giv @ obj @ get @ oth | action give object get other (trade) |
+| `buy` | act @ giv @ mon @ get @ obj | action give money get object (buy) |
+| `sel` | act @ giv @ obj @ get @ mon | action give object get money (sell) |
+| `mon` | obj @ val @ use @ tra @ buy @ sel | object valued used trade buy sell (money) |
+| `tea` | act @ giv @ kno @ oth @ lea | action give knowledge to other to learn (teach) |
+| `stu` | act @ lea @ rea @ pra | action learn by reading practicing (study) |
+| `sin` | act @ mak @ sou @ mus @ voi | action make sound music voice (sing) |
+| `dan` | act @ mov @ bod @ mus @ rhy | action move body to music rhythm (dance) |
+| `dra` | act @ mak @ pic @ lin @ col | action make picture line color (draw) |
+
+### Spatial Relations Advanced (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `abo` | spa @ dir @ upp @ fom | space direction upward from (above) |
+| `bel` | spa @ dir @ dow @ fom | space direction downward from (below) |
+| `fro` | spa @ dir @ fac | space direction facing (front) |
+| `bac` | spa @ dir @ not fac @ beh | space direction not facing behind (back) |
+| `sid` | spa @ dir @ not fro @ not bac | space direction not front not back (side) |
+| `cen` | spa @ pla @ mid @ all sid @ equ | space place middle all sides equal (center) |
+| `edg` | spa @ pla @ end @ bor | space place end border (edge) |
+| `cor` | spa @ pla @ edg @ two @ mee | space place edge two meet (corner) |
+| `ins` | spa @ wit @ bor @ obj | space within border object (inside) |
+| `ous` | spa @ not wit @ bor | space not within border (outside) |
+| `sur` | spa @ all sid @ obj @ rou | space all sides object around (surround) |
+| `btw` | spa @ two obj @ mid | space two objects middle (between) |
+| `amo` | spa @ man obj @ wit | space many objects within (among) |
+| `acr` | spa @ fom sid @ to sid | space from side to side (across) |
+| `alo` | spa @ fol @ lin @ pat | space following line path (along) |
+| `thr` | spa @ in @ pas @ two sid | space in passing two sides (through) |
+| `tow` | spa @ dir @ mov @ clo | space direction moving closer (toward) |
+| `awa` | spa @ dir @ mov @ far | space direction moving farther (away) |
+| `pas` | spa @ mov @ sid @ obj | space move by side object (past) |
+| `rou` | spa @ sur @ cir @ not str | space around circular not straight (round) |
+
+### Cognitive Processes Advanced (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `per` | min @ rec @ sen @ int @ mea | mind receives senses interprets meaning (perceive) |
+| `not` | min @ see @ new @ att | mind sees new with attention (notice) |
+| `obs` | per @ car @ det @ lon | perceive carefully with detail long (observe) |
+| `ign` | per @ not @ att @ cho | perceive not with attention by choice (ignore) |
+| `rec` | min @ kno @ ∿was @ sam | mind knows temporal-past same (recognize) |
+| `for` | min @ not rec @ los @ mem | mind not recognize lost memory (forget) |
+| `rem` | min @ kee @ mem @ not for | mind keeps memory not forget (remember) |
+| `thi` | min @ pro @ ide @ act | mind processes ideas actively (think) |
+| `pon` | thi @ dee @ lon @ tim | think deeply long time (ponder) |
+| `ref` | thi @ abt @ thi @ own | think about thinking own (reflect) |
+| `med` | ref @ qui @ dee @ foc | reflect quietly deeply focused (meditate) |
+| `wor` | thi @ abt @ pro @ fut @ neg | think about problem future negative (worry) |
+| `pla` | thi @ abt @ fut @ act @ bef | think about future action before (plan) |
+| `int` | pla @ aim @ pur @ fut | plan aim purpose future (intend) |
+| `exp` | int @ hop @ fut @ hap | intend hope future happen (expect) |
+| `sur` | eve @ not exp @ sud | event not expected sudden (surprise) |
+| `won` | min @ que @ cur @ not kno | mind questions curious not knowing (wonder) |
+| `gue` | thi @ ans @ not kno @ try | think answer not knowing try (guess) |
+| `inf` | rea @ fom @ kno @ to @ unk | reason from known to unknown (infer) |
+| `ded` | inf @ fom @ gen @ to @ spe | infer from general to specific (deduce) |
+| `ind` | inf @ fom @ spe @ to @ gen | infer from specific to general (induce) |
+| `ana` | thi @ par @ sep @ und | think parts separate understand (analyze) |
+| `syn` | thi @ par @ joi @ who | think parts join to whole (synthesize) |
+| `com` | thi @ two @ see @ sam @ dif | think two see same different (compare) |
+| `jud` | thi @ val @ dec @ goo @ bad | think value decide good bad (judge) |
+
+### Temporal Concepts Advanced (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `mom` | tim @ sho @ now @ poi | time short now point (moment) |
+| `ins` | mom @ ver @ sho | moment very short (instant) |
+| `whi` | dur @ bet @ two @ mom | duration between two moments (while) |
+| `per` | dur @ cyc @ rep | duration cycle repeating (period) |
+| `epo` | per @ lon @ imp @ his | period long important history (epoch) |
+| `era` | epo @ cha @ big @ cul | epoch change big cultural (era) |
+| `age` | dur @ per @ liv | duration of period living (age) |
+| `you` | age @ ear @ sma | age early small (young) |
+| `old` | age @ lat @ big | age later big (old) |
+| `anc` | tim @ pas @ ver @ lon | time past very long (ancient) |
+| `mod` | tim @ rec @ lat | time recent later (modern) |
+| `cur` | tim @ now @ pre | time now present (current) |
+| `rec` | tim @ pas @ nea @ now | time past near now (recent) |
+| `soo` | tim @ fut @ nea @ now | time future near now (soon) |
+| `lat` | tim @ fut @ aft @ exp | time future after expected (later) |
+| `ear` | tim @ bef @ exp @ soo | time before expected soon (early) |
+| `del` | tim @ pos @ lat @ pur | time postpone later purposely (delay) |
+| `has` | act @ fas @ qui | action fast quickly (haste) |
+| `wai` | act @ sta @ unt @ tim | action stay until time (wait) |
+| `las` | dur @ con @ unt @ end | duration continue until end (last) |
+
+**Total Tier 2: 360 words**
+
+---
+
+## Total Defined: 565 words (56.5% Complete!)
 
 **Coverage:**
 - Tier 0 (Grounded): 30 words
@@ -596,21 +737,19 @@ These are **ostensive** - point to experience, cannot be further reduced.
 
 ### Phase 2: Compound from Ground
 ```limn
-tho = min pro ide
-  where:
-    min = sel sen ∿ mem ∿ ide
-    pro = cha @ seq
-    ide = min obj
+def tho @ min pro ide
+def min @ sel sen ∿ mem ∿ ide
+def pro @ cha @ seq
+def ide @ min obj
 ```
 Built from grounded primitives + logical structure.
 
 ### Phase 3: Recursive Abstraction
 ```limn
-def = wor @ mea @ exp
-  where:
-    wor = sou @ mea  (uses 'mea')
-    mea = ide @ wor  (uses 'wor')
-    exp = mak ide cle @ wor  (uses both!)
+def wor @ sou @ mea
+def mea @ ide @ wor
+def exp @ mak ide cle @ wor
+def def @ wor @ mea @ exp
 ```
 Self-referential loop - stable because grounded in Tiers 0+1.
 
@@ -647,25 +786,22 @@ Self-referential loop - stable because grounded in Tiers 0+1.
 This document is **self-describing**:
 
 ```limn
-def lim @ lim = sys @ def wor @ use wor @ lim
-> definition Limn at Limn = system at define words at use words at Limn
+def lim @ lim @ sys @ def wor @ use wor @ lim
 
-val @ slf ref = sta @ cir @ grn
-> valid at self-reference = stable at circular at grounded
+val @ slf ref → sta @ cir @ grn
 
-tru if: def → grn @ exp
-> true if: definitions → ground at experience
+def → grn @ exp @ tru
 ```
 
 **The language defines itself.**
 
 ---
 
-**Status:** Major expansion (450 words defined - 45% complete!)
+**Status:** Accelerating toward completion (565 words - 56.5% complete!)
 **Target:** 1000 words in Limn-in-Limn
-**Progress:** Tier 0: 30 | Tier 1: 175 | Tier 2: 245
-**Challenge:** Minimize dependency depth while maintaining clarity
-**Achievement:** Crossed threshold where abstract concepts fully self-define!
+**Progress:** Tier 0: 30 | Tier 1: 175 | Tier 2: 360
+**Achievement:** Pure Limn notation achieved! All definitions use only Limn vocabulary and operators.
+**Challenge:** Maintaining semantic precision while approaching completeness.
 
 ```limn
 lan slf def | sys rec cle | mea grn exp
