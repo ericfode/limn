@@ -596,21 +596,19 @@ These are **ostensive** - point to experience, cannot be further reduced.
 
 ### Phase 2: Compound from Ground
 ```limn
-tho = min pro ide
-  where:
-    min = sel sen ∿ mem ∿ ide
-    pro = cha @ seq
-    ide = min obj
+def tho @ min pro ide
+def min @ sel sen ∿ mem ∿ ide
+def pro @ cha @ seq
+def ide @ min obj
 ```
 Built from grounded primitives + logical structure.
 
 ### Phase 3: Recursive Abstraction
 ```limn
-def = wor @ mea @ exp
-  where:
-    wor = sou @ mea  (uses 'mea')
-    mea = ide @ wor  (uses 'wor')
-    exp = mak ide cle @ wor  (uses both!)
+def wor @ sou @ mea
+def mea @ ide @ wor
+def exp @ mak ide cle @ wor
+def def @ wor @ mea @ exp
 ```
 Self-referential loop - stable because grounded in Tiers 0+1.
 
@@ -647,14 +645,11 @@ Self-referential loop - stable because grounded in Tiers 0+1.
 This document is **self-describing**:
 
 ```limn
-def lim @ lim = sys @ def wor @ use wor @ lim
-> definition Limn at Limn = system at define words at use words at Limn
+def lim @ lim @ sys @ def wor @ use wor @ lim
 
-val @ slf ref = sta @ cir @ grn
-> valid at self-reference = stable at circular at grounded
+val @ slf ref → sta @ cir @ grn
 
-tru if: def → grn @ exp
-> true if: definitions → ground at experience
+def → grn @ exp @ tru
 ```
 
 **The language defines itself.**
