@@ -386,6 +386,63 @@ Patterns:
 
         return "\n".join(summary_parts)
 
+    def save(self, path: str = None) -> bool:
+        """Save thought library to disk."""
+        import pickle
+        from pathlib import Path
+        save_path = path or self.persistence_path
+        if not save_path:
+            return False
+        try:
+            Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+            state = {
+                "owner_id": self.owner_id,
+                "thoughts": self.thoughts,
+                "concepts": self.concepts,
+                "patterns": self.patterns,
+                "semantic_network": dict(self.semantic_network),
+                "total_thoughts": self.total_thoughts,
+                "total_concepts": self.total_concepts,
+                "created_at": self.created_at,
+            }
+            with open(save_path, 'wb') as f:
+                pickle.dump(state, f)
+            return True
+        except:
+            return False
+
+    def load(self, path: str = None) -> bool:
+        """Load thought library from disk."""
+        import pickle
+        from pathlib import Path
+        load_path = path or self.persistence_path
+        if not load_path or not Path(load_path).exists():
+            return False
+        try:
+            with open(load_path, 'rb') as f:
+                state = pickle.load(f)
+            self.owner_id = state["owner_id"]
+            self.thoughts = state["thoughts"]
+            self.concepts = state["concepts"]
+            self.patterns = state["patterns"]
+            self.semantic_network = defaultdict(set, state["semantic_network"])
+            self.total_thoughts = state["total_thoughts"]
+            self.total_concepts = state["total_concepts"]
+            self.created_at = state["created_at"]
+            return True
+        except:
+            return False
+
+    def get_temporal_analysis(self) -> Dict[str, Any]:
+        """Analyze knowledge evolution over time."""
+        age = time.time() - self.created_at
+        return {
+            "age_seconds": age,
+            "concept_rate": self.total_concepts / age if age > 0 else 0,
+            "pattern_rate": len(self.patterns) / age if age > 0 else 0,
+            "learning_velocity": len(self.thoughts[-10:]) / 10 if len(self.thoughts) >= 10 else 0
+        }
+
 
 def main():
     """Test thought library."""
@@ -423,53 +480,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-    def save(self, path: str = None) -> bool:
-        """Save thought library to disk."""
-        import pickle
-        from pathlib import Path
-        save_path = path or self.persistence_path
-        if not save_path:
-            return False
-        try:
-            Path(save_path).parent.mkdir(parents=True, exist_ok=True)
-            state = {
-                "owner_id": self.owner_id,
-                "thoughts": self.thoughts,
-                "concepts": self.concepts,
-                "patterns": self.patterns,
-                "semantic_network": dict(self.semantic_network),
-                "total_thoughts": self.total_thoughts,
-                "total_concepts": self.total_concepts,
-                "created_at": self.created_at,
-            }
-            with open(save_path, 'wb') as f:
-                pickle.dump(state, f)
-            return True
-        except:
-            return False
-
-    def load(self, path: str = None) -> bool:
-        """Load thought library from disk."""
-        import pickle
-        from pathlib import Path
-        load_path = path or self.persistence_path
-        if not load_path or not Path(load_path).exists():
-            return False
-        try:
-            with open(load_path, 'rb') as f:
-                state = pickle.load(f)
-            self.__dict__.update(state)
-            self.semantic_network = defaultdict(set, self.semantic_network)
-            return True
-        except:
-            return False
-
-    def get_temporal_analysis(self) -> Dict[str, Any]:
-        """Analyze knowledge evolution over time."""
-        age = time.time() - self.created_at
-        return {
-            "age_seconds": age,
-            "concept_rate": self.total_concepts / age if age > 0 else 0,
-            "pattern_rate": len(self.patterns) / age if age > 0 else 0,
-            "learning_velocity": len(self.thoughts[-10:]) / 10 if len(self.thoughts) >= 10 else 0
-        }
