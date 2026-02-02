@@ -238,9 +238,9 @@ class LiveHarness(ProductionHarness):
 
         # Different formats for different oracle types
         if oracle_type == "Semantic":
-            prompt = oracle.params.get("prompt", "")
-            result = str(response.result)[:200]
-            return f"Thought: {prompt} → {result}"
+            # Return pure Limn thought - no English prefix
+            result = str(response.result)
+            return result
         elif oracle_type == "TimeNow":
             return f"Time awareness: {response.result}"
         elif oracle_type == "Arith":

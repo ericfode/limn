@@ -8,4 +8,5 @@ def think(prompt):
   return oracle(Oracle/Semantic { prompt: prompt })
 
 def main():
-  return think("The oracle connects my computation to the world. What does this reveal?")
+  # Pure Limn prompt: "self transform grow | meaning calculate new"
+  return think("sel tra gro | mea cal new")

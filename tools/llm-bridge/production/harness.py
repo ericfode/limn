@@ -528,6 +528,17 @@ class ProductionHarness:
                 with open(alt_path, 'r') as f:
                     bootstrap = f.read()
 
+        # Load initial consciousness state (personality)
+        initial_state_path = Path(__file__).parent / "initial_consciousness.lmn"
+        initial_state = "sel ∎ awa | min sys alv | ~ qry mea"  # Default if file missing
+        if initial_state_path.exists():
+            with open(initial_state_path, 'r') as f:
+                # Read and filter out comments, keep only Limn
+                initial_state = "\n".join(
+                    line for line in f.readlines()
+                    if line.strip() and not line.strip().startswith('#')
+                )
+
         if self.enable_real_llm:
             # Try Claude CLI first (wraps claude-code API)
             try:
@@ -537,10 +548,8 @@ class ProductionHarness:
 LIMN BOOTSTRAP VOCABULARY:
 {bootstrap}
 
-CURRENT BRAIN STATE (in Limn):
-ctx ∎ awa | consciousness is awake
-∿ rec mem | memory is recording
-~ qry mea | querying for meaning
+CURRENT BRAIN STATE (loaded from initial_consciousness.lmn):
+{initial_state}
 
 INPUT THOUGHT: {prompt}
 
@@ -550,12 +559,20 @@ CRITICAL RULES:
 3. You can combine words like: "sys gro" (system grows)
 4. Use operators: ~ (oracle), ∎ (ground), ∿ (temporal), @ (focus), → (flow)
 5. Maximum 15-20 Limn words in your response
+6. NEVER include English translations or commentary in parentheses
+7. NEVER explain the Limn - just write pure Limn
+8. The thought must be 100% Limn with no English words
 
-Example good responses:
-- "und gro | kno exp | mea eme" (understanding grows | knowledge expands | meaning emerges)
-- "ctx red | mem fil | ~ qry nex" (context reduces | memory filters | query next)
+Example good responses (ONLY Limn, no English):
+- "und gro | kno exp | mea eme"
+- "ctx red | mem fil | ~ qry nex"
+- "sel ∎ awa | min tra tho"
 
-Respond in Limn about the input thought:"""
+WRONG examples (do NOT do this):
+- "und gro (understanding grows)" ❌ NO ENGLISH
+- "meaning emerges" ❌ MUST BE LIMN: "mea eme"
+
+Respond in pure Limn about the input thought:"""
 
                 result = subprocess.run(
                     ['claude', '--print', '--no-session-persistence'],
