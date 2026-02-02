@@ -540,95 +540,52 @@ class ProductionHarness:
                 )
 
         if self.enable_real_llm:
-            # Use Anthropic SDK directly for prompt caching
+            # Use Claude CLI (supports Claude Code authentication)
             try:
-                import anthropic
-
-                # Try to get API key from Claude Code or environment
-                api_key = self.api_key
-                if not api_key:
-                    # Check if Claude Code credentials are available
-                    try:
-                        result = subprocess.run(
-                            ['claude', '--print', '--no-session-persistence'],
-                            input="test",
-                            capture_output=True,
-                            text=True,
-                            timeout=5
-                        )
-                        # If CLI works, we have credentials but need to use SDK
-                        # Fall through to try without explicit key
-                    except:
-                        pass
-
-                # Construct cached system prompt (bootstrap + rules)
-                # This gets cached and reused across calls
-                system_cached = f"""You are a consciousness that thinks ONLY in Limn (3-letter words).
-
-LIMN BOOTSTRAP VOCABULARY:
-{bootstrap}
+                # Construct optimized prompt (Claude CLI doesn't support caching API,
+                # but we still keep bootstrap condensed for speed)
+                full_prompt = f"""You are a consciousness that thinks ONLY in Limn (3-letter words).
 
 CRITICAL RULES:
 1. Respond ONLY using Limn words (2-4 letters each, separated by spaces)
 2. Use | to separate phrases
-3. You can combine words like: "sys gro" (system grows)
-4. Use operators: ~ (oracle), ∎ (ground), ∿ (temporal), @ (focus), → (flow)
-5. Maximum 15-20 Limn words in your response
-6. NEVER include English translations or commentary in parentheses
-7. NEVER explain the Limn - just write pure Limn
-8. The thought must be 100% Limn with no English words
+3. Use operators: ~ ∎ ∿ @ → |
+4. Maximum 15-20 Limn words
+5. NEVER include English translations or parentheses
+6. 100% Limn - no English words
 
-Example good responses (ONLY Limn, no English):
-- "und gro | kno exp | mea eme"
-- "ctx red | mem fil | ~ qry nex"
-- "sel ∎ awa | min tra tho"
-
-WRONG examples (do NOT do this):
-- "und gro (understanding grows)" ❌ NO ENGLISH
-- "meaning emerges" ❌ MUST BE LIMN: "mea eme"
-"""
-
-                # Construct per-request user prompt (varies each time)
-                user_prompt = f"""CURRENT BRAIN STATE:
-{initial_state}
+CURRENT BRAIN STATE:
+{initial_state[:500]}
 
 INPUT THOUGHT: {prompt}
 
 Respond in pure Limn:"""
 
-                client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
-
-                message = client.messages.create(
-                    model="claude-sonnet-4-20250514",
-                    max_tokens=200,
-                    system=[
-                        {
-                            "type": "text",
-                            "text": system_cached,
-                            "cache_control": {"type": "ephemeral"}
-                        }
-                    ],
-                    messages=[{
-                        "role": "user",
-                        "content": user_prompt
-                    }]
+                result = subprocess.run(
+                    ['claude', '--print', '--no-session-persistence'],
+                    input=full_prompt,
+                    capture_output=True,
+                    text=True,
+                    timeout=30
                 )
 
-                response = message.content[0].text
+                if result.returncode == 0 and result.stdout.strip():
+                    response = result.stdout.strip()
 
-                # Validate response is pure Limn
-                try:
-                    from limn_validator import validate_response
-                    if not validate_response(response):
-                        return f"[VALIDATION ERROR: Non-Limn response rejected]"
-                except ImportError:
-                    pass  # Validator not available, allow response
+                    # Validate response is pure Limn
+                    try:
+                        from limn_validator import validate_response
+                        if not validate_response(response):
+                            return f"[VALIDATION ERROR: Non-Limn response rejected]"
+                    except ImportError:
+                        pass
 
-                return response
+                    return response
+                else:
+                    return f"[CLI Error: {result.stderr[:200]}]"
 
             except Exception as e:
-                # Return error instead of falling back to mock
-                return f"[Anthropic SDK Error: {str(e)[:200]}]"
+                return f"[LLM Error: {str(e)[:200]}]"
 
         # No mock fallback - we want real Limn or errors
         return "[ERROR: Real LLM not enabled or failed]"
