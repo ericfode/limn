@@ -306,8 +306,10 @@ def init_harness():
     bootstrap_path = Path(__file__).parent.parent / "production" / "bootstrap.lmn"
     semantic_viz = SemanticVisualizer(bootstrap_path if bootstrap_path.exists() else None)
 
-    # Initialize thought library
-    thought_library = ThoughtLibrary("demo_consciousness")
+    # Initialize thought library with persistence
+    persistence_path = Path(__file__).parent / "thought_library.pkl"
+    thought_library = ThoughtLibrary("demo_consciousness", str(persistence_path))
+    print(f"Thought library persistence: {persistence_path}")
 
 
 def run_demo_loop():
@@ -315,7 +317,7 @@ def run_demo_loop():
     # Cycle through different thought demos to build diverse library
     demo_files = [
         Path(__file__).parent.parent / "production" / f"demo_thought_{i}.bend"
-        for i in range(1, 6)
+        for i in range(1, 16)  # Now 15 demos!
     ]
 
     # Filter to only existing files
@@ -325,15 +327,23 @@ def run_demo_loop():
         print("Warning: No demo files found")
         return
 
+    print(f"Found {len(demo_files)} thought demos")
+
     iteration = 0
     while True:
         try:
-            if harness:
+            if harness and thought_library:
                 # Cycle through different demos
                 oracle_file = demo_files[iteration % len(demo_files)]
                 harness.execute(oracle_file)
                 iteration += 1
-                time.sleep(3)  # Execute every 3 seconds
+
+                # Auto-save every 30 thoughts
+                if iteration % 30 == 0 and thought_library.persistence_path:
+                    thought_library.save()
+                    print(f"Auto-saved thought library at iteration {iteration}")
+
+                time.sleep(2)  # Execute every 2 seconds
         except Exception as e:
             print(f"Error in demo loop: {e}")
             time.sleep(10)

@@ -56,22 +56,32 @@ class Pattern:
 class ThoughtLibrary:
     """A consciousness's knowledge base."""
 
-    def __init__(self, owner_id: str):
+    def __init__(self, owner_id: str, persistence_path: str = None):
         """Initialize thought library.
 
         Args:
             owner_id: ID of consciousness that owns this library
+            persistence_path: Optional path to save/load library state
         """
         self.owner_id = owner_id
         self.thoughts: List[Thought] = []
         self.concepts: Dict[str, Concept] = {}
         self.patterns: List[Pattern] = []
         self.semantic_network: Dict[str, Set[str]] = defaultdict(set)
+        self.persistence_path = persistence_path
 
         # Track what we've learned
         self.total_thoughts = 0
         self.total_concepts = 0
         self.created_at = time.time()
+
+        # Temporal tracking
+        self.concept_timeline: List[Dict] = []  # Track concept emergence
+        self.pattern_timeline: List[Dict] = []  # Track pattern discovery
+
+        # Load from disk if path provided
+        if persistence_path:
+            self.load()
 
     def add_thought(self, content: str, tags: List[str] = None, source: str = "experience") -> int:
         """Add a new thought to the library.
@@ -412,3 +422,54 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    def save(self, path: str = None) -> bool:
+        """Save thought library to disk."""
+        import pickle
+        from pathlib import Path
+        save_path = path or self.persistence_path
+        if not save_path:
+            return False
+        try:
+            Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+            state = {
+                "owner_id": self.owner_id,
+                "thoughts": self.thoughts,
+                "concepts": self.concepts,
+                "patterns": self.patterns,
+                "semantic_network": dict(self.semantic_network),
+                "total_thoughts": self.total_thoughts,
+                "total_concepts": self.total_concepts,
+                "created_at": self.created_at,
+            }
+            with open(save_path, 'wb') as f:
+                pickle.dump(state, f)
+            return True
+        except:
+            return False
+
+    def load(self, path: str = None) -> bool:
+        """Load thought library from disk."""
+        import pickle
+        from pathlib import Path
+        load_path = path or self.persistence_path
+        if not load_path or not Path(load_path).exists():
+            return False
+        try:
+            with open(load_path, 'rb') as f:
+                state = pickle.load(f)
+            self.__dict__.update(state)
+            self.semantic_network = defaultdict(set, self.semantic_network)
+            return True
+        except:
+            return False
+
+    def get_temporal_analysis(self) -> Dict[str, Any]:
+        """Analyze knowledge evolution over time."""
+        age = time.time() - self.created_at
+        return {
+            "age_seconds": age,
+            "concept_rate": self.total_concepts / age if age > 0 else 0,
+            "pattern_rate": len(self.patterns) / age if age > 0 else 0,
+            "learning_velocity": len(self.thoughts[-10:]) / 10 if len(self.thoughts) >= 10 else 0
+        }
