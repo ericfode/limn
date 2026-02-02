@@ -62,6 +62,13 @@ class OracleType(Enum):
     MEMORY_STORE = "MemoryStore"
     MEMORY_RETRIEVE = "MemoryRetrieve"
 
+    # Context manipulation
+    CTX_REDUCE = "CtxReduce"
+    CTX_MERGE = "CtxMerge"
+    CTX_FILTER = "CtxFilter"
+    CTX_AGGREGATE = "CtxAggregate"
+    CTX_COMPRESS = "CtxCompress"
+
 
 @dataclass
 class OracleRequest:
@@ -114,6 +121,13 @@ class ProductionHarness:
 
         # Memory store
         self.memory = {}
+
+        # Context engine
+        try:
+            from context_engine import ContextEngine
+            self.context_engine = ContextEngine()
+        except ImportError:
+            self.context_engine = None
 
         # Performance stats
         self.stats = {
@@ -298,6 +312,11 @@ class ProductionHarness:
                 OracleType.HTTP_POST: self._exec_http_post,
                 OracleType.MEMORY_STORE: self._exec_memory_store,
                 OracleType.MEMORY_RETRIEVE: self._exec_memory_retrieve,
+                OracleType.CTX_REDUCE: self._exec_ctx_reduce,
+                OracleType.CTX_MERGE: self._exec_ctx_merge,
+                OracleType.CTX_FILTER: self._exec_ctx_filter,
+                OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
+                OracleType.CTX_COMPRESS: self._exec_ctx_compress,
             }
 
             handler = handlers.get(oracle.type)
@@ -485,6 +504,75 @@ class ProductionHarness:
         """Memory retrieve oracle (∿ context)."""
         key = params["key"]
         return self.memory.get(key)
+
+    def _exec_ctx_reduce(self, params: Dict) -> Dict:
+        """Context reduce oracle - compress by removing low-frequency patterns."""
+        if not self.context_engine:
+            return {"error": "Context engine not available"}
+
+        threshold = params.get("threshold", 0.5)
+        reduced = self.context_engine.reduce(threshold=threshold)
+
+        return {
+            "original_size": len(self.context_engine.context),
+            "reduced_size": len(reduced),
+            "compression_ratio": len(reduced) / len(self.context_engine.context) if self.context_engine.context else 0
+        }
+
+    def _exec_ctx_merge(self, params: Dict) -> Dict:
+        """Context merge oracle - combine similar patterns."""
+        if not self.context_engine:
+            return {"error": "Context engine not available"}
+
+        threshold = params.get("threshold", 0.7)
+        merged = self.context_engine.merge(similarity_threshold=threshold)
+
+        return {
+            "original_size": len(self.context_engine.context),
+            "merged_size": len(merged),
+            "merge_ratio": len(merged) / len(self.context_engine.context) if self.context_engine.context else 0
+        }
+
+    def _exec_ctx_filter(self, params: Dict) -> Dict:
+        """Context filter oracle - select matching items."""
+        if not self.context_engine:
+            return {"error": "Context engine not available"}
+
+        predicate = params.get("predicate", "")
+        filtered = self.context_engine.filter(predicate)
+
+        return {
+            "total_items": len(self.context_engine.context),
+            "filtered_items": len(filtered),
+            "predicate": predicate
+        }
+
+    def _exec_ctx_aggregate(self, params: Dict) -> Dict:
+        """Context aggregate oracle - group by attribute."""
+        if not self.context_engine:
+            return {"error": "Context engine not available"}
+
+        group_by = params.get("group_by", "type")
+        groups = self.context_engine.aggregate(group_by=group_by)
+
+        return {
+            "groups": len(groups),
+            "group_sizes": {k: len(v) for k, v in groups.items()}
+        }
+
+    def _exec_ctx_compress(self, params: Dict) -> Dict:
+        """Context compress oracle - reduce to target size."""
+        if not self.context_engine:
+            return {"error": "Context engine not available"}
+
+        target_size = params.get("target_size")
+        compressed = self.context_engine.compress(target_size=target_size)
+
+        return {
+            "original_size": len(self.context_engine.context),
+            "compressed_size": len(compressed),
+            "compression_ratio": len(compressed) / len(self.context_engine.context) if self.context_engine.context else 0
+        }
 
     # =========================================================================
     # Main Execution
