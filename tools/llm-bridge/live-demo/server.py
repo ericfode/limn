@@ -326,7 +326,7 @@ def run_demo_loop():
     # Cycle through different thought demos to build diverse library
     demo_files = [
         Path(__file__).parent.parent / "production" / f"demo_thought_{i}.bend"
-        for i in range(1, 16)  # Now 15 demos!
+        for i in range(1, 27)  # Now 26 demos!
     ]
 
     # Filter to only existing files

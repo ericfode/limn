@@ -64,3 +64,4 @@ Cargo.lock
 .claude/
 .logs/
 .beads/
+tools/llm-bridge/live-demo/thought_library.pkl
