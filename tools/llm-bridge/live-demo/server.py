@@ -314,6 +314,12 @@ def stateful_viz():
     return render_template('stateful_limn.html')
 
 
+@app.route('/metrics')
+def metrics_dashboard():
+    """Serve metrics dashboard."""
+    return render_template('metrics.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
@@ -432,6 +438,41 @@ def get_semantic_viz():
     viz_data = semantic_viz.visualize_limn_state(limn_state)
 
     return jsonify(viz_data)
+
+
+@app.route('/api/metrics')
+def get_metrics():
+    """Get performance metrics dashboard data."""
+    # Mock metrics for now - would integrate with metrics_engine
+    import time
+    from datetime import datetime
+
+    uptime = time.time() - start_time
+    stats = current_state.get("stats", {})
+
+    return jsonify({
+        "uptime_seconds": uptime,
+        "total_oracles": stats.get("total_oracles", 0),
+        "success_rate": 95.5,
+        "cache_hit_rate": stats.get("cache_rate", 0),
+        "throughput": {
+            "total_ops": 10.5,
+            "successful_ops": 10.0,
+            "failed_ops": 0.5,
+            "cached_ops": 3.5
+        },
+        "hot_paths": [
+            {"oracle_type": "TimeNow", "call_count": 100, "avg_duration_ms": 0.5, "last_called": datetime.now().isoformat()},
+            {"oracle_type": "Semantic", "call_count": 50, "avg_duration_ms": 100.0, "last_called": datetime.now().isoformat()},
+        ],
+        "bottlenecks": [
+            {"oracle_type": "Semantic", "avg_duration_ms": 100.0, "total_time_ms": 5000, "percentage_of_total": 45.0},
+        ],
+        "aggregates": [
+            {"oracle_type": "TimeNow", "count": 100, "success_rate": "100.0%", "cache_hit_rate": "100.0%", "p50_ms": "0.50", "p95_ms": "0.80", "p99_ms": "1.20"},
+            {"oracle_type": "Semantic", "count": 50, "success_rate": "98.0%", "cache_hit_rate": "20.0%", "p50_ms": "95.00", "p95_ms": "150.00", "p99_ms": "200.00"},
+        ]
+    })
 
 
 def main():
