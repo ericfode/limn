@@ -633,27 +633,6 @@ def ask_consciousness():
     return jsonify(response)
 
 
-def main():
-    """Main entry point."""
-    print("=" * 70)
-    print("Live Oracle Demo - Consciousness Architecture")
-    print("=" * 70)
-    print("\nInitializing harness...")
-
-    init_harness()
-
-    print("Starting demo loop...")
-    threading.Thread(target=run_demo_loop, daemon=True).start()
-
-    print("\nServer starting on http://localhost:5000")
-    print("=" * 70)
-
-    app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
-
-
-if __name__ == "__main__":
-    main()
-
 
 @app.route('/api/metacognition')
 def get_metacognition():
@@ -805,3 +784,35 @@ Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
         mimetype='text/markdown',
         headers={'Content-Disposition': f'attachment;filename=consciousness_export_{int(time.time())}.md'}
     )
+
+
+@app.route('/api/temporal_analysis')
+def get_temporal_analysis():
+    """Get temporal analysis of knowledge evolution."""
+    if not thought_library:
+        return jsonify({"error": "Thought library not initialized"}), 500
+
+    analysis = thought_library.get_temporal_analysis()
+    return jsonify(analysis)
+
+
+def main():
+    """Main entry point."""
+    print("=" * 70)
+    print("Live Oracle Demo - Consciousness Architecture")
+    print("=" * 70)
+    print("\nInitializing harness...")
+
+    init_harness()
+
+    print("Starting demo loop...")
+    threading.Thread(target=run_demo_loop, daemon=True).start()
+
+    print("\nServer starting on http://localhost:5000")
+    print("=" * 70)
+
+    app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
+
+
+if __name__ == "__main__":
+    main()
