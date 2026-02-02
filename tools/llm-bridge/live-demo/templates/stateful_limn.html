@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stateful Limn - Accumulated Execution State</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #0ff;
+            font-size: 32px;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .state-container {
+            flex: 1;
+            background: rgba(0, 20, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 15px;
+            padding: 30px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .limn-state {
+            font-size: 20px;
+            line-height: 2.5;
+            letter-spacing: 1px;
+        }
+
+        .limn-line {
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .limn-word {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Oracle states */
+        .oracle-pending {
+            color: #ff0;
+            border: 1px dashed #ff0;
+        }
+
+        .oracle-executing {
+            color: #f80;
+            background: rgba(255, 136, 0, 0.2);
+            animation: executing-pulse 0.5s infinite;
+        }
+
+        .oracle-resolved {
+            color: #0f0;
+            background: rgba(0, 255, 0, 0.1);
+            font-weight: bold;
+        }
+
+        @keyframes executing-pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 5px currentColor;
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px currentColor;
+            }
+        }
+
+        /* Value display */
+        .value {
+            color: #0ff;
+            font-weight: bold;
+            background: rgba(0, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #0ff;
+        }
+
+        .value.number {
+            color: #f0f;
+        }
+
+        .value.string {
+            color: #0ff;
+        }
+
+        .value.boolean {
+            color: #0f0;
+        }
+
+        /* Operators */
+        .operator {
+            color: #f0f;
+            font-size: 24px;
+            margin: 0 8px;
+        }
+
+        .operator.tilde {
+            animation: tilde-pulse 2s infinite;
+        }
+
+        @keyframes tilde-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .separator {
+            color: #444;
+            margin: 0 8px;
+        }
+
+        /* Context section */
+        .context-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .section-header {
+            color: #ff0;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Stats overlay */
+        .stats {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 200px;
+        }
+
+        .stat {
+            margin: 8px 0;
+            font-size: 12px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .stat-value {
+            color: #0f0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Event log at bottom */
+        .event-log {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 2px solid #0f0;
+            padding: 10px 20px;
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 11px;
+        }
+
+        .event {
+            margin: 3px 0;
+            padding-left: 10px;
+            border-left: 2px solid #0f0;
+        }
+
+        .event.resolution {
+            border-left-color: #0ff;
+            color: #0ff;
+        }
+
+        /* Transition effects */
+        .value-transition {
+            animation: materialize 0.5s ease-out;
+        }
+
+        @keyframes materialize {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>∿ Stateful Limn Visualization</h1>
+            <div class="subtitle">Accumulated Execution State - Oracles Materialize</div>
+        </div>
+
+        <div class="state-container">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Materialized</div>
+                    <div class="stat-value" id="stat-resolved">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value" id="stat-pending">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Uptime</div>
+                    <div class="stat-value" id="stat-uptime">0s</div>
+                </div>
+            </div>
+
+            <div style="background: rgba(0, 100, 100, 0.1); border: 1px solid #0ff; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                <div style="color: #0ff; font-size: 14px; margin-bottom: 10px;">🧠 Consciousness Translation (for humans):</div>
+                <div id="translation" style="color: #fff; font-size: 16px; line-height: 1.8; font-family: Arial, sans-serif;">
+                    Loading translation...
+                </div>
+            </div>
+
+            <div class="limn-state" id="limn-state">
+                <!-- State will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="event-log" id="event-log">
+        <div style="color: #888; font-size: 10px;">Materialization Events:</div>
+    </div>
+
+    <script>
+        // Accumulated state - oracles and their resolved values
+        const accumulatedState = {
+            oracles: [],
+            values: new Map(),
+            phase: 'idle'
+        };
+
+        let stats = { resolved: 0, pending: 0, uptime: 0 };
+
+        function generateStatefulLimn() {
+            const lines = [];
+
+            // System phase
+            lines.push(`<div class="limn-line">` +
+                `<span class="limn-word" style="color: #f0f; font-size: 24px;">${accumulatedState.phase.toUpperCase()}</span>` +
+                `</div>`);
+
+            // Accumulated oracle executions
+            if (accumulatedState.oracles.length > 0) {
+                lines.push(`<div class="context-section">` +
+                    `<div class="section-header">Oracle State</div>`);
+
+                accumulatedState.oracles.forEach((oracle, idx) => {
+                    const oracleId = `oracle-${idx}`;
+                    const hasValue = accumulatedState.values.has(oracleId);
+                    const value = accumulatedState.values.get(oracleId);
+
+                    // Before execution: ~ tim now clk
+                    // After execution: 1770001234 tim now clk
+
+                    const parts = [];
+
+                    if (hasValue) {
+                        // Show materialized value
+                        const valueClass = typeof value === 'number' ? 'number' :
+                                         typeof value === 'boolean' ? 'boolean' : 'string';
+                        parts.push(`<span class="value ${valueClass} value-transition">${formatValue(value)}</span>`);
+                    } else if (oracle.executing) {
+                        // Show executing
+                        parts.push(`<span class="operator tilde oracle-executing">~</span>`);
+                    } else {
+                        // Show pending
+                        parts.push(`<span class="operator tilde oracle-pending">~</span>`);
+                    }
+
+                    // Add oracle words
+                    const words = getOracleWords(oracle);
+                    words.forEach(word => {
+                        const wordClass = hasValue ? 'oracle-resolved' :
+                                        oracle.executing ? 'oracle-executing' : 'oracle-pending';
+                        parts.push(`<span class="limn-word ${wordClass}">${word}</span>`);
+                    });
+
+                    lines.push(`<div class="limn-line">${parts.join(' ')}</div>`);
+                });
+
+                lines.push(`</div>`);
+            }
+
+            // Context state
+            lines.push(`<div class="context-section">` +
+                `<div class="section-header">Context</div>` +
+                `<div class="limn-line">` +
+                `<span class="limn-word">ctx</span>` +
+                `<span class="limn-word">acc</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word">sta</span>` +
+                `<span class="limn-word">per</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word">val</span>` +
+                `<span class="limn-word">mat</span>` +
+                `</div>` +
+                `</div>`);
+
+            return lines.join('\n');
+        }
+
+        function formatValue(value) {
+            if (typeof value === 'object') {
+                if (value.timestamp) {
+                    // Format timestamp
+                    return value.timestamp;
+                }
+                return JSON.stringify(value).substring(0, 50);
+            }
+            if (typeof value === 'string') {
+                return value.length > 30 ? value.substring(0, 30) + '...' : value;
+            }
+            return String(value);
+        }
+
+        function getOracleWords(oracle) {
+            const type = oracle.type.toLowerCase();
+
+            if (type.includes('time')) {
+                return ['tim', 'now', 'clk'];
+            } else if (type.includes('file')) {
+                return ['fil', 'rea', 'dat'];
+            } else if (type.includes('semantic')) {
+                return ['sem', 'tho', 'llm'];
+            } else if (type.includes('memory')) {
+                return ['mem', 'sto', 'ctx'];
+            }
+
+            return ['ora', 'exe', 'res'];
+        }
+
+        function updateDisplay() {
+            const stateDiv = document.getElementById('limn-state');
+            stateDiv.innerHTML = generateStatefulLimn();
+
+            // Update stats
+            document.getElementById('stat-resolved').textContent = stats.resolved;
+            document.getElementById('stat-pending').textContent = stats.pending;
+            document.getElementById('stat-uptime').textContent = stats.uptime + 's';
+        }
+
+        function addEvent(message) {
+            const log = document.getElementById('event-log');
+            const event = document.createElement('div');
+            event.className = 'event resolution';
+            event.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(event);
+
+            while (log.children.length > 15) {
+                log.removeChild(log.children[1]);
+            }
+        }
+
+        function initEventStream() {
+            const eventSource = new EventSource('/api/events');
+
+            eventSource.onmessage = function(e) {
+                const event = JSON.parse(e.data);
+
+                switch(event.type) {
+                    case 'phase_change':
+                        accumulatedState.phase = event.data.phase;
+                        addEvent(`Phase: ${event.data.phase}`);
+                        break;
+
+                    case 'oracle_start':
+                        const oracleIdx = accumulatedState.oracles.length;
+                        accumulatedState.oracles.push({
+                            type: event.data.type,
+                            params: event.data.params,
+                            executing: true,
+                            timestamp: Date.now()
+                        });
+                        stats.pending++;
+                        addEvent(`Oracle ${event.data.type} started`);
+                        break;
+
+                    case 'oracle_complete':
+                        // Find the most recent executing oracle
+                        const executingIdx = accumulatedState.oracles.findIndex(o => o.executing);
+                        if (executingIdx !== -1) {
+                            accumulatedState.oracles[executingIdx].executing = false;
+
+                            // Materialize the value - replace ~ with actual result
+                            const oracleId = `oracle-${executingIdx}`;
+                            accumulatedState.values.set(oracleId, event.data.result);
+
+                            stats.pending--;
+                            stats.resolved++;
+
+                            addEvent(`✓ Materialized: ${event.data.type} → ${formatValue(event.data.result)}`);
+                        }
+                        break;
+                }
+
+                updateDisplay();
+            };
+
+            eventSource.onerror = function() {
+                setTimeout(initEventStream, 5000);
+            };
+        }
+
+        function updateStats() {
+            fetch('/api/state')
+                .then(r => r.json())
+                .then(state => {
+                    stats.uptime = state.stats.uptime_seconds;
+
+                    // Update translation
+                    if (state.consciousness_translation) {
+                        document.getElementById('translation').textContent = state.consciousness_translation;
+                    }
+
+                    updateDisplay();
+                });
+        }
+
+        // Initialize
+        initEventStream();
+        updateStats();
+        setInterval(updateStats, 3000);
+        updateDisplay();
+    </script>
+</body>
+</html>
