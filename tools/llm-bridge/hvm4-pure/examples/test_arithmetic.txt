@@ -1,0 +1,7 @@
+# Test Arithmetic Oracle
+# These are oracle requests that can be piped to harness.py
+
+ORACLE:ARITH:ADD:5,3
+ORACLE:ARITH:MUL:7,6
+ORACLE:ARITH:SUB:10,4
+ORACLE:ARITH:DIV:20,5
