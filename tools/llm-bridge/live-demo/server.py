@@ -270,7 +270,7 @@ def init_harness():
 
 def run_demo_loop():
     """Continuously run demo oracles."""
-    oracle_file = Path(__file__).parent.parent / "production" / "oracle.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
 
     if not oracle_file.exists():
         print(f"Warning: {oracle_file} not found")
@@ -317,7 +317,7 @@ def stateful_viz():
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
-    oracle_file = Path(__file__).parent.parent / "production" / "oracle.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
 
     if not oracle_file.exists():
         return jsonify({"error": "Oracle file not found"}), 404
@@ -325,7 +325,7 @@ def get_bend_code():
     code = oracle_file.read_text()
 
     return jsonify({
-        "file": "oracle.bend",
+        "file": "demo_interesting.bend",
         "code": code,
         "lines": len(code.split('\n'))
     })
@@ -406,7 +406,7 @@ def trigger_execution():
     if not harness:
         return jsonify({"error": "Harness not initialized"}), 500
 
-    oracle_file = Path(__file__).parent.parent / "production" / "oracle.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
     if not oracle_file.exists():
         return jsonify({"error": "Oracle file not found"}), 404
 
