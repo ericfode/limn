@@ -369,27 +369,43 @@ class ProductionHarness:
         prompt = params["prompt"]
         context = params.get("context", "general")
 
-        if self.enable_real_llm and self.api_key:
-            # Real Claude API call
+        if self.enable_real_llm:
+            # Try Claude CLI first (wraps claude-code API)
             try:
-                import anthropic
-                client = anthropic.Anthropic(api_key=self.api_key)
-
-                message = client.messages.create(
-                    model="claude-sonnet-4-20250514",
-                    max_tokens=1024,
-                    messages=[{
-                        "role": "user",
-                        "content": f"Context: {context}\n\n{prompt}"
-                    }]
+                full_prompt = f"Context: {context}\n\n{prompt}\n\nRespond concisely in 1-2 sentences."
+                result = subprocess.run(
+                    ['claude', '--quiet'],
+                    input=full_prompt,
+                    capture_output=True,
+                    text=True,
+                    timeout=30
                 )
+                if result.returncode == 0 and result.stdout.strip():
+                    return result.stdout.strip()
+            except (FileNotFoundError, subprocess.TimeoutExpired):
+                pass
 
-                return message.content[0].text
-            except Exception as e:
-                return f"[LLM Error: {e}]"
-        else:
-            # Mock LLM
-            return self._mock_llm(prompt, context)
+            # Fallback to Anthropic API if claude CLI not available
+            if self.api_key:
+                try:
+                    import anthropic
+                    client = anthropic.Anthropic(api_key=self.api_key)
+
+                    message = client.messages.create(
+                        model="claude-sonnet-4-20250514",
+                        max_tokens=1024,
+                        messages=[{
+                            "role": "user",
+                            "content": f"Context: {context}\n\n{prompt}"
+                        }]
+                    )
+
+                    return message.content[0].text
+                except Exception as e:
+                    return f"[LLM Error: {e}]"
+
+        # Mock LLM fallback
+        return self._mock_llm(prompt, context)
 
     def _mock_llm(self, prompt: str, context: str) -> str:
         """Mock LLM for testing."""
