@@ -47,10 +47,89 @@ current_state = {
         "avg_oracle_time_ms": 0,
         "uptime_seconds": 0
     },
-    "recent_oracles": []
+    "recent_oracles": [],
+    "consciousness_translation": ""  # Human-readable translation
 }
 
+# Bootstrap Limn vocabulary for translation
+BOOTSTRAP_LIMN = """
+Core Operators:
+~ = delegate to conscious (LLM/oracle)
+∎ = ground truth (immutable reality)
+∿ = temporal (memory/time)
+@ = focus/collapse context
+→ = sequential flow
+
+Core Vocabulary:
+sys run = system running
+ora exe = oracle executing
+tim now = time now
+fil rea = file read
+mem sto = memory store
+sub red = subconscious reducing
+con act = conscious acting
+ctx acc = context accumulating
+val mat = value materialized
+
+Type Markers (postfix):
+epo = epoch timestamp
+txt = text value
+boo = boolean
+lst = list
+"""
+
 start_time = time.time()
+translation_cache = {}
+
+
+def translate_limn_to_english(limn_state):
+    """Translate Limn consciousness to English using Claude.
+
+    Uses bootstrap vocabulary and database to make the consciousness
+    understandable to humans.
+    """
+    # Check cache
+    cache_key = str(limn_state)[:100]
+    if cache_key in translation_cache:
+        return translation_cache[cache_key]
+
+    # Only translate if Claude API is available
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        return "[Translation requires ANTHROPIC_API_KEY]"
+
+    try:
+        import anthropic
+        client = anthropic.Anthropic(api_key=api_key)
+
+        # Build translation prompt with bootstrap
+        prompt = f"""You are translating Limn (a 3-letter vocabulary language) into English.
+
+Bootstrap Vocabulary:
+{BOOTSTRAP_LIMN}
+
+Current Limn State:
+{limn_state}
+
+Translate this Limn state into clear English that explains:
+1. What the system is currently doing
+2. What oracles have executed and their results
+3. The overall consciousness state
+
+Be concise (2-3 sentences) and human-friendly."""
+
+        message = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=200,
+            messages=[{"role": "user", "content": prompt}]
+        )
+
+        translation = message.content[0].text
+        translation_cache[cache_key] = translation
+        return translation
+
+    except Exception as e:
+        return f"[Translation error: {str(e)[:50]}...]"
 
 
 class LiveHarness(ProductionHarness):
@@ -211,6 +290,41 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/limn')
+def limn_viz():
+    """Serve Limn visualization page."""
+    return render_template('limn_viz.html')
+
+
+@app.route('/full')
+def full_viz():
+    """Serve full visualization (Limn + HVM)."""
+    return render_template('full_viz.html')
+
+
+@app.route('/stateful')
+def stateful_viz():
+    """Serve stateful Limn visualization (accumulated state)."""
+    return render_template('stateful_limn.html')
+
+
+@app.route('/api/bend_code')
+def get_bend_code():
+    """Get current Bend/HVM code."""
+    oracle_file = Path(__file__).parent.parent / "production" / "oracle.bend"
+
+    if not oracle_file.exists():
+        return jsonify({"error": "Oracle file not found"}), 404
+
+    code = oracle_file.read_text()
+
+    return jsonify({
+        "file": "oracle.bend",
+        "code": code,
+        "lines": len(code.split('\n'))
+    })
+
+
 @app.route('/api/state')
 def get_state():
     """Get current state."""
@@ -222,7 +336,46 @@ def get_state():
     cache_rate = (hits / total * 100) if total > 0 else 0
     current_state["stats"]["cache_rate"] = round(cache_rate, 1)
 
+    # Generate Limn representation
+    limn_repr = generate_limn_representation(current_state)
+
+    # Translate to English for humans
+    current_state["consciousness_translation"] = translate_limn_to_english(limn_repr)
+    current_state["limn_state"] = limn_repr
+
     return jsonify(current_state)
+
+
+def generate_limn_representation(state):
+    """Generate Limn representation of current state."""
+    lines = []
+
+    # Phase
+    lines.append(f"{state['phase']} pha")
+
+    # System state
+    lines.append("sys run | ora exe")
+
+    # Recent oracles with postfix types
+    for oracle in state["recent_oracles"][:5]:
+        result_str = str(oracle.get("result", ""))[:20]
+
+        # Add type annotation based on result
+        if isinstance(oracle.get("result"), dict) and "timestamp" in str(oracle.get("result")):
+            result_with_type = f"{oracle.get('result', {}).get('timestamp', '?')} epo"
+        elif isinstance(oracle.get("result"), bool):
+            result_with_type = f"{result_str} boo"
+        elif isinstance(oracle.get("result"), (int, float)):
+            result_with_type = f"{result_str} num"
+        else:
+            result_with_type = f"{result_str} txt"
+
+        lines.append(f"~ {oracle['type'][:3].lower()} exe → {result_with_type}")
+
+    # Context state
+    lines.append(f"ctx acc | val mat | cac {state['stats']['cache_rate']}%")
+
+    return "\n".join(lines)
 
 
 @app.route('/api/events')
