@@ -520,7 +520,7 @@ class ProductionHarness:
             try:
                 full_prompt = f"Context: {context}\n\n{prompt}\n\nRespond concisely in 1-2 sentences."
                 result = subprocess.run(
-                    ['claude', '--quiet'],
+                    ['claude', '--print', '--no-session-persistence'],
                     input=full_prompt,
                     capture_output=True,
                     text=True,
