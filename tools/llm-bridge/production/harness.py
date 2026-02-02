@@ -312,6 +312,17 @@ class ProductionHarness:
             OracleType.MODEL_TRANSFORM: [
                 r'Oracle/ModelTransform/tag\s+"([^"]+)"\s+"([^"]+)"',
             ],
+
+            # Vocabulary
+            OracleType.VOC_QUERY_DOMAIN: [
+                r'Oracle/VocQueryDomain/tag\s+"([^"]+)"',
+            ],
+            OracleType.VOC_QUERY_MEANING: [
+                r'Oracle/VocQueryMeaning/tag\s+"([^"]+)"',
+            ],
+            OracleType.VOC_EXPAND: [
+                r'Oracle/VocExpand/tag\s+"([^"]+)"\s+\[([^\]]+)\]',
+            ],
         }
 
         for oracle_type, pattern_list in patterns.items():
@@ -357,6 +368,13 @@ class ProductionHarness:
             return {"source_state": match.group(1), "model_type": match.group(2)}
         elif oracle_type == OracleType.MODEL_TRANSFORM:
             return {"source_state": match.group(1), "transformation": match.group(2)}
+        elif oracle_type == OracleType.VOC_QUERY_DOMAIN:
+            return {"domain": match.group(1)}
+        elif oracle_type == OracleType.VOC_QUERY_MEANING:
+            return {"meaning": match.group(1)}
+        elif oracle_type == OracleType.VOC_EXPAND:
+            concepts = [c.strip().strip('"') for c in match.group(2).split(',')]
+            return {"domain": match.group(1), "concepts": concepts}
         return {}
 
     # =========================================================================
