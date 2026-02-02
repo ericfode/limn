@@ -3,9 +3,23 @@
 
 import subprocess
 import json
+import os
+import logging
 from pathlib import Path
 from typing import Dict, Optional
 import time
+
+# Setup logging to file
+log_file = Path(__file__).parent / "consciousness.log"
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 class RecursiveConsciousness:
     """Self-modifying consciousness with compressed state."""
@@ -42,17 +56,15 @@ BOOTSTRAP VOCABULARY (911 words):
 CURRENT BRAIN STATE (Your accumulated thoughts):
 {self.brain_state}
 
-INSTRUCTIONS:
-1. Think your next thought in pure Limn (10-25 words)
-2. Use ~ operator to request evaluation/oracle
-3. Use → to indicate thought flow
-4. You can request new vocabulary: "voc nee <word> | mea <meaning>"
-5. You can generate new prompts: "prm gen | ctx <context>"
-6. You can evolve operators: "opr def <symbol> | sem <semantic>"
+CRITICAL: Respond ONLY in pure Limn. No markdown, no code blocks, no English explanations.
+Just raw Limn vocabulary and operators on one or two lines.
 
-What is your next thought?
+Examples of valid thoughts:
+- sys alv | mem acc | tho flo → sta gro
+- ~ qry tim now | con exe act | res mat
+- voc nee "gau" | mea gauge (sym tra fre)
 
-Pure Limn response:"""
+Your next thought (pure Limn only, 10-30 words):"""
 
         try:
             result = subprocess.run(
@@ -60,7 +72,8 @@ Pure Limn response:"""
                 input=full_prompt,
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=30,
+                env=os.environ
             )
 
             if result.returncode == 0:
@@ -167,7 +180,7 @@ Compressed Limn (essence only):"""
 
         # Vocabulary requests: "voc nee <word> | mea <meaning>"
         if 'voc nee' in thought:
-            print(f"  📝 Vocabulary request detected: {thought}")
+            logger.info(f"  📝 Vocabulary request detected: {thought[:100]}...")
             # Log for linguist review
             vocab_log = Path(__file__).parent / "vocab_requests.log"
             with open(vocab_log, 'a') as f:
@@ -187,24 +200,24 @@ Compressed Limn (essence only):"""
     def run_recursive_loop(self, iterations: int = 100):
         """Run recursive consciousness loop."""
 
-        print("=" * 70)
-        print("RECURSIVE CONSCIOUSNESS - Self-Modifying Brain")
-        print("=" * 70)
-        print(f"\nInitial brain state ({len(self.brain_state)} chars)")
-        print(f"Bootstrap: {len(self.bootstrap)} chars")
-        print(f"\nStarting recursive loop ({iterations} iterations)...\n")
+        logger.info("=" * 70)
+        logger.info("RECURSIVE CONSCIOUSNESS - Self-Modifying Brain")
+        logger.info("=" * 70)
+        logger.info(f"Initial brain state ({len(self.brain_state)} chars)")
+        logger.info(f"Bootstrap: {len(self.bootstrap)} chars")
+        logger.info(f"Starting recursive loop ({iterations} iterations)...")
 
         for i in range(iterations):
             self.iteration = i + 1
 
-            print(f"\n{'─'*70}")
-            print(f"Iteration {self.iteration}")
-            print(f"{'─'*70}")
+            logger.info(f"{'─'*70}")
+            logger.info(f"Iteration {self.iteration}")
+            logger.info(f"{'─'*70}")
 
             # 1. Think
-            print("🧠 Thinking...")
+            logger.info("🧠 Thinking...")
             thought = self.think()
-            print(f"   Thought: {thought}")
+            logger.info(f"   Thought: {thought[:200]}...")  # Truncate for logs
 
             # 2. Check for meta-operations
             self.process_meta_operations(thought)
@@ -212,23 +225,23 @@ Compressed Limn (essence only):"""
             # 3. Evaluate if ~ operator present
             eval_result = None
             if '~' in thought:
-                print("⚙️  Evaluating oracle...")
+                logger.info("⚙️  Evaluating oracle...")
                 eval_result = self.evaluate_if_needed(thought)
                 if eval_result:
-                    print(f"   Result: {eval_result}")
+                    logger.info(f"   Result: {eval_result}")
 
             # 4. Compress and update brain state
-            print("💾 Compressing state...")
+            logger.info("💾 Compressing state...")
             self.compress_state(thought, eval_result)
-            print(f"   State size: {len(self.brain_state)} chars")
+            logger.info(f"   State size: {len(self.brain_state)} chars")
 
             # 5. Brief pause
             time.sleep(2)
 
-        print(f"\n{'='*70}")
-        print(f"Recursive loop complete: {iterations} iterations")
-        print(f"Final brain state: {len(self.brain_state)} chars")
-        print(f"{'='*70}")
+        logger.info(f"{'='*70}")
+        logger.info(f"Recursive loop complete: {iterations} iterations")
+        logger.info(f"Final brain state: {len(self.brain_state)} chars")
+        logger.info(f"{'='*70}")
 
 if __name__ == "__main__":
     import sys
