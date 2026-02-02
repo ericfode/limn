@@ -301,20 +301,25 @@
                 .then(r => r.json())
                 .then(data => {
                     const stats = data.stats;
+                    const semanticNetwork = data.semantic_network || {};
 
                     // Update stats
                     document.getElementById('total-concepts').textContent = stats.total_concepts;
                     document.getElementById('total-connections').textContent = stats.semantic_connections;
 
-                    // Build network from concepts
-                    if (stats.most_used_concepts) {
-                        buildNetwork(stats.most_used_concepts.slice(0, 20));
+                    // Build network from concepts with REAL connections
+                    if (stats.most_used_concepts && stats.most_used_concepts.length > 0) {
+                        buildNetwork(stats.most_used_concepts.slice(0, 25), semanticNetwork);
                     }
                 })
                 .catch(err => console.error('Error:', err));
         }
 
-        function buildNetwork(concepts) {
+        function buildNetwork(concepts, semanticNetwork) {
+            // Clear existing network
+            nodes = [];
+            edges = [];
+
             // Create nodes for top concepts
             const nodeMap = new Map();
 
@@ -326,19 +331,30 @@
                 }
             });
 
-            // Fetch semantic connections and create edges
-            // For now, create some random edges based on concept proximity
-            // In a real implementation, use the semantic_network data
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    if (Math.random() < 0.3) {  // 30% chance of connection
-                        const edge = new Edge(nodes[i], nodes[j]);
-                        edges.push(edge);
-                        nodes[i].connections++;
-                        nodes[j].connections++;
+            // Create edges from REAL semantic network data
+            concepts.forEach(concept => {
+                const node1 = nodeMap.get(concept.word);
+                if (!node1) return;
+
+                const connections = semanticNetwork[concept.word] || [];
+                connections.forEach(connectedWord => {
+                    const node2 = nodeMap.get(connectedWord);
+                    if (node2 && node1 !== node2) {
+                        // Check if edge already exists
+                        const edgeExists = edges.some(e =>
+                            (e.node1 === node1 && e.node2 === node2) ||
+                            (e.node1 === node2 && e.node2 === node1)
+                        );
+
+                        if (!edgeExists) {
+                            const edge = new Edge(node1, node2);
+                            edges.push(edge);
+                            node1.connections++;
+                            node2.connections++;
+                        }
                     }
-                }
-            }
+                });
+            });
 
             updateStats();
         }

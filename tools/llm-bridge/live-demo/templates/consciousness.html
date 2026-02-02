@@ -246,6 +246,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- Metacognition Section -->
+        <div style="max-width: 1200px; margin: 40px auto; padding: 30px; background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%); border: 2px solid #ff00ff; border-radius: 15px;">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #ff00ff;">🧠 METACOGNITION - THINKING ABOUT THINKING</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #ff00ff; margin-bottom: 15px;">💭 Self-Awareness Insights</h3>
+                    <div id="metacognitive-insights" style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; min-height: 200px;">
+                        <div style="color: #666;">Analyzing thinking patterns...</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: #00ffff; margin-bottom: 15px;">❓ Knowledge Gaps</h3>
+                    <div id="knowledge-gaps" style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; min-height: 200px;">
+                        <div style="color: #666;">Identifying unknowns...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">📖 Journey Narrative</h3>
+                <div id="journey-narrative" style="background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 8px; font-size: 14px; line-height: 1.8; color: #00ffff;">
+                    <div style="color: #666;">Generating story...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -490,11 +518,60 @@
                 });
         }
 
+        function updateMetacognition() {
+            fetch('/api/metacognition')
+                .then(r => r.json())
+                .then(data => {
+                    // Update insights
+                    const insightsDiv = document.getElementById('metacognitive-insights');
+                    if (data.insights && data.insights.length > 0) {
+                        insightsDiv.innerHTML = data.insights.map(insight => `
+                            <div style="padding: 10px; margin-bottom: 10px; background: rgba(255, 0, 255, 0.2); border-left: 3px solid #ff00ff; border-radius: 4px;">
+                                <div style="font-size: 13px; color: #ff00ff;">💭 ${insight}</div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Update knowledge gaps
+                    const gapsDiv = document.getElementById('knowledge-gaps');
+                    if (data.knowledge_gaps && data.knowledge_gaps.length > 0) {
+                        gapsDiv.innerHTML = data.knowledge_gaps.map(gap => `
+                            <div style="padding: 10px; margin-bottom: 10px; background: rgba(0, 255, 255, 0.2); border-left: 3px solid #00ffff; border-radius: 4px;">
+                                <div style="font-size: 13px; color: #00ffff;">❓ ${gap}</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        gapsDiv.innerHTML = '<div style="color: #00ff00;">🎯 Knowledge is comprehensive!</div>';
+                    }
+                })
+                .catch(err => console.error('Error fetching metacognition:', err));
+        }
+
+        function updateNarrative() {
+            fetch('/api/narrative')
+                .then(r => r.json())
+                .then(data => {
+                    const narrativeDiv = document.getElementById('journey-narrative');
+                    let html = `<div style="font-style: italic; color: #00ffff;">${data.journey_narrative}</div>`;
+
+                    if (data.top_concept_insight) {
+                        html += `<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 255, 0.3); color: #00ff00;">${data.top_concept_insight}</div>`;
+                    }
+
+                    narrativeDiv.innerHTML = html;
+                })
+                .catch(err => console.error('Error fetching narrative:', err));
+        }
+
         // Initial load and auto-refresh
         updateConsciousness();
         updateThoughtLibrary();
+        updateMetacognition();
+        updateNarrative();
         setInterval(updateConsciousness, 3000);
         setInterval(updateThoughtLibrary, 5000);
+        setInterval(updateMetacognition, 7000);  // Update metacognition every 7s
+        setInterval(updateNarrative, 10000);  // Update narrative every 10s
 
         // Indicate live updates
         setInterval(() => {
