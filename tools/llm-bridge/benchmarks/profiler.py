@@ -21,7 +21,7 @@ import io
 import json
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, List, Any
 
 # Add parent to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
