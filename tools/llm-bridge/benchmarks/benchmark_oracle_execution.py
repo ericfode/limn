@@ -120,7 +120,7 @@ def run_benchmarks() -> Dict[str, Any]:
 
     results = {
         "benchmark": "oracle_execution",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "iterations": 100,
         "metrics": {}
     }

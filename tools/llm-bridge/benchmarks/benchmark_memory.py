@@ -141,7 +141,7 @@ def run_benchmarks() -> Dict[str, Any]:
 
     results = {
         "benchmark": "memory",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "metrics": {}
     }
 

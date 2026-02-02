@@ -154,7 +154,7 @@ def run_benchmarks() -> Dict[str, Any]:
             return {
                 "error": "bend binary not found",
                 "benchmark": "compilation",
-                "timestamp": datetime.utcnow().isoformat() + "Z"
+                "timestamp": datetime.now(datetime.UTC).isoformat() + "Z"
             }
         bend_binary = bend_path
 
@@ -168,7 +168,7 @@ def run_benchmarks() -> Dict[str, Any]:
 
     results = {
         "benchmark": "compilation",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "bend_binary": str(bend_binary),
         "results": compilation_results
     }

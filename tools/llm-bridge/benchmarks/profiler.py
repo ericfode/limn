@@ -235,7 +235,7 @@ def run_profiler() -> Dict[str, Any]:
 
     results = {
         "benchmark": "profiler",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "oracle_count": oracle_count,
         "analysis": {
             "top_cumulative": analysis["top_cumulative"],
