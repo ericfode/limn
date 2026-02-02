@@ -40,7 +40,7 @@ Limn's vocabulary follows a "natural extensions" principle designed for intuitiv
 - **Latin/Greek transparency**: Etymology from classical languages for universal recognition (e.g., "pyr" from Greek πῦρ for fire)
 - **Phonaesthetic fit**: Sound patterns matching semantic meaning
 
-As of January 2026, the vocabulary contains 784 words organized into 26 semantic domains, stored in a Dolt database with version control.
+As of January 2026, the vocabulary contains 938 words organized into 26 semantic domains, stored in a Dolt database with version control.
 
 #### Grammar
 
