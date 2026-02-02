@@ -3,9 +3,11 @@
 %% tes gar | sta ver | pur log
 %% *Testing garden. State verification. Pure logic.*
 
-:- use_module('state.pl').
-:- use_module('propagation.pl').
 :- use_module(library(lists)).
+
+%% Load local modules
+:- include('state.pl').
+:- include('propagation.pl').
 
 %% ============================================================
 %% TEST RUNNER
@@ -148,10 +150,10 @@ test_calculate_ripples :-
         format('  ✗ FAILED: Expected 8 ripples, got ~w~n', [Count]), fail
     ),
 
-    % Check ripple types
-    include(lambda([ripple(_, E, _)], E = reinforcement), Ripples, Reinforcements),
-    include(lambda([ripple(_, E, _)], E = inversion), Ripples, Inversions),
-    include(lambda([ripple(_, E, _)], E = tension), Ripples, Tensions),
+    % Check ripple types using findall
+    findall(R, (member(R, Ripples), R = ripple(_, reinforcement, _)), Reinforcements),
+    findall(R, (member(R, Ripples), R = ripple(_, inversion, _)), Inversions),
+    findall(R, (member(R, Ripples), R = ripple(_, tension, _)), Tensions),
 
     length(Reinforcements, RC),
     length(Inversions, IC),
@@ -174,13 +176,6 @@ test_adjacency :-
     ;
         write('  ✗ FAILED: Adjacency counts wrong'), nl, fail
     ).
-
-%% ============================================================
-%% LAMBDA HELPER (if not available)
-%% ============================================================
-
-%% Simple lambda for filtering
-lambda([ripple(_, E, _)], Goal, ripple(_, E, _)) :- call(Goal, E).
 
 %% ============================================================
 %% RUN TESTS

@@ -12,11 +12,9 @@
 :- use_module(library(format)).
 :- use_module(library(dcgs)).
 :- use_module(library(charsio)).
-:- use_module('state.pl').
-:- use_module('propagation.pl').
 
-%% Load JSON library (from parent dir)
-:- use_module('../json.pl').
+%% Dependencies loaded separately (start with: scryer-prolog state.pl propagation.pl ../json.pl mcp-server.pl)
+%% Or use a shell wrapper to load in sequence
 
 %% ============================================================
 %% TOOL DEFINITIONS
