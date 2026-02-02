@@ -1,0 +1,149 @@
+%% Moment Garden State Management
+%% =========================================================
+%% gar sta | pur prl | tem nav
+%% *Garden state. Pure Prolog. Temporal navigation.*
+%%
+%% State persistence for The Moment Garden semantic game.
+
+:- use_module(library(lists)).
+:- use_module(library(format)).
+:- use_module(library(charsio)).
+
+%% ============================================================
+%% PERSISTENCE LAYER
+%% ============================================================
+
+%% Path to state storage
+state_dir('.beads/moment-garden').
+
+%% Ensure state directory exists
+ensure_state_dir :-
+    state_dir(Dir),
+    (exists_directory(Dir) -> true ; make_directory(Dir)).
+
+%% Load garden state from disk
+load_garden(GardenId) :-
+    ensure_state_dir,
+    state_dir(Dir),
+    atom_concat(Dir, '/', DirSlash),
+    atom_concat(DirSlash, GardenId, PathBase),
+    atom_concat(PathBase, '.pl', Path),
+    (exists_file(Path) ->
+        consult(Path)
+    ;
+        true  % No state yet
+    ).
+
+%% Save garden state to disk
+save_garden(GardenId) :-
+    ensure_state_dir,
+    state_dir(Dir),
+    atom_concat(Dir, '/', DirSlash),
+    atom_concat(DirSlash, GardenId, PathBase),
+    atom_concat(PathBase, '.pl', Path),
+    open(Path, write, Stream),
+    write_garden_to_stream(GardenId, Stream),
+    close(Stream).
+
+%% ============================================================
+%% GARDEN STRUCTURE
+%% ============================================================
+
+%% Dynamic predicates for garden state
+:- dynamic garden/4.           % garden(Id, Created, Seeds, Metadata)
+:- dynamic reading/6.          % reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp)
+:- dynamic seed_state/3.       % seed_state(GardenId, SeedNum, Ripples)
+
+%% Create new garden instance
+create_garden(GardenId) :-
+    \+ garden(GardenId, _, _, _),
+    get_time(Timestamp),
+    InitialSeeds = [
+        seed(1, [beg, lov, fea]),
+        seed(2, [mid, hol, bre]),
+        seed(3, [end, pea, gri]),
+        seed(4, [los, sel, oth]),
+        seed(5, [now, her, gon]),
+        seed(6, [fnd, wha_was, wha_wil]),
+        seed(7, [rem, tru, wis]),
+        seed(8, [for, giv, tak]),
+        seed(9, [bec, who_was, who_wil])
+    ],
+    assertz(garden(GardenId, Timestamp, InitialSeeds, metadata([]))),
+    save_garden(GardenId).
+
+%% Check if garden exists
+garden_exists(GardenId) :-
+    load_garden(GardenId),
+    garden(GardenId, _, _, _).
+
+%% ============================================================
+%% READING OPERATIONS
+%% ============================================================
+
+%% Record a reader's navigation
+save_reading(GardenId, ReaderId, Key, Path, Collapses) :-
+    get_time(Timestamp),
+    assertz(reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp)),
+    save_garden(GardenId).
+
+%% Get all readings for a garden
+get_readings(GardenId, Readings) :-
+    load_garden(GardenId),
+    findall(
+        reading(ReaderId, Key, Path, Collapses, Timestamp),
+        reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp),
+        Readings
+    ).
+
+%% Get specific reader's reading
+get_reader_reading(GardenId, ReaderId, Reading) :-
+    load_garden(GardenId),
+    reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp),
+    Reading = reading(Key, Path, Collapses, Timestamp).
+
+%% ============================================================
+%% COMPARISON OPERATIONS
+%% ============================================================
+
+%% Calculate divergence between two readings
+%% Returns list of (SeedNum, Collapse1, Collapse2, Divergence)
+compare_readings(Reading1, Reading2, Divergences) :-
+    Reading1 = reading(_, _, _, Collapses1, _),
+    Reading2 = reading(_, _, _, Collapses2, _),
+    findall(
+        divergence(Seed, C1, C2, Score),
+        (
+            member(collapse(Seed, C1), Collapses1),
+            member(collapse(Seed, C2), Collapses2),
+            (C1 = C2 -> Score = 0.0 ; Score = 1.0)
+        ),
+        Divergences
+    ).
+
+%% Calculate overall divergence percentage
+divergence_score(Divergences, Score) :-
+    length(Divergences, Total),
+    include(lambda([divergence(_, _, _, S)], S =:= 1.0), Divergences, Different),
+    length(Different, DiffCount),
+    (Total > 0 -> Score is (DiffCount * 100) / Total ; Score = 0.0).
+
+%% ============================================================
+%% HELPER PREDICATES
+%% ============================================================
+
+%% Write garden state to stream
+write_garden_to_stream(GardenId, Stream) :-
+    garden(GardenId, Created, Seeds, Metadata),
+    format(Stream, '% Garden: ~w~n', [GardenId]),
+    format(Stream, 'garden(~w, ~w, ~w, ~w).~n~n', [GardenId, Created, Seeds, Metadata]),
+    forall(
+        reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp),
+        format(Stream, 'reading(~w, ~w, ~w, ~w, ~w, ~w).~n',
+               [GardenId, ReaderId, Key, Path, Collapses, Timestamp])
+    ).
+
+%% Get current timestamp
+get_time(Timestamp) :-
+    % Simplified - in real impl use proper time library
+    Timestamp = 0.
