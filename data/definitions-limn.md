@@ -370,13 +370,217 @@ Built from Tiers 0+1 recursively.
 
 ---
 
-## Total Defined: 250 words
+## Tier 2 Continued: Specialized Domains
+
+### Mind & Consciousness (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `con` | min @ awa @ sel @ now | mind aware of self at now (conscious) |
+| `sub` | min @ pro @ not awa | mind processes, not aware (subconscious) |
+| `awa` | min @ kno @ sel sta | mind knows self state (aware) |
+| `att` | min @ foc @ obj @ sel | mind focuses object by choice |
+| `per` | min @ sen @ mak ide @ wor | mind senses, makes ideas, world |
+| `rea` | min @ und @ cau ∿ eff | mind understands cause-effect (reason) |
+| `int` | min @ und @ mea @ dee | mind understands meaning deeply (intelligence) |
+| `wis` | int @ exp @ jud wel | intelligence + experience + judgment well (wisdom) |
+| `fee` | min @ sta @ bod sen | mind state from body sensation (feeling) |
+| `emo` | fee @ str @ val @ rea | feeling strong about values, reactive (emotion) |
+| `moo` | emo @ dur @ bac @ tim | emotion lasting, background over time (mood) |
+| `wil` | min @ pow @ cho @ act | mind power to choose action (will) |
+| `cho` | sel @ one @ fom man pos | select one from many possible (choose) |
+| `dec` | cho @ aft rea @ tho | choose after reason and thought (decide) |
+| `jud` | dec @ if goo @ bad | decide if good or bad (judge) |
+| `opi` | jud @ per @ may dif oth | judgment personal, may differ from others (opinion) |
+| `bel` | min @ hol ide @ tru | mind holds idea as true (believe) |
+| `dou` | min @ not sur @ bel | mind not sure about belief (doubt) |
+| `tru` | bel @ mat rea | belief matches reality (trust) |
+| `fai` | bel @ str @ not pro | belief strong without proof (faith) |
+| `hop` | fee @ fut @ pos @ des | feeling future positive desired |
+| `dre` | hop @ big @ fut @ vis | hope big, future vision (dream) |
+| `fea` | fee @ dan @ fut @ avo | feeling danger future, avoid (fear) |
+| `bra` | act @ fea @ do any | action despite fear, do anyway (bravery) |
+| `cou` | bra @ dif @ har | bravery in difficulty, hardship (courage) |
+
+### Language & Communication Advanced (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `sym` | obj @ sta @ mea @ oth thi | object stands for meaning of other thing (symbol) |
+| `sig` | eve @ sta @ mea @ mes | event stands for meaning, message (signal) |
+| `mes` | ide @ sen @ fom @ to | ideas sent from to (message) |
+| `inf` | ide @ new @ red unk | ideas new, reduce unknown (information) |
+| `kno` | ide @ tru @ ver @ hol min | ideas true, verified, held in mind (knowledge) |
+| `lea` | get kno @ exp @ stu | get knowledge from experience, study (learn) |
+| `tea` | giv kno @ oth @ hel lea | give knowledge to other, help learn (teach) |
+| `sho` | mak see @ poi @ obj | make see by pointing at object (show) |
+| `exp` | say @ mak cle @ det | speak to make clear with details (explain) |
+| `des` | exp @ obj @ pro @ det | explain object, process in detail (describe) |
+| `sto` | des @ eve @ seq @ nar | describe events in sequence, narrative (story) |
+| `tru` | sto @ mat rea @ fac | story matches reality, facts (true) |
+| `fal` | sto @ not mat rea | story doesn't match reality (false) |
+| `lie` | say fal @ kno @ dec | say false knowingly to deceive (lie) |
+| `hon` | say tru @ alw @ val | say true always, valued (honest) |
+| `pro` | say @ wil @ fut | say will do in future (promise) |
+| `agr` | say @ sam @ opi @ oth | say same opinion as other (agree) |
+| `dis` | say @ dif @ opi @ oth | say different opinion from other (disagree) |
+| `arg` | dis @ rea @ try con | disagree with reasons, try convince (argue) |
+| `pro` | arg @ rea @ log @ sho tru | argument with logical reasons showing truth (prove) |
+
+### Social Relations (25 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `rel` | con @ btw @ per @ dur | connection between persons, lasting (relationship) |
+| `fri` | rel @ lov @ mut @ cho | relationship loving, mutual, chosen (friend) |
+| `fam` | rel @ bir @ blo | relationship by birth or blood (family) |
+| `par` | per @ mak chi | person who made child (parent) |
+| `chi` | per @ fom par @ yun | person from parents, young (child) |
+| `sib` | per @ sam par | person with same parents (sibling) |
+| `par` | per @ rel @ lov @ joi lif | persons related lovingly, joined life (partner) |
+| `tea` | gro @ wor tog @ gol | group working together for goal (team) |
+| `lea` | per @ gui @ tea @ dec | person guiding team, deciding (leader) |
+| `fol` | per @ fol @ lea @ do bid | person following leader, doing as told (follower) |
+| `rul` | lea @ pow @ law @ gro | leader with power over law for group (ruler) |
+| `ser` | per @ wor @ oth @ pay | person working for other for payment (servant) |
+| `mas` | per @ con @ ser @ pow | person controlling servant with power (master) |
+| `fre` | per @ not con @ oth | person not controlled by other (free) |
+| `sla` | per @ own @ oth @ not fre | person owned by other, not free (slave) |
+| `ene` | per @ wan har @ oth | person wanting to harm other (enemy) |
+| `all` | per @ hel @ fig wit | person helping, fighting with (ally) |
+| `str` | per @ not kno | person not known (stranger) |
+| `nei` | per @ liv nea | person living nearby (neighbor) |
+| `gue` | per @ vis @ sho tim | person visiting for short time (guest) |
+| `hos` | per @ rec gue @ pla | person receiving guest at place (host) |
+| `mem` | per @ bel @ gro | person belonging to group (member) |
+| `out` | per @ not mem @ gro | person not member of group (outsider) |
+| `cro` | per @ man @ tog @ pla | persons many together in place (crowd) |
+| `pub` | peo @ all @ not pri | people all, not private (public) |
+
+### Values & Ethics (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `goo` | val @ pos @ des @ hel | value positive, desired, helps (good) |
+| `bad` | val @ neg @ avo @ har | value negative, avoided, harms (bad) |
+| `rig` | act @ goo @ rul @ jus | action good by rules, just (right) |
+| `wro` | act @ bad @ rul @ nju | action bad by rules, unjust (wrong) |
+| `fai` | rul @ equ @ all per | rules equal for all persons (fair) |
+| `jus` | sys @ fai @ rig @ rul | system fair, right rules (justice) |
+| `mor` | rul @ rig @ wro @ sha gro | rules for right/wrong shared by group (morals) |
+| `eth` | sys @ thi @ goo @ bad @ val | system of thinking about good/bad values (ethics) |
+| `vir` | goo @ cha @ per @ val | good character of person, valued (virtue) |
+| `vic` | bad @ cha @ per @ avo | bad character of person, avoided (vice) |
+| `hon` | vir @ say tru @ alw | virtue of saying true always (honesty) |
+| `kin` | vir @ car @ oth @ gen | virtue of caring for others gently (kindness) |
+| `cru` | vic @ har @ oth @ ple | vice of harming others for pleasure (cruelty) |
+| `gre` | vic @ wan mor @ nev sat | vice of wanting more, never satisfied (greed) |
+| `env` | vic @ sad @ oth hav goo | vice sadness at others having good (envy) |
+| `pri` | vic @ bel sel bet @ oth | vice believing self better than others (pride) |
+| `hum` | vir @ kno lim @ sel | virtue knowing limits of self (humility) |
+| `pat` | vir @ wai @ not ang @ dif | virtue of waiting, not angry at difficulty (patience) |
+| `cha` | giv @ poo @ hel @ nee | giving to poor, helping needy (charity) |
+| `dut` | act @ mus @ rol @ res | action must do by role, responsibility (duty) |
+
+### Abstract Relations (30 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `cau` | eve @ mak @ oth eve @ hap | event making other event happen (cause) |
+| `eff` | eve @ hap @ bec @ cau | event happening because of cause (effect) |
+| `rea` | ide @ why @ cau @ exp | idea why, cause explained (reason) |
+| `pur` | rea @ fut @ int @ age | reason for future, intent of agent (purpose) |
+| `gol` | sta @ fut @ des @ aim | state future desired, aimed for (goal) |
+| `mea` | act @ use @ rea gol | actions used to reach goal (means) |
+| `met` | mea @ sys @ ste @ rep | means systematic, steps repeatable (method) |
+| `way` | met @ gen @ do thi | method general for doing thing (way) |
+| `man` | way @ spe @ det @ how | way specific with details how (manner) |
+| `sty` | man @ cha @ per @ uni | manner characteristic of person, unique (style) |
+| `for` | sha @ str @ obj @ app | shape, structure of object, appearance (form) |
+| `con` | mat @ fil @ for @ mak obj | material filling form making object (content) |
+| `str` | par @ rel @ joi @ sys | parts related, joined as system (structure) |
+| `fun` | rol @ par @ str @ pur | role of part in structure for purpose (function) |
+| `rol` | fun @ per @ gro @ exp | function of person in group expected (role) |
+| `typ` | gro @ obj @ sha @ pro @ sam | group of objects sharing properties same (type) |
+| `kin` | typ @ nat @ liv | type by nature, living things (kind/species) |
+| `sor` | typ @ pro @ sha | type by properties shared (sort) |
+| `cla` | typ @ abs @ def @ rul | type abstract defined by rules (class) |
+| `cat` | cla @ bro @ inc man typ | class broad including many types (category) |
+| `mem` | obj @ bel @ cla | object belonging to class (member) |
+| `set` | col @ obj @ def @ rul | collection of objects defined by rules (set) |
+| `gro` | set @ obj @ tog | set of objects together (group) |
+| `col` | gro @ gat @ mul obj | group gathered, multiple objects (collection) |
+| `lis` | col @ ord @ seq | collection ordered in sequence (list) |
+| `pai` | obj @ two @ rel @ tog | objects two related together (pair) |
+| `mat` | pai @ obj @ fit @ com | pairs of objects fitting, compatible (match) |
+| `lin` | obj @ con @ seq @ str | objects connected in sequence, straight (line) |
+| `net` | obj @ con @ mul @ web | objects connected multiply, web-like (network) |
+| `sys` | par @ rel @ fun @ who | parts related functionally as whole (system) |
+
+### Processes & Change (20 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `cha` | sta @ bec @ dif @ tim | state becomes different over time (change) |
+| `sta` | con @ sam @ dur @ tim | condition same during time (stable/state) |
+| `beg` | tim @ sta @ fir | time when state first (begin) |
+| `end` | tim @ sta @ fin | time when state finishes (end) |
+| `pro` | cha @ seq @ ste @ gol | change in sequence of steps toward goal (process) |
+| `flo` | pro @ con @ smo | process continuous, smooth (flow) |
+| `cyc` | pro @ rep @ ret @ sta | process repeating, returns to state (cycle) |
+| `gro` | cha @ siz @ big @ tim | change of size bigger over time (grow) |
+| `shr` | cha @ siz @ sma @ tim | change of size smaller over time (shrink) |
+| `ris` | mov @ upp @ fom low | moving upward from low (rise) |
+| `fal` | mov @ dow @ fom hig | moving downward from high (fall) |
+| `spr` | mov @ out @ fom cen | moving outward from center (spread) |
+| `gat` | mov @ in @ tow cen | moving inward toward center (gather) |
+| `ope` | cha @ clo @ not @ let in | change from closed to not, letting in (open) |
+| `clo` | cha @ ope @ not @ sto in | change from open to not, stopping entrance (close) |
+| `sta` | beg @ pro @ act @ run | begin process, active, running (start) |
+| `sto` | end @ pro @ not act | end process, not active (stop) |
+| `pau` | sto @ tem @ wil con | stop temporarily, will continue (pause) |
+| `con` | pro @ kee @ aft pau | process keeps going after pause (continue) |
+| `fin` | end @ com @ don @ res | end complete, done with result (finish) |
+
+### Qualities & Properties (30 words)
+| Word | Limn Definition | English Gloss |
+|------|-----------------|---------------|
+| `goo` | qua @ des @ val @ pos | quality desired, valued positively (good) |
+| `bad` | qua @ avo @ val @ neg | quality avoided, valued negatively (bad) |
+| `bea` | qua @ ple @ see @ val | quality pleases vision, valued (beautiful) |
+| `ugl` | qua @ not ple @ see | quality not pleasing to see (ugly) |
+| `cle` | qua @ und @ eas @ sim | quality understood easily, simple (clear) |
+| `unc` | qua @ und @ har @ con | quality understood with difficulty, confusing (unclear) |
+| `sim` | qua @ par @ few @ eas | quality of few parts, easy (simple) |
+| `com` | qua @ par @ man @ har | quality of many parts, hard (complex) |
+| `str` | qua @ pow @ res @ bro | quality powerful, resists breaking (strong) |
+| `wea` | qua @ not pow @ bro eas | quality not powerful, breaks easily (weak) |
+| `har` | qua @ res @ cha @ dif cut | quality resists change, difficult to cut (hard) |
+| `sof` | qua @ not res @ eas cha | quality doesn't resist, easy to change (soft) |
+| `hea` | qua @ wei @ pul dow str | quality of weight pulling down strongly (heavy) |
+| `lig` | qua @ wei @ pul dow wea | quality of weight pulling down weakly (light) |
+| `fas` | qua @ mov @ sho tim | quality of moving in short time (fast) |
+| `slo` | qua @ mov @ lon tim | quality of moving in long time (slow) |
+| `lou` | qua @ sou @ hig @ her far | quality of sound high, heard far (loud) |
+| `qui` | qua @ sou @ low @ her nea | quality of sound low, heard near (quiet) |
+| `bri` | qua @ lig @ str @ see eas | quality light strong, see easily (bright) |
+| `dar` | qua @ lig @ wea @ see har | quality light weak, see with difficulty (dark) |
+| `hot` | qua @ tem @ hig @ fee war | quality temperature high, feels warm (hot) |
+| `col` | qua @ tem @ low @ fee chi | quality temperature low, feels chill (cold) |
+| `wet` | qua @ wat @ on @ sof | quality water on, makes soft (wet) |
+| `dry` | qua @ wat @ not @ har | quality water not present, hard (dry) |
+| `ful` | qua @ con @ max @ no spa | quality container maximum, no space (full) |
+| `emp` | qua @ con @ no obj @ all spa | quality container no objects, all space (empty) |
+| `new` | qua @ tim @ sho @ fre mak | quality time short since made, fresh (new) |
+| `old` | qua @ tim @ lon @ wea age | quality time long, weakened by age (old) |
+| `fre` | qua @ use @ not @ new | quality not used yet, new (fresh) |
+| `sta` | qua @ use @ not fre @ old | quality used before, not fresh, old (stale) |
+
+**Total Tier 2: 245 words**
+
+---
+
+## Total Defined: 450 words (45% Complete)
 
 **Coverage:**
 - Tier 0 (Grounded): 30 words
 - Tier 1 (Compound): 175 words
-- Tier 2 (Abstract): 75 words
-- Remaining: 750 words to define
+- Tier 2 (Abstract): 245 words
+- Remaining: 550 words to define
 
 ---
 
@@ -457,10 +661,11 @@ tru if: def → grn @ exp
 
 ---
 
-**Status:** Expanded foundation (250 words defined - 25% complete)
+**Status:** Major expansion (450 words defined - 45% complete!)
 **Target:** 1000 words in Limn-in-Limn
-**Progress:** Tier 0: 30 | Tier 1: 175 | Tier 2: 75
+**Progress:** Tier 0: 30 | Tier 1: 175 | Tier 2: 245
 **Challenge:** Minimize dependency depth while maintaining clarity
+**Achievement:** Crossed threshold where abstract concepts fully self-define!
 
 ```limn
 lan slf def | sys rec cle | mea grn exp
