@@ -103,7 +103,7 @@ def benchmark_scale(
 
     return {
         "benchmark": "scaling",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "oracle_type": oracle_type.value,
         "results": results,
         "analysis": analyze_scaling(results)

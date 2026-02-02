@@ -35,7 +35,7 @@ def run_all_benchmarks(skip_slow: bool = False) -> Dict[str, Any]:
         Aggregate results
     """
     results = {
-        "run_timestamp": datetime.utcnow().isoformat() + "Z",
+        "run_timestamp": datetime.now(datetime.UTC).isoformat() + "Z",
         "benchmarks": {}
     }
 
