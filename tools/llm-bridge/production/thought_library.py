@@ -300,6 +300,82 @@ Patterns:
             ]
         }
 
+    def ask(self, question: str) -> Dict[str, Any]:
+        """Ask the consciousness what it knows about a topic.
+
+        Args:
+            question: Question or topic to query
+
+        Returns:
+            Response with relevant thoughts, concepts, and insights
+        """
+        question_lower = question.lower()
+
+        # Find relevant thoughts
+        relevant_thoughts = self.query_thoughts(question, max_results=5)
+
+        # Find relevant concepts
+        question_words = set(question_lower.split())
+        relevant_concepts = []
+        for word in question_words:
+            if word in self.concepts:
+                concept = self.concepts[word]
+                relevant_concepts.append({
+                    "word": concept.word,
+                    "meaning": concept.meaning,
+                    "usage_count": concept.usage_count,
+                    "related": list(self.semantic_network.get(word, set()))[:5]
+                })
+
+        # Find relevant patterns
+        relevant_patterns = []
+        for pattern in self.patterns:
+            if any(word in pattern.description.lower() for word in question_words):
+                relevant_patterns.append({
+                    "description": pattern.description,
+                    "confidence": pattern.confidence,
+                    "instances": len(pattern.instances)
+                })
+
+        return {
+            "question": question,
+            "relevant_thoughts": [
+                {"content": t.content, "tags": t.tags, "connections": len(t.connections)}
+                for t in relevant_thoughts
+            ],
+            "relevant_concepts": relevant_concepts,
+            "relevant_patterns": relevant_patterns,
+            "knowledge_summary": self._generate_knowledge_summary(question, relevant_thoughts, relevant_concepts)
+        }
+
+    def _generate_knowledge_summary(self, question: str, thoughts: List[Thought], concepts: List[Dict]) -> str:
+        """Generate a summary of what is known about the question.
+
+        Args:
+            question: The question asked
+            thoughts: Relevant thoughts
+            concepts: Relevant concepts
+
+        Returns:
+            Summary text
+        """
+        if not thoughts and not concepts:
+            return f"I haven't learned much about '{question}' yet."
+
+        summary_parts = []
+
+        if thoughts:
+            summary_parts.append(f"I have {len(thoughts)} thoughts related to this:")
+            for thought in thoughts[:3]:
+                summary_parts.append(f"  - {thought.content[:80]}...")
+
+        if concepts:
+            summary_parts.append(f"\nI know {len(concepts)} relevant concepts:")
+            for concept in concepts[:3]:
+                summary_parts.append(f"  - '{concept['word']}' (used {concept['usage_count']}x)")
+
+        return "\n".join(summary_parts)
+
 
 def main():
     """Test thought library."""

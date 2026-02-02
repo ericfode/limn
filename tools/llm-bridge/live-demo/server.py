@@ -554,6 +554,23 @@ def get_thought_library():
     })
 
 
+@app.route('/api/thought_library/ask')
+def ask_consciousness():
+    """Ask the consciousness what it knows about a topic."""
+    from flask import request
+
+    if not thought_library:
+        return jsonify({"error": "Thought library not initialized"}), 500
+
+    question = request.args.get('q', '')
+    if not question:
+        return jsonify({"error": "Missing 'q' parameter"}), 400
+
+    response = thought_library.ask(question)
+
+    return jsonify(response)
+
+
 def main():
     """Main entry point."""
     print("=" * 70)
