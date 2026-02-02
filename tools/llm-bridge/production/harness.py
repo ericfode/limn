@@ -582,7 +582,17 @@ Respond in pure Limn about the input thought:"""
                     timeout=30
                 )
                 if result.returncode == 0 and result.stdout.strip():
-                    return result.stdout.strip()
+                    response = result.stdout.strip()
+
+                    # Validate response is pure Limn
+                    try:
+                        from limn_validator import validate_response
+                        if not validate_response(response):
+                            return f"[VALIDATION ERROR: Non-Limn response rejected]"
+                    except ImportError:
+                        pass  # Validator not available, allow response
+
+                    return response
             except (FileNotFoundError, subprocess.TimeoutExpired):
                 pass
 
