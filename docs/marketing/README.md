@@ -124,7 +124,7 @@ All marketing content follows these guidelines:
 - **Main README:** [../../README.md](../../README.md)
 - **Experiment 005:** [../../experiments/005-FINAL-REPORT.md](../../experiments/005-FINAL-REPORT.md) - 52% compositionality advantage
 - **Bootstrap:** [../spec/bootstrap-v3-natural.md](../spec/bootstrap-v3-natural.md) - Zero-bootstrap validation
-- **Vocabulary:** [../../data/vocabulary/](../../data/vocabulary/) - 784 words, 26 domains
+- **Vocabulary:** [../../data/vocabulary/](../../data/vocabulary/) - 938 words, 26 domains
 
 ---
 
