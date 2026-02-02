@@ -326,6 +326,12 @@ def consciousness_view():
     return render_template('consciousness.html')
 
 
+@app.route('/context')
+def context_view():
+    """Serve context window input/output view."""
+    return render_template('context_view.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
