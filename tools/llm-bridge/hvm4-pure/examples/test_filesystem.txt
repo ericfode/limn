@@ -1,0 +1,4 @@
+# Test Filesystem Oracle
+# Note: These examples use /tmp which should exist on most systems
+
+ORACLE:FS:LIST:/tmp
