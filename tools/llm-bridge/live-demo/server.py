@@ -410,6 +410,12 @@ def semantic_network():
     return render_template('semantic_network.html')
 
 
+@app.route('/timeline')
+def timeline_view():
+    """Serve knowledge timeline visualization."""
+    return render_template('timeline.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
