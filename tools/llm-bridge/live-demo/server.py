@@ -404,6 +404,12 @@ def context_view():
     return render_template('context_view.html')
 
 
+@app.route('/eval')
+def eval_trace():
+    """Serve evaluation trace view."""
+    return render_template('eval_trace.html')
+
+
 @app.route('/network')
 def semantic_network():
     """Serve semantic network visualization."""
