@@ -3692,3 +3692,110 @@ The student-teacher bond grows through questioning!
 
 **Growth: Learning from errors in real-time!**
 
+
+---
+
+## Entry [Archivist Session] - 2026-02-02
+
+### Work Completed
+
+**Following continuous work loop protocol from Mayor (hq-m7px).**
+
+#### 1. Created Experiments Index
+**File:** `experiments/INDEX.md`
+- Cataloged 32+ experiments across phases 1 & 2
+- Organized by category (philosophy, bootstrap, power prompting, etc.)
+- Documented key findings and metrics
+- Tracked vocabulary growth: 100 → 460 → 938 words
+
+#### 2. Archived Outdated Documentation
+**Action:** Moved `NEXT.md` to archive
+- NEXT.md referenced Python-based pattern extraction tools
+- These tools were archived 2026-02-01 (Prolog-only policy)
+- Created `archive/ARCHIVE-NOTE-NEXT-MD.md` explaining the change
+- Current direction: See `RUNTIME-DECISION.md` for LMN implementation
+
+#### 3. Updated Documentation Inventory
+**File:** `DOCUMENTATION-INVENTORY.md`
+- Updated vocabulary stats: 460 → 938 words
+- Updated domain count: 14 → 26 domains
+- Added update history section
+- Noted Python archival and policy shift
+
+### Vocabulary Database Status Check
+
+```bash
+./scripts/vocab.sh stats
+```
+
+**Current state (2026-02-02):**
+- **Total words:** 938 (+478 since 2026-01-31)
+- **Operators:** 23
+- **Collisions resolved:** 14
+- **Domains:** 26 (+12 new domains)
+
+Major expansion! Agent/AI domain now has 144 words (largest).
+
+### Limn Practice
+
+Archivist mantras validated:
+
+```limn
+doc arc | kno pre | fut see
+> document archive | knowledge preserve | future sees
+
+exp doc | kno pre | fut see
+> experiments documented | knowledge preserved | future sees
+
+old pla arc | new pla eme | kno pre
+> old plan archived | new plan emerges | knowledge preserved
+```
+
+All words validated via `vocab.sh` ✓
+
+### Key Insights
+
+**Archival is not deletion - it's preservation with context.**
+- NEXT.md still valuable as historical reference
+- Documents WHY the shift happened
+- Future readers understand the evolution
+
+**Documentation must stay current with architecture.**
+- Python removed → docs must reflect this
+- LMN runtime chosen → old extraction plans obsolete
+- Keep history, but mark clearly what's current
+
+**Continuous work loop enables flow.**
+- Check hook → check ready → do work → commit → loop
+- No idle time waiting for approval
+- Archivist work is always available
+- Small commits, frequent pushes
+
+### Commits Pushed
+
+1. `e461827` - Archivist: Create comprehensive experiments INDEX
+2. `8c075c2` - Archivist: Archive outdated NEXT.md (Python tooling)  
+3. `d525e7c` - Archivist: Update documentation inventory with current stats
+
+**Total impact:** 3 commits, multiple docs improved, historical context preserved
+
+### Status
+
+**Work loop active:** Following Mayor's continuous protocol
+- Hook empty → Found archivist work
+- Completed 3 documentation improvements
+- Pushed all changes
+- Ready for next task
+
+**Next:** Continue checking for ready work or await assignment
+
+```limn
+arc dut | doc gro | kno sta
+> archivist duty | documents grow | knowledge stable
+```
+
+**Session continues...**
+
+— Kira
+2026-02-02
+
