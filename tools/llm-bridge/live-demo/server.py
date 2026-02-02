@@ -31,6 +31,7 @@ from datetime import datetime
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "production"))
 from harness import ProductionHarness, OracleType
+from semantic_viz import SemanticVisualizer
 
 app = Flask(__name__)
 CORS(app)
@@ -244,13 +245,14 @@ class LiveHarness(ProductionHarness):
         return result
 
 
-# Global harness instance
+# Global instances
 harness = None
+semantic_viz = None
 
 
 def init_harness():
-    """Initialize the harness."""
-    global harness
+    """Initialize the harness and visualizer."""
+    global harness, semantic_viz
 
     bend_binary = Path(__file__).parent.parent.parent.parent / "tools" / "lmn-bend" / "bend"
     if not bend_binary.exists():
@@ -260,6 +262,10 @@ def init_harness():
         bend_binary=str(bend_binary),
         enable_real_llm=False  # Set to True if you have ANTHROPIC_API_KEY
     )
+
+    # Initialize semantic visualizer with bootstrap
+    bootstrap_path = Path(__file__).parent.parent / "production" / "bootstrap.lmn"
+    semantic_viz = SemanticVisualizer(bootstrap_path if bootstrap_path.exists() else None)
 
 
 def run_demo_loop():
@@ -409,6 +415,23 @@ def trigger_execution():
         return jsonify({"status": "triggered"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/semantic_viz')
+def get_semantic_viz():
+    """Get semantic visualization data from current state."""
+    if not semantic_viz:
+        return jsonify({"error": "Semantic visualizer not initialized"}), 500
+
+    # Get current Limn state
+    limn_state = current_state.get("limn_state", "")
+    if not limn_state:
+        limn_state = generate_limn_representation(current_state)
+
+    # Extract viz hints and generate visualization
+    viz_data = semantic_viz.visualize_limn_state(limn_state)
+
+    return jsonify(viz_data)
 
 
 def main():
