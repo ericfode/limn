@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Evaluation Trace - Bend/HVM Execution</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        .trace-entry {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .trace-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        .trace-id {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 12px;
+        }
+        .phase {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 3px solid;
+            border-radius: 4px;
+        }
+        .phase.subconscious {
+            border-left-color: #ff00ff;
+            color: #ff00ff;
+        }
+        .phase.conscious {
+            border-left-color: #00ffff;
+            color: #00ffff;
+        }
+        .phase.complete {
+            border-left-color: #00ff00;
+            color: #00ff00;
+        }
+        .phase-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .bend-code {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 12px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .oracle-call {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .oracle-label {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        .oracle-result {
+            color: #ffff00;
+            margin-top: 5px;
+            padding: 10px;
+            background: rgba(255, 255, 0, 0.05);
+            border-radius: 4px;
+        }
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        .stat-item {
+            color: #00cc00;
+        }
+        .stat-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <h1>⚙️ EVALUATION TRACE</h1>
+        <p style="text-align: center; color: #00cc00; margin-bottom: 40px;">
+            See what the Bend/HVM evaluates and when oracles are called
+        </p>
+
+        <div id="traces">
+            <div style="text-align: center; color: #666; padding: 40px;">
+                Loading evaluation traces...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let lastExecutionId = 0;
+
+        function updateTraces() {
+            const eventSource = new EventSource('/api/events');
+
+            eventSource.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    handleEvent(data);
+                } catch (e) {
+                    console.error('Parse error:', e);
+                }
+            };
+        }
+
+        const currentTraces = new Map();
+
+        function handleEvent(data) {
+            const type = data.type;
+
+            if (type === 'execution_start') {
+                const id = data.data.id;
+                currentTraces.set(id, {
+                    id: id,
+                    file: data.data.file,
+                    start_time: data.timestamp,
+                    phases: [],
+                    oracles: []
+                });
+                renderTraces();
+            }
+
+            else if (type === 'phase_change') {
+                const id = Object.keys(currentTraces).pop();  // Get latest
+                if (id) {
+                    const trace = currentTraces.get(Number(id));
+                    trace.phases.push({
+                        phase: data.data.phase,
+                        message: data.data.message,
+                        time: data.timestamp
+                    });
+                    renderTraces();
+                }
+            }
+
+            else if (type === 'bend_complete') {
+                const id = Object.keys(currentTraces).pop();
+                if (id) {
+                    const trace = currentTraces.get(Number(id));
+                    trace.bend_output_length = data.data.output_length;
+                    renderTraces();
+                }
+            }
+
+            else if (type === 'oracle_start') {
+                const id = Object.keys(currentTraces).pop();
+                if (id) {
+                    const trace = currentTraces.get(Number(id));
+                    trace.oracles.push({
+                        type: data.data.type,
+                        params: data.data.params,
+                        start_time: data.timestamp,
+                        result: null
+                    });
+                    renderTraces();
+                }
+            }
+
+            else if (type === 'oracle_complete') {
+                const id = Object.keys(currentTraces).pop();
+                if (id) {
+                    const trace = currentTraces.get(Number(id));
+                    if (trace.oracles.length > 0) {
+                        const lastOracle = trace.oracles[trace.oracles.length - 1];
+                        lastOracle.result = data.data.result;
+                        lastOracle.duration_ms = data.data.duration_ms;
+                        lastOracle.cached = data.data.cached;
+                    }
+                    renderTraces();
+                }
+            }
+
+            else if (type === 'execution_complete') {
+                // Execution finished, render final state
+                renderTraces();
+            }
+        }
+
+        function renderTraces() {
+            const container = document.getElementById('traces');
+            const traces = Array.from(currentTraces.values()).reverse().slice(0, 10);
+
+            if (traces.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 40px;">No executions yet...</div>';
+                return;
+            }
+
+            container.innerHTML = traces.map(trace => {
+                let phasesHtml = trace.phases.map(p => `
+                    <div class="phase ${p.phase}">
+                        <div class="phase-label">${p.phase}</div>
+                        <div>${p.message}</div>
+                    </div>
+                `).join('');
+
+                let oraclesHtml = trace.oracles.map(o => `
+                    <div class="oracle-call">
+                        <div class="oracle-label">Oracle: ${o.type}</div>
+                        <div class="bend-code">${escapeHtml(JSON.stringify(o.params, null, 2))}</div>
+                        ${o.result ? `
+                            <div class="oracle-result">
+                                <strong>Result:</strong><br>
+                                ${escapeHtml(o.result).substring(0, 300)}${o.result.length > 300 ? '...' : ''}
+                            </div>
+                            <div class="stats-row">
+                                <div class="stat-item">Duration: <span class="stat-value">${o.duration_ms ? o.duration_ms.toFixed(2) + 'ms' : 'N/A'}</span></div>
+                                <div class="stat-item">Cached: <span class="stat-value">${o.cached ? 'Yes' : 'No'}</span></div>
+                            </div>
+                        ` : '<div style="color: #666;">Executing...</div>'}
+                    </div>
+                `).join('');
+
+                return `
+                    <div class="trace-entry">
+                        <div class="trace-header">
+                            <div class="trace-id">Execution #${trace.id}: ${trace.file}</div>
+                            <div class="timestamp">${new Date(trace.start_time).toLocaleTimeString()}</div>
+                        </div>
+                        ${phasesHtml}
+                        ${oraclesHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Start listening
+        updateTraces();
+    </script>
+</body>
+</html>
