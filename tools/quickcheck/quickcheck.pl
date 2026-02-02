@@ -149,8 +149,15 @@ shrink_list(List, Smaller) :-
     append(Smaller, _, List).
 
 shrink_atom(A, S) :-
-    atom_chars(A, [_|Cs]),
-    atom_chars(S, Cs).
+    atom_chars(A, Chars),
+    Chars = [_|_],  % non-empty
+    shrink_atom_chars(Chars, SmallerChars),
+    atom_chars(S, SmallerChars).
+
+shrink_atom_chars([_], []) :- !.  % Single char shrinks to empty
+shrink_atom_chars([_|T], T).      % Remove first char
+shrink_atom_chars([H|T], [H|T2]) :- % Keep first, shrink rest
+    shrink_atom_chars(T, T2).
 
 is_list([]).
 is_list([_|T]) :- is_list(T).
