@@ -416,6 +416,12 @@ def timeline_view():
     return render_template('timeline.html')
 
 
+@app.route('/explorer')
+def explorer_view():
+    """Serve knowledge explorer."""
+    return render_template('explorer.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
