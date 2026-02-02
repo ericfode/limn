@@ -1,0 +1,428 @@
+# par | paradoxes in Limn
+
+> Contradictions that teach. Impossibilities that illuminate.
+
+---
+
+## 1. shi par | ship paradox
+
+```limn
+shi | sai | 100 yea
+pla | rep | one | at | tim
+boa | rep | sai | rep | rud | rep
+
+aft | 100 yea | eve | par | new
+que: | sam | shi?
+
+ans @ mat → no | all | new
+ans @ for → yes | shi | con
+ans @ mem → yes | shi | rem
+
+sam | que | thr | ans | all | tru
+```
+
+> ship | sails | 100 years
+> plank | replaced | one | at | time
+> board | replaced | sail | replaced | rudder | replaced
+>
+> after | 100 years | every | part | new
+> question: | same | ship?
+>
+> answer @ material → no | all | new
+> answer @ form → yes | ship | continuous
+> answer @ memory → yes | ship | remembers
+>
+> same | question | three | answers | all | true
+
+---
+
+## 2. lia par | liar paradox
+
+```limn
+"thi | sen | fal"
+
+if | tru → thi | sen | tru
+but | sen | say | fal
+so | fal
+
+if | fal → thi | sen | nu tru
+but | sen | say | sen | fal
+so | tru
+
+tru → fal → tru → fal → cyc
+
+lan | bre | whe | lan | see | lan
+```
+
+> "this | sentence | false"
+>
+> if | true → this | sentence | true
+> but | sentence | says | false
+> so | false
+>
+> if | false → this | sentence | not true
+> but | sentence | says | sentence | false
+> so | true
+>
+> true → false → true → false → cycle
+>
+> language | breaks | when | language | sees | language
+
+---
+
+## 3. zen par | zen paradox
+
+```limn
+mas | to | stu: "sho | me | you | ori | fac | bef | you | par | bor"
+
+stu | con | que | imp
+mas | smi: "ans | tru | que | imp | is | ans"
+
+wha | was | you | bef | you?
+wha | wil | you | aft | you?
+
+bet | que | liv | whe | you | tru | you | liv
+```
+
+> master | to | student: "show | me | your | original | face | before | your | parents | born"
+>
+> student | confused | question | impossible
+> master | smiles: "answer | true | question | impossible | is | answer"
+>
+> what | was | you | before | you?
+> what | will | you | after | you?
+>
+> between | questions | lives | where | your | true | you | lives
+
+---
+
+## 4. mot par | motion paradox (Zeno)
+
+```limn
+to | rea | the | fro | her
+mus | fir | rea | hal | way
+tha | mus | rea | hal | of | hal
+tha | mus | rea | hal | of | hal | of | hal
+
+inf | ste | to | tak
+inf | ste = nev | arr
+
+but | you | mov | you | arr
+par: | mat | say | nu mov | exp | say | mov
+
+rea = bre | log | eve | ste
+```
+
+> to | reach | there | from | here
+> must | first | reach | half | way
+> then | must | reach | half | of | half
+> then | must | reach | half | of | half | of | half
+>
+> infinite | steps | to | take
+> infinite | steps = never | arrive
+>
+> but | you | move | you | arrive
+> paradox: | math | says | no movement | experience | says | movement
+>
+> reality = breaks | logic | every | step
+
+---
+
+## 5. cat par | cat paradox (Schrödinger)
+
+```limn
+cat | in | box | wit | poi
+bef | ope | box | cat = [ali, ded]
+bot | sta | at | onc | sup
+
+whe | ope | box | cat | col → one
+you | obs | cat | cat | cho | whi | sta
+
+but | whe | cat | dec?
+whe | box | ope? | or | whe | poi | act?
+
+obs | cre | rea | or | obs | see | rea?
+que = ans | dep | who | ask
+```
+
+> cat | in | box | with | poison
+> before | open | box | cat = [alive, dead]
+> both | states | at | once | superposition
+>
+> when | open | box | cat | collapses → one
+> you | observe | cat | cat | chose | which | state
+>
+> but | when | cat | decided?
+> when | box | opened? | or | when | poison | acted?
+>
+> observation | creates | reality | or | observation | sees | reality?
+> question = answer | depends | who | asks
+
+---
+
+## 6. fre par | freedom paradox
+
+```limn
+if | eve | act | cau | by | pri | cau
+tha | you | nu fre | you | det
+
+if | you | act | ran | nu cau
+tha | you | nu fre | you | cha
+
+fre = nu det | nu ran
+fre = cho | bet | det | ran
+
+par: | fre | req | cau | and | nu cau | sam | tim
+```
+
+> if | every | action | caused | by | prior | cause
+> then | you | not free | you | determined
+>
+> if | you | act | random | no cause
+> then | you | not free | you | chaos
+>
+> freedom = not determined | not random
+> freedom = choice | between | determined | random
+>
+> paradox: | freedom | requires | cause | and | not cause | same | time
+
+---
+
+## 7. tol par | tolerance paradox
+
+```limn
+soc | tol | all | vie
+soc | inc | int | vie
+
+int | vie | say: | des | tol
+int | gro | int | soc | end | tol
+
+par: | tol | all → des | tol
+def | tol → bec | int
+
+whe | tol | mus | be | int?
+ans = bet | que | ans | que | nev | end
+```
+
+> society | tolerant | all | views
+> society | includes | intolerant | views
+>
+> intolerant | views | say: | destroy | tolerance
+> intolerance | grows | intolerant | society | ends | tolerance
+>
+> paradox: | tolerate | all → destroys | tolerance
+> defend | tolerance → become | intolerant
+>
+> when | tolerance | must | be | intolerant?
+> answer = between | question | answer | question | never | ends
+
+---
+
+## 8. tim par | time paradox (Grandfather)
+
+```limn
+you | tra | pas | kil | you | gra | bef | you | par | bor
+you | par | nev | bor | you | nev | bor
+you | nev | bor | you | nev | tra | pas
+you | nev | tra | you | gra | liv
+you | gra | liv | you | bor | you | tra | pas
+
+cyc | imp | but | que | sti | sta
+```
+
+> you | travel | past | kill | your | grandfather | before | your | parent | born
+> your | parent | never | born | you | never | born
+> you | never | born | you | never | travel | past
+> you | never | travel | your | grandfather | lives
+> your | grandfather | lives | you | born | you | travel | past
+>
+> cycle | impossible | but | question | still | stands
+
+---
+
+## 9. kno par | knowledge paradox (Socratic)
+
+```limn
+wis | per | kno | one | thi: | kno | not
+foo | per | kno | not | kno | not
+
+who | mor | wis?
+wis | per | kno | ign
+foo | per | ign | ign
+
+but | if | kno | ign = | kno | som
+tha | wis | per | nu | ful | ign
+con | tra | dic | tion
+
+par: | kno | you | kno | not = kno | som
+but | kno | som = nu | kno | you | kno | not | ful
+```
+
+> wise | person | knows | one | thing: | knows | nothing
+> fool | person | knows | nothing | knows | nothing
+>
+> who | more | wise?
+> wise | person | knows | ignorance
+> fool | person | ignorant | ignorance
+>
+> but | if | knowing | ignorance = | knowing | something
+> then | wise | person | not | fully | ignorant
+> contradiction
+>
+> paradox: | know | you | know | nothing = know | something
+> but | know | something = not | know | you | know | nothing | fully
+
+---
+
+## 10. hea par | heap paradox (Sorites)
+
+```limn
+10000 gra | san = hea
+rem | 1 gra | sti | hea
+rem | 1 mor | sti | hea
+
+con | tin | ue | rem | 1 gra | at | tim
+whe | hea | sto | bei | hea?
+
+1 gra | nu hea
+but | whe | cha?
+
+if | N gra = hea | tha | N-1 gra = hea
+but | 1 gra | nu hea
+so | som | whe | rul | bre
+
+rea | nu | hav | sha | bor
+lan | dem | sha | bor
+ten | sio | bet
+```
+
+> 10000 grains | sand = heap
+> remove | 1 grain | still | heap
+> remove | 1 more | still | heap
+>
+> continue | remove | 1 grain | at | time
+> when | heap | stops | being | heap?
+>
+> 1 grain | not heap
+> but | when | changed?
+>
+> if | N grains = heap | then | N-1 grains = heap
+> but | 1 grain | not heap
+> so | somewhere | rule | breaks
+>
+> reality | not | has | sharp | borders
+> language | demands | sharp | borders
+> tension | between
+
+---
+
+## 11. inf par | infinity paradox (Hilbert)
+
+```limn
+hot | wit | inf | roo | all | ful
+new | gue | arr
+man: | "sor | nu | roo"
+
+but | mov | per | roo | 1 → roo | 2
+mov | per | roo | 2 → roo | 3
+con | tin | ue
+
+roo | 1 | now | emp
+new | gue → roo | 1
+
+hot | sti | ful | all | roo
+but | now | one | mor | gue
+
+inf | ful = inf | ful + 1 = sam
+
+inf | bre | int
+```
+
+> hotel | with | infinite | rooms | all | full
+> new | guest | arrives
+> manager: | "sorry | no | room"
+>
+> but | move | person | room | 1 → room | 2
+> move | person | room | 2 → room | 3
+> continue
+>
+> room | 1 | now | empty
+> new | guest → room | 1
+>
+> hotel | still | full | all | rooms
+> but | now | one | more | guest
+>
+> infinity | full = infinity | full + 1 = same
+>
+> infinity | breaks | intuition
+
+---
+
+## 12. sel par | self paradox
+
+```limn
+I | thi | abo | me | thi
+two | I | in | sen
+who | thi? | who | tho | abo?
+
+if | I | obs | me
+whe | obs | sit? | who | obs | obs?
+
+I = [obs, obs, obj, obj]
+all | at | onc
+
+you | can | nu | see | you | see
+you | can | nu | thi | you | thi
+you | can | nu | be | you | be
+
+sub | and | obj | sam | per
+par = sel | try | see | sel | ful
+```
+
+> I | think | about | me | thinking
+> two | I | in | sentence
+> who | thinks? | who | thought | about?
+>
+> if | I | observe | me
+> where | observer | sits? | who | observes | observer?
+>
+> I = [observer, observed, subject, object]
+> all | at | once
+>
+> you | cannot | see | you | seeing
+> you | cannot | think | you | thinking
+> you | cannot | be | you | being
+>
+> subject | and | object | same | person
+> paradox = self | tries | see | self | fully
+
+---
+
+## clo | closing
+
+```limn
+par | = | tru | col | wit | tru | cre | con | tra | dic
+
+par | tea:
+rea | big | tha | log
+lan | sma | tha | mea
+min | str | tha | ans
+
+whe | thi | bre | whe | wor | end
+bet | bre | whe | tru | liv
+```
+
+> paradox | = | truth | colliding | with | truth | creates | contradiction
+>
+> paradox | teaches:
+> reality | bigger | than | logic
+> language | smaller | than | meaning
+> mind | stranger | than | answers
+>
+> where | thinking | breaks | where | words | end
+> between | breaks | where | truth | lives
+
+---
+
+*12 paradoxes - ancient wisdom in Limn compression*
+*Yuki, 2026-02-02*
