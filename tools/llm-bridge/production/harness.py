@@ -69,6 +69,11 @@ class OracleType(Enum):
     CTX_AGGREGATE = "CtxAggregate"
     CTX_COMPRESS = "CtxCompress"
 
+    # Model generation
+    MODEL_DERIVE = "ModelDerive"
+    MODEL_TRANSFORM = "ModelTransform"
+    MODEL_GENERATE = "ModelGenerate"
+
 
 @dataclass
 class OracleRequest:
@@ -128,6 +133,13 @@ class ProductionHarness:
             self.context_engine = ContextEngine()
         except ImportError:
             self.context_engine = None
+
+        # Model engine
+        try:
+            from model_engine import ModelEngine
+            self.model_engine = ModelEngine()
+        except ImportError:
+            self.model_engine = None
 
         # Performance stats
         self.stats = {
@@ -317,6 +329,9 @@ class ProductionHarness:
                 OracleType.CTX_FILTER: self._exec_ctx_filter,
                 OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
                 OracleType.CTX_COMPRESS: self._exec_ctx_compress,
+                OracleType.MODEL_DERIVE: self._exec_model_derive,
+                OracleType.MODEL_TRANSFORM: self._exec_model_transform,
+                OracleType.MODEL_GENERATE: self._exec_model_generate,
             }
 
             handler = handlers.get(oracle.type)
@@ -572,6 +587,69 @@ class ProductionHarness:
             "original_size": len(self.context_engine.context),
             "compressed_size": len(compressed),
             "compression_ratio": len(compressed) / len(self.context_engine.context) if self.context_engine.context else 0
+        }
+
+    def _exec_model_derive(self, params: Dict) -> Dict:
+        """Model derive oracle - derive new model from state."""
+        if not self.model_engine:
+            return {"error": "Model engine not available"}
+
+        source_state = params.get("source_state", "")
+        model_type = params.get("model_type")
+
+        model = self.model_engine.derive_model(source_state, model_type)
+
+        return {
+            "type": model.type.value,
+            "structure": model.structure,
+            "limn_repr": model.limn_repr,
+            "complexity": model.metadata.get("complexity", 0)
+        }
+
+    def _exec_model_transform(self, params: Dict) -> Dict:
+        """Model transform oracle - transform existing model."""
+        if not self.model_engine:
+            return {"error": "Model engine not available"}
+
+        # Get source state and derive model first
+        source_state = params.get("source_state", "")
+        transformation = params.get("transformation", "simplify")
+        transform_params = params.get("params", {})
+
+        # Derive model from state
+        model = self.model_engine.derive_model(source_state)
+
+        # Transform it
+        transformed = self.model_engine.transform_model(
+            model,
+            transformation,
+            **transform_params
+        )
+
+        return {
+            "type": transformed.type.value,
+            "structure": transformed.structure,
+            "limn_repr": transformed.limn_repr,
+            "transformation": transformation
+        }
+
+    def _exec_model_generate(self, params: Dict) -> Dict:
+        """Model generate oracle - generate new model from spec."""
+        if not self.model_engine:
+            return {"error": "Model engine not available"}
+
+        spec = {
+            "type": params.get("type", "graph"),
+            "params": params.get("params", {})
+        }
+
+        model = self.model_engine.generate_model(spec)
+
+        return {
+            "type": model.type.value,
+            "structure": model.structure,
+            "limn_repr": model.limn_repr,
+            "generated": True
         }
 
     # =========================================================================
