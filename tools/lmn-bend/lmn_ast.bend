@@ -1,92 +1,93 @@
-# LMN AST - Abstract Syntax Tree for LMN (Wave Language)
+# LMN AST - LMN is a strict subset of Limn
 # =========================================================
-# LMN (objective) orchestrates execution
-# Limn (subjective) provides semantic content for LLM interpretation
+# Everything is Limn (3-letter vocabulary)
+# LMN adds execution semantics to certain Limn patterns
 
-# Temporal operators
+# Temporal operators (Limn words with execution meaning)
 type Temporal = Was | Now | Will
 
-# Limn - Subjective semantic expressions (3-letter vocabulary)
+# Limn Expression - The universal type
+# All LMN constructs are Limn expressions
 type Limn:
-  # Single 3-letter word: cod
+  # Atomic Limn: 3-letter word
   Word { word }
-  # Triad: cod flo log (space-separated, represents thought unit)
+
+  # Triad: w1 w2 w3 (space-separated thought unit)
   Triad { w1, w2, w3 }
-  # Sentence: cod flo log | sys gro bea (triads separated by |)
+
+  # Sentence: triads separated by |
   Sentence { triads }
 
-# LMN Expression types (objective execution)
-type Expr:
-  # Literals
+  # LMN executable patterns (still Limn, but with semantics)
+
+  # Temporal wave: ∿ <temporal> [limn]
+  # ∿ is itself a Limn construct
+  Wave { temp, limn }
+
+  # Collapse: limn @ context
+  # @ is contextual resolution operator
+  Collapse { limn, context }
+
+  # Oracle: ~ limn @ context
+  # ~ marks LLM evaluation point
+  Oracle { limn, context }
+
+  # Superposition: [limn1, limn2, limn3]
+  # Multiple possibilities held simultaneously
+  Super { options }
+
+  # Flow: limn1 → limn2 → limn3
+  # → is sequential composition
+  Flow { steps }
+
+  # Literals (for bootstrapping, but prefer Limn)
   Str { val }
   Num { val }
 
-  # Limn embedding (subjective content)
-  LimnExpr { limn }
+# Constructors
 
-  # Temporal wave: ∿ was [expr]
-  Wave { temp, expr }
+def word(w):
+  return Limn/Word { word: w }
 
-  # Collapse: expr @ context
-  Collapse { super, context }
-
-  # Oracle (LLM interprets Limn): ~ [cod flo log]
-  Oracle { limn, context }
-
-  # Superposition: [opt1, opt2, opt3]
-  Super { options }
-
-  # Flow: expr1 → expr2 → expr3
-  Flow { steps }
-
-  # Variable reference
-  Var { name }
-
-# Limn constructors
-def limn_word(word):
-  return Limn/Word { word: word }
-
-def limn_triad(w1, w2, w3):
+def triad(w1, w2, w3):
   return Limn/Triad { w1: w1, w2: w2, w3: w3 }
 
-def limn_sentence(triads):
+def sentence(triads):
   return Limn/Sentence { triads: triads }
 
-# LMN constructors
-def wave(temp, expr):
-  return Expr/Wave { temp: temp, expr: expr }
+def wave(temp, limn):
+  return Limn/Wave { temp: temp, limn: limn }
 
-def collapse(super, context):
-  return Expr/Collapse { super: super, context: context }
+def collapse(limn, context):
+  return Limn/Collapse { limn: limn, context: context }
 
 def oracle(limn, context):
-  return Expr/Oracle { limn: limn, context: context }
-
-def limn_expr(limn):
-  return Expr/LimnExpr { limn: limn }
+  return Limn/Oracle { limn: limn, context: context }
 
 def super_pos(options):
-  return Expr/Super { options: options }
+  return Limn/Super { options: options }
 
 def flow(steps):
-  return Expr/Flow { steps: steps }
+  return Limn/Flow { steps: steps }
 
 def str(val):
-  return Expr/Str { val: val }
+  return Limn/Str { val: val }
 
 def num(val):
-  return Expr/Num { val: val }
-
-def var(name):
-  return Expr/Var { name: name }
+  return Limn/Num { val: val }
 
 def main():
-  # Test: Limn embedded in LMN
-  # ~ [cod flo log] @ context
-  # = Oracle interprets Limn triad "cod flo log" with context
+  # Example LMN program (all in Limn)
+  # ∿ now [cod flo log] @ context
 
-  triad = limn_triad("cod", "flo", "log")
-  context = str("programming")
-  expr = oracle(triad, context)
+  # cod flo log = code flows clearly (Limn triad)
+  thought = triad("cod", "flo", "log")
+
+  # ∿ now = temporal wave in present
+  present = wave(Temporal/Now, thought)
+
+  # @ programming = collapse with context
+  context = word("programming")
+  expr = collapse(present, context)
 
   return 0
