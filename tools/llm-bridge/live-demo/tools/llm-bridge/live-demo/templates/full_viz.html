@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full System Visualization - Limn + HVM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #0ff;
+            font-size: 28px;
+            text-shadow: 0 0 10px #0ff;
+            margin-bottom: 5px;
+        }
+
+        .phase-display {
+            font-size: 20px;
+            color: #f0f;
+            text-shadow: 0 0 10px #f0f;
+            font-weight: bold;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .panel {
+            background: rgba(0, 20, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 20px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .panel-header {
+            color: #ff0;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Limn State Styles */
+        .limn-blob {
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .limn-line {
+            margin: 10px 0;
+        }
+
+        .limn-word {
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 0 3px;
+            transition: all 0.2s ease;
+            border-radius: 3px;
+        }
+
+        .limn-word.semantic { color: #0ff; }
+        .limn-word.file { color: #ff0; }
+        .limn-word.time { color: #f0f; }
+        .limn-word.memory { color: #0f0; }
+        .limn-word.system { color: #888; }
+        .limn-word.oracle { color: #f80; }
+
+        .limn-word.active {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px currentColor;
+            transform: scale(1.15);
+            font-weight: bold;
+        }
+
+        .limn-word.executing {
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1.15); }
+            50% { opacity: 0.7; transform: scale(1.25); }
+        }
+
+        .separator {
+            color: #444;
+            margin: 0 5px;
+        }
+
+        /* HVM Code Styles */
+        .hvm-code {
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre;
+            color: #0f0;
+        }
+
+        .code-line {
+            padding: 2px 5px;
+            transition: all 0.2s ease;
+        }
+
+        .code-line.executing {
+            background: rgba(255, 255, 0, 0.2);
+            border-left: 3px solid #ff0;
+            padding-left: 10px;
+            animation: highlight 1s infinite;
+        }
+
+        @keyframes highlight {
+            0%, 100% { background: rgba(255, 255, 0, 0.2); }
+            50% { background: rgba(255, 255, 0, 0.4); }
+        }
+
+        .code-keyword {
+            color: #f0f;
+            font-weight: bold;
+        }
+
+        .code-function {
+            color: #0ff;
+        }
+
+        .code-type {
+            color: #ff0;
+        }
+
+        .code-operator {
+            color: #f80;
+        }
+
+        .code-comment {
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Stats mini-overlay */
+        .mini-stats {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 11px;
+            min-width: 150px;
+        }
+
+        .mini-stat {
+            margin: 5px 0;
+        }
+
+        .mini-stat-label {
+            color: #888;
+            font-size: 10px;
+        }
+
+        .mini-stat-value {
+            color: #0f0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Event ticker at bottom */
+        .event-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 2px solid #0f0;
+            padding: 10px 20px;
+            font-size: 12px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .ticker-item {
+            margin: 3px 0;
+            padding: 3px;
+            border-left: 2px solid #0f0;
+            padding-left: 8px;
+        }
+
+        .ticker-time {
+            color: #555;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>∿ Full System Visualization ∎</h1>
+            <div class="phase-display" id="phase-display">~ Initializing ~</div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Limn State Panel -->
+            <div class="panel">
+                <div class="panel-header">Limn State (Semantic Representation)</div>
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-label">Oracles</div>
+                        <div class="mini-stat-value" id="stat-oracles">0</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-label">Cache</div>
+                        <div class="mini-stat-value" id="stat-cache">0%</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-label">Uptime</div>
+                        <div class="mini-stat-value" id="stat-uptime">0s</div>
+                    </div>
+                </div>
+                <div class="limn-blob" id="limn-blob">
+                    <div style="color: #555;">Loading...</div>
+                </div>
+            </div>
+
+            <!-- HVM Code Panel -->
+            <div class="panel">
+                <div class="panel-header">HVM/Bend Code (Execution Layer)</div>
+                <div class="hvm-code" id="hvm-code">
+                    <div style="color: #555;">Loading code...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="event-ticker" id="event-ticker">
+        <div style="color: #888; font-size: 11px; margin-bottom: 5px;">Live Events:</div>
+    </div>
+
+    <script>
+        let systemState = {
+            phase: 'idle',
+            oracles: [],
+            stats: {},
+            executing_line: null
+        };
+
+        function syntaxHighlight(code) {
+            const lines = code.split('\n');
+            return lines.map((line, idx) => {
+                let highlighted = line;
+
+                // Keywords
+                highlighted = highlighted.replace(/\b(def|type|return|if|else|match|case)\b/g,
+                    '<span class="code-keyword">$1</span>');
+
+                // Types
+                highlighted = highlighted.replace(/\b(Oracle|OracleType|Semantic|TimeNow|FileRead)\b/g,
+                    '<span class="code-type">$1</span>');
+
+                // Functions
+                highlighted = highlighted.replace(/\b(oracle|llm|think|add|mul|now|read_file)\b(?=\()/g,
+                    '<span class="code-function">$1</span>');
+
+                // Operators
+                highlighted = highlighted.replace(/([~∿∎@→|])/g,
+                    '<span class="code-operator">$1</span>');
+
+                // Comments
+                highlighted = highlighted.replace(/(#.*$)/g,
+                    '<span class="code-comment">$1</span>');
+
+                const executingClass = (systemState.phase === 'subconscious' && idx > 0 && idx < 20) ? ' executing' : '';
+                return `<div class="code-line${executingClass}">${highlighted || '&nbsp;'}</div>`;
+            }).join('');
+        }
+
+        function generateLimnState(state) {
+            const lines = [];
+
+            // Phase indicator
+            const phaseColors = {
+                'idle': '#888',
+                'subconscious': '#f0f',
+                'oracle': '#ff0',
+                'conscious': '#0ff'
+            };
+            const phaseColor = phaseColors[state.phase] || '#888';
+
+            lines.push(`<div class="limn-line">` +
+                `<span style="color: ${phaseColor}; font-size: 20px; font-weight: bold;">${state.phase.toUpperCase()}</span>` +
+                `</div>`);
+
+            // System state
+            lines.push(`<div class="limn-line">` +
+                `<span class="limn-word system ${state.phase === 'subconscious' || state.phase === 'conscious' ? 'active' : ''}">sys</span>` +
+                `<span class="limn-word system ${state.phase === 'subconscious' || state.phase === 'conscious' ? 'active' : ''}">run</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word oracle">ora</span>` +
+                `<span class="limn-word oracle">pro</span>` +
+                `</div>`);
+
+            // Recent oracles
+            if (state.oracles && state.oracles.length > 0) {
+                lines.push(`<div class="limn-line" style="margin-top: 20px; color: #555;">Recent Oracles:</div>`);
+
+                state.oracles.slice(0, 8).forEach((oracle, idx) => {
+                    const category = getOracleCategory(oracle.type);
+                    const activeClass = oracle.active ? ' executing' : '';
+                    const cachedMark = oracle.cached ? ' 📦' : '';
+
+                    const words = getLimnWords(oracle, category);
+                    const wordSpans = words.map(w =>
+                        `<span class="limn-word ${category}${activeClass}">${w}</span>`
+                    ).join(' ');
+
+                    const result = oracle.result ? String(oracle.result).substring(0, 30) : '...';
+
+                    lines.push(`<div class="limn-line">` +
+                        `<span class="separator">∿</span> ` +
+                        wordSpans +
+                        ` <span class="separator">→</span> ` +
+                        `<span class="limn-word ${category}" style="font-size: 12px;">${result}</span>` +
+                        `${cachedMark}` +
+                        `</div>`);
+                });
+            }
+
+            // Consciousness layers
+            lines.push(`<div class="limn-line" style="margin-top: 20px; color: #555;">Consciousness:</div>`);
+            lines.push(`<div class="limn-line">` +
+                `<span class="separator">~</span> ` +
+                `<span class="limn-word oracle ${state.phase === 'subconscious' ? 'active' : ''}">sub</span>` +
+                `<span class="limn-word oracle ${state.phase === 'subconscious' ? 'active' : ''}">red</span>` +
+                `<span class="limn-word oracle ${state.phase === 'subconscious' ? 'active' : ''}">hvm</span>` +
+                `</div>`);
+
+            lines.push(`<div class="limn-line">` +
+                `<span class="separator">∎</span> ` +
+                `<span class="limn-word oracle ${state.phase === 'conscious' || state.phase === 'oracle' ? 'active' : ''}">con</span>` +
+                `<span class="limn-word oracle ${state.phase === 'conscious' || state.phase === 'oracle' ? 'active' : ''}">act</span>` +
+                `<span class="limn-word oracle ${state.phase === 'conscious' || state.phase === 'oracle' ? 'active' : ''}">exe</span>` +
+                `</div>`);
+
+            // Cache state
+            lines.push(`<div class="limn-line" style="margin-top: 20px;">` +
+                `<span class="limn-word memory">cac</span>` +
+                `<span class="limn-word memory">hit</span>` +
+                `<span class="separator">@</span>` +
+                `<span class="limn-word memory">${state.stats.cache_rate || 0}%</span>` +
+                `</div>`);
+
+            return lines.join('\n');
+        }
+
+        function getOracleCategory(type) {
+            const lower = type.toLowerCase();
+            if (lower.includes('semantic')) return 'semantic';
+            if (lower.includes('file')) return 'file';
+            if (lower.includes('time')) return 'time';
+            if (lower.includes('memory')) return 'memory';
+            return 'oracle';
+        }
+
+        function getLimnWords(oracle, category) {
+            if (category === 'semantic') return ['sem', 'tho', 'llm'];
+            if (category === 'file') return ['fil', 'rea', 'dat'];
+            if (category === 'time') return ['tim', 'now', 'clk'];
+            if (category === 'memory') return ['mem', 'sto', 'ctx'];
+            return ['ora', 'exe', 'res'];
+        }
+
+        function updateLimnState() {
+            const blob = document.getElementById('limn-blob');
+            blob.innerHTML = generateLimnState(systemState);
+        }
+
+        function loadHVMCode() {
+            fetch('/api/bend_code')
+                .then(r => r.json())
+                .then(data => {
+                    const codeDiv = document.getElementById('hvm-code');
+                    codeDiv.innerHTML = syntaxHighlight(data.code);
+                })
+                .catch(e => console.error('Error loading code:', e));
+        }
+
+        function addTickerEvent(message, type) {
+            const ticker = document.getElementById('event-ticker');
+            const item = document.createElement('div');
+            item.className = 'ticker-item';
+
+            const time = new Date().toLocaleTimeString();
+            item.innerHTML = `<span class="ticker-time">[${time}]</span> ${message}`;
+
+            ticker.appendChild(item);
+
+            while (ticker.children.length > 12) {
+                ticker.removeChild(ticker.children[1]); // Keep header
+            }
+
+            ticker.scrollTop = ticker.scrollHeight;
+        }
+
+        function initEventStream() {
+            const eventSource = new EventSource('/api/events');
+
+            eventSource.onmessage = function(e) {
+                const event = JSON.parse(e.data);
+
+                switch(event.type) {
+                    case 'phase_change':
+                        systemState.phase = event.data.phase;
+                        document.getElementById('phase-display').textContent = `~ ${event.data.phase.toUpperCase()} ~`;
+                        addTickerEvent(`Phase: ${event.data.phase.toUpperCase()}`, 'phase');
+                        loadHVMCode(); // Refresh code highlighting
+                        break;
+
+                    case 'oracle_start':
+                        systemState.oracles.unshift({
+                            type: event.data.type,
+                            params: event.data.params,
+                            active: true
+                        });
+                        addTickerEvent(`Oracle ${event.data.type} started`, 'oracle');
+                        break;
+
+                    case 'oracle_complete':
+                        if (systemState.oracles.length > 0) {
+                            systemState.oracles[0].active = false;
+                            systemState.oracles[0].result = event.data.result;
+                            systemState.oracles[0].cached = event.data.cached;
+                        }
+                        addTickerEvent(`Oracle ${event.data.type} complete (${event.data.duration_ms.toFixed(2)}ms)`, 'complete');
+                        break;
+                }
+
+                updateLimnState();
+            };
+        }
+
+        function updateStats() {
+            fetch('/api/state')
+                .then(r => r.json())
+                .then(state => {
+                    systemState.stats = state.stats;
+                    systemState.phase = state.phase;
+                    systemState.oracles = state.recent_oracles.map(o => ({ ...o, active: false }));
+
+                    document.getElementById('stat-oracles').textContent = state.stats.total_oracles;
+                    document.getElementById('stat-cache').textContent = state.stats.cache_rate + '%';
+                    document.getElementById('stat-uptime').textContent = state.stats.uptime_seconds + 's';
+                    document.getElementById('phase-display').textContent = `~ ${state.phase.toUpperCase()} ~`;
+
+                    updateLimnState();
+                });
+        }
+
+        // Initialize
+        loadHVMCode();
+        initEventStream();
+        updateStats();
+        setInterval(updateStats, 3000);
+    </script>
+</body>
+</html>
