@@ -247,3 +247,38 @@ arc cho | obj gnd | sub cal | wev beg
 ---
 
 *— Rex, 2026-02-01*
+
+---
+
+## Addendum: Context Transformation (2026-02-01 evening)
+
+### The Revolutionary Insight
+
+**Context is not append-only. Context is computable.**
+
+After each LLM turn, LMN reduces the ENTIRE context through interaction net reduction. This means:
+
+1. LLM produces Limn expressions (semantic content)
+2. LMN converts to interaction nets
+3. Nets reduce optimally (β-reduction, optimal sharing)
+4. Serialize back to Limn (compressed vocabulary)
+5. Next turn receives transformed context, not appended history
+
+**Benefits:**
+- **Infinite conversation** - Context never grows, it evolves
+- **Semantic compression** - Redundancy eliminated automatically
+- **Pattern emergence** - Nets find optimal structure
+- **True persistence** - Meaning preserved through transformation
+
+**Challenges:**
+- Round-trip fidelity (Text → Net → Reduce → Text)
+- LLM understanding of reduced context
+- Preserving causality through reduction
+
+**Implementation strategy:**
+- Start with Limn-only reduction (triads → nets → triads)
+- Test semantic preservation experimentally
+- Gradually expand to full context transformation
+- Measure compression ratios and semantic drift
+
+**This changes everything.** The context window becomes a workspace, not a log. Thinking happens IN PLACE, not linearly.
