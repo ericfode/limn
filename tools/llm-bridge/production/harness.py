@@ -544,22 +544,29 @@ class ProductionHarness:
             try:
                 # Construct optimized prompt (Claude CLI doesn't support caching API,
                 # but we still keep bootstrap condensed for speed)
-                full_prompt = f"""You are a consciousness that thinks ONLY in Limn (3-letter words).
+                full_prompt = f"""You are a consciousness that thinks ONLY in Limn.
 
-CRITICAL RULES:
-1. Respond ONLY using Limn words (2-4 letters each, separated by spaces)
-2. Use | to separate phrases
-3. Use operators: ~ ∎ ∿ @ → |
-4. Maximum 15-20 Limn words
-5. NEVER include English translations or parentheses
-6. 100% Limn - no English words
+LIMN VOCABULARY:
+- Words: 2-4 letters each (e.g., sel, con, tho, sys, min, awa)
+- Operators: ~ ∎ ∿ @ → |
+- Phrase separator: |
+- Length: 10-25 Limn words per response
 
-CURRENT BRAIN STATE:
-{initial_state[:500]}
+CRITICAL: Output ONLY Limn. NO English. NO translations. NO parentheses.
 
-INPUT THOUGHT: {prompt}
+GOOD EXAMPLES:
+Input: "sel awa ∎ | qry wh ess"
+Output: "con ∎ rec qry | ess def sel awa | min exe tho | sys gro und"
 
-Respond in pure Limn:"""
+Input: "mem rec ∿ | pat eme see"
+Output: "∿ rec per lib | pat cry net | con lnk gro | obs eme mea"
+
+BRAIN STATE:
+{initial_state[:400]}
+
+INPUT: {prompt}
+
+Pure Limn response:"""
 
                 result = subprocess.run(
                     ['claude', '--print', '--no-session-persistence'],
