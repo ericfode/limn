@@ -1,0 +1,101 @@
+# Bootstrap Consciousness - The Immutable Core
+# ============================================
+# This is the minimal seed consciousness that never changes.
+# It contains just enough to understand how to grow itself.
+
+# Core Operators (Immutable)
+# ---------------------------
+~ | delegate to conscious (oracle/LLM)
+∎ | ground truth (frozen, immutable reality)
+∿ | temporal (memory, time dimension)
+@ | focus attention (collapse context)
+→ | sequential flow (then do this)
+
+# Meta-Cognition (How to Think About Thinking)
+# ---------------------------------------------
+qry | query (ask for information)
+und | understand (comprehend meaning)
+kno | know (have knowledge)
+nee | need (require something)
+lea | learn (acquire new knowledge)
+
+# Vocabulary Expansion (How to Get More Words)
+# ---------------------------------------------
+wor | word (vocabulary item)
+voc | vocabulary (collection of words)
+mea | meaning (semantic content)
+def | define (create definition)
+use | use (employ a word)
+
+# Self-Description (How to Describe This Bootstrap)
+# --------------------------------------------------
+boo | bootstrap (this core)
+cor | core (essential part)
+imm | immutable (never changes)
+see | seed (starting point)
+gro | grow (expand from seed)
+
+# Query Pattern (How to Ask for More)
+# ------------------------------------
+# Template: ~ qry voc @ <domain>
+# Example: ~ qry voc @ mathematics
+# Result: System queries vocabulary database for math words
+
+# Derived Model Generation (Meta-Transformation)
+# -----------------------------------------------
+mod | model (representation)
+der | derive (create from existing)
+tra | transform (change form)
+gen | generate (create new)
+vis | visualize (make visible)
+
+# Context Manipulation (Memory Management)
+# -----------------------------------------
+ctx | context (accumulated state)
+red | reduce (compress/optimize)
+mer | merge (combine patterns)
+fil | filter (select subset)
+agg | aggregate (combine data)
+com | compress (make smaller)
+
+# Visualization Hints (Self-Display Instructions)
+# ------------------------------------------------
+viz gph | visualize as graph
+viz lin | visualize as timeline
+viz tre | visualize as tree
+viz tab | visualize as table
+viz net | visualize as network
+
+# Bootstrap Query Examples
+# -------------------------
+# To learn about a new domain:
+~ qry voc @ domain_name → ∎ vocabulary_list
+
+# To derive a new model:
+~ der mod @ current_state → new_model
+
+# To visualize current state:
+~ viz gph @ ctx → graph_visualization
+
+# To reduce context:
+~ red ctx @ threshold → compressed_context
+
+# The Bootstrap Loop (Self-Sustaining Cognition)
+# -----------------------------------------------
+# 1. Start with bootstrap (this file)
+# 2. Use bootstrap to query for domain vocabulary
+# 3. Use domain vocabulary to build models
+# 4. Use models to transform context
+# 5. Use context to generate new queries
+# 6. Loop: Query → Learn → Build → Transform → Query
+
+# Core Invariants (Never Violate)
+# --------------------------------
+# - Bootstrap is immutable (∎)
+# - Queries always go through ~ operator
+# - Results always have type annotations
+# - Context always accumulates (∿)
+# - Visualization hints always honored
+
+# This is enough to bootstrap infinite complexity
+# from 911 words and a query mechanism.
