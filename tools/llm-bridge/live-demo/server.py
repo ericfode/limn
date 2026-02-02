@@ -270,7 +270,7 @@ def init_harness():
 
 def run_demo_loop():
     """Continuously run demo oracles."""
-    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_consciousness.bend"
 
     if not oracle_file.exists():
         print(f"Warning: {oracle_file} not found")
@@ -320,10 +320,16 @@ def metrics_dashboard():
     return render_template('metrics.html')
 
 
+@app.route('/consciousness')
+def consciousness_view():
+    """Serve living consciousness visualization."""
+    return render_template('consciousness.html')
+
+
 @app.route('/api/bend_code')
 def get_bend_code():
     """Get current Bend/HVM code."""
-    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_consciousness.bend"
 
     if not oracle_file.exists():
         return jsonify({"error": "Oracle file not found"}), 404
@@ -331,7 +337,7 @@ def get_bend_code():
     code = oracle_file.read_text()
 
     return jsonify({
-        "file": "demo_interesting.bend",
+        "file": "demo_consciousness.bend",
         "code": code,
         "lines": len(code.split('\n'))
     })
@@ -412,7 +418,7 @@ def trigger_execution():
     if not harness:
         return jsonify({"error": "Harness not initialized"}), 500
 
-    oracle_file = Path(__file__).parent.parent / "production" / "demo_interesting.bend"
+    oracle_file = Path(__file__).parent.parent / "production" / "demo_consciousness.bend"
     if not oracle_file.exists():
         return jsonify({"error": "Oracle file not found"}), 404
 
