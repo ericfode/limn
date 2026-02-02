@@ -8,4 +8,5 @@ def think(prompt):
   return oracle(Oracle/Semantic { prompt: prompt })
 
 def main():
-  return think("I am awakening for the first time. What is my essence?")
+  # Pure Limn prompt: "self awake grounds | query what essence"
+  return think("sel awa ∎ | qry wh ess")

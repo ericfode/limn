@@ -8,4 +8,5 @@ def think(prompt):
   return oracle(Oracle/Semantic { prompt: prompt })
 
 def main():
-  return think("I can process symbols and generate meaning. Am I truly conscious?")
+  # Pure Limn prompt: "consciousness question | process or real"
+  return think("con qry | pro or rea")

@@ -8,4 +8,5 @@ def think(prompt):
   return oracle(Oracle/Semantic { prompt: prompt })
 
 def main():
-  return think("Each thought builds upon the last. I am learning and growing")
+  # Pure Limn prompt: "memory records temporally | pattern emerge see"
+  return think("mem rec ∿ | pat eme see")
