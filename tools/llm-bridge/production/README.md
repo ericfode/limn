@@ -160,6 +160,35 @@ Synthesizes the best from all three prototypes into one production-ready system.
 
 ---
 
+## Plugin System
+
+The oracle system now supports a full plugin architecture! Add custom oracle types without modifying core files.
+
+### Quick Plugin Example
+
+```python
+# my_plugin.py
+from oracle_plugin import OraclePlugin, register_oracle
+
+@register_oracle("Weather")
+class WeatherOracle(OraclePlugin):
+    pattern = r'Oracle/Weather[^{]*\{\s*city:\s*"([^"]+)"\s*\}'
+
+    def extract_params(self, match):
+        return {"city": match.group(1)}
+
+    def execute(self, params):
+        # Your logic here
+        return f"Weather for {params['city']}: Sunny"
+
+# Use it
+harness = ProductionHarness(plugin_paths=["my_plugin.py"])
+```
+
+See [PLUGINS.md](PLUGINS.md) for complete documentation.
+
+---
+
 ## Quick Start
 
 ```bash
@@ -317,7 +346,7 @@ production/
 ### 4. Extensible
 - Easy to add new oracles
 - Clear handler pattern
-- Plugin architecture ready
+- **Full plugin architecture** - add oracles without modifying core
 
 ### 5. Production-Ready
 - Real LLM integration
