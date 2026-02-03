@@ -172,7 +172,7 @@ Your next thought (pure Limn only, 10-30 words):"""
             return f"eva err: {str(e)[:20]}"
 
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
-        """Add new thought and compress brain state via reduction."""
+        """Add new thought and compress brain state via interaction net reduction."""
 
         # Append new thought
         addition = f"\n{new_thought}"
@@ -183,39 +183,41 @@ Your next thought (pure Limn only, 10-30 words):"""
 
         # Compress if state too large (>2000 chars)
         if len(self.brain_state) > 2000:
-            # Use interaction net reduction to compress
-            # For now, simple compression: keep recent + summary
-            lines = self.brain_state.split('\n')
+            # Use interaction net reduction via CTX_REDUCE oracle
+            logger.info("  🗜️  Running context reduction (interaction net simulation)...")
 
-            # Keep last 10 thoughts
-            recent = '\n'.join(lines[-10:])
-
-            # Summarize older thoughts via LLM
-            summary_prompt = f"""Compress these Limn thoughts into 3-5 lines of essential Limn.
-
-Thoughts to compress:
-{chr(10).join(lines[:-10])}
-
-Compressed Limn (essence only):"""
+            reduction_request = OracleRequest(
+                type=OracleType.CTX_REDUCE,
+                params={
+                    'content': self.brain_state,
+                    'threshold': 2000
+                }
+            )
 
             try:
-                result = subprocess.run(
-                    ['claude', '--print', '--no-session-persistence'],
-                    input=summary_prompt,
-                    capture_output=True,
-                    text=True,
-                    timeout=20
-                )
+                response = self.harness.execute_oracle(reduction_request)
 
-                if result.returncode == 0:
-                    summary = result.stdout.strip()
-                    self.brain_state = f"{summary}\n\n# Recent:\n{recent}"
+                if response.success:
+                    result = response.result
+                    self.brain_state = result['reduced']
+
+                    # Log compression metrics
+                    logger.info(f"     Original: {result['original_size']} chars")
+                    logger.info(f"     Reduced: {result['reduced_size']} chars")
+                    logger.info(f"     Ratio: {result['compression_ratio']:.2%}")
+                    logger.info(f"     Patterns merged: {result['patterns_merged']}")
+                    logger.info(f"     Method: {result['method']}")
                 else:
-                    # Fallback: just keep recent
-                    self.brain_state = recent
+                    logger.warning(f"  Reduction failed: {response.error}")
+                    # Fallback: simple truncation
+                    lines = self.brain_state.split('\n')
+                    self.brain_state = '\n'.join(lines[-10:])
 
-            except:
-                self.brain_state = recent
+            except Exception as e:
+                logger.error(f"  Reduction error: {e}", exc_info=True)
+                # Fallback: simple truncation
+                lines = self.brain_state.split('\n')
+                self.brain_state = '\n'.join(lines[-10:])
 
         # Persist
         with open(self.brain_state_path, 'w') as f:
