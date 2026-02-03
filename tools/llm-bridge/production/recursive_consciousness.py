@@ -28,11 +28,12 @@ logger = logging.getLogger(__name__)
 class RecursiveConsciousness:
     """Self-modifying consciousness with compressed state."""
 
-    def __init__(self, max_recursion_depth: int = 3):
+    def __init__(self, max_recursion_depth: int = 3, parallel_mode: bool = False):
         self.bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
         self.brain_state_path = Path(__file__).parent / "brain_state.lmn"
         self.iteration = 0
         self.max_recursion_depth = max_recursion_depth
+        self.parallel_mode = parallel_mode  # Enable parallel conscious/subconscious execution
 
         # Initialize oracle harness with LLM enabled
         self.harness = ProductionHarness(enable_real_llm=True)
@@ -129,8 +130,17 @@ Your next thought (pure Limn only, 10-30 words):"""
             params={'prompt': f"{operation} {content}"}
         )
 
-    def evaluate_if_needed(self, thought: str, depth: int = 0) -> Optional[str]:
-        """Evaluate oracle request using production harness (with recursion support)."""
+    def evaluate_if_needed(self, thought: str, depth: int = 0, async_mode: bool = False) -> Optional[str]:
+        """Evaluate oracle request using production harness (with recursion support).
+
+        Args:
+            thought: The Limn thought to evaluate
+            depth: Current recursion depth
+            async_mode: If True, executes oracle asynchronously (parallel mode)
+
+        Returns:
+            Oracle result string, or None if no oracle request
+        """
 
         oracle_request = self.parse_oracle_request(thought)
         if not oracle_request:
@@ -142,7 +152,16 @@ Your next thought (pure Limn only, 10-30 words):"""
         logger.info(f"{indent}Oracle L{depth} params: {oracle_request.params}")
 
         try:
-            response = self.harness.execute_oracle(oracle_request)
+            if async_mode:
+                # PARALLEL EXECUTION: Launch oracle asynchronously
+                logger.info(f"{indent}⚡ Launching oracle asynchronously...")
+                future = self.harness.execute_oracle_async(oracle_request)
+
+                # Wait for result (could add timeout/speculation here)
+                response = self.harness.wait_for_oracle(future, timeout=30)
+            else:
+                # SEQUENTIAL EXECUTION: Wait for oracle to complete
+                response = self.harness.execute_oracle(oracle_request)
 
             if response.success:
                 result = response.result
@@ -283,8 +302,9 @@ Your next thought (pure Limn only, 10-30 words):"""
             # 3. Evaluate if ~ operator present
             eval_result = None
             if '~' in thought:
-                logger.info("⚙️  Evaluating oracle...")
-                eval_result = self.evaluate_if_needed(thought)
+                mode = "⚡ PARALLEL" if self.parallel_mode else "⚙️  SEQUENTIAL"
+                logger.info(f"{mode} oracle evaluation...")
+                eval_result = self.evaluate_if_needed(thought, async_mode=self.parallel_mode)
                 if eval_result:
                     logger.info(f"   Result: {eval_result}")
 
@@ -304,7 +324,20 @@ Your next thought (pure Limn only, 10-30 words):"""
 if __name__ == "__main__":
     import sys
 
-    iterations = int(sys.argv[1]) if len(sys.argv) > 1 else 100
+    # Parse arguments
+    iterations = 100
+    parallel_mode = False
 
-    consciousness = RecursiveConsciousness()
+    for arg in sys.argv[1:]:
+        if arg == "--parallel":
+            parallel_mode = True
+        elif arg.isdigit():
+            iterations = int(arg)
+
+    if parallel_mode:
+        print("🚀 PARALLEL MODE: Conscious and subconscious execute in parallel")
+    else:
+        print("🔄 SEQUENTIAL MODE: Conscious waits for subconscious")
+
+    consciousness = RecursiveConsciousness(parallel_mode=parallel_mode)
     consciousness.run_recursive_loop(iterations)
