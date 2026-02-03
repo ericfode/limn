@@ -28,10 +28,11 @@ logger = logging.getLogger(__name__)
 class RecursiveConsciousness:
     """Self-modifying consciousness with compressed state."""
 
-    def __init__(self):
+    def __init__(self, max_recursion_depth: int = 3):
         self.bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
         self.brain_state_path = Path(__file__).parent / "brain_state.lmn"
         self.iteration = 0
+        self.max_recursion_depth = max_recursion_depth
 
         # Initialize oracle harness with LLM enabled
         self.harness = ProductionHarness(enable_real_llm=True)
@@ -128,16 +129,17 @@ Your next thought (pure Limn only, 10-30 words):"""
             params={'prompt': f"{operation} {content}"}
         )
 
-    def evaluate_if_needed(self, thought: str) -> Optional[str]:
-        """Evaluate oracle request using production harness."""
+    def evaluate_if_needed(self, thought: str, depth: int = 0) -> Optional[str]:
+        """Evaluate oracle request using production harness (with recursion support)."""
 
         oracle_request = self.parse_oracle_request(thought)
         if not oracle_request:
             logger.debug(f"No oracle request parsed from: {thought[:100]}")
             return None
 
-        logger.info(f"  Oracle type: {oracle_request.type.value}")
-        logger.info(f"  Oracle params: {oracle_request.params}")
+        indent = "  " * (depth + 1)
+        logger.info(f"{indent}Oracle L{depth} type: {oracle_request.type.value}")
+        logger.info(f"{indent}Oracle L{depth} params: {oracle_request.params}")
 
         try:
             response = self.harness.execute_oracle(oracle_request)
@@ -148,15 +150,25 @@ Your next thought (pure Limn only, 10-30 words):"""
                 if isinstance(result, (dict, list)):
                     result = json.dumps(result)
                 result_str = str(result)
-                logger.info(f"  Oracle succeeded: {result_str[:100]}")
+                logger.info(f"{indent}Oracle L{depth} succeeded: {result_str[:100]}")
+
+                # Multi-level recursion: If result contains ~, evaluate deeper
+                if '~' in result_str and depth < self.max_recursion_depth:
+                    logger.info(f"{indent}↓ Spawning sub-oracle (depth {depth + 1})...")
+                    sub_result = self.evaluate_if_needed(result_str, depth + 1)
+                    if sub_result:
+                        # Combine results: original + sub-evaluation
+                        result_str = f"{result_str}\n{indent}∎ L{depth+1}: {sub_result}"
+                        logger.info(f"{indent}↑ Sub-oracle complete, bubbling up")
+
                 return result_str
             else:
                 error = response.error or "unknown error"
-                logger.warning(f"Oracle failed: {error}")
+                logger.warning(f"{indent}Oracle L{depth} failed: {error}")
                 return f"eva fai: {error[:20]}"
 
         except Exception as e:
-            logger.error(f"Oracle exception: {e}", exc_info=True)
+            logger.error(f"{indent}Oracle L{depth} exception: {e}", exc_info=True)
             return f"eva err: {str(e)[:20]}"
 
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
