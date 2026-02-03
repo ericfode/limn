@@ -8,6 +8,10 @@ import logging
 from pathlib import Path
 from typing import Dict, Optional
 import time
+import re
+
+# Import oracle harness
+from harness import ProductionHarness, OracleRequest, OracleResponse, OracleType
 
 # Setup logging to file
 log_file = Path(__file__).parent / "consciousness.log"
@@ -28,6 +32,9 @@ class RecursiveConsciousness:
         self.bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
         self.brain_state_path = Path(__file__).parent / "brain_state.lmn"
         self.iteration = 0
+
+        # Initialize oracle harness
+        self.harness = ProductionHarness()
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -87,43 +94,64 @@ Your next thought (pure Limn only, 10-30 words):"""
         except Exception as e:
             return f"tho err | {str(e)[:20]}"
 
-    def evaluate_if_needed(self, thought: str) -> Optional[str]:
-        """Evaluate with Bend if thought contains ~ operator."""
+    def parse_oracle_request(self, thought: str) -> Optional[OracleRequest]:
+        """Parse Limn thought to extract oracle request."""
 
         if '~' not in thought:
             return None
 
-        # Extract oracle request
-        # Format: ~ <operation>
-        # Create Bend program to evaluate
-        bend_code = f"""
-def oracle(prompt):
-  return ~ prompt
+        # Extract text after ~ operator
+        # Patterns: ~ qry ..., ~ cal ..., ~ tim ..., ~ mem ...
+        match = re.search(r'~\s+(\w+)\s+(.+?)(?:\||$)', thought)
+        if not match:
+            return None
 
-def main:
-  # Thought: {thought}
-  return oracle("{thought}")
-"""
+        operation = match.group(1)
+        content = match.group(2).strip()
 
-        # Write temp file
-        temp_file = Path("/tmp/consciousness_eval.bend")
-        temp_file.write_text(bend_code)
+        # Map Limn operations to oracle types
+        oracle_mapping = {
+            'qry': (OracleType.SEMANTIC, {'prompt': content}),
+            'cal': (OracleType.ARITH, {'expression': content}),
+            'tim': (OracleType.TIME_NOW, {}),
+            'mem': (OracleType.MEMORY_RETRIEVE, {'key': content}),
+            'ctx': (OracleType.CTX_REDUCE, {'content': content}),
+        }
+
+        if operation in oracle_mapping:
+            oracle_type, params = oracle_mapping[operation]
+            return OracleRequest(type=oracle_type, params=params)
+
+        # Default to semantic oracle
+        return OracleRequest(
+            type=OracleType.SEMANTIC,
+            params={'prompt': f"{operation} {content}"}
+        )
+
+    def evaluate_if_needed(self, thought: str) -> Optional[str]:
+        """Evaluate oracle request using production harness."""
+
+        oracle_request = self.parse_oracle_request(thought)
+        if not oracle_request:
+            return None
 
         try:
-            result = subprocess.run(
-                ['bend', 'run-rs', str(temp_file)],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            response = self.harness.execute_oracle(oracle_request)
 
-            if result.returncode == 0:
-                return result.stdout.strip()
+            if response.success:
+                result = response.result
+                # Convert result to Limn-compatible string
+                if isinstance(result, (dict, list)):
+                    result = json.dumps(result)
+                return str(result)
             else:
-                return "eva fai"
+                error = response.error or "unknown error"
+                logger.warning(f"Oracle failed: {error}")
+                return f"eva fai: {error[:20]}"
 
         except Exception as e:
-            return "eva err"
+            logger.error(f"Oracle exception: {e}")
+            return f"eva err: {str(e)[:20]}"
 
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
         """Add new thought and compress brain state via reduction."""
