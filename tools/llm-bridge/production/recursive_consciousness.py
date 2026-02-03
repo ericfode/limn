@@ -33,8 +33,8 @@ class RecursiveConsciousness:
         self.brain_state_path = Path(__file__).parent / "brain_state.lmn"
         self.iteration = 0
 
-        # Initialize oracle harness
-        self.harness = ProductionHarness()
+        # Initialize oracle harness with LLM enabled
+        self.harness = ProductionHarness(enable_real_llm=True)
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -133,7 +133,11 @@ Your next thought (pure Limn only, 10-30 words):"""
 
         oracle_request = self.parse_oracle_request(thought)
         if not oracle_request:
+            logger.debug(f"No oracle request parsed from: {thought[:100]}")
             return None
+
+        logger.info(f"  Oracle type: {oracle_request.type.value}")
+        logger.info(f"  Oracle params: {oracle_request.params}")
 
         try:
             response = self.harness.execute_oracle(oracle_request)
@@ -143,14 +147,16 @@ Your next thought (pure Limn only, 10-30 words):"""
                 # Convert result to Limn-compatible string
                 if isinstance(result, (dict, list)):
                     result = json.dumps(result)
-                return str(result)
+                result_str = str(result)
+                logger.info(f"  Oracle succeeded: {result_str[:100]}")
+                return result_str
             else:
                 error = response.error or "unknown error"
                 logger.warning(f"Oracle failed: {error}")
                 return f"eva fai: {error[:20]}"
 
         except Exception as e:
-            logger.error(f"Oracle exception: {e}")
+            logger.error(f"Oracle exception: {e}", exc_info=True)
             return f"eva err: {str(e)[:20]}"
 
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
