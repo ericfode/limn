@@ -207,6 +207,16 @@ Your next thought (pure Limn only, 10-30 words):"""
                     logger.info(f"     Ratio: {result['compression_ratio']:.2%}")
                     logger.info(f"     Patterns merged: {result['patterns_merged']}")
                     logger.info(f"     Method: {result['method']}")
+
+                    # Log autonomous learning stats if present
+                    if 'autonomous_learning' in result:
+                        learning = result['autonomous_learning']
+                        if learning['patterns_discovered'] > 0:
+                            logger.info(f"  🧠 AUTONOMOUS LEARNING:")
+                            logger.info(f"     Patterns discovered: {learning['patterns_discovered']}")
+                            logger.info(f"     Rules proposed: {learning['rules_proposed']}")
+                            logger.info(f"     Rules applied: {learning['rules_applied']}")
+                            logger.info(f"     Total learned rules: {learning['total_learned_rules']}")
                 else:
                     logger.warning(f"  Reduction failed: {response.error}")
                     # Fallback: simple truncation

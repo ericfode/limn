@@ -236,6 +236,12 @@ class ProductionHarness:
             "total_time_ms": 0
         }
 
+        # Pattern learning for autonomous rule discovery
+        self.pattern_frequencies = {}  # Track phrase co-occurrence
+        self.learned_rules = {}  # pattern -> reduction mapping
+        self.pattern_log_path = Path(__file__).parent / "pattern_discoveries.log"
+        self.rule_proposals_path = Path(__file__).parent / "rule_proposals.jsonl"
+
     def _init_cache(self):
         """Initialize persistent cache database."""
         conn = sqlite3.connect(self.cache_db)
@@ -887,6 +893,91 @@ Pure Limn response:"""
         key = params["key"]
         return self.memory.get(key)
 
+    def _discover_patterns(self, statements: List[str]) -> List[Dict[str, Any]]:
+        """Discover recurring patterns in thought sequences.
+
+        Returns list of pattern proposals with:
+        - pattern: the recurring sequence
+        - frequency: how often it appears
+        - proposed_reduction: suggested compression
+        """
+        from collections import Counter
+        from itertools import combinations
+        import re
+
+        # Extract word sequences (2-4 words)
+        word_sequences = []
+        for stmt in statements:
+            # Remove operators and split into words
+            words = re.findall(r'\b[a-z]{2,4}\b', stmt.lower())
+
+            # Generate 2-grams, 3-grams, 4-grams
+            for n in [2, 3, 4]:
+                for i in range(len(words) - n + 1):
+                    seq = tuple(words[i:i+n])
+                    word_sequences.append(seq)
+
+        # Count frequencies
+        seq_counts = Counter(word_sequences)
+
+        # Find patterns that appear 5+ times
+        frequent_patterns = [
+            (seq, count) for seq, count in seq_counts.items()
+            if count >= 5
+        ]
+
+        # Sort by frequency
+        frequent_patterns.sort(key=lambda x: x[1], reverse=True)
+
+        # Generate proposals
+        proposals = []
+        for seq, freq in frequent_patterns[:10]:  # Top 10 patterns
+            pattern_str = ' '.join(seq)
+
+            # Check if not already a learned rule
+            if pattern_str in self.learned_rules:
+                continue
+
+            # Propose a compound reduction
+            # Example: ('cod', 'flo', 'log') → 'cod_flo_log'
+            reduction = '_'.join(seq)
+
+            proposals.append({
+                'pattern': pattern_str,
+                'frequency': freq,
+                'proposed_reduction': reduction,
+                'confidence': min(freq / 10.0, 1.0)  # Normalize confidence
+            })
+
+        return proposals
+
+    def _apply_learned_rules(self, content: str) -> str:
+        """Apply learned reduction rules to content."""
+        reduced = content
+
+        for pattern, reduction in self.learned_rules.items():
+            # Replace pattern with reduction
+            reduced = reduced.replace(pattern, reduction)
+
+        return reduced
+
+    def _log_pattern_proposal(self, proposal: Dict[str, Any], applied: bool = False):
+        """Log pattern proposal for human review."""
+        import json
+
+        log_entry = {
+            'timestamp': time.time(),
+            'pattern': proposal['pattern'],
+            'frequency': proposal['frequency'],
+            'reduction': proposal['proposed_reduction'],
+            'confidence': proposal['confidence'],
+            'applied': applied
+        }
+
+        # Append to JSONL log
+        with open(self.rule_proposals_path, 'a') as f:
+            f.write(json.dumps(log_entry) + '\n')
+
     def _exec_ctx_reduce(self, params: Dict) -> Dict[str, Any]:
         """Context reduction oracle - Interaction net-like compression.
 
@@ -912,13 +1003,41 @@ Pure Limn response:"""
         # Parse into logical units (preserve line structure)
         lines = [l.strip() for l in content.split('\n') if l.strip() and not l.strip().startswith('#')]
 
+        from collections import Counter, OrderedDict
+
+        # AUTONOMOUS LEARNING: Discover patterns BEFORE reduction
+        # (need to see full repetition to discover patterns)
+        pattern_proposals = []
+        rules_applied_count = 0
+        rules_proposed_count = 0
+
+        if len(lines) >= 10:
+            pattern_proposals = self._discover_patterns(lines)
+
+            # Auto-apply high-confidence rules (confidence >= 0.7)
+            for proposal in pattern_proposals:
+                rules_proposed_count += 1
+
+                if proposal['confidence'] >= 0.7:
+                    # Apply the rule
+                    pattern = proposal['pattern']
+                    reduction = proposal['proposed_reduction']
+
+                    # Add to learned rules
+                    self.learned_rules[pattern] = reduction
+                    rules_applied_count += 1
+
+                    # Log as applied
+                    self._log_pattern_proposal(proposal, applied=True)
+                else:
+                    # Log as proposed (for human review)
+                    self._log_pattern_proposal(proposal, applied=False)
+
         # Interaction net reduction rules (order matters):
         # 1. Remove exact duplicates
         # 2. Compress failed oracle chains
         # 3. Merge similar operations (semantic similarity)
         # 4. Keep only recent N thoughts + summary of old
-
-        from collections import Counter, OrderedDict
 
         # Track what we've seen
         seen_lines = OrderedDict()  # Preserves insertion order
@@ -990,6 +1109,11 @@ Pure Limn response:"""
             reduced_lines = [summary] + reduced_lines[-MAX_LINES:]
 
         reduced_content = '\n'.join(reduced_lines)
+
+        # Apply learned rules to the reduced content
+        if self.learned_rules:
+            reduced_content = self._apply_learned_rules(reduced_content)
+
         reduced_size = len(reduced_content)
         compression_ratio = reduced_size / original_size if original_size > 0 else 1.0
 
@@ -999,14 +1123,20 @@ Pure Limn response:"""
             "reduced": reduced_content,
             "original_size": original_size,
             "reduced_size": reduced_size,
-            "compression_ratio": compression_ratio,
+            "compression_ratio": reduced_size / original_size if original_size > 0 else 1.0,
             "patterns_merged": patterns_merged,
-            "method": "interaction_net_simulation_v2",
+            "method": "interaction_net_simulation_v3_autonomous",
             "rules_applied": {
                 "exact_duplicates": duplicate_count,
                 "failed_oracle_compression": oracle_chain_compressions,
                 "total_failed_oracles": len(failed_oracles),
                 "successful_oracles": len(successful_oracles)
+            },
+            "autonomous_learning": {
+                "patterns_discovered": len(pattern_proposals),
+                "rules_proposed": rules_proposed_count,
+                "rules_applied": rules_applied_count,
+                "total_learned_rules": len(self.learned_rules)
             }
         }
 
