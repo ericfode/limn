@@ -29,7 +29,7 @@ from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, Future
 import requests
 import hashlib
 import hmac
@@ -624,6 +624,43 @@ class ProductionHarness:
                 result=None,
                 error=str(e),
                 duration_ms=duration
+            )
+
+    def execute_oracle_async(self, oracle: OracleRequest) -> Future:
+        """Execute oracle asynchronously, return Future.
+
+        Enables parallel conscious/subconscious execution.
+        Conscious can continue thinking while oracle executes.
+        """
+        if not hasattr(self, '_executor'):
+            # Lazy-init thread pool executor
+            self._executor = ThreadPoolExecutor(max_workers=self.max_concurrency)
+
+        # Submit oracle execution to thread pool
+        future = self._executor.submit(self.execute_oracle, oracle)
+        return future
+
+    def wait_for_oracle(self, future: Future, timeout: Optional[float] = None) -> OracleResponse:
+        """Wait for async oracle to complete.
+
+        Args:
+            future: Future from execute_oracle_async()
+            timeout: Max seconds to wait (None = wait forever)
+
+        Returns:
+            OracleResponse when oracle completes
+
+        Raises:
+            TimeoutError if oracle doesn't complete in time
+        """
+        try:
+            response = future.result(timeout=timeout)
+            return response
+        except TimeoutError:
+            return OracleResponse(
+                success=False,
+                result=None,
+                error=f"Oracle timed out after {timeout}s"
             )
 
     def execute_oracles_batch(
