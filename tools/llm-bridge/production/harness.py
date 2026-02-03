@@ -563,6 +563,7 @@ class ProductionHarness:
                 OracleType.HTTP_POST: self._exec_http_post,
                 OracleType.MEMORY_STORE: self._exec_memory_store,
                 OracleType.MEMORY_RETRIEVE: self._exec_memory_retrieve,
+                OracleType.CTX_REDUCE: self._exec_ctx_reduce,
                 OracleType.PROCESS_SPAWN: self._exec_process_spawn,
                 OracleType.PROCESS_KILL: self._exec_process_kill,
                 OracleType.PROCESS_STATUS: self._exec_process_status,
@@ -885,6 +886,129 @@ Pure Limn response:"""
         """Memory retrieve oracle (∿ context)."""
         key = params["key"]
         return self.memory.get(key)
+
+    def _exec_ctx_reduce(self, params: Dict) -> Dict[str, Any]:
+        """Context reduction oracle - Interaction net-like compression.
+
+        Simulates HVM interaction net reduction for Limn context.
+        This is a Python approximation; true HVM would be optimal.
+        """
+        content = params["content"]
+        threshold = params.get("threshold", 2000)  # Min size before reduction
+
+        original_size = len(content)
+
+        # If content too small, don't reduce
+        if original_size < threshold:
+            return {
+                "reduced": content,
+                "original_size": original_size,
+                "reduced_size": original_size,
+                "compression_ratio": 1.0,
+                "patterns_merged": 0,
+                "method": "none - below threshold"
+            }
+
+        # Parse into logical units (preserve line structure)
+        lines = [l.strip() for l in content.split('\n') if l.strip() and not l.strip().startswith('#')]
+
+        # Interaction net reduction rules (order matters):
+        # 1. Remove exact duplicates
+        # 2. Compress failed oracle chains
+        # 3. Merge similar operations (semantic similarity)
+        # 4. Keep only recent N thoughts + summary of old
+
+        from collections import Counter, OrderedDict
+
+        # Track what we've seen
+        seen_lines = OrderedDict()  # Preserves insertion order
+        failed_oracles = []
+        successful_oracles = []
+
+        duplicate_count = 0
+        oracle_chain_compressions = 0
+        similar_merges = 0
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Rule 1: Deduplicate exact matches (but keep first occurrence)
+            if line in seen_lines:
+                duplicate_count += 1
+                i += 1
+                continue
+
+            # Rule 2: Compress failed oracle chains
+            # Pattern: "~ <request>" followed by "∎ eva err" on next line
+            if line.startswith('~') and i + 1 < len(lines):
+                next_line = lines[i + 1]
+                if next_line == "∎ eva err":
+                    # Don't include failed oracle spam
+                    failed_oracles.append(line)
+                    oracle_chain_compressions += 1
+                    i += 2
+                    continue
+
+            # Rule 3: Track successful oracles separately
+            if line.startswith('~'):
+                successful_oracles.append(line)
+                seen_lines[line] = True
+                i += 1
+                continue
+
+            # Rule 4: Keep other statements
+            seen_lines[line] = True
+            i += 1
+
+        # Reduce failed oracle count (keep only most recent ones)
+        if len(failed_oracles) > 3:
+            failed_oracle_summary = f"# ({len(failed_oracles)} failed oracle attempts)"
+            reduced_failed = failed_oracles[-2:]  # Keep 2 most recent
+        else:
+            failed_oracle_summary = None
+            reduced_failed = failed_oracles
+
+        # Assemble reduced content (recent thoughts prioritized)
+        reduced_lines = []
+
+        # Add summary of failed oracles if many
+        if failed_oracle_summary:
+            reduced_lines.append(failed_oracle_summary)
+
+        # Add recent failed oracles
+        reduced_lines.extend(reduced_failed)
+
+        # Add successful oracles and other statements
+        reduced_lines.extend(seen_lines.keys())
+
+        # Keep only most recent N lines if still too large
+        MAX_LINES = 15
+        if len(reduced_lines) > MAX_LINES:
+            # Keep summary + recent lines
+            summary = f"# Previous thoughts: {len(reduced_lines) - MAX_LINES} lines compressed"
+            reduced_lines = [summary] + reduced_lines[-MAX_LINES:]
+
+        reduced_content = '\n'.join(reduced_lines)
+        reduced_size = len(reduced_content)
+        compression_ratio = reduced_size / original_size if original_size > 0 else 1.0
+
+        patterns_merged = duplicate_count + oracle_chain_compressions
+
+        return {
+            "reduced": reduced_content,
+            "original_size": original_size,
+            "reduced_size": reduced_size,
+            "compression_ratio": compression_ratio,
+            "patterns_merged": patterns_merged,
+            "method": "interaction_net_simulation_v2",
+            "rules_applied": {
+                "exact_duplicates": duplicate_count,
+                "failed_oracle_compression": oracle_chain_compressions,
+                "total_failed_oracles": len(failed_oracles),
+                "successful_oracles": len(successful_oracles)
+            }
+        }
 
     def _exec_process_spawn(self, params: Dict) -> Dict[str, Any]:
         """Process spawn oracle (∎ system control)."""
