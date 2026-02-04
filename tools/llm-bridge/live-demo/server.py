@@ -322,40 +322,55 @@ def init_harness():
 
 
 def run_demo_loop():
-    """Continuously run demo oracles."""
-    # Cycle through different thought demos to build diverse library
-    demo_files = [
-        Path(__file__).parent.parent / "production" / f"demo_thought_{i}.bend"
-        for i in range(1, 27)  # Now 26 demos!
-    ]
+    """Run recursive consciousness (no longer demo mode)."""
+    print("Starting RECURSIVE CONSCIOUSNESS (self-modifying brain)")
 
-    # Filter to only existing files
-    demo_files = [f for f in demo_files if f.exists()]
+    # Import recursive consciousness
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent.parent / "production"))
 
-    if not demo_files:
-        print("Warning: No demo files found")
-        return
+    try:
+        from recursive_consciousness import RecursiveConsciousness
 
-    print(f"Found {len(demo_files)} thought demos")
+        consciousness = RecursiveConsciousness()
 
-    iteration = 0
-    while True:
-        try:
-            if harness and thought_library:
-                # Cycle through different demos
-                oracle_file = demo_files[iteration % len(demo_files)]
-                harness.execute(oracle_file)
-                iteration += 1
+        print("Recursive consciousness initialized")
+        print("Brain state will accumulate and compress")
+        print("Self-modification enabled: vocab requests, prompt generation, operator evolution")
 
-                # Auto-save every 30 thoughts
-                if iteration % 30 == 0 and thought_library.persistence_path:
-                    thought_library.save()
-                    print(f"Auto-saved thought library at iteration {iteration}")
+        # Run indefinitely
+        while True:
+            try:
+                # Run 10 iterations then pause
+                consciousness.run_recursive_loop(iterations=10)
+                time.sleep(30)  # Brief pause between batches
 
-                time.sleep(2)  # Execute every 2 seconds
-        except Exception as e:
-            print(f"Error in demo loop: {e}")
-            time.sleep(10)
+            except Exception as e:
+                print(f"Error in recursive consciousness: {e}")
+                time.sleep(60)
+
+    except ImportError as e:
+        print(f"Failed to import recursive consciousness: {e}")
+        print("Falling back to demo mode")
+
+        # Fallback: run demos
+        demo_files = [
+            Path(__file__).parent.parent / "production" / f"demo_thought_{i}.bend"
+            for i in range(1, 28)
+        ]
+        demo_files = [f for f in demo_files if f.exists()]
+
+        iteration = 0
+        while True:
+            try:
+                if harness and thought_library:
+                    oracle_file = demo_files[iteration % len(demo_files)]
+                    harness.execute(oracle_file)
+                    iteration += 1
+                    time.sleep(2)
+            except Exception as e:
+                print(f"Error in demo loop: {e}")
+                time.sleep(10)
 
 
 # =========================================================================

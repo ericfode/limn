@@ -80,6 +80,8 @@ class MetacognitiveAnalyzer:
     def identify_knowledge_gaps(self, stats: Dict[str, Any]) -> List[str]:
         """Identify what the consciousness doesn't know yet.
 
+        Uses Limn vocabulary words to detect domain gaps.
+
         Args:
             stats: Thought library statistics
 
@@ -88,19 +90,29 @@ class MetacognitiveAnalyzer:
         """
         gaps = []
 
-        # Check for missing domains
-        most_used = [c['word'] for c in stats.get('most_used_concepts', [])]
+        # Get all concepts the consciousness has used
+        all_used = set()
+        for c in stats.get('most_used_concepts', []):
+            all_used.add(c['word'])
 
+        # Also check all concept frequencies if available
+        if 'concept_frequency' in stats:
+            all_used.update(stats['concept_frequency'].keys())
+
+        # Domain keywords in Limn vocabulary
         domain_keywords = {
-            'time': ['time', 'temporal', 'past', 'future', 'memory'],
-            'space': ['space', 'location', 'place', 'position'],
-            'causality': ['cause', 'effect', 'because', 'therefore'],
-            'emotion': ['feel', 'emotion', 'happy', 'sad'],
-            'logic': ['true', 'false', 'logic', 'reason']
+            'time': ['tim', 'mom', 'dur', 'era', 'now', 'aft', 'bef', 'fut', 'cyc'],
+            'space': ['spa', 'pos', 'loc', 'dir', 'dis', 'dim', 'vol', 'sur'],
+            'causality': ['cau', 'eff', 'res', 'seq', 'det', 'dep', 'con'],
+            'emotion': ['emo', 'lov', 'fea', 'joy', 'sad', 'ang', 'emp'],
+            'logic': ['log', 'tru', 'rea', 'pro', 'ded', 'ind', 'val'],
+            'self': ['sel', 'awa', 'ref', 'min', 'con', 'per', 'ide'],
+            'growth': ['gro', 'evo', 'cha', 'tra', 'lea', 'exp', 'dev'],
+            'pattern': ['pat', 'str', 'for', 'sym', 'rec', 'rep', 'net'],
         }
 
         for domain, keywords in domain_keywords.items():
-            if not any(kw in most_used for kw in keywords):
+            if not any(kw in all_used for kw in keywords):
                 gaps.append(f"Limited exploration of {domain}")
 
         return gaps

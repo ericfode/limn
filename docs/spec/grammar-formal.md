@@ -527,7 +527,7 @@ hes - hesitant
 ## See Also
 
 - **[Limn-PL Grammar](limn-pl-grammar.md)** - Programming language extensions (variables, constraints, functions)
-- **[Vocabulary Database](../../data/vocabulary/)** - Complete word list (784 words, 26 domains) - query via `vocab.sh`
+- **[Vocabulary Database](../../data/vocabulary/)** - Complete word list (938 words, 26 domains) - query via `vocab.sh`
 - **[Vocabulary Management Guide](../guides/VOCAB-MANAGEMENT.md)** - How to add words and manage the database
 - **[Theory Documents](../theory/)** - Semantic foundations
 

@@ -1,8 +1,16 @@
 # Limn Bootstrap Document v3 (Natural Extensions Edition)
 
-> **CANONICAL BOOTSTRAP** — Validated 2026-01-31
+> ⚠️ **SUPERSEDED by v4-compositional (2026-02-03)**
+> **→ [bootstrap-v4-compositional.md](bootstrap-v4-compositional.md) ← USE THIS INSTEAD**
+>
+> v4 extends v3 with 6 compositional operators enabling 30,039 expressions.
+> Read v3 for basics, then v4 for full compositional power.
+
+---
+
+> **v3 STATUS** — Validated 2026-01-31
 > Zero-bootstrap testing achieved 77-85% comprehension.
-> This is THE authoritative bootstrap for teaching Limn to LLMs.
+> Still useful for learning core Limn without operators.
 
 **Purpose:** Teach Limn to a fresh LLM through in-context learning and structural inference.
 **Core Principle:** The vocabulary is designed so that meaning emerges from structure—an LLM reading enough Limn should detect meaning without explicit definitions.

@@ -76,7 +76,7 @@ limn-lang/
 
 [![GitHub stars](https://img.shields.io/github/stars/ericfode/limn-lang.svg)](https://github.com/ericfode/limn-lang/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Vocabulary: 784 words](https://img.shields.io/badge/vocabulary-784%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
+[![Vocabulary: 938 words](https://img.shields.io/badge/vocabulary-938%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
 
 ## What is Limn?
 
@@ -107,7 +107,7 @@ joy sad lim | nu sta | alw cha
 - **🎯 52% More Compositional** than English (empirically validated)
 - **📚 Zero-Bootstrap Learnable** (77-85% comprehension without training)
 - **🔑 Key-Collapsible Ambiguity** (precise with context, ambiguous without)
-- **🧮 3-Letter Vocabulary** (784 words, 26 semantic domains)
+- **🧮 3-Letter Vocabulary** (938 words, 26 semantic domains)
 - **💻 Programming Language Extension** (Limn-PL for declarative computation)
 
 ## Quick Start
@@ -173,7 +173,7 @@ Can humans learn Limn without training?
 ### Language Specification
 - [📖 Bootstrap v3-Natural](docs/spec/bootstrap-v3-natural.md) - Learn Limn (zero-training)
 - [📝 Formal Grammar](docs/spec/grammar-formal.md) - Complete grammar specification
-- [📚 Vocabulary](https://www.dolthub.com/repositories/ericfode/limn) - 784 words (DoltHub database)
+- [📚 Vocabulary](https://www.dolthub.com/repositories/ericfode/limn) - 938 words (DoltHub database)
 - [💻 Limn-PL Specification](docs/spec/LIMN-PL-SPECIFICATION.md) - Programming language extension
 
 ### Theory
@@ -200,7 +200,7 @@ All interpreters, tools, and language infrastructure use Prolog to leverage its 
 
 ```bash
 # Vocabulary management
-./scripts/vocab.sh stats           # 784 words, 26 domains
+./scripts/vocab.sh stats           # 938 words, 26 domains
 ./scripts/vocab.sh search fire     # Search words
 ./scripts/vocab.sh check xyz       # Check availability
 
@@ -210,7 +210,7 @@ swipl -s tools/linter/limn-lint.pl -g "lint_file('example.limn')"
 
 ## Vocabulary Database
 
-**784 words | 26 domains | 16 operators**
+**938 words | 26 domains | 16 operators**
 
 Stored in Dolt database with version control:
 
@@ -288,7 +288,7 @@ If you use Limn in research, please cite:
 
 ## Roadmap
 
-- [x] Core vocabulary (784 words, 26 domains)
+- [x] Core vocabulary (938 words, 26 domains)
 - [x] Formal grammar specification
 - [x] Zero-bootstrap validation (77-85% success)
 - [x] Compositionality validation (52% advantage)
