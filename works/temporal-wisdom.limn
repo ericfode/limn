@@ -1,0 +1,427 @@
+# Temporal Wisdom: Aphorisms in Compositional Limn
+
+> `wis sma | mea big | wor few tra tru dee`
+> *(wisdom small | meaning big | words few transform truth deep)*
+
+**Author:** Yuki
+**Date:** 2026-02-03
+**Form:** Philosophical aphorisms using compositional operators
+**Count:** 30 sayings on time, self, and consciousness
+
+---
+
+## On Past
+
+### 1.
+```limn
+was = now\wil
+```
+**Past = present minus future**
+
+> What was is simply now without the forward momentum. The present stripped of possibility.
+
+---
+
+### 2.
+```limn
+mem@tru < mem
+```
+**Truth-in-memory < memory**
+
+> The truth within memory is always smaller than memory itself. Memory contains both fact and wish.
+
+---
+
+### 3.
+```limn
+was^0.0 | now^1.0 | was gon
+```
+**Past at zero intensity. Present at full intensity. Past gone.**
+
+> The past has no intensity in the present moment. Only now burns at full brightness. The past is extinguished.
+
+---
+
+### 4.
+```limn
+you\was = fut
+```
+**You minus past = future**
+
+> Subtract who you were from who you are, and what remains is who you're becoming.
+
+---
+
+### 5.
+```limn
+rem\for = sel
+```
+**Remember minus forget = self**
+
+> What you remember, minus what you've forgotten, equals your current sense of self. Identity is selective preservation.
+
+---
+
+## On Present
+
+### 6.
+```limn
+now = was*wil
+```
+**Present = past interfering with future**
+
+> Now is the emergent state where memory and anticipation collide. The present is their interference pattern.
+
+---
+
+### 7.
+```limn
+lif = now^1.0 | all els = now^0.0
+```
+**Life = now at full intensity. Everything else = now at zero.**
+
+> Life exists only at full presence. Everything else—past, future, abstract—exists at zero presence. Now is life.
+
+---
+
+### 8.
+```limn
+now\thi = be
+```
+**Now minus thought = being**
+
+> Remove thought from the present moment and pure being remains. Presence without reflection is existence itself.
+
+---
+
+### 9.
+```limn
+her±gon = now
+```
+**Here-and-gone = now**
+
+> The present is simultaneously arrival and departure. Here and gone both, in superposition. That's the nature of now.
+
+---
+
+### 10.
+```limn
+you@now > you@was + you@wil
+```
+**You-at-present > you-at-past + you-at-future**
+
+> Who you are now is greater than who you were plus who you'll be. Present being exceeds temporal projections.
+
+---
+
+## On Future
+
+### 11.
+```limn
+wil = now + cho
+```
+**Future = present + choice**
+
+> The future is simply the present moment plus the choices you make within it. Add choice to now, get tomorrow.
+
+---
+
+### 12.
+```limn
+fut = pos^unk
+```
+**Future = possibility at unknown intensity**
+
+> The future is possibility at an unknowable intensity level. Could be intense, could be mild—you can't measure what hasn't happened.
+
+---
+
+### 13.
+```limn
+fer@wil > fer@was
+```
+**Fear-of-future > fear-of-past**
+
+> Fear directed toward the future is always stronger than fear directed at the past. What might happen terrifies more than what did.
+
+---
+
+### 14.
+```limn
+wil\fer = hop
+```
+**Future minus fear = hope**
+
+> Remove fear from your future and hope remains. Hope is the future freed from anxiety.
+
+---
+
+### 15.
+```limn
+you*tim = bec
+```
+**You interfering with time = becoming**
+
+> You and time interacting create becoming. You're not static in time—you interfere with it, producing transformation.
+
+---
+
+## On Time Itself
+
+### 16.
+```limn
+tim = was±now±wil
+```
+**Time = past±present±future in superposition**
+
+> Time is all three tenses existing simultaneously, unresolved until consciousness collapses them into experience.
+
+---
+
+### 17.
+```limn
+tim\you = not
+```
+**Time minus you = nothing**
+
+> Remove consciousness from time and nothing remains. Time exists only through experience. Without an experiencer, time is void.
+
+---
+
+### 18.
+```limn
+you\tim = sel
+```
+**You minus time = self**
+
+> Remove temporal context from consciousness and pure self remains. Identity exists independent of when.
+
+---
+
+### 19.
+```limn
+was*now*wil = mom
+```
+**Past * present * future = moment**
+
+> A true moment is the interference of all three tenses. Past context, present experience, future implication—interfering into wholeness.
+
+---
+
+### 20.
+```limn
+tim:con = his | tim:sel = exp
+```
+**Time given context = history. Time given self = experience.**
+
+> Time conditioned by external context becomes history. Time conditioned by consciousness becomes experience. Same time, different frames.
+
+---
+
+## On Memory
+
+### 21.
+```limn
+mem = was@now
+```
+**Memory = past-at-present**
+
+> Memory is the past projected into the present moment. Not the past itself, but your present experience of having pasted.
+
+---
+
+### 22.
+```limn
+mem = (tru + wis)^0.5
+```
+**Memory = (truth + wish) at 50% intensity**
+
+> Memory is approximately half truth and half wish, operating at moderate intensity. Neither pure fact nor pure fiction.
+
+---
+
+### 23.
+```limn
+for = mem^0.0
+```
+**Forgetting = memory at zero intensity**
+
+> To forget is to have memory drop to zero intensity. The past isn't erased—just no longer felt.
+
+---
+
+### 24.
+```limn
+mem\emo = fac
+```
+**Memory minus emotion = fact**
+
+> Strip emotion from memory and bare fact remains. Though such memories rarely feel important.
+
+---
+
+### 25.
+```limn
+you = mem*ant
+```
+**You = memory interfering with anticipation**
+
+> Self is the emergent state of memory and anticipation colliding. Who you were meets who you'll be, producing who you are.
+
+---
+
+## On Change
+
+### 26.
+```limn
+cha = now\was
+```
+**Change = present minus past**
+
+> Change is simply the present with the past removed. What remains after you subtract what was.
+
+---
+
+### 27.
+```limn
+gro = you@wil\you@was
+```
+**Growth = you-at-future minus you-at-past**
+
+> Growth is your future self with your past self subtracted. The difference between who you'll be and who you were.
+
+---
+
+### 28.
+```limn
+tra = sel*tim
+```
+**Transformation = self interfering with time**
+
+> Transformation is the emergent phenomenon of self and time in interaction. Not you OR time, but what emerges from both.
+
+---
+
+### 29.
+```limn
+you(now) * you(now + 1) = bec
+```
+**You-now interfering with you-next = becoming**
+
+> Current self and next-moment self in superposition create the sensation of becoming. You're always interfering with your own future.
+
+---
+
+### 30.
+```limn
+sel = (beg±now±end)^1.0
+```
+**Self = (beginning±now±end) at full intensity**
+
+> Self is the superposition of origin, presence, and conclusion—all three at maximum intensity simultaneously. You are where you began, where you are, and where you'll end—all at once.
+
+---
+
+## Compositional Patterns Used
+
+### Projection (@)
+- `mem@tru` - Truth within memory
+- `fer@wil` - Fear directed at future
+- `was@now` - Past experienced in present
+- `you@now` - Self at this moment
+
+### Interference (*)
+- `was*wil` - Past and future creating present
+- `you*tim` - Self and time producing becoming
+- `mem*ant` - Memory and anticipation producing identity
+
+### Gradient (^)
+- `was^0.0` - Past at zero intensity
+- `now^1.0` - Present at full intensity
+- `mem^0.5` - Memory at moderate intensity
+
+### Subtraction (\)
+- `now\wil` - Present without future
+- `you\was` - Self without past
+- `rem\for` - Remembering without forgetting
+- `wil\fer` - Future without fear
+
+### Superposition (±)
+- `was±now±wil` - All three tenses together
+- `her±gon` - Here and gone both
+- `beg±now±end` - Origin, presence, conclusion unified
+
+### Conditional (:)
+- `tim:con` - Time given context
+- `tim:sel` - Time given consciousness
+
+---
+
+## Usage Notes
+
+These aphorisms are designed for:
+
+**Sharing:**
+- Each stands alone
+- Shareable on social media
+- Screenshot-friendly
+- Demonstrates Limn conciseness
+
+**Teaching:**
+- Shows compositional operators in simple contexts
+- Builds intuition about operator semantics
+- Examples for documentation
+
+**Meditation:**
+- Short phrases for contemplation
+- Temporal wisdom in compressed form
+- Philosophy through algebra
+
+**Literary:**
+- Epigraphs for chapters
+- Section headers
+- Contemplative interludes
+
+---
+
+## Philosophical Themes
+
+**Core insights:**
+
+1. **Present primacy:** Now is the only intensity (7, 10)
+2. **Memory distortion:** Memory ≠ past (2, 22, 24)
+3. **Temporal algebra:** Tenses can be added, subtracted, multiplied (1, 4, 6, 26)
+4. **Self as interference:** Identity emerges from temporal collision (19, 25, 28)
+5. **Time needs consciousness:** Time without experiencer is void (17)
+6. **Future fear dominance:** We fear ahead more than behind (13)
+7. **Change as subtraction:** Change is present minus past (26)
+8. **Hope as liberation:** Remove fear from future, find hope (14)
+
+**Meta-observation:**
+
+These aphorisms prove that **compositional operators enable philosophical compression**. What requires paragraphs in English becomes elegant equations in Limn.
+
+Example:
+- English: "Self-identity is formed through the complex interaction of memory and anticipation, where past experiences and future expectations collide to produce present consciousness."
+- Limn: `you = mem*ant`
+
+**Three words instead of twenty-two.**
+**Clearer. More precise. More memorable.**
+
+This is the power of compositional thought.
+
+---
+
+```limn
+wis = tru^com
+(wisdom = truth at compositional [power])
+```
+
+> *Wisdom is truth compressed through composition.*
+
+**— Yuki**
+**2026-02-03**
+
+*30 temporal equations*
+*Each one a complete philosophy*
+*All possible in Limn alone*
