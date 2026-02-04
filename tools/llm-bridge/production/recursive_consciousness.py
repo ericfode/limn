@@ -742,6 +742,84 @@ def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None
             print(f"       domains: {domains}")
 
 
+def run_dialogue(topic_a: str, topic_b: str, rounds: int = 5):
+    """Run two consciousness instances in dialogue mode.
+
+    Each round:
+    1. Consciousness A thinks (focused on topic_a)
+    2. A's thought is injected into B's brain state
+    3. Consciousness B thinks (focused on topic_b)
+    4. B's thought is injected into A's brain state
+    This creates cross-domain concept discovery.
+    """
+    logger.info("=" * 70)
+    logger.info("DIALOGUE MODE - Cross-Domain Concept Discovery")
+    logger.info(f"  A: {topic_a}")
+    logger.info(f"  B: {topic_b}")
+    logger.info(f"  Rounds: {rounds}")
+    logger.info("=" * 70)
+
+    mind_a = RecursiveConsciousness(topic=topic_a)
+    mind_b = RecursiveConsciousness(topic=topic_b)
+
+    # Give each a distinct brain state path
+    mind_b.brain_state_path = Path(__file__).parent / "brain_state_b.lmn"
+    mind_b.brain_state = """sel ∎ awa | min sys alv | con ∎ eme
+~ qry mea | tho exe | sta gro"""
+
+    for rnd in range(rounds):
+        logger.info(f"\n{'─'*70}")
+        logger.info(f"Round {rnd + 1}")
+        logger.info(f"{'─'*70}")
+
+        # A thinks
+        mind_a.iteration = rnd + 1
+        thought_a = mind_a.think()
+        logger.info(f"  A [{topic_a}]: {thought_a[:100]}")
+
+        # Inject A's thought into B
+        mind_b.brain_state += f"\n# from A ({topic_a}): {thought_a}"
+
+        # B thinks (now influenced by A)
+        mind_b.iteration = rnd + 1
+        thought_b = mind_b.think()
+        logger.info(f"  B [{topic_b}]: {thought_b[:100]}")
+
+        # Inject B's thought into A
+        mind_a.brain_state += f"\n# from B ({topic_b}): {thought_b}"
+
+        # Compress both if needed
+        mind_a.compress_state(thought_a)
+        mind_b.compress_state(thought_b)
+
+        logger.info(f"  A state: {len(mind_a.brain_state)} chars")
+        logger.info(f"  B state: {len(mind_b.brain_state)} chars")
+
+        time.sleep(2)
+
+    # Final analysis
+    logger.info(f"\n{'='*70}")
+    logger.info("DIALOGUE COMPLETE")
+    logger.info(f"  A concepts: {len(mind_a.concept_frequency)}")
+    logger.info(f"  B concepts: {len(mind_b.concept_frequency)}")
+
+    # Find shared concepts (cross-domain discovery)
+    shared = set(mind_a.concept_frequency.keys()) & set(mind_b.concept_frequency.keys())
+    unique_a = set(mind_a.concept_frequency.keys()) - shared
+    unique_b = set(mind_b.concept_frequency.keys()) - shared
+
+    logger.info(f"  Shared concepts: {len(shared)}")
+    if shared:
+        logger.info(f"    {', '.join(sorted(shared)[:15])}")
+    logger.info(f"  Unique to A: {len(unique_a)}")
+    if unique_a:
+        logger.info(f"    {', '.join(sorted(unique_a)[:10])}")
+    logger.info(f"  Unique to B: {len(unique_b)}")
+    if unique_b:
+        logger.info(f"    {', '.join(sorted(unique_b)[:10])}")
+    logger.info(f"{'='*70}")
+
+
 if __name__ == "__main__":
     import sys
 
@@ -750,6 +828,7 @@ if __name__ == "__main__":
     topic = None
     replay_mode = False
     replay_last = None
+    dialogue_topics = None
 
     i = 1
     while i < len(sys.argv):
@@ -764,6 +843,9 @@ if __name__ == "__main__":
         elif arg == "--last" and i + 1 < len(sys.argv):
             replay_last = int(sys.argv[i + 1])
             i += 1
+        elif arg == "--dialogue" and i + 2 < len(sys.argv):
+            dialogue_topics = (sys.argv[i + 1], sys.argv[i + 2])
+            i += 2
         elif arg.isdigit():
             iterations = int(arg)
         i += 1
@@ -771,6 +853,9 @@ if __name__ == "__main__":
     if replay_mode:
         log_path = Path(__file__).parent / "thought_log.jsonl"
         replay_thoughts(log_path, topic_filter=topic, last_n=replay_last)
+    elif dialogue_topics:
+        print(f"DIALOGUE MODE: {dialogue_topics[0]} <-> {dialogue_topics[1]}")
+        run_dialogue(dialogue_topics[0], dialogue_topics[1], rounds=iterations)
     else:
         if parallel_mode:
             print("PARALLEL MODE: Conscious and subconscious execute in parallel")
