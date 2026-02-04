@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1006 words, 23 operators
+%% 1024 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -29,6 +29,7 @@ word('aim').
 word('air').
 word('ale').
 word('alg').
+word('ali').
 word('all').
 word('alo').
 word('alp').
@@ -91,6 +92,7 @@ word('bea').
 word('bec').
 word('bed').
 word('bee').
+word('beer').
 word('bef').
 word('beff').
 word('beg').
@@ -111,6 +113,7 @@ word('blf').
 word('bli').
 word('blk').
 word('blo').
+word('blu').
 word('bnd').
 word('bng').
 word('bnk').
@@ -134,9 +137,11 @@ word('bri').
 word('brk').
 word('btw').
 word('bug').
+word('bul').
 word('bur').
 word('bus').
 word('but').
+word('byp').
 word('cal').
 word('can').
 word('cap').
@@ -188,6 +193,7 @@ word('cor').
 word('cos').
 word('cot').
 word('cou').
+word('cov').
 word('cow').
 word('cpu').
 word('cra').
@@ -223,6 +229,7 @@ word('ded').
 word('dee').
 word('def').
 word('del').
+word('dem').
 word('den').
 word('dep').
 word('der').
@@ -327,6 +334,7 @@ word('fee').
 word('fes').
 word('few').
 word('fht').
+word('fig').
 word('fil').
 word('fin').
 word('fir').
@@ -335,6 +343,7 @@ word('fit').
 word('fix').
 word('flat').
 word('fld').
+word('fle').
 word('fli').
 word('flo').
 word('flr').
@@ -391,6 +400,7 @@ word('gra').
 word('grd').
 word('gre').
 word('gri').
+word('grn').
 word('gro').
 word('grt').
 word('gua').
@@ -423,6 +433,7 @@ word('hns').
 word('hof').
 word('hok').
 word('hol').
+word('hom').
 word('hon').
 word('hop').
 word('hor').
@@ -643,6 +654,7 @@ word('oxy').
 word('pai').
 word('pal').
 word('pan').
+word('pani').
 word('pap').
 word('par').
 word('pas').
@@ -664,6 +676,7 @@ word('pit').
 word('pkg').
 word('pla').
 word('pln').
+word('plnt').
 word('poe').
 word('poi').
 word('pok').
@@ -802,6 +815,7 @@ word('shr').
 word('sic').
 word('sid').
 word('sig').
+word('sign').
 word('sil').
 word('sim').
 word('sin').
@@ -811,6 +825,7 @@ word('ski').
 word('skp').
 word('sky').
 word('sle').
+word('slep').
 word('slf').
 word('slh').
 word('sli').
@@ -907,6 +922,7 @@ word('top').
 word('tor').
 word('tou').
 word('tow').
+word('towl').
 word('tpe').
 word('tpr').
 word('tra').
@@ -959,6 +975,7 @@ word('vit').
 word('viz').
 word('vlu').
 word('vod').
+word('vog').
 word('void').
 word('vol').
 word('vsn').
@@ -996,6 +1013,7 @@ word('wre').
 word('wri').
 word('wrk').
 word('wro').
+word('wrp').
 word('wrt').
 word('wuw').
 word('xfr').
