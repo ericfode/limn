@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Knowledge Explorer - Browse Consciousness</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 300px;
+            background: #1a1a1a;
+            border-right: 2px solid #00ff00;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .main-panel {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            color: #00ff00;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .concept-list {
+            margin-top: 20px;
+        }
+        .concept-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #00ff00;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .concept-item:hover {
+            background: rgba(0, 255, 0, 0.15);
+            transform: translateX(5px);
+        }
+        .concept-item.selected {
+            background: rgba(0, 255, 0, 0.2);
+            border-left-color: #00ffff;
+        }
+        .thought-card {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .thought-content {
+            color: #00ff00;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .thought-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 11px;
+            color: #00cc00;
+        }
+        .tag {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 28px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #00cc00;
+            margin-top: 5px;
+        }
+        .related-concepts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .related-chip {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .related-chip:hover {
+            background: rgba(0, 255, 255, 0.3);
+        }
+        h2 {
+            color: #00ff00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>🔍 Concepts</h2>
+            <input type="text" id="search" class="search-box" placeholder="Search concepts..." onkeyup="filterConcepts()">
+
+            <div class="stats-grid" style="grid-template-columns: 1fr;">
+                <div class="stat-box">
+                    <div class="stat-value" id="concept-count">0</div>
+                    <div class="stat-label">Total Concepts</div>
+                </div>
+            </div>
+
+            <div class="concept-list" id="concept-list">
+                <div style="color: #666;">Loading concepts...</div>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <div id="detail-view">
+                <h2 style="text-align: center; color: #00cc00; margin-top: 100px;">👈 Select a concept to explore</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allConcepts = [];
+        let allThoughts = [];
+        let semanticNetwork = {};
+        let selectedConcept = null;
+
+        function loadData() {
+            fetch('/api/thought_library')
+                .then(r => r.json())
+                .then(data => {
+                    const stats = data.stats;
+                    allConcepts = stats.most_used_concepts || [];
+                    allThoughts = stats.recent_thoughts || [];
+                    semanticNetwork = data.semantic_network || {};
+
+                    document.getElementById('concept-count').textContent = stats.total_concepts;
+
+                    renderConceptList();
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function renderConceptList() {
+            const list = document.getElementById('concept-list');
+
+            if (allConcepts.length === 0) {
+                list.innerHTML = '<div style="color: #666;">No concepts yet</div>';
+                return;
+            }
+
+            list.innerHTML = allConcepts.map(concept => `
+                <div class="concept-item ${selectedConcept === concept.word ? 'selected' : ''}"
+                     onclick="selectConcept('${concept.word}')">
+                    <div style="font-weight: bold; color: #00ff00;">${concept.word}</div>
+                    <div style="font-size: 10px; color: #00cc00; margin-top: 3px;">Used ${concept.usage}x</div>
+                </div>
+            `).join('');
+        }
+
+        function filterConcepts() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const items = document.querySelectorAll('.concept-item');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(search) ? 'block' : 'none';
+            });
+        }
+
+        function selectConcept(word) {
+            selectedConcept = word;
+            renderConceptList();
+
+            // Get related info
+            const related = semanticNetwork[word] || [];
+            const relevantThoughts = allThoughts.filter(t =>
+                t.content.toLowerCase().includes(word.toLowerCase())
+            );
+
+            const detailView = document.getElementById('detail-view');
+            detailView.innerHTML = `
+                <h2>📖 Concept: "${word}"</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value">${allConcepts.find(c => c.word === word)?.usage || 0}</div>
+                        <div class="stat-label">Times Used</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">${related.length}</div>
+                        <div class="stat-label">Connections</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">${relevantThoughts.length}</div>
+                        <div class="stat-label">Related Thoughts</div>
+                    </div>
+                </div>
+
+                ${related.length > 0 ? `
+                    <h3 style="color: #00ffff;">🌐 Connected Concepts</h3>
+                    <div class="related-concepts">
+                        ${related.slice(0, 20).map(r => `
+                            <div class="related-chip" onclick="selectConcept('${r}')">${r}</div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                <h3 style="color: #00ff00; margin-top: 30px;">💭 Thoughts Containing This Concept</h3>
+                ${relevantThoughts.length > 0 ? relevantThoughts.slice(0, 10).map(thought => `
+                    <div class="thought-card">
+                        <div class="thought-content">${thought.content}</div>
+                        <div class="thought-meta">
+                            <span>📅 ${new Date(thought.timestamp * 1000).toLocaleString()}</span>
+                            <span class="tag">${thought.source}</span>
+                        </div>
+                    </div>
+                `).join('') : '<div style="color: #666;">No thoughts found containing this concept</div>'}
+            `;
+        }
+
+        // Auto-refresh
+        loadData();
+        setInterval(loadData, 5000);
+    </script>
+</body>
+</html>

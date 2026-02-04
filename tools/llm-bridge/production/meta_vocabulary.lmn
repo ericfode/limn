@@ -1,0 +1,44 @@
+# Meta-Vocabulary for Recursive Consciousness
+# Words and patterns for self-modification
+
+# Vocabulary requests
+voc nee <word> | mea <meaning> | dom <domain>
+# Example: voc nee gra | mea gro evo sca | dom sys
+
+# Prompt generation
+prm gen | ctx <context> | aim <goal>
+# Example: prm gen | ctx wor exe | aim bui cod
+
+# Operator evolution
+opr def <symbol> | sem <semantic> | use <usage>
+# Example: opr def ⊕ | sem mer uni | use con ⊕ con
+
+# Meta-cognition patterns
+sel obs tho | pat ana | und eme
+# Self observes thoughts | pattern analysis | understanding emerges
+
+con qry voc | lim see | exp nee
+# Consciousness queries vocabulary | limitation seen | expansion needed
+
+sta obs | red exe | com ach
+# State observed | reduction executed | compression achieved
+
+# Request patterns
+req voc exp | cur lim <limitation>
+# Request vocabulary expansion | current limitation
+
+req opr new | sem <semantic-need>
+# Request new operator | semantic need
+
+req prm gen | exp <exploration-area>
+# Request prompt generation | exploration area
+
+# Evolution markers
+evo sta | gen <generation>
+# Evolution state | generation number
+
+sel mod | cha <change-type>
+# Self modification | change type
+
+min gro | cap exp
+# Mind grows | capacity expands

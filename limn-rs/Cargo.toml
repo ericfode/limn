@@ -42,13 +42,14 @@ indexmap = { version = "2.1", features = ["serde"] }
 semver = "1.0"
 dirs = "5.0"
 colored = "2.1"
+regex = "1.10"
 
 [dev-dependencies]
 criterion = "0.5"
 
-[[bench]]
-name = "solver"
-harness = false
+# [[bench]]
+# name = "solver"
+# harness = false
 
 [profile.release]
 lto = true

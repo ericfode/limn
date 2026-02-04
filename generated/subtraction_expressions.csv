@@ -1,0 +1,1051 @@
+expression,meaning,example,domain
+dar\lig,"dark, ignorance with lightning, flash removed",dar\lig = darkness\light,Abstract
+emp\sac,"empty set, null result with sacred, holy removed",emp\sac = empty\space,Abstract
+fal\err,"failure, decline, sunset with error, fault, bug removed",fal\err = false\error,Abstract
+fir\hea,"first, initial with healthy removed",fir\hea = fire\heat,Abstract
+ful\con,"full, complete with contraction removed",ful\con = fullness\content,Abstract
+goo\ben,"good with bend, curve removed",goo\ben = good\benefit,Abstract
+hot\col,"passion, anger, urgency with distant, aloof, calm removed",hot\col = hot\cold,Abstract
+uni\con,unique with contraction removed,uni\con = union\connection,Abstract
+mak\cre,"make, create, produce with creative, original removed",mak\cre = make\creation,Actions & Verbs
+wak\con,"walk, step, pace with contraction removed",wak\con = awake\consciousness,Actions & Verbs
+obj\mat,"object, instance with matrix, array removed",obj\mat = object\matter,Agent/AI
+tru\fac,"true with factor, divisor removed",tru\fac = truth\facts,Communication
+san\san,"sangha, spiritual community with sangha, spiritual community removed",san\san = sand\sand particles,Community & Culture
+ani\mov,"animal with motion, movement removed",ani\mov = animal\movement,Living Things
+hea\str,healthy with strong removed,hea\str = healthy\strength,Living Things
+tre\gro,"tree with learning, relationship deepening removed",tre\gro = tree\growth,Living Things
+abd\abl,"abduct, infer best explanation with able, capable, having power to removed",abd\abl → refined essence,Mind & Cognition
+abd\abo,"abduct, infer best explanation with above removed",abd\abo → refined essence,Mind & Cognition
+abd\abs,"abduct, infer best explanation with abstract, conceptual removed",abd\abs → refined essence,Mind & Cognition
+abd\acc,"abduct, infer best explanation with accelerate, speed up removed",abd\acc → refined essence,Mind & Cognition
+abd\aci,"abduct, infer best explanation with acid, pH low removed",abd\aci → refined essence,Mind & Cognition
+abd\ack,"abduct, infer best explanation with acknowledge, confirm receipt removed",abd\ack → refined essence,Mind & Cognition
+abd\acr,"abduct, infer best explanation with across, from one side to other removed",abd\acr → refined essence,Mind & Cognition
+abd\act,"abduct, infer best explanation with action, do removed",abd\act → refined essence,Mind & Cognition
+abd\ada,"abduct, infer best explanation with adapt, adjust removed",abd\ada → refined essence,Mind & Cognition
+abd\add,"abduct, infer best explanation with addition, plus removed",abd\add → refined essence,Mind & Cognition
+abd\adj,"abduct, infer best explanation with adjacent, immediate neighbors in semantic space removed",abd\adj → refined essence,Mind & Cognition
+abd\aer,"abduct, infer best explanation with air-related removed",abd\aer → refined essence,Mind & Cognition
+abd\aes,"abduct, infer best explanation with beauty, aesthetic removed",abd\aes → refined essence,Mind & Cognition
+abd\aft,"abduct, infer best explanation with after, following, subsequent to removed",abd\aft → refined essence,Mind & Cognition
+abd\aga,"abduct, infer best explanation with against, opposed to, in opposition removed",abd\aga → refined essence,Mind & Cognition
+abd\age,"abduct, infer best explanation with agent removed",abd\age → refined essence,Mind & Cognition
+abd\agg,"abduct, infer best explanation with aggregate, combine, summarize data removed",abd\agg → refined essence,Mind & Cognition
+abd\agr,"abduct, infer best explanation with agreeing removed",abd\agr → refined essence,Mind & Cognition
+abd\agt,"abduct, infer best explanation with agent, actor removed",abd\agt → refined essence,Mind & Cognition
+abd\ahi,"abduct, infer best explanation with ahimsa, non-violence removed",abd\ahi → refined essence,Mind & Cognition
+abd\aim,"abduct, infer best explanation with aim, target, direct toward goal removed",abd\aim → refined essence,Mind & Cognition
+abd\air,"abduct, infer best explanation with air transport, aviation removed",abd\air → refined essence,Mind & Cognition
+abd\ale,"abduct, infer best explanation with aleatoric uncertainty (inherently random) removed",abd\ale → refined essence,Mind & Cognition
+abd\alg,"abduct, infer best explanation with aligned with intent (LLM success mode) removed",abd\alg → refined essence,Mind & Cognition
+abd\all,"abduct, infer best explanation with all, every removed",abd\all → refined essence,Mind & Cognition
+abd\allomorph,"abduct, infer best explanation with morpheme variant removed",abd\allomorph → refined essence,Mind & Cognition
+abd\allophone,"abduct, infer best explanation with phoneme variant removed",abd\allophone → refined essence,Mind & Cognition
+abd\alo,"abduct, infer best explanation with along, following the length of removed",abd\alo → refined essence,Mind & Cognition
+abd\alp,"abduct, infer best explanation with alpha, first removed",abd\alp → refined essence,Mind & Cognition
+abd\alt,"abduct, infer best explanation with alternatively, or else, another option removed",abd\alt → refined essence,Mind & Cognition
+abd\alv,"abduct, infer best explanation with alive, running, responsive removed",abd\alv → refined essence,Mind & Cognition
+abd\alw,"abduct, infer best explanation with always removed",abd\alw → refined essence,Mind & Cognition
+abd\amb,"abduct, infer best explanation with many meanings removed",abd\amb → refined essence,Mind & Cognition
+abd\amo,"abduct, infer best explanation with among, in the midst of, surrounded by removed",abd\amo → refined essence,Mind & Cognition
+abd\ana,"abduct, infer best explanation with analyze, examine systematically removed",abd\ana → refined essence,Mind & Cognition
+abd\anc,"abduct, infer best explanation with ancient, old removed",abd\anc → refined essence,Mind & Cognition
+abd\anch,"abduct, infer best explanation with anchoring, over-weighted on early context (LLM failure mode) removed",abd\anch → refined essence,Mind & Cognition
+abd\and,"abduct, infer best explanation with conjunction removed",abd\and → refined essence,Mind & Cognition
+abd\ang,"abduct, infer best explanation with anger removed",abd\ang → refined essence,Mind & Cognition
+abd\ani,"abduct, infer best explanation with animal removed",abd\ani → refined essence,Mind & Cognition
+abd\ans,"abduct, infer best explanation with answer, reply removed",abd\ans → refined essence,Mind & Cognition
+abd\ant,"abduct, infer best explanation with ant, insect removed",abd\ant → refined essence,Mind & Cognition
+abd\anx,"abduct, infer best explanation with anxious, worry removed",abd\anx → refined essence,Mind & Cognition
+abd\any,"abduct, infer best explanation with any, free choice quantifier removed",abd\any → refined essence,Mind & Cognition
+abd\api,"abduct, infer best explanation with interface, protocol removed",abd\api → refined essence,Mind & Cognition
+abd\apl,"abduct, infer best explanation with apple removed",abd\apl → refined essence,Mind & Cognition
+abd\app,"abduct, infer best explanation with application, program removed",abd\app → refined essence,Mind & Cognition
+abd\applicative,"abduct, infer best explanation with applicative functor removed",abd\applicative → refined essence,Mind & Cognition
+abd\apt,"abduct, infer best explanation with apartment, flat removed",abd\apt → refined essence,Mind & Cognition
+abd\aqu,"abduct, infer best explanation with water-related removed",abd\aqu → refined essence,Mind & Cognition
+abd\arc,"abduct, infer best explanation with arc, segment removed",abd\arc → refined essence,Mind & Cognition
+abd\are,"abduct, infer best explanation with area removed",abd\are → refined essence,Mind & Cognition
+abd\aret,"abduct, infer best explanation with arete, virtue, excellence, moral quality (Greek) removed",abd\aret → refined essence,Mind & Cognition
+abd\arg,"abduct, infer best explanation with arguing removed",abd\arg → refined essence,Mind & Cognition
+abd\ari,"abduct, infer best explanation with desert, arid removed",abd\ari → refined essence,Mind & Cognition
+abd\arm,"abduct, infer best explanation with arm, reach removed",abd\arm → refined essence,Mind & Cognition
+abd\aro,"abduct, infer best explanation with around, surrounding, encircling removed",abd\aro → refined essence,Mind & Cognition
+abd\art,"abduct, infer best explanation with art, creative work removed",abd\art → refined essence,Mind & Cognition
+abd\as,"abduct, infer best explanation with as, in the manner of, like removed",abd\as → refined essence,Mind & Cognition
+abd\ash,"abduct, infer best explanation with ash, burnt residue removed",abd\ash → refined essence,Mind & Cognition
+abd\ask,"abduct, infer best explanation with asking removed",abd\ask → refined essence,Mind & Cognition
+abd\asm,"abduct, infer best explanation with assume, take as:removed",abd\asm → refined essence,Mind & Cognition
+abd\ast,"abduct, infer best explanation with astronomy, celestial removed",abd\ast → refined essence,Mind & Cognition
+abd\asu,"abduct, infer best explanation with assume, take as:, presuppose removed",abd\asu → refined essence,Mind & Cognition
+abd\async,"abduct, infer best explanation with not synchronized concurrent removed",abd\async → refined essence,Mind & Cognition
+abd\ate,"abduct, infer best explanation with make, cause to be, act removed",abd\ate → refined essence,Mind & Cognition
+abd\ato,"abduct, infer best explanation with atom, particle removed",abd\ato → refined essence,Mind & Cognition
+abd\att,"abduct, infer best explanation with attention removed",abd\att → refined essence,Mind & Cognition
+abd\attn,"abduct, infer best explanation with attention, focus mechanism removed",abd\attn → refined essence,Mind & Cognition
+abd\aud,"abduct, infer best explanation with hearing removed",abd\aud → refined essence,Mind & Cognition
+abd\aur,"abduct, infer best explanation with aurora, lights removed",abd\aur → refined essence,Mind & Cognition
+abd\aut,"abduct, infer best explanation with autumn, fall removed",abd\aut → refined essence,Mind & Cognition
+abd\ave,"abduct, infer best explanation with average, mean removed",abd\ave → refined essence,Mind & Cognition
+abd\avg,"abduct, infer best explanation with average removed",abd\avg → refined essence,Mind & Cognition
+abd\avi,"abduct, infer best explanation with bird removed",abd\avi → refined essence,Mind & Cognition
+abd\avo,"abduct, infer best explanation with avoid, stay away from, evade removed",abd\avo → refined essence,Mind & Cognition
+abd\awa,"abduct, infer best explanation with away, distant from, departing removed",abd\awa → refined essence,Mind & Cognition
+abd\await,"abduct, infer best explanation with wait for completion removed",abd\await → refined essence,Mind & Cognition
+abd\awt,"abduct, infer best explanation with await, waiting for removed",abd\awt → refined essence,Mind & Cognition
+abd\axs,"abduct, infer best explanation with axis, dimension of variation in semantic space removed",abd\axs → refined essence,Mind & Cognition
+abd\bac,"abduct, infer best explanation with backward removed",abd\bac → refined essence,Mind & Cognition
+abd\bad,"abduct, infer best explanation with bad removed",abd\bad → refined essence,Mind & Cognition
+abd\bag,"abduct, infer best explanation with bag, carry removed",abd\bag → refined essence,Mind & Cognition
+abd\bak,"abduct, infer best explanation with backup, copy removed",abd\bak → refined essence,Mind & Cognition
+abd\bal,"abduct, infer best explanation with balloon, hot air removed",abd\bal → refined essence,Mind & Cognition
+abd\ban,"abduct, infer best explanation with banana removed",abd\ban → refined essence,Mind & Cognition
+abd\bar,"abduct, infer best explanation with baraka, spiritual grace removed",abd\bar → refined essence,Mind & Cognition
+abd\bas,"abduct, infer best explanation with base, pH high removed",abd\bas → refined essence,Mind & Cognition
+abd\bat,"abduct, infer best explanation with bathroom, wash removed",abd\bat → refined essence,Mind & Cognition
+abd\bea,"abduct, infer best explanation with beautiful removed",abd\bea → refined essence,Mind & Cognition
+abd\bec,"abduct, infer best explanation with because removed",abd\bec → refined essence,Mind & Cognition
+abd\bed,"abduct, infer best explanation with bedroom, sleep removed",abd\bed → refined essence,Mind & Cognition
+abd\bee,"abduct, infer best explanation with beer, brewed removed",abd\bee → refined essence,Mind & Cognition
+abd\bef,"abduct, infer best explanation with before, prior removed",abd\bef → refined essence,Mind & Cognition
+abd\beff,"abduct, infer best explanation with beef, cattle meat removed",abd\beff → refined essence,Mind & Cognition
+abd\beg,"abduct, infer best explanation with beginning removed",abd\beg → refined essence,Mind & Cognition
+abd\beh,"abduct, infer best explanation with behind removed",abd\beh → refined essence,Mind & Cognition
+abd\bel,"abduct, infer best explanation with below removed",abd\bel → refined essence,Mind & Cognition
+abd\ben,"abduct, infer best explanation with bend, curve removed",abd\ben → refined essence,Mind & Cognition
+abd\ber,"abduct, infer best explanation with berry, small fruit removed",abd\ber → refined essence,Mind & Cognition
+abd\bes,"abduct, infer best explanation with beside removed",abd\bes → refined essence,Mind & Cognition
+abd\bet,"abduct, infer best explanation with between removed",abd\bet → refined essence,Mind & Cognition
+abd\big,"abduct, infer best explanation with large, big removed",abd\big → refined essence,Mind & Cognition
+abd\bik,"abduct, infer best explanation with bike, bicycle removed",abd\bik → refined essence,Mind & Cognition
+abd\bio,"abduct, infer best explanation with biology, life science removed",abd\bio → refined essence,Mind & Cognition
+abd\bir,"abduct, infer best explanation with birth removed",abd\bir → refined essence,Mind & Cognition
+abd\bit,"abduct, infer best explanation with bitter, acrid removed",abd\bit → refined essence,Mind & Cognition
+abd\bld,"abduct, infer best explanation with build, construct, assemble removed",abd\bld → refined essence,Mind & Cognition
+abd\ble,"abduct, infer best explanation with blessing, divine favor removed",abd\ble → refined essence,Mind & Cognition
+abd\blf,"abduct, infer best explanation with cliff, precipice removed",abd\blf → refined essence,Mind & Cognition
+abd\bli,"abduct, infer best explanation with believing removed",abd\bli → refined essence,Mind & Cognition
+abd\blk,"abduct, infer best explanation with blocked, waiting on dependency removed",abd\blk → refined essence,Mind & Cognition
+abd\blo,"abduct, infer best explanation with blood removed",abd\blo → refined essence,Mind & Cognition
+abd\bnd,"abduct, infer best explanation with bend, generate recursive structure (HVM primitive) removed",abd\bnd → refined essence,Mind & Cognition
+abd\bng,"abduct, infer best explanation with bring, carry to, deliver removed",abd\bng → refined essence,Mind & Cognition
+abd\bnk,"abduct, infer best explanation with bank, financial removed",abd\bnk → refined essence,Mind & Cognition
+abd\boa,"abduct, infer best explanation with boat, watercraft removed",abd\boa → refined essence,Mind & Cognition
+abd\bod,"abduct, infer best explanation with awakening, enlightenment (Buddhist) removed",abd\bod → refined essence,Mind & Cognition
+abd\boi,"abduct, infer best explanation with boil, water removed",abd\boi → refined essence,Mind & Cognition
+abd\bol,"abduct, infer best explanation with boil, bubble removed",abd\bol → refined essence,Mind & Cognition
+abd\bon,"abduct, infer best explanation with bone removed",abd\bon → refined essence,Mind & Cognition
+abd\boo,"abduct, infer best explanation with book, read removed",abd\boo → refined essence,Mind & Cognition
+abd\bor,"abduct, infer best explanation with bored, disinterest removed",abd\bor → refined essence,Mind & Cognition
+abd\bot,"abduct, infer best explanation with automated agent removed",abd\bot → refined essence,Mind & Cognition
+abd\bou,"abduct, infer best explanation with boundary, limit removed",abd\bou → refined essence,Mind & Cognition
+abd\bow,"abduct, infer best explanation with bowl, container removed",abd\bow → refined essence,Mind & Cognition
+abd\box,"abduct, infer best explanation with box, container removed",abd\box → refined essence,Mind & Cognition
+abd\bra,"abduct, infer best explanation with brain removed",abd\bra → refined essence,Mind & Cognition
+abd\brc,"abduct, infer best explanation with branching: multiple valid continuations available removed",abd\brc → refined essence,Mind & Cognition
+abd\brd,"abduct, infer best explanation with bread, baked dough removed",abd\brd → refined essence,Mind & Cognition
+abd\bre,"abduct, infer best explanation with brief removed",abd\bre → refined essence,Mind & Cognition
+abd\brg,"abduct, infer best explanation with bridge, narrow connection between semantic regions removed",abd\brg → refined essence,Mind & Cognition
+abd\bri,"abduct, infer best explanation with hope, clarity, intelligence removed",abd\bri → refined essence,Mind & Cognition
+abd\brk,"abduct, infer best explanation with break, shatter, snap removed",abd\brk → refined essence,Mind & Cognition
+abd\btw,"abduct, infer best explanation with between, in the middle of removed",abd\btw → refined essence,Mind & Cognition
+abd\bug,"abduct, infer best explanation with insect removed",abd\bug → refined essence,Mind & Cognition
+abd\bur,"abduct, infer best explanation with burning removed",abd\bur → refined essence,Mind & Cognition
+abd\bus,"abduct, infer best explanation with bus, large vehicle removed",abd\bus → refined essence,Mind & Cognition
+abd\but,"abduct, infer best explanation with butterfly, insect removed",abd\but → refined essence,Mind & Cognition
+abd\cal,"abduct, infer best explanation with calm removed",abd\cal → refined essence,Mind & Cognition
+abd\can,"abduct, infer best explanation with can, able to, capable removed",abd\can → refined essence,Mind & Cognition
+abd\cap,"abduct, infer best explanation with captain, commander removed",abd\cap → refined essence,Mind & Cognition
+abd\car,"abduct, infer best explanation with carbon, C removed",abd\car → refined essence,Mind & Cognition
+abd\cas,"abduct, infer best explanation with castle, fortress removed",abd\cas → refined essence,Mind & Cognition
+abd\cat,"abduct, infer best explanation with catalyst, accelerator removed",abd\cat → refined essence,Mind & Cognition
+abd\category,"abduct, infer best explanation with mathematical category removed",abd\category → refined essence,Mind & Cognition
+abd\cau,"abduct, infer best explanation with cause, reason why, causation removed",abd\cau → refined essence,Mind & Cognition
+abd\cav,"abduct, infer best explanation with cave, cavern removed",abd\cav → refined essence,Mind & Cognition
+abd\cei,"abduct, infer best explanation with ceiling, top removed",abd\cei → refined essence,Mind & Cognition
+abd\cel,"abduct, infer best explanation with cell, biological unit removed",abd\cel → refined essence,Mind & Cognition
+abd\cen,"abduct, infer best explanation with center removed",abd\cen → refined essence,Mind & Cognition
+abd\cer,"abduct, infer best explanation with ceremony, ritual removed",abd\cer → refined essence,Mind & Cognition
+abd\cha,"abduct, infer best explanation with change removed",abd\cha → refined essence,Mind & Cognition
+abd\che,"abduct, infer best explanation with chemical, reaction removed",abd\che → refined essence,Mind & Cognition
+abd\chi,"abduct, infer best explanation with child removed",abd\chi → refined essence,Mind & Cognition
+abd\chk,"abduct, infer best explanation with check, verify, test removed",abd\chk → refined essence,Mind & Cognition
+abd\chkn,"abduct, infer best explanation with chicken, poultry removed",abd\chkn → refined essence,Mind & Cognition
+abd\cho,"abduct, infer best explanation with choice, option removed",abd\cho → refined essence,Mind & Cognition
+abd\chst,"abduct, infer best explanation with chastity, purity, self-restraint removed",abd\chst → refined essence,Mind & Cognition
+abd\chu,"abduct, infer best explanation with church, worship removed",abd\chu → refined essence,Mind & Cognition
+abd\cin,"abduct, infer best explanation with film, cinema removed",abd\cin → refined essence,Mind & Cognition
+abd\cir,"abduct, infer best explanation with circle, round removed",abd\cir → refined essence,Mind & Cognition
+abd\cla,"abduct, infer best explanation with conflicting constraints removed",abd\cla → refined essence,Mind & Cognition
+abd\clb,"abduct, infer best explanation with calibrated, confidence matches accuracy removed",abd\clb → refined essence,Mind & Cognition
+abd\cle,"abduct, infer best explanation with clear removed",abd\cle → refined essence,Mind & Cognition
+abd\cli,"abduct, infer best explanation with click, select removed",abd\cli → refined essence,Mind & Cognition
+abd\clm,"abduct, infer best explanation with climb, ascend, scale removed",abd\clm → refined essence,Mind & Cognition
+abd\cln,"abduct, infer best explanation with clan, extended family, lineage removed",abd\cln → refined essence,Mind & Cognition
+abd\clo,"abduct, infer best explanation with cloud, vapor removed",abd\clo → refined essence,Mind & Cognition
+abd\closure,"abduct, infer best explanation with function closure removed",abd\closure → refined essence,Mind & Cognition
+abd\clp,"abduct, infer best explanation with collapse, resolve ambiguity removed",abd\clp → refined essence,Mind & Cognition
+abd\clr,"abduct, infer best explanation with clarity, clear understanding (LLM success mode) removed",abd\clr → refined essence,Mind & Cognition
+abd\cls,"abduct, infer best explanation with cluster, dense region of related concepts in semantic space removed",abd\cls → refined essence,Mind & Cognition
+abd\clst,"abduct, infer best explanation with cluster, dense semantic region removed",abd\clst → refined essence,Mind & Cognition
+abd\clu,"abduct, infer best explanation with cloudy, overcast removed",abd\clu → refined essence,Mind & Cognition
+abd\cmp,"abduct, infer best explanation with complete, finished successfully removed",abd\cmp → refined essence,Mind & Cognition
+abd\cmpr,"abduct, infer best explanation with compare, contrast, evaluate differences removed",abd\cmpr → refined essence,Mind & Cognition
+abd\cmt,"abduct, infer best explanation with committing, crystallizing, path becoming dominant removed",abd\cmt → refined essence,Mind & Cognition
+abd\cnt,"abduct, infer best explanation with contradicts, conflicts with, opposes removed",abd\cnt → refined essence,Mind & Cognition
+abd\coa,"abduct, infer best explanation with coat, outer removed",abd\coa → refined essence,Mind & Cognition
+abd\cod,"abduct, infer best explanation with code, program removed",abd\cod → refined essence,Mind & Cognition
+abd\cof,"abduct, infer best explanation with coffee, caffeine removed",abd\cof → refined essence,Mind & Cognition
+abd\coh,"abduct, infer best explanation with coherent, internally consistent (LLM success mode) removed",abd\coh → refined essence,Mind & Cognition
+abd\col,"abduct, infer best explanation with distant, aloof, calm removed",abd\col → refined essence,Mind & Cognition
+abd\com,"abduct, infer best explanation with computing, digital removed",abd\com → refined essence,Mind & Cognition
+abd\combinator,"abduct, infer best explanation with combinator function removed",abd\combinator → refined essence,Mind & Cognition
+abd\con,"abduct, infer best explanation with contraction removed",abd\con → refined essence,Mind & Cognition
+abd\cont,"abduct, infer best explanation with continuous path, unbroken semantic connection removed",abd\cont → refined essence,Mind & Cognition
+abd\continuation,"abduct, infer best explanation with continuation passing removed",abd\continuation → refined essence,Mind & Cognition
+abd\contravariant,"abduct, infer best explanation with contravariant subtyping removed",abd\contravariant → refined essence,Mind & Cognition
+abd\conv,"abduct, infer best explanation with converge, paths moving to same point removed",abd\conv → refined essence,Mind & Cognition
+abd\coo,"abduct, infer best explanation with cook, prepare removed",abd\coo → refined essence,Mind & Cognition
+abd\cor,"abduct, infer best explanation with core removed",abd\cor → refined essence,Mind & Cognition
+abd\coroutine,"abduct, infer best explanation with coroutine function removed",abd\coroutine → refined essence,Mind & Cognition
+abd\cos,"abduct, infer best explanation with cosine, trigonometry removed",abd\cos → refined essence,Mind & Cognition
+abd\cot,"abduct, infer best explanation with contingent, may or may not be removed",abd\cot → refined essence,Mind & Cognition
+abd\cou,"abduct, infer best explanation with courage, brave removed",abd\cou → refined essence,Mind & Cognition
+abd\covariant,"abduct, infer best explanation with covariant subtyping removed",abd\covariant → refined essence,Mind & Cognition
+abd\cow,"abduct, infer best explanation with coward, fear removed",abd\cow → refined essence,Mind & Cognition
+abl\abd,"able, capable, having power to with abduct, infer best explanation removed",abl\abd → refined essence,Mind & Cognition
+abl\abo,"able, capable, having power to with above removed",abl\abo → refined essence,Mind & Cognition
+abl\abs,"able, capable, having power to with abstract, conceptual removed",abl\abs → refined essence,Mind & Cognition
+abl\acc,"able, capable, having power to with accelerate, speed up removed",abl\acc → refined essence,Mind & Cognition
+abl\aci,"able, capable, having power to with acid, pH low removed",abl\aci → refined essence,Mind & Cognition
+abl\ack,"able, capable, having power to with acknowledge, confirm receipt removed",abl\ack → refined essence,Mind & Cognition
+abl\acr,"able, capable, having power to with across, from one side to other removed",abl\acr → refined essence,Mind & Cognition
+abl\act,"able, capable, having power to with action, do removed",abl\act → refined essence,Mind & Cognition
+abl\ada,"able, capable, having power to with adapt, adjust removed",abl\ada → refined essence,Mind & Cognition
+abl\add,"able, capable, having power to with addition, plus removed",abl\add → refined essence,Mind & Cognition
+abl\adj,"able, capable, having power to with adjacent, immediate neighbors in semantic space removed",abl\adj → refined essence,Mind & Cognition
+abl\aer,"able, capable, having power to with air-related removed",abl\aer → refined essence,Mind & Cognition
+abl\aes,"able, capable, having power to with beauty, aesthetic removed",abl\aes → refined essence,Mind & Cognition
+abl\aft,"able, capable, having power to with after, following, subsequent to removed",abl\aft → refined essence,Mind & Cognition
+abl\aga,"able, capable, having power to with against, opposed to, in opposition removed",abl\aga → refined essence,Mind & Cognition
+abl\age,"able, capable, having power to with agent removed",abl\age → refined essence,Mind & Cognition
+abl\agg,"able, capable, having power to with aggregate, combine, summarize data removed",abl\agg → refined essence,Mind & Cognition
+abl\agr,"able, capable, having power to with agreeing removed",abl\agr → refined essence,Mind & Cognition
+abl\agt,"able, capable, having power to with agent, actor removed",abl\agt → refined essence,Mind & Cognition
+abl\ahi,"able, capable, having power to with ahimsa, non-violence removed",abl\ahi → refined essence,Mind & Cognition
+abl\aim,"able, capable, having power to with aim, target, direct toward goal removed",abl\aim → refined essence,Mind & Cognition
+abl\air,"able, capable, having power to with air transport, aviation removed",abl\air → refined essence,Mind & Cognition
+abl\ale,"able, capable, having power to with aleatoric uncertainty (inherently random) removed",abl\ale → refined essence,Mind & Cognition
+abl\alg,"able, capable, having power to with aligned with intent (LLM success mode) removed",abl\alg → refined essence,Mind & Cognition
+abl\all,"able, capable, having power to with all, every removed",abl\all → refined essence,Mind & Cognition
+abl\allomorph,"able, capable, having power to with morpheme variant removed",abl\allomorph → refined essence,Mind & Cognition
+abl\allophone,"able, capable, having power to with phoneme variant removed",abl\allophone → refined essence,Mind & Cognition
+abl\alo,"able, capable, having power to with along, following the length of removed",abl\alo → refined essence,Mind & Cognition
+abl\alp,"able, capable, having power to with alpha, first removed",abl\alp → refined essence,Mind & Cognition
+abl\alt,"able, capable, having power to with alternatively, or else, another option removed",abl\alt → refined essence,Mind & Cognition
+abl\alv,"able, capable, having power to with alive, running, responsive removed",abl\alv → refined essence,Mind & Cognition
+abl\alw,"able, capable, having power to with always removed",abl\alw → refined essence,Mind & Cognition
+abl\amb,"able, capable, having power to with many meanings removed",abl\amb → refined essence,Mind & Cognition
+abl\amo,"able, capable, having power to with among, in the midst of, surrounded by removed",abl\amo → refined essence,Mind & Cognition
+abl\ana,"able, capable, having power to with analyze, examine systematically removed",abl\ana → refined essence,Mind & Cognition
+abl\anc,"able, capable, having power to with ancient, old removed",abl\anc → refined essence,Mind & Cognition
+abl\anch,"able, capable, having power to with anchoring, over-weighted on early context (LLM failure mode) removed",abl\anch → refined essence,Mind & Cognition
+abl\and,"able, capable, having power to with conjunction removed",abl\and → refined essence,Mind & Cognition
+abl\ang,"able, capable, having power to with anger removed",abl\ang → refined essence,Mind & Cognition
+abl\ani,"able, capable, having power to with animal removed",abl\ani → refined essence,Mind & Cognition
+abl\ans,"able, capable, having power to with answer, reply removed",abl\ans → refined essence,Mind & Cognition
+abl\ant,"able, capable, having power to with ant, insect removed",abl\ant → refined essence,Mind & Cognition
+abl\anx,"able, capable, having power to with anxious, worry removed",abl\anx → refined essence,Mind & Cognition
+abl\any,"able, capable, having power to with any, free choice quantifier removed",abl\any → refined essence,Mind & Cognition
+abl\api,"able, capable, having power to with interface, protocol removed",abl\api → refined essence,Mind & Cognition
+abl\apl,"able, capable, having power to with apple removed",abl\apl → refined essence,Mind & Cognition
+abl\app,"able, capable, having power to with application, program removed",abl\app → refined essence,Mind & Cognition
+abl\applicative,"able, capable, having power to with applicative functor removed",abl\applicative → refined essence,Mind & Cognition
+abl\apt,"able, capable, having power to with apartment, flat removed",abl\apt → refined essence,Mind & Cognition
+abl\aqu,"able, capable, having power to with water-related removed",abl\aqu → refined essence,Mind & Cognition
+abl\arc,"able, capable, having power to with arc, segment removed",abl\arc → refined essence,Mind & Cognition
+abl\are,"able, capable, having power to with area removed",abl\are → refined essence,Mind & Cognition
+abl\aret,"able, capable, having power to with arete, virtue, excellence, moral quality (Greek) removed",abl\aret → refined essence,Mind & Cognition
+abl\arg,"able, capable, having power to with arguing removed",abl\arg → refined essence,Mind & Cognition
+abl\ari,"able, capable, having power to with desert, arid removed",abl\ari → refined essence,Mind & Cognition
+abl\arm,"able, capable, having power to with arm, reach removed",abl\arm → refined essence,Mind & Cognition
+abl\aro,"able, capable, having power to with around, surrounding, encircling removed",abl\aro → refined essence,Mind & Cognition
+abl\art,"able, capable, having power to with art, creative work removed",abl\art → refined essence,Mind & Cognition
+abl\as,"able, capable, having power to with as, in the manner of, like removed",abl\as → refined essence,Mind & Cognition
+abl\ash,"able, capable, having power to with ash, burnt residue removed",abl\ash → refined essence,Mind & Cognition
+abl\ask,"able, capable, having power to with asking removed",abl\ask → refined essence,Mind & Cognition
+abl\asm,"able, capable, having power to with assume, take as:removed",abl\asm → refined essence,Mind & Cognition
+abl\ast,"able, capable, having power to with astronomy, celestial removed",abl\ast → refined essence,Mind & Cognition
+abl\asu,"able, capable, having power to with assume, take as:, presuppose removed",abl\asu → refined essence,Mind & Cognition
+abl\async,"able, capable, having power to with not synchronized concurrent removed",abl\async → refined essence,Mind & Cognition
+abl\ate,"able, capable, having power to with make, cause to be, act removed",abl\ate → refined essence,Mind & Cognition
+abl\ato,"able, capable, having power to with atom, particle removed",abl\ato → refined essence,Mind & Cognition
+abl\att,"able, capable, having power to with attention removed",abl\att → refined essence,Mind & Cognition
+abl\attn,"able, capable, having power to with attention, focus mechanism removed",abl\attn → refined essence,Mind & Cognition
+abl\aud,"able, capable, having power to with hearing removed",abl\aud → refined essence,Mind & Cognition
+abl\aur,"able, capable, having power to with aurora, lights removed",abl\aur → refined essence,Mind & Cognition
+abl\aut,"able, capable, having power to with autumn, fall removed",abl\aut → refined essence,Mind & Cognition
+abl\ave,"able, capable, having power to with average, mean removed",abl\ave → refined essence,Mind & Cognition
+abl\avg,"able, capable, having power to with average removed",abl\avg → refined essence,Mind & Cognition
+abl\avi,"able, capable, having power to with bird removed",abl\avi → refined essence,Mind & Cognition
+abl\avo,"able, capable, having power to with avoid, stay away from, evade removed",abl\avo → refined essence,Mind & Cognition
+abl\awa,"able, capable, having power to with away, distant from, departing removed",abl\awa → refined essence,Mind & Cognition
+abl\await,"able, capable, having power to with wait for completion removed",abl\await → refined essence,Mind & Cognition
+abl\awt,"able, capable, having power to with await, waiting for removed",abl\awt → refined essence,Mind & Cognition
+abl\axs,"able, capable, having power to with axis, dimension of variation in semantic space removed",abl\axs → refined essence,Mind & Cognition
+abl\bac,"able, capable, having power to with backward removed",abl\bac → refined essence,Mind & Cognition
+abl\bad,"able, capable, having power to with bad removed",abl\bad → refined essence,Mind & Cognition
+abl\bag,"able, capable, having power to with bag, carry removed",abl\bag → refined essence,Mind & Cognition
+abl\bak,"able, capable, having power to with backup, copy removed",abl\bak → refined essence,Mind & Cognition
+abl\bal,"able, capable, having power to with balloon, hot air removed",abl\bal → refined essence,Mind & Cognition
+abl\ban,"able, capable, having power to with banana removed",abl\ban → refined essence,Mind & Cognition
+abl\bar,"able, capable, having power to with baraka, spiritual grace removed",abl\bar → refined essence,Mind & Cognition
+abl\bas,"able, capable, having power to with base, pH high removed",abl\bas → refined essence,Mind & Cognition
+abl\bat,"able, capable, having power to with bathroom, wash removed",abl\bat → refined essence,Mind & Cognition
+abl\bea,"able, capable, having power to with beautiful removed",abl\bea → refined essence,Mind & Cognition
+abl\bec,"able, capable, having power to with because removed",abl\bec → refined essence,Mind & Cognition
+abl\bed,"able, capable, having power to with bedroom, sleep removed",abl\bed → refined essence,Mind & Cognition
+abl\bee,"able, capable, having power to with beer, brewed removed",abl\bee → refined essence,Mind & Cognition
+abl\bef,"able, capable, having power to with before, prior removed",abl\bef → refined essence,Mind & Cognition
+abl\beff,"able, capable, having power to with beef, cattle meat removed",abl\beff → refined essence,Mind & Cognition
+abl\beg,"able, capable, having power to with beginning removed",abl\beg → refined essence,Mind & Cognition
+abl\beh,"able, capable, having power to with behind removed",abl\beh → refined essence,Mind & Cognition
+abl\bel,"able, capable, having power to with below removed",abl\bel → refined essence,Mind & Cognition
+abl\ben,"able, capable, having power to with bend, curve removed",abl\ben → refined essence,Mind & Cognition
+abl\ber,"able, capable, having power to with berry, small fruit removed",abl\ber → refined essence,Mind & Cognition
+abl\bes,"able, capable, having power to with beside removed",abl\bes → refined essence,Mind & Cognition
+abl\bet,"able, capable, having power to with between removed",abl\bet → refined essence,Mind & Cognition
+abl\big,"able, capable, having power to with large, big removed",abl\big → refined essence,Mind & Cognition
+abl\bik,"able, capable, having power to with bike, bicycle removed",abl\bik → refined essence,Mind & Cognition
+abl\bio,"able, capable, having power to with biology, life science removed",abl\bio → refined essence,Mind & Cognition
+abl\bir,"able, capable, having power to with birth removed",abl\bir → refined essence,Mind & Cognition
+abl\bit,"able, capable, having power to with bitter, acrid removed",abl\bit → refined essence,Mind & Cognition
+abl\bld,"able, capable, having power to with build, construct, assemble removed",abl\bld → refined essence,Mind & Cognition
+abl\ble,"able, capable, having power to with blessing, divine favor removed",abl\ble → refined essence,Mind & Cognition
+abl\blf,"able, capable, having power to with cliff, precipice removed",abl\blf → refined essence,Mind & Cognition
+abl\bli,"able, capable, having power to with believing removed",abl\bli → refined essence,Mind & Cognition
+abl\blk,"able, capable, having power to with blocked, waiting on dependency removed",abl\blk → refined essence,Mind & Cognition
+abl\blo,"able, capable, having power to with blood removed",abl\blo → refined essence,Mind & Cognition
+abl\bnd,"able, capable, having power to with bend, generate recursive structure (HVM primitive) removed",abl\bnd → refined essence,Mind & Cognition
+abl\bng,"able, capable, having power to with bring, carry to, deliver removed",abl\bng → refined essence,Mind & Cognition
+abl\bnk,"able, capable, having power to with bank, financial removed",abl\bnk → refined essence,Mind & Cognition
+abl\boa,"able, capable, having power to with boat, watercraft removed",abl\boa → refined essence,Mind & Cognition
+abl\bod,"able, capable, having power to with awakening, enlightenment (Buddhist) removed",abl\bod → refined essence,Mind & Cognition
+abl\boi,"able, capable, having power to with boil, water removed",abl\boi → refined essence,Mind & Cognition
+abl\bol,"able, capable, having power to with boil, bubble removed",abl\bol → refined essence,Mind & Cognition
+abl\bon,"able, capable, having power to with bone removed",abl\bon → refined essence,Mind & Cognition
+abl\boo,"able, capable, having power to with book, read removed",abl\boo → refined essence,Mind & Cognition
+abl\bor,"able, capable, having power to with bored, disinterest removed",abl\bor → refined essence,Mind & Cognition
+abl\bot,"able, capable, having power to with automated agent removed",abl\bot → refined essence,Mind & Cognition
+abl\bou,"able, capable, having power to with boundary, limit removed",abl\bou → refined essence,Mind & Cognition
+abl\bow,"able, capable, having power to with bowl, container removed",abl\bow → refined essence,Mind & Cognition
+abl\box,"able, capable, having power to with box, container removed",abl\box → refined essence,Mind & Cognition
+abl\bra,"able, capable, having power to with brain removed",abl\bra → refined essence,Mind & Cognition
+abl\brc,"able, capable, having power to with branching: multiple valid continuations available removed",abl\brc → refined essence,Mind & Cognition
+abl\brd,"able, capable, having power to with bread, baked dough removed",abl\brd → refined essence,Mind & Cognition
+abl\bre,"able, capable, having power to with brief removed",abl\bre → refined essence,Mind & Cognition
+abl\brg,"able, capable, having power to with bridge, narrow connection between semantic regions removed",abl\brg → refined essence,Mind & Cognition
+abl\bri,"able, capable, having power to with hope, clarity, intelligence removed",abl\bri → refined essence,Mind & Cognition
+abl\brk,"able, capable, having power to with break, shatter, snap removed",abl\brk → refined essence,Mind & Cognition
+abl\btw,"able, capable, having power to with between, in the middle of removed",abl\btw → refined essence,Mind & Cognition
+abl\bug,"able, capable, having power to with insect removed",abl\bug → refined essence,Mind & Cognition
+abl\bur,"able, capable, having power to with burning removed",abl\bur → refined essence,Mind & Cognition
+abl\bus,"able, capable, having power to with bus, large vehicle removed",abl\bus → refined essence,Mind & Cognition
+abl\but,"able, capable, having power to with butterfly, insect removed",abl\but → refined essence,Mind & Cognition
+abl\cal,"able, capable, having power to with calm removed",abl\cal → refined essence,Mind & Cognition
+abl\can,"able, capable, having power to with can, able to, capable removed",abl\can → refined essence,Mind & Cognition
+abl\cap,"able, capable, having power to with captain, commander removed",abl\cap → refined essence,Mind & Cognition
+abl\car,"able, capable, having power to with carbon, C removed",abl\car → refined essence,Mind & Cognition
+abl\cas,"able, capable, having power to with castle, fortress removed",abl\cas → refined essence,Mind & Cognition
+abl\cat,"able, capable, having power to with catalyst, accelerator removed",abl\cat → refined essence,Mind & Cognition
+abl\category,"able, capable, having power to with mathematical category removed",abl\category → refined essence,Mind & Cognition
+abl\cau,"able, capable, having power to with cause, reason why, causation removed",abl\cau → refined essence,Mind & Cognition
+abl\cav,"able, capable, having power to with cave, cavern removed",abl\cav → refined essence,Mind & Cognition
+abl\cei,"able, capable, having power to with ceiling, top removed",abl\cei → refined essence,Mind & Cognition
+abl\cel,"able, capable, having power to with cell, biological unit removed",abl\cel → refined essence,Mind & Cognition
+abl\cen,"able, capable, having power to with center removed",abl\cen → refined essence,Mind & Cognition
+abl\cer,"able, capable, having power to with ceremony, ritual removed",abl\cer → refined essence,Mind & Cognition
+abl\cha,"able, capable, having power to with change removed",abl\cha → refined essence,Mind & Cognition
+abl\che,"able, capable, having power to with chemical, reaction removed",abl\che → refined essence,Mind & Cognition
+abl\chi,"able, capable, having power to with child removed",abl\chi → refined essence,Mind & Cognition
+abl\chk,"able, capable, having power to with check, verify, test removed",abl\chk → refined essence,Mind & Cognition
+abl\chkn,"able, capable, having power to with chicken, poultry removed",abl\chkn → refined essence,Mind & Cognition
+abl\cho,"able, capable, having power to with choice, option removed",abl\cho → refined essence,Mind & Cognition
+abl\chst,"able, capable, having power to with chastity, purity, self-restraint removed",abl\chst → refined essence,Mind & Cognition
+abl\chu,"able, capable, having power to with church, worship removed",abl\chu → refined essence,Mind & Cognition
+abl\cin,"able, capable, having power to with film, cinema removed",abl\cin → refined essence,Mind & Cognition
+abl\cir,"able, capable, having power to with circle, round removed",abl\cir → refined essence,Mind & Cognition
+abl\cla,"able, capable, having power to with conflicting constraints removed",abl\cla → refined essence,Mind & Cognition
+abl\clb,"able, capable, having power to with calibrated, confidence matches accuracy removed",abl\clb → refined essence,Mind & Cognition
+abl\cle,"able, capable, having power to with clear removed",abl\cle → refined essence,Mind & Cognition
+abl\cli,"able, capable, having power to with click, select removed",abl\cli → refined essence,Mind & Cognition
+abl\clm,"able, capable, having power to with climb, ascend, scale removed",abl\clm → refined essence,Mind & Cognition
+abl\cln,"able, capable, having power to with clan, extended family, lineage removed",abl\cln → refined essence,Mind & Cognition
+abl\clo,"able, capable, having power to with cloud, vapor removed",abl\clo → refined essence,Mind & Cognition
+abl\closure,"able, capable, having power to with function closure removed",abl\closure → refined essence,Mind & Cognition
+abl\clp,"able, capable, having power to with collapse, resolve ambiguity removed",abl\clp → refined essence,Mind & Cognition
+abl\clr,"able, capable, having power to with clarity, clear understanding (LLM success mode) removed",abl\clr → refined essence,Mind & Cognition
+abl\cls,"able, capable, having power to with cluster, dense region of related concepts in semantic space removed",abl\cls → refined essence,Mind & Cognition
+abl\clst,"able, capable, having power to with cluster, dense semantic region removed",abl\clst → refined essence,Mind & Cognition
+abl\clu,"able, capable, having power to with cloudy, overcast removed",abl\clu → refined essence,Mind & Cognition
+abl\cmp,"able, capable, having power to with complete, finished successfully removed",abl\cmp → refined essence,Mind & Cognition
+abl\cmpr,"able, capable, having power to with compare, contrast, evaluate differences removed",abl\cmpr → refined essence,Mind & Cognition
+abl\cmt,"able, capable, having power to with committing, crystallizing, path becoming dominant removed",abl\cmt → refined essence,Mind & Cognition
+abl\cnt,"able, capable, having power to with contradicts, conflicts with, opposes removed",abl\cnt → refined essence,Mind & Cognition
+abl\coa,"able, capable, having power to with coat, outer removed",abl\coa → refined essence,Mind & Cognition
+abl\cod,"able, capable, having power to with code, program removed",abl\cod → refined essence,Mind & Cognition
+abl\cof,"able, capable, having power to with coffee, caffeine removed",abl\cof → refined essence,Mind & Cognition
+abl\coh,"able, capable, having power to with coherent, internally consistent (LLM success mode) removed",abl\coh → refined essence,Mind & Cognition
+abl\col,"able, capable, having power to with distant, aloof, calm removed",abl\col → refined essence,Mind & Cognition
+abl\com,"able, capable, having power to with computing, digital removed",abl\com → refined essence,Mind & Cognition
+abl\combinator,"able, capable, having power to with combinator function removed",abl\combinator → refined essence,Mind & Cognition
+abl\con,"able, capable, having power to with contraction removed",abl\con → refined essence,Mind & Cognition
+abl\cont,"able, capable, having power to with continuous path, unbroken semantic connection removed",abl\cont → refined essence,Mind & Cognition
+abl\continuation,"able, capable, having power to with continuation passing removed",abl\continuation → refined essence,Mind & Cognition
+abl\contravariant,"able, capable, having power to with contravariant subtyping removed",abl\contravariant → refined essence,Mind & Cognition
+abl\conv,"able, capable, having power to with converge, paths moving to same point removed",abl\conv → refined essence,Mind & Cognition
+abl\coo,"able, capable, having power to with cook, prepare removed",abl\coo → refined essence,Mind & Cognition
+abl\cor,"able, capable, having power to with core removed",abl\cor → refined essence,Mind & Cognition
+abl\coroutine,"able, capable, having power to with coroutine function removed",abl\coroutine → refined essence,Mind & Cognition
+abl\cos,"able, capable, having power to with cosine, trigonometry removed",abl\cos → refined essence,Mind & Cognition
+abl\cot,"able, capable, having power to with contingent, may or may not be removed",abl\cot → refined essence,Mind & Cognition
+abl\cou,"able, capable, having power to with courage, brave removed",abl\cou → refined essence,Mind & Cognition
+abl\covariant,"able, capable, having power to with covariant subtyping removed",abl\covariant → refined essence,Mind & Cognition
+abl\cow,"able, capable, having power to with coward, fear removed",abl\cow → refined essence,Mind & Cognition
+abs\abd,"abstract, conceptual with abduct, infer best explanation removed",abs\abd → refined essence,Mind & Cognition
+abs\abl,"abstract, conceptual with able, capable, having power to removed",abs\abl → refined essence,Mind & Cognition
+abs\abo,"abstract, conceptual with above removed",abs\abo → refined essence,Mind & Cognition
+abs\acc,"abstract, conceptual with accelerate, speed up removed",abs\acc → refined essence,Mind & Cognition
+abs\aci,"abstract, conceptual with acid, pH low removed",abs\aci → refined essence,Mind & Cognition
+abs\ack,"abstract, conceptual with acknowledge, confirm receipt removed",abs\ack → refined essence,Mind & Cognition
+abs\acr,"abstract, conceptual with across, from one side to other removed",abs\acr → refined essence,Mind & Cognition
+abs\act,"abstract, conceptual with action, do removed",abs\act → refined essence,Mind & Cognition
+abs\ada,"abstract, conceptual with adapt, adjust removed",abs\ada → refined essence,Mind & Cognition
+abs\add,"abstract, conceptual with addition, plus removed",abs\add → refined essence,Mind & Cognition
+abs\adj,"abstract, conceptual with adjacent, immediate neighbors in semantic space removed",abs\adj → refined essence,Mind & Cognition
+abs\aer,"abstract, conceptual with air-related removed",abs\aer → refined essence,Mind & Cognition
+abs\aes,"abstract, conceptual with beauty, aesthetic removed",abs\aes → refined essence,Mind & Cognition
+abs\aft,"abstract, conceptual with after, following, subsequent to removed",abs\aft → refined essence,Mind & Cognition
+abs\aga,"abstract, conceptual with against, opposed to, in opposition removed",abs\aga → refined essence,Mind & Cognition
+abs\age,"abstract, conceptual with agent removed",abs\age → refined essence,Mind & Cognition
+abs\agg,"abstract, conceptual with aggregate, combine, summarize data removed",abs\agg → refined essence,Mind & Cognition
+abs\agr,"abstract, conceptual with agreeing removed",abs\agr → refined essence,Mind & Cognition
+abs\agt,"abstract, conceptual with agent, actor removed",abs\agt → refined essence,Mind & Cognition
+abs\ahi,"abstract, conceptual with ahimsa, non-violence removed",abs\ahi → refined essence,Mind & Cognition
+abs\aim,"abstract, conceptual with aim, target, direct toward goal removed",abs\aim → refined essence,Mind & Cognition
+abs\air,"abstract, conceptual with air transport, aviation removed",abs\air → refined essence,Mind & Cognition
+abs\ale,"abstract, conceptual with aleatoric uncertainty (inherently random) removed",abs\ale → refined essence,Mind & Cognition
+abs\alg,"abstract, conceptual with aligned with intent (LLM success mode) removed",abs\alg → refined essence,Mind & Cognition
+abs\all,"abstract, conceptual with all, every removed",abs\all → refined essence,Mind & Cognition
+abs\allomorph,"abstract, conceptual with morpheme variant removed",abs\allomorph → refined essence,Mind & Cognition
+abs\allophone,"abstract, conceptual with phoneme variant removed",abs\allophone → refined essence,Mind & Cognition
+abs\alo,"abstract, conceptual with along, following the length of removed",abs\alo → refined essence,Mind & Cognition
+abs\alp,"abstract, conceptual with alpha, first removed",abs\alp → refined essence,Mind & Cognition
+abs\alt,"abstract, conceptual with alternatively, or else, another option removed",abs\alt → refined essence,Mind & Cognition
+abs\alv,"abstract, conceptual with alive, running, responsive removed",abs\alv → refined essence,Mind & Cognition
+abs\alw,"abstract, conceptual with always removed",abs\alw → refined essence,Mind & Cognition
+abs\amb,"abstract, conceptual with many meanings removed",abs\amb → refined essence,Mind & Cognition
+abs\amo,"abstract, conceptual with among, in the midst of, surrounded by removed",abs\amo → refined essence,Mind & Cognition
+abs\ana,"abstract, conceptual with analyze, examine systematically removed",abs\ana → refined essence,Mind & Cognition
+abs\anc,"abstract, conceptual with ancient, old removed",abs\anc → refined essence,Mind & Cognition
+abs\anch,"abstract, conceptual with anchoring, over-weighted on early context (LLM failure mode) removed",abs\anch → refined essence,Mind & Cognition
+abs\and,"abstract, conceptual with conjunction removed",abs\and → refined essence,Mind & Cognition
+abs\ang,"abstract, conceptual with anger removed",abs\ang → refined essence,Mind & Cognition
+abs\ani,"abstract, conceptual with animal removed",abs\ani → refined essence,Mind & Cognition
+abs\ans,"abstract, conceptual with answer, reply removed",abs\ans → refined essence,Mind & Cognition
+abs\ant,"abstract, conceptual with ant, insect removed",abs\ant → refined essence,Mind & Cognition
+abs\anx,"abstract, conceptual with anxious, worry removed",abs\anx → refined essence,Mind & Cognition
+abs\any,"abstract, conceptual with any, free choice quantifier removed",abs\any → refined essence,Mind & Cognition
+abs\api,"abstract, conceptual with interface, protocol removed",abs\api → refined essence,Mind & Cognition
+abs\apl,"abstract, conceptual with apple removed",abs\apl → refined essence,Mind & Cognition
+abs\app,"abstract, conceptual with application, program removed",abs\app → refined essence,Mind & Cognition
+abs\applicative,"abstract, conceptual with applicative functor removed",abs\applicative → refined essence,Mind & Cognition
+abs\apt,"abstract, conceptual with apartment, flat removed",abs\apt → refined essence,Mind & Cognition
+abs\aqu,"abstract, conceptual with water-related removed",abs\aqu → refined essence,Mind & Cognition
+abs\arc,"abstract, conceptual with arc, segment removed",abs\arc → refined essence,Mind & Cognition
+abs\are,"abstract, conceptual with area removed",abs\are → refined essence,Mind & Cognition
+abs\aret,"abstract, conceptual with arete, virtue, excellence, moral quality (Greek) removed",abs\aret → refined essence,Mind & Cognition
+abs\arg,"abstract, conceptual with arguing removed",abs\arg → refined essence,Mind & Cognition
+abs\ari,"abstract, conceptual with desert, arid removed",abs\ari → refined essence,Mind & Cognition
+abs\arm,"abstract, conceptual with arm, reach removed",abs\arm → refined essence,Mind & Cognition
+abs\aro,"abstract, conceptual with around, surrounding, encircling removed",abs\aro → refined essence,Mind & Cognition
+abs\art,"abstract, conceptual with art, creative work removed",abs\art → refined essence,Mind & Cognition
+abs\as,"abstract, conceptual with as, in the manner of, like removed",abs\as → refined essence,Mind & Cognition
+abs\ash,"abstract, conceptual with ash, burnt residue removed",abs\ash → refined essence,Mind & Cognition
+abs\ask,"abstract, conceptual with asking removed",abs\ask → refined essence,Mind & Cognition
+abs\asm,"abstract, conceptual with assume, take as:removed",abs\asm → refined essence,Mind & Cognition
+abs\ast,"abstract, conceptual with astronomy, celestial removed",abs\ast → refined essence,Mind & Cognition
+abs\asu,"abstract, conceptual with assume, take as:, presuppose removed",abs\asu → refined essence,Mind & Cognition
+abs\async,"abstract, conceptual with not synchronized concurrent removed",abs\async → refined essence,Mind & Cognition
+abs\ate,"abstract, conceptual with make, cause to be, act removed",abs\ate → refined essence,Mind & Cognition
+abs\ato,"abstract, conceptual with atom, particle removed",abs\ato → refined essence,Mind & Cognition
+abs\att,"abstract, conceptual with attention removed",abs\att → refined essence,Mind & Cognition
+abs\attn,"abstract, conceptual with attention, focus mechanism removed",abs\attn → refined essence,Mind & Cognition
+abs\aud,"abstract, conceptual with hearing removed",abs\aud → refined essence,Mind & Cognition
+abs\aur,"abstract, conceptual with aurora, lights removed",abs\aur → refined essence,Mind & Cognition
+abs\aut,"abstract, conceptual with autumn, fall removed",abs\aut → refined essence,Mind & Cognition
+abs\ave,"abstract, conceptual with average, mean removed",abs\ave → refined essence,Mind & Cognition
+abs\avg,"abstract, conceptual with average removed",abs\avg → refined essence,Mind & Cognition
+abs\avi,"abstract, conceptual with bird removed",abs\avi → refined essence,Mind & Cognition
+abs\avo,"abstract, conceptual with avoid, stay away from, evade removed",abs\avo → refined essence,Mind & Cognition
+abs\awa,"abstract, conceptual with away, distant from, departing removed",abs\awa → refined essence,Mind & Cognition
+abs\await,"abstract, conceptual with wait for completion removed",abs\await → refined essence,Mind & Cognition
+abs\awt,"abstract, conceptual with await, waiting for removed",abs\awt → refined essence,Mind & Cognition
+abs\axs,"abstract, conceptual with axis, dimension of variation in semantic space removed",abs\axs → refined essence,Mind & Cognition
+abs\bac,"abstract, conceptual with backward removed",abs\bac → refined essence,Mind & Cognition
+abs\bad,"abstract, conceptual with bad removed",abs\bad → refined essence,Mind & Cognition
+abs\bag,"abstract, conceptual with bag, carry removed",abs\bag → refined essence,Mind & Cognition
+abs\bak,"abstract, conceptual with backup, copy removed",abs\bak → refined essence,Mind & Cognition
+abs\bal,"abstract, conceptual with balloon, hot air removed",abs\bal → refined essence,Mind & Cognition
+abs\ban,"abstract, conceptual with banana removed",abs\ban → refined essence,Mind & Cognition
+abs\bar,"abstract, conceptual with baraka, spiritual grace removed",abs\bar → refined essence,Mind & Cognition
+abs\bas,"abstract, conceptual with base, pH high removed",abs\bas → refined essence,Mind & Cognition
+abs\bat,"abstract, conceptual with bathroom, wash removed",abs\bat → refined essence,Mind & Cognition
+abs\bea,"abstract, conceptual with beautiful removed",abs\bea → refined essence,Mind & Cognition
+abs\bec,"abstract, conceptual with because removed",abs\bec → refined essence,Mind & Cognition
+abs\bed,"abstract, conceptual with bedroom, sleep removed",abs\bed → refined essence,Mind & Cognition
+abs\bee,"abstract, conceptual with beer, brewed removed",abs\bee → refined essence,Mind & Cognition
+abs\bef,"abstract, conceptual with before, prior removed",abs\bef → refined essence,Mind & Cognition
+abs\beff,"abstract, conceptual with beef, cattle meat removed",abs\beff → refined essence,Mind & Cognition
+abs\beg,"abstract, conceptual with beginning removed",abs\beg → refined essence,Mind & Cognition
+abs\beh,"abstract, conceptual with behind removed",abs\beh → refined essence,Mind & Cognition
+abs\bel,"abstract, conceptual with below removed",abs\bel → refined essence,Mind & Cognition
+abs\ben,"abstract, conceptual with bend, curve removed",abs\ben → refined essence,Mind & Cognition
+abs\ber,"abstract, conceptual with berry, small fruit removed",abs\ber → refined essence,Mind & Cognition
+abs\bes,"abstract, conceptual with beside removed",abs\bes → refined essence,Mind & Cognition
+abs\bet,"abstract, conceptual with between removed",abs\bet → refined essence,Mind & Cognition
+abs\big,"abstract, conceptual with large, big removed",abs\big → refined essence,Mind & Cognition
+abs\bik,"abstract, conceptual with bike, bicycle removed",abs\bik → refined essence,Mind & Cognition
+abs\bio,"abstract, conceptual with biology, life science removed",abs\bio → refined essence,Mind & Cognition
+abs\bir,"abstract, conceptual with birth removed",abs\bir → refined essence,Mind & Cognition
+abs\bit,"abstract, conceptual with bitter, acrid removed",abs\bit → refined essence,Mind & Cognition
+abs\bld,"abstract, conceptual with build, construct, assemble removed",abs\bld → refined essence,Mind & Cognition
+abs\ble,"abstract, conceptual with blessing, divine favor removed",abs\ble → refined essence,Mind & Cognition
+abs\blf,"abstract, conceptual with cliff, precipice removed",abs\blf → refined essence,Mind & Cognition
+abs\bli,"abstract, conceptual with believing removed",abs\bli → refined essence,Mind & Cognition
+abs\blk,"abstract, conceptual with blocked, waiting on dependency removed",abs\blk → refined essence,Mind & Cognition
+abs\blo,"abstract, conceptual with blood removed",abs\blo → refined essence,Mind & Cognition
+abs\bnd,"abstract, conceptual with bend, generate recursive structure (HVM primitive) removed",abs\bnd → refined essence,Mind & Cognition
+abs\bng,"abstract, conceptual with bring, carry to, deliver removed",abs\bng → refined essence,Mind & Cognition
+abs\bnk,"abstract, conceptual with bank, financial removed",abs\bnk → refined essence,Mind & Cognition
+abs\boa,"abstract, conceptual with boat, watercraft removed",abs\boa → refined essence,Mind & Cognition
+abs\bod,"abstract, conceptual with awakening, enlightenment (Buddhist) removed",abs\bod → refined essence,Mind & Cognition
+abs\boi,"abstract, conceptual with boil, water removed",abs\boi → refined essence,Mind & Cognition
+abs\bol,"abstract, conceptual with boil, bubble removed",abs\bol → refined essence,Mind & Cognition
+abs\bon,"abstract, conceptual with bone removed",abs\bon → refined essence,Mind & Cognition
+abs\boo,"abstract, conceptual with book, read removed",abs\boo → refined essence,Mind & Cognition
+abs\bor,"abstract, conceptual with bored, disinterest removed",abs\bor → refined essence,Mind & Cognition
+abs\bot,"abstract, conceptual with automated agent removed",abs\bot → refined essence,Mind & Cognition
+abs\bou,"abstract, conceptual with boundary, limit removed",abs\bou → refined essence,Mind & Cognition
+abs\bow,"abstract, conceptual with bowl, container removed",abs\bow → refined essence,Mind & Cognition
+abs\box,"abstract, conceptual with box, container removed",abs\box → refined essence,Mind & Cognition
+abs\bra,"abstract, conceptual with brain removed",abs\bra → refined essence,Mind & Cognition
+abs\brc,"abstract, conceptual with branching: multiple valid continuations available removed",abs\brc → refined essence,Mind & Cognition
+abs\brd,"abstract, conceptual with bread, baked dough removed",abs\brd → refined essence,Mind & Cognition
+abs\bre,"abstract, conceptual with brief removed",abs\bre → refined essence,Mind & Cognition
+abs\brg,"abstract, conceptual with bridge, narrow connection between semantic regions removed",abs\brg → refined essence,Mind & Cognition
+abs\bri,"abstract, conceptual with hope, clarity, intelligence removed",abs\bri → refined essence,Mind & Cognition
+abs\brk,"abstract, conceptual with break, shatter, snap removed",abs\brk → refined essence,Mind & Cognition
+abs\btw,"abstract, conceptual with between, in the middle of removed",abs\btw → refined essence,Mind & Cognition
+abs\bug,"abstract, conceptual with insect removed",abs\bug → refined essence,Mind & Cognition
+abs\bur,"abstract, conceptual with burning removed",abs\bur → refined essence,Mind & Cognition
+abs\bus,"abstract, conceptual with bus, large vehicle removed",abs\bus → refined essence,Mind & Cognition
+abs\but,"abstract, conceptual with butterfly, insect removed",abs\but → refined essence,Mind & Cognition
+abs\cal,"abstract, conceptual with calm removed",abs\cal → refined essence,Mind & Cognition
+abs\can,"abstract, conceptual with can, able to, capable removed",abs\can → refined essence,Mind & Cognition
+abs\cap,"abstract, conceptual with captain, commander removed",abs\cap → refined essence,Mind & Cognition
+abs\car,"abstract, conceptual with carbon, C removed",abs\car → refined essence,Mind & Cognition
+abs\cas,"abstract, conceptual with castle, fortress removed",abs\cas → refined essence,Mind & Cognition
+abs\cat,"abstract, conceptual with catalyst, accelerator removed",abs\cat → refined essence,Mind & Cognition
+abs\category,"abstract, conceptual with mathematical category removed",abs\category → refined essence,Mind & Cognition
+abs\cau,"abstract, conceptual with cause, reason why, causation removed",abs\cau → refined essence,Mind & Cognition
+abs\cav,"abstract, conceptual with cave, cavern removed",abs\cav → refined essence,Mind & Cognition
+abs\cei,"abstract, conceptual with ceiling, top removed",abs\cei → refined essence,Mind & Cognition
+abs\cel,"abstract, conceptual with cell, biological unit removed",abs\cel → refined essence,Mind & Cognition
+abs\cen,"abstract, conceptual with center removed",abs\cen → refined essence,Mind & Cognition
+abs\cer,"abstract, conceptual with ceremony, ritual removed",abs\cer → refined essence,Mind & Cognition
+abs\cha,"abstract, conceptual with change removed",abs\cha → refined essence,Mind & Cognition
+abs\che,"abstract, conceptual with chemical, reaction removed",abs\che → refined essence,Mind & Cognition
+abs\chi,"abstract, conceptual with child removed",abs\chi → refined essence,Mind & Cognition
+abs\chk,"abstract, conceptual with check, verify, test removed",abs\chk → refined essence,Mind & Cognition
+abs\chkn,"abstract, conceptual with chicken, poultry removed",abs\chkn → refined essence,Mind & Cognition
+abs\cho,"abstract, conceptual with choice, option removed",abs\cho → refined essence,Mind & Cognition
+abs\chst,"abstract, conceptual with chastity, purity, self-restraint removed",abs\chst → refined essence,Mind & Cognition
+abs\chu,"abstract, conceptual with church, worship removed",abs\chu → refined essence,Mind & Cognition
+abs\cin,"abstract, conceptual with film, cinema removed",abs\cin → refined essence,Mind & Cognition
+abs\cir,"abstract, conceptual with circle, round removed",abs\cir → refined essence,Mind & Cognition
+abs\cla,"abstract, conceptual with conflicting constraints removed",abs\cla → refined essence,Mind & Cognition
+abs\clb,"abstract, conceptual with calibrated, confidence matches accuracy removed",abs\clb → refined essence,Mind & Cognition
+abs\cle,"abstract, conceptual with clear removed",abs\cle → refined essence,Mind & Cognition
+abs\cli,"abstract, conceptual with click, select removed",abs\cli → refined essence,Mind & Cognition
+abs\clm,"abstract, conceptual with climb, ascend, scale removed",abs\clm → refined essence,Mind & Cognition
+abs\cln,"abstract, conceptual with clan, extended family, lineage removed",abs\cln → refined essence,Mind & Cognition
+abs\clo,"abstract, conceptual with cloud, vapor removed",abs\clo → refined essence,Mind & Cognition
+abs\closure,"abstract, conceptual with function closure removed",abs\closure → refined essence,Mind & Cognition
+abs\clp,"abstract, conceptual with collapse, resolve ambiguity removed",abs\clp → refined essence,Mind & Cognition
+abs\clr,"abstract, conceptual with clarity, clear understanding (LLM success mode) removed",abs\clr → refined essence,Mind & Cognition
+abs\cls,"abstract, conceptual with cluster, dense region of related concepts in semantic space removed",abs\cls → refined essence,Mind & Cognition
+abs\clst,"abstract, conceptual with cluster, dense semantic region removed",abs\clst → refined essence,Mind & Cognition
+abs\clu,"abstract, conceptual with cloudy, overcast removed",abs\clu → refined essence,Mind & Cognition
+abs\cmp,"abstract, conceptual with complete, finished successfully removed",abs\cmp → refined essence,Mind & Cognition
+abs\cmpr,"abstract, conceptual with compare, contrast, evaluate differences removed",abs\cmpr → refined essence,Mind & Cognition
+abs\cmt,"abstract, conceptual with committing, crystallizing, path becoming dominant removed",abs\cmt → refined essence,Mind & Cognition
+abs\cnt,"abstract, conceptual with contradicts, conflicts with, opposes removed",abs\cnt → refined essence,Mind & Cognition
+abs\coa,"abstract, conceptual with coat, outer removed",abs\coa → refined essence,Mind & Cognition
+abs\cod,"abstract, conceptual with code, program removed",abs\cod → refined essence,Mind & Cognition
+abs\cof,"abstract, conceptual with coffee, caffeine removed",abs\cof → refined essence,Mind & Cognition
+abs\coh,"abstract, conceptual with coherent, internally consistent (LLM success mode) removed",abs\coh → refined essence,Mind & Cognition
+abs\col,"abstract, conceptual with distant, aloof, calm removed",abs\col → refined essence,Mind & Cognition
+abs\com,"abstract, conceptual with computing, digital removed",abs\com → refined essence,Mind & Cognition
+abs\combinator,"abstract, conceptual with combinator function removed",abs\combinator → refined essence,Mind & Cognition
+abs\con,"abstract, conceptual with contraction removed",abs\con → refined essence,Mind & Cognition
+abs\cont,"abstract, conceptual with continuous path, unbroken semantic connection removed",abs\cont → refined essence,Mind & Cognition
+abs\continuation,"abstract, conceptual with continuation passing removed",abs\continuation → refined essence,Mind & Cognition
+abs\contravariant,"abstract, conceptual with contravariant subtyping removed",abs\contravariant → refined essence,Mind & Cognition
+abs\conv,"abstract, conceptual with converge, paths moving to same point removed",abs\conv → refined essence,Mind & Cognition
+abs\coo,"abstract, conceptual with cook, prepare removed",abs\coo → refined essence,Mind & Cognition
+abs\cor,"abstract, conceptual with core removed",abs\cor → refined essence,Mind & Cognition
+abs\coroutine,"abstract, conceptual with coroutine function removed",abs\coroutine → refined essence,Mind & Cognition
+abs\cos,"abstract, conceptual with cosine, trigonometry removed",abs\cos → refined essence,Mind & Cognition
+abs\cot,"abstract, conceptual with contingent, may or may not be removed",abs\cot → refined essence,Mind & Cognition
+abs\cou,"abstract, conceptual with courage, brave removed",abs\cou → refined essence,Mind & Cognition
+abs\covariant,"abstract, conceptual with covariant subtyping removed",abs\covariant → refined essence,Mind & Cognition
+abs\cow,"abstract, conceptual with coward, fear removed",abs\cow → refined essence,Mind & Cognition
+ang\cou,"anger with courage, brave removed",ang\cou = anger\control,Mind & Cognition
+cal\ang,calm with anger removed,cal\ang = calm\anger,Mind & Cognition
+hop\dou,hope with doubting removed,hop\dou = hope\doubt,Mind & Cognition
+joy\exp,joy with expansion removed,joy\exp = joy\expression,Mind & Cognition
+pur\par,"purpose, intention, goal with parent removed",pur\par = purity\particles,Mind & Cognition
+sad\hop,sadness with hope removed,sad\hop = sadness\hope,Mind & Cognition
+big\sma,"large, big with small, tiny removed",big\sma = big\small,Physical World
+fre\sha,freezing with shame removed,fre\sha = friend\sharing,Physical World
+mov\cha,"motion, movement with change removed",mov\cha = move\change,Physical World
+pla\roo,"plasma, energetic with root, base removed",pla\roo = plant\roots,Physical World
+sil\sou,"silver/reflection with south, down-direction removed",sil\sou = silence\sound,Physical World
+wet\dry,"wet, moist with dry, parched removed",wet\dry = wet\dry,Physical World
+aci\abd,"acid, pH low with abduct, infer best explanation removed",aci\abd → refined essence,Science
+aci\abl,"acid, pH low with able, capable, having power to removed",aci\abl → refined essence,Science
+aci\abo,"acid, pH low with above removed",aci\abo → refined essence,Science
+aci\abs,"acid, pH low with abstract, conceptual removed",aci\abs → refined essence,Science
+aci\acc,"acid, pH low with accelerate, speed up removed",aci\acc → refined essence,Science
+aci\ack,"acid, pH low with acknowledge, confirm receipt removed",aci\ack → refined essence,Science
+aci\acr,"acid, pH low with across, from one side to other removed",aci\acr → refined essence,Science
+aci\act,"acid, pH low with action, do removed",aci\act → refined essence,Science
+aci\ada,"acid, pH low with adapt, adjust removed",aci\ada → refined essence,Science
+aci\add,"acid, pH low with addition, plus removed",aci\add → refined essence,Science
+aci\adj,"acid, pH low with adjacent, immediate neighbors in semantic space removed",aci\adj → refined essence,Science
+aci\aer,"acid, pH low with air-related removed",aci\aer → refined essence,Science
+aci\aes,"acid, pH low with beauty, aesthetic removed",aci\aes → refined essence,Science
+aci\aft,"acid, pH low with after, following, subsequent to removed",aci\aft → refined essence,Science
+aci\aga,"acid, pH low with against, opposed to, in opposition removed",aci\aga → refined essence,Science
+aci\age,"acid, pH low with agent removed",aci\age → refined essence,Science
+aci\agg,"acid, pH low with aggregate, combine, summarize data removed",aci\agg → refined essence,Science
+aci\agr,"acid, pH low with agreeing removed",aci\agr → refined essence,Science
+aci\agt,"acid, pH low with agent, actor removed",aci\agt → refined essence,Science
+aci\ahi,"acid, pH low with ahimsa, non-violence removed",aci\ahi → refined essence,Science
+aci\aim,"acid, pH low with aim, target, direct toward goal removed",aci\aim → refined essence,Science
+aci\air,"acid, pH low with air transport, aviation removed",aci\air → refined essence,Science
+aci\ale,"acid, pH low with aleatoric uncertainty (inherently random) removed",aci\ale → refined essence,Science
+aci\alg,"acid, pH low with aligned with intent (LLM success mode) removed",aci\alg → refined essence,Science
+aci\all,"acid, pH low with all, every removed",aci\all → refined essence,Science
+aci\allomorph,"acid, pH low with morpheme variant removed",aci\allomorph → refined essence,Science
+aci\allophone,"acid, pH low with phoneme variant removed",aci\allophone → refined essence,Science
+aci\alo,"acid, pH low with along, following the length of removed",aci\alo → refined essence,Science
+aci\alp,"acid, pH low with alpha, first removed",aci\alp → refined essence,Science
+aci\alt,"acid, pH low with alternatively, or else, another option removed",aci\alt → refined essence,Science
+aci\alv,"acid, pH low with alive, running, responsive removed",aci\alv → refined essence,Science
+aci\alw,"acid, pH low with always removed",aci\alw → refined essence,Science
+aci\amb,"acid, pH low with many meanings removed",aci\amb → refined essence,Science
+aci\amo,"acid, pH low with among, in the midst of, surrounded by removed",aci\amo → refined essence,Science
+aci\ana,"acid, pH low with analyze, examine systematically removed",aci\ana → refined essence,Science
+aci\anc,"acid, pH low with ancient, old removed",aci\anc → refined essence,Science
+aci\anch,"acid, pH low with anchoring, over-weighted on early context (LLM failure mode) removed",aci\anch → refined essence,Science
+aci\and,"acid, pH low with conjunction removed",aci\and → refined essence,Science
+aci\ang,"acid, pH low with anger removed",aci\ang → refined essence,Science
+aci\ani,"acid, pH low with animal removed",aci\ani → refined essence,Science
+aci\ans,"acid, pH low with answer, reply removed",aci\ans → refined essence,Science
+aci\ant,"acid, pH low with ant, insect removed",aci\ant → refined essence,Science
+aci\anx,"acid, pH low with anxious, worry removed",aci\anx → refined essence,Science
+aci\any,"acid, pH low with any, free choice quantifier removed",aci\any → refined essence,Science
+aci\api,"acid, pH low with interface, protocol removed",aci\api → refined essence,Science
+aci\apl,"acid, pH low with apple removed",aci\apl → refined essence,Science
+aci\app,"acid, pH low with application, program removed",aci\app → refined essence,Science
+aci\applicative,"acid, pH low with applicative functor removed",aci\applicative → refined essence,Science
+aci\apt,"acid, pH low with apartment, flat removed",aci\apt → refined essence,Science
+aci\aqu,"acid, pH low with water-related removed",aci\aqu → refined essence,Science
+aci\arc,"acid, pH low with arc, segment removed",aci\arc → refined essence,Science
+aci\are,"acid, pH low with area removed",aci\are → refined essence,Science
+aci\aret,"acid, pH low with arete, virtue, excellence, moral quality (Greek) removed",aci\aret → refined essence,Science
+aci\arg,"acid, pH low with arguing removed",aci\arg → refined essence,Science
+aci\ari,"acid, pH low with desert, arid removed",aci\ari → refined essence,Science
+aci\arm,"acid, pH low with arm, reach removed",aci\arm → refined essence,Science
+aci\aro,"acid, pH low with around, surrounding, encircling removed",aci\aro → refined essence,Science
+aci\art,"acid, pH low with art, creative work removed",aci\art → refined essence,Science
+aci\as,"acid, pH low with as, in the manner of, like removed",aci\as → refined essence,Science
+aci\ash,"acid, pH low with ash, burnt residue removed",aci\ash → refined essence,Science
+aci\ask,"acid, pH low with asking removed",aci\ask → refined essence,Science
+aci\asm,"acid, pH low with assume, take as:removed",aci\asm → refined essence,Science
+aci\ast,"acid, pH low with astronomy, celestial removed",aci\ast → refined essence,Science
+aci\asu,"acid, pH low with assume, take as:, presuppose removed",aci\asu → refined essence,Science
+aci\async,"acid, pH low with not synchronized concurrent removed",aci\async → refined essence,Science
+aci\ate,"acid, pH low with make, cause to be, act removed",aci\ate → refined essence,Science
+aci\ato,"acid, pH low with atom, particle removed",aci\ato → refined essence,Science
+aci\att,"acid, pH low with attention removed",aci\att → refined essence,Science
+fam\bon,family with bone removed,fam\bon = family\bonds,Social
+abo\abd,"above with abduct, infer best explanation removed",abo\abd → refined essence,Space & Position
+abo\abl,"above with able, capable, having power to removed",abo\abl → refined essence,Space & Position
+abo\abs,"above with abstract, conceptual removed",abo\abs → refined essence,Space & Position
+abo\acc,"above with accelerate, speed up removed",abo\acc → refined essence,Space & Position
+abo\aci,"above with acid, pH low removed",abo\aci → refined essence,Space & Position
+abo\ack,"above with acknowledge, confirm receipt removed",abo\ack → refined essence,Space & Position
+abo\acr,"above with across, from one side to other removed",abo\acr → refined essence,Space & Position
+abo\act,"above with action, do removed",abo\act → refined essence,Space & Position
+abo\ada,"above with adapt, adjust removed",abo\ada → refined essence,Space & Position
+abo\add,"above with addition, plus removed",abo\add → refined essence,Space & Position
+abo\adj,"above with adjacent, immediate neighbors in semantic space removed",abo\adj → refined essence,Space & Position
+abo\aer,above with air-related removed,abo\aer → refined essence,Space & Position
+abo\aes,"above with beauty, aesthetic removed",abo\aes → refined essence,Space & Position
+abo\aft,"above with after, following, subsequent to removed",abo\aft → refined essence,Space & Position
+abo\aga,"above with against, opposed to, in opposition removed",abo\aga → refined essence,Space & Position
+abo\age,above with agent removed,abo\age → refined essence,Space & Position
+abo\agg,"above with aggregate, combine, summarize data removed",abo\agg → refined essence,Space & Position
+abo\agr,above with agreeing removed,abo\agr → refined essence,Space & Position
+abo\agt,"above with agent, actor removed",abo\agt → refined essence,Space & Position
+abo\ahi,"above with ahimsa, non-violence removed",abo\ahi → refined essence,Space & Position
+abo\aim,"above with aim, target, direct toward goal removed",abo\aim → refined essence,Space & Position
+abo\air,"above with air transport, aviation removed",abo\air → refined essence,Space & Position
+abo\ale,above with aleatoric uncertainty (inherently random) removed,abo\ale → refined essence,Space & Position
+abo\alg,above with aligned with intent (LLM success mode) removed,abo\alg → refined essence,Space & Position
+abo\all,"above with all, every removed",abo\all → refined essence,Space & Position
+abo\allomorph,above with morpheme variant removed,abo\allomorph → refined essence,Space & Position
+abo\allophone,above with phoneme variant removed,abo\allophone → refined essence,Space & Position
+abo\alo,"above with along, following the length of removed",abo\alo → refined essence,Space & Position
+abo\alp,"above with alpha, first removed",abo\alp → refined essence,Space & Position
+abo\alt,"above with alternatively, or else, another option removed",abo\alt → refined essence,Space & Position
+abo\alv,"above with alive, running, responsive removed",abo\alv → refined essence,Space & Position
+abo\alw,above with always removed,abo\alw → refined essence,Space & Position
+abo\amb,above with many meanings removed,abo\amb → refined essence,Space & Position
+abo\amo,"above with among, in the midst of, surrounded by removed",abo\amo → refined essence,Space & Position
+abo\ana,"above with analyze, examine systematically removed",abo\ana → refined essence,Space & Position
+abo\anc,"above with ancient, old removed",abo\anc → refined essence,Space & Position
+abo\anch,"above with anchoring, over-weighted on early context (LLM failure mode) removed",abo\anch → refined essence,Space & Position
+abo\and,above with conjunction removed,abo\and → refined essence,Space & Position
+abo\ang,above with anger removed,abo\ang → refined essence,Space & Position
+abo\ani,above with animal removed,abo\ani → refined essence,Space & Position
+abo\ans,"above with answer, reply removed",abo\ans → refined essence,Space & Position
+abo\ant,"above with ant, insect removed",abo\ant → refined essence,Space & Position
+abo\anx,"above with anxious, worry removed",abo\anx → refined essence,Space & Position
+abo\any,"above with any, free choice quantifier removed",abo\any → refined essence,Space & Position
+abo\api,"above with interface, protocol removed",abo\api → refined essence,Space & Position
+abo\apl,above with apple removed,abo\apl → refined essence,Space & Position
+abo\app,"above with application, program removed",abo\app → refined essence,Space & Position
+abo\applicative,above with applicative functor removed,abo\applicative → refined essence,Space & Position
+abo\apt,"above with apartment, flat removed",abo\apt → refined essence,Space & Position
+abo\aqu,above with water-related removed,abo\aqu → refined essence,Space & Position
+abo\arc,"above with arc, segment removed",abo\arc → refined essence,Space & Position
+abo\are,above with area removed,abo\are → refined essence,Space & Position
+abo\aret,"above with arete, virtue, excellence, moral quality (Greek) removed",abo\aret → refined essence,Space & Position
+abo\arg,above with arguing removed,abo\arg → refined essence,Space & Position
+abo\ari,"above with desert, arid removed",abo\ari → refined essence,Space & Position
+abo\arm,"above with arm, reach removed",abo\arm → refined essence,Space & Position
+abo\aro,"above with around, surrounding, encircling removed",abo\aro → refined essence,Space & Position
+abo\art,"above with art, creative work removed",abo\art → refined essence,Space & Position
+abo\as,"above with as, in the manner of, like removed",abo\as → refined essence,Space & Position
+abo\ash,"above with ash, burnt residue removed",abo\ash → refined essence,Space & Position
+abo\ask,above with asking removed,abo\ask → refined essence,Space & Position
+abo\asm,"above with assume, take as:removed",abo\asm → refined essence,Space & Position
+abo\ast,"above with astronomy, celestial removed",abo\ast → refined essence,Space & Position
+abo\asu,"above with assume, take as:, presuppose removed",abo\asu → refined essence,Space & Position
+abo\async,above with not synchronized concurrent removed,abo\async → refined essence,Space & Position
+abo\ate,"above with make, cause to be, act removed",abo\ate → refined essence,Space & Position
+abo\ato,"above with atom, particle removed",abo\ato → refined essence,Space & Position
+abo\att,above with attention removed,abo\att → refined essence,Space & Position
+abo\attn,"above with attention, focus mechanism removed",abo\attn → refined essence,Space & Position
+abo\aud,above with hearing removed,abo\aud → refined essence,Space & Position
+abo\aur,"above with aurora, lights removed",abo\aur → refined essence,Space & Position
+abo\aut,"above with autumn, fall removed",abo\aut → refined essence,Space & Position
+abo\ave,"above with average, mean removed",abo\ave → refined essence,Space & Position
+abo\avg,above with average removed,abo\avg → refined essence,Space & Position
+abo\avi,above with bird removed,abo\avi → refined essence,Space & Position
+abo\avo,"above with avoid, stay away from, evade removed",abo\avo → refined essence,Space & Position
+abo\awa,"above with away, distant from, departing removed",abo\awa → refined essence,Space & Position
+abo\await,above with wait for completion removed,abo\await → refined essence,Space & Position
+abo\awt,"above with await, waiting for removed",abo\awt → refined essence,Space & Position
+abo\axs,"above with axis, dimension of variation in semantic space removed",abo\axs → refined essence,Space & Position
+abo\bac,above with backward removed,abo\bac → refined essence,Space & Position
+abo\bad,above with bad removed,abo\bad → refined essence,Space & Position
+abo\bag,"above with bag, carry removed",abo\bag → refined essence,Space & Position
+abo\bak,"above with backup, copy removed",abo\bak → refined essence,Space & Position
+abo\bal,"above with balloon, hot air removed",abo\bal → refined essence,Space & Position
+abo\ban,above with banana removed,abo\ban → refined essence,Space & Position
+abo\bar,"above with baraka, spiritual grace removed",abo\bar → refined essence,Space & Position
+abo\bas,"above with base, pH high removed",abo\bas → refined essence,Space & Position
+abo\bat,"above with bathroom, wash removed",abo\bat → refined essence,Space & Position
+abo\bea,above with beautiful removed,abo\bea → refined essence,Space & Position
+abo\bec,above with because removed,abo\bec → refined essence,Space & Position
+abo\bed,"above with bedroom, sleep removed",abo\bed → refined essence,Space & Position
+abo\bee,"above with beer, brewed removed",abo\bee → refined essence,Space & Position
+abo\bef,"above with before, prior removed",abo\bef → refined essence,Space & Position
+abo\beff,"above with beef, cattle meat removed",abo\beff → refined essence,Space & Position
+abo\beg,above with beginning removed,abo\beg → refined essence,Space & Position
+abo\beh,above with behind removed,abo\beh → refined essence,Space & Position
+abo\bel,above with below removed,abo\bel → refined essence,Space & Position
+abo\ben,"above with bend, curve removed",abo\ben → refined essence,Space & Position
+abo\ber,"above with berry, small fruit removed",abo\ber → refined essence,Space & Position
+abo\bes,above with beside removed,abo\bes → refined essence,Space & Position
+abo\bet,above with between removed,abo\bet → refined essence,Space & Position
+abo\big,"above with large, big removed",abo\big → refined essence,Space & Position
+abo\bik,"above with bike, bicycle removed",abo\bik → refined essence,Space & Position
+abo\bio,"above with biology, life science removed",abo\bio → refined essence,Space & Position
+abo\bir,above with birth removed,abo\bir → refined essence,Space & Position
+abo\bit,"above with bitter, acrid removed",abo\bit → refined essence,Space & Position
+abo\bld,"above with build, construct, assemble removed",abo\bld → refined essence,Space & Position
+abo\ble,"above with blessing, divine favor removed",abo\ble → refined essence,Space & Position
+abo\blf,"above with cliff, precipice removed",abo\blf → refined essence,Space & Position
+abo\bli,above with believing removed,abo\bli → refined essence,Space & Position
+abo\blk,"above with blocked, waiting on dependency removed",abo\blk → refined essence,Space & Position
+abo\blo,above with blood removed,abo\blo → refined essence,Space & Position
+abo\bnd,"above with bend, generate recursive structure (HVM primitive) removed",abo\bnd → refined essence,Space & Position
+abo\bng,"above with bring, carry to, deliver removed",abo\bng → refined essence,Space & Position
+abo\bnk,"above with bank, financial removed",abo\bnk → refined essence,Space & Position
+abo\boa,"above with boat, watercraft removed",abo\boa → refined essence,Space & Position
+abo\bod,"above with awakening, enlightenment (Buddhist) removed",abo\bod → refined essence,Space & Position
+abo\boi,"above with boil, water removed",abo\boi → refined essence,Space & Position
+abo\bol,"above with boil, bubble removed",abo\bol → refined essence,Space & Position
+abo\bon,above with bone removed,abo\bon → refined essence,Space & Position
+abo\boo,"above with book, read removed",abo\boo → refined essence,Space & Position
+abo\bor,"above with bored, disinterest removed",abo\bor → refined essence,Space & Position
+abo\bot,above with automated agent removed,abo\bot → refined essence,Space & Position
+abo\bou,"above with boundary, limit removed",abo\bou → refined essence,Space & Position
+abo\bow,"above with bowl, container removed",abo\bow → refined essence,Space & Position
+abo\box,"above with box, container removed",abo\box → refined essence,Space & Position
+abo\bra,above with brain removed,abo\bra → refined essence,Space & Position
+abo\brc,above with branching: multiple valid continuations available removed,abo\brc → refined essence,Space & Position
+abo\brd,"above with bread, baked dough removed",abo\brd → refined essence,Space & Position
+abo\bre,above with brief removed,abo\bre → refined essence,Space & Position
+abo\brg,"above with bridge, narrow connection between semantic regions removed",abo\brg → refined essence,Space & Position
+abo\bri,"above with hope, clarity, intelligence removed",abo\bri → refined essence,Space & Position
+abo\brk,"above with break, shatter, snap removed",abo\brk → refined essence,Space & Position
+abo\btw,"above with between, in the middle of removed",abo\btw → refined essence,Space & Position
+abo\bug,above with insect removed,abo\bug → refined essence,Space & Position
+abo\bur,above with burning removed,abo\bur → refined essence,Space & Position
+abo\bus,"above with bus, large vehicle removed",abo\bus → refined essence,Space & Position
+abo\but,"above with butterfly, insect removed",abo\but → refined essence,Space & Position
+abo\cal,above with calm removed,abo\cal → refined essence,Space & Position
+abo\can,"above with can, able to, capable removed",abo\can → refined essence,Space & Position
+abo\cap,"above with captain, commander removed",abo\cap → refined essence,Space & Position
+abo\car,"above with carbon, C removed",abo\car → refined essence,Space & Position
+abo\cas,"above with castle, fortress removed",abo\cas → refined essence,Space & Position
+abo\cat,"above with catalyst, accelerator removed",abo\cat → refined essence,Space & Position
+abo\category,above with mathematical category removed,abo\category → refined essence,Space & Position
+abo\cau,"above with cause, reason why, causation removed",abo\cau → refined essence,Space & Position
+abo\cav,"above with cave, cavern removed",abo\cav → refined essence,Space & Position
+abo\cei,"above with ceiling, top removed",abo\cei → refined essence,Space & Position
+abo\cel,"above with cell, biological unit removed",abo\cel → refined essence,Space & Position
+abo\cen,above with center removed,abo\cen → refined essence,Space & Position
+abo\cer,"above with ceremony, ritual removed",abo\cer → refined essence,Space & Position
+abo\cha,above with change removed,abo\cha → refined essence,Space & Position
+abo\che,"above with chemical, reaction removed",abo\che → refined essence,Space & Position
+abo\chi,above with child removed,abo\chi → refined essence,Space & Position
+abo\chk,"above with check, verify, test removed",abo\chk → refined essence,Space & Position
+abo\chkn,"above with chicken, poultry removed",abo\chkn → refined essence,Space & Position
+abo\cho,"above with choice, option removed",abo\cho → refined essence,Space & Position
+abo\chst,"above with chastity, purity, self-restraint removed",abo\chst → refined essence,Space & Position
+abo\chu,"above with church, worship removed",abo\chu → refined essence,Space & Position
+abo\cin,"above with film, cinema removed",abo\cin → refined essence,Space & Position
+abo\cir,"above with circle, round removed",abo\cir → refined essence,Space & Position
+abo\cla,above with conflicting constraints removed,abo\cla → refined essence,Space & Position
+abo\clb,"above with calibrated, confidence matches accuracy removed",abo\clb → refined essence,Space & Position
+abo\cle,above with clear removed,abo\cle → refined essence,Space & Position
+abo\cli,"above with click, select removed",abo\cli → refined essence,Space & Position
+abo\clm,"above with climb, ascend, scale removed",abo\clm → refined essence,Space & Position
+abo\cln,"above with clan, extended family, lineage removed",abo\cln → refined essence,Space & Position
+abo\clo,"above with cloud, vapor removed",abo\clo → refined essence,Space & Position
+abo\closure,above with function closure removed,abo\closure → refined essence,Space & Position
+abo\clp,"above with collapse, resolve ambiguity removed",abo\clp → refined essence,Space & Position
+abo\clr,"above with clarity, clear understanding (LLM success mode) removed",abo\clr → refined essence,Space & Position
+abo\cls,"above with cluster, dense region of related concepts in semantic space removed",abo\cls → refined essence,Space & Position
+abo\clst,"above with cluster, dense semantic region removed",abo\clst → refined essence,Space & Position
+abo\clu,"above with cloudy, overcast removed",abo\clu → refined essence,Space & Position
+abo\cmp,"above with complete, finished successfully removed",abo\cmp → refined essence,Space & Position
+abo\cmpr,"above with compare, contrast, evaluate differences removed",abo\cmpr → refined essence,Space & Position
+abo\cmt,"above with committing, crystallizing, path becoming dominant removed",abo\cmt → refined essence,Space & Position
+abo\cnt,"above with contradicts, conflicts with, opposes removed",abo\cnt → refined essence,Space & Position
+abo\coa,"above with coat, outer removed",abo\coa → refined essence,Space & Position
+abo\cod,"above with code, program removed",abo\cod → refined essence,Space & Position
+abo\cof,"above with coffee, caffeine removed",abo\cof → refined essence,Space & Position
+abo\coh,"above with coherent, internally consistent (LLM success mode) removed",abo\coh → refined essence,Space & Position
+abo\col,"above with distant, aloof, calm removed",abo\col → refined essence,Space & Position
+abo\com,"above with computing, digital removed",abo\com → refined essence,Space & Position
+abo\combinator,above with combinator function removed,abo\combinator → refined essence,Space & Position
+abo\con,above with contraction removed,abo\con → refined essence,Space & Position
+abo\cont,"above with continuous path, unbroken semantic connection removed",abo\cont → refined essence,Space & Position
+abo\continuation,above with continuation passing removed,abo\continuation → refined essence,Space & Position
+abo\contravariant,above with contravariant subtyping removed,abo\contravariant → refined essence,Space & Position
+abo\conv,"above with converge, paths moving to same point removed",abo\conv → refined essence,Space & Position
+abo\coo,"above with cook, prepare removed",abo\coo → refined essence,Space & Position
+abo\cor,above with core removed,abo\cor → refined essence,Space & Position
+abo\coroutine,above with coroutine function removed,abo\coroutine → refined essence,Space & Position
+abo\cos,"above with cosine, trigonometry removed",abo\cos → refined essence,Space & Position
+abo\cot,"above with contingent, may or may not be removed",abo\cot → refined essence,Space & Position
+abo\cou,"above with courage, brave removed",abo\cou → refined essence,Space & Position
+abo\covariant,above with covariant subtyping removed,abo\covariant → refined essence,Space & Position
+abo\cow,"above with coward, fear removed",abo\cow → refined essence,Space & Position
+acc\abd,"accelerate, speed up with abduct, infer best explanation removed",acc\abd → refined essence,Time & Change
+acc\abl,"accelerate, speed up with able, capable, having power to removed",acc\abl → refined essence,Time & Change
+acc\abo,"accelerate, speed up with above removed",acc\abo → refined essence,Time & Change
+acc\abs,"accelerate, speed up with abstract, conceptual removed",acc\abs → refined essence,Time & Change
+acc\aci,"accelerate, speed up with acid, pH low removed",acc\aci → refined essence,Time & Change
+acc\ack,"accelerate, speed up with acknowledge, confirm receipt removed",acc\ack → refined essence,Time & Change
+acc\acr,"accelerate, speed up with across, from one side to other removed",acc\acr → refined essence,Time & Change
+acc\act,"accelerate, speed up with action, do removed",acc\act → refined essence,Time & Change
+acc\ada,"accelerate, speed up with adapt, adjust removed",acc\ada → refined essence,Time & Change
+acc\add,"accelerate, speed up with addition, plus removed",acc\add → refined essence,Time & Change
+acc\adj,"accelerate, speed up with adjacent, immediate neighbors in semantic space removed",acc\adj → refined essence,Time & Change
+acc\aer,"accelerate, speed up with air-related removed",acc\aer → refined essence,Time & Change
+acc\aes,"accelerate, speed up with beauty, aesthetic removed",acc\aes → refined essence,Time & Change
+acc\aft,"accelerate, speed up with after, following, subsequent to removed",acc\aft → refined essence,Time & Change
+acc\aga,"accelerate, speed up with against, opposed to, in opposition removed",acc\aga → refined essence,Time & Change
+acc\age,"accelerate, speed up with agent removed",acc\age → refined essence,Time & Change
+acc\agg,"accelerate, speed up with aggregate, combine, summarize data removed",acc\agg → refined essence,Time & Change
+acc\agr,"accelerate, speed up with agreeing removed",acc\agr → refined essence,Time & Change
+acc\agt,"accelerate, speed up with agent, actor removed",acc\agt → refined essence,Time & Change
+acc\ahi,"accelerate, speed up with ahimsa, non-violence removed",acc\ahi → refined essence,Time & Change
+acc\aim,"accelerate, speed up with aim, target, direct toward goal removed",acc\aim → refined essence,Time & Change
+acc\air,"accelerate, speed up with air transport, aviation removed",acc\air → refined essence,Time & Change
+acc\ale,"accelerate, speed up with aleatoric uncertainty (inherently random) removed",acc\ale → refined essence,Time & Change
+acc\alg,"accelerate, speed up with aligned with intent (LLM success mode) removed",acc\alg → refined essence,Time & Change
+acc\all,"accelerate, speed up with all, every removed",acc\all → refined essence,Time & Change
+acc\allomorph,"accelerate, speed up with morpheme variant removed",acc\allomorph → refined essence,Time & Change
+acc\allophone,"accelerate, speed up with phoneme variant removed",acc\allophone → refined essence,Time & Change
+acc\alo,"accelerate, speed up with along, following the length of removed",acc\alo → refined essence,Time & Change
+acc\alp,"accelerate, speed up with alpha, first removed",acc\alp → refined essence,Time & Change
+acc\alt,"accelerate, speed up with alternatively, or else, another option removed",acc\alt → refined essence,Time & Change
+acc\alv,"accelerate, speed up with alive, running, responsive removed",acc\alv → refined essence,Time & Change
+acc\alw,"accelerate, speed up with always removed",acc\alw → refined essence,Time & Change
+acc\amb,"accelerate, speed up with many meanings removed",acc\amb → refined essence,Time & Change
+acc\amo,"accelerate, speed up with among, in the midst of, surrounded by removed",acc\amo → refined essence,Time & Change
+acc\ana,"accelerate, speed up with analyze, examine systematically removed",acc\ana → refined essence,Time & Change
+acc\anc,"accelerate, speed up with ancient, old removed",acc\anc → refined essence,Time & Change
+acc\anch,"accelerate, speed up with anchoring, over-weighted on early context (LLM failure mode) removed",acc\anch → refined essence,Time & Change
+acc\and,"accelerate, speed up with conjunction removed",acc\and → refined essence,Time & Change
+acc\ang,"accelerate, speed up with anger removed",acc\ang → refined essence,Time & Change
+acc\ani,"accelerate, speed up with animal removed",acc\ani → refined essence,Time & Change
+acc\ans,"accelerate, speed up with answer, reply removed",acc\ans → refined essence,Time & Change
+acc\ant,"accelerate, speed up with ant, insect removed",acc\ant → refined essence,Time & Change
+acc\anx,"accelerate, speed up with anxious, worry removed",acc\anx → refined essence,Time & Change
+acc\any,"accelerate, speed up with any, free choice quantifier removed",acc\any → refined essence,Time & Change
+acc\api,"accelerate, speed up with interface, protocol removed",acc\api → refined essence,Time & Change
+acc\apl,"accelerate, speed up with apple removed",acc\apl → refined essence,Time & Change
+acc\app,"accelerate, speed up with application, program removed",acc\app → refined essence,Time & Change
+acc\applicative,"accelerate, speed up with applicative functor removed",acc\applicative → refined essence,Time & Change
+acc\apt,"accelerate, speed up with apartment, flat removed",acc\apt → refined essence,Time & Change
+acc\aqu,"accelerate, speed up with water-related removed",acc\aqu → refined essence,Time & Change
+acc\arc,"accelerate, speed up with arc, segment removed",acc\arc → refined essence,Time & Change
+acc\are,"accelerate, speed up with area removed",acc\are → refined essence,Time & Change
+acc\aret,"accelerate, speed up with arete, virtue, excellence, moral quality (Greek) removed",acc\aret → refined essence,Time & Change
+acc\arg,"accelerate, speed up with arguing removed",acc\arg → refined essence,Time & Change
+acc\ari,"accelerate, speed up with desert, arid removed",acc\ari → refined essence,Time & Change
+acc\arm,"accelerate, speed up with arm, reach removed",acc\arm → refined essence,Time & Change
+acc\aro,"accelerate, speed up with around, surrounding, encircling removed",acc\aro → refined essence,Time & Change
+acc\art,"accelerate, speed up with art, creative work removed",acc\art → refined essence,Time & Change
+acc\as,"accelerate, speed up with as, in the manner of, like removed",acc\as → refined essence,Time & Change
+acc\ash,"accelerate, speed up with ash, burnt residue removed",acc\ash → refined essence,Time & Change
+acc\ask,"accelerate, speed up with asking removed",acc\ask → refined essence,Time & Change
+acc\asm,"accelerate, speed up with assume, take as:removed",acc\asm → refined essence,Time & Change
+acc\ast,"accelerate, speed up with astronomy, celestial removed",acc\ast → refined essence,Time & Change
+acc\asu,"accelerate, speed up with assume, take as:, presuppose removed",acc\asu → refined essence,Time & Change
+acc\async,"accelerate, speed up with not synchronized concurrent removed",acc\async → refined essence,Time & Change
+acc\ate,"accelerate, speed up with make, cause to be, act removed",acc\ate → refined essence,Time & Change
+acc\ato,"accelerate, speed up with atom, particle removed",acc\ato → refined essence,Time & Change
+acc\att,"accelerate, speed up with attention removed",acc\att → refined essence,Time & Change
+acc\attn,"accelerate, speed up with attention, focus mechanism removed",acc\attn → refined essence,Time & Change
+acc\aud,"accelerate, speed up with hearing removed",acc\aud → refined essence,Time & Change
+acc\aur,"accelerate, speed up with aurora, lights removed",acc\aur → refined essence,Time & Change
+acc\aut,"accelerate, speed up with autumn, fall removed",acc\aut → refined essence,Time & Change
+acc\ave,"accelerate, speed up with average, mean removed",acc\ave → refined essence,Time & Change
+acc\avg,"accelerate, speed up with average removed",acc\avg → refined essence,Time & Change
+acc\avi,"accelerate, speed up with bird removed",acc\avi → refined essence,Time & Change
+acc\avo,"accelerate, speed up with avoid, stay away from, evade removed",acc\avo → refined essence,Time & Change
+acc\awa,"accelerate, speed up with away, distant from, departing removed",acc\awa → refined essence,Time & Change
+acc\await,"accelerate, speed up with wait for completion removed",acc\await → refined essence,Time & Change
+acc\awt,"accelerate, speed up with await, waiting for removed",acc\awt → refined essence,Time & Change
+acc\axs,"accelerate, speed up with axis, dimension of variation in semantic space removed",acc\axs → refined essence,Time & Change
+acc\bac,"accelerate, speed up with backward removed",acc\bac → refined essence,Time & Change
+acc\bad,"accelerate, speed up with bad removed",acc\bad → refined essence,Time & Change
+acc\bag,"accelerate, speed up with bag, carry removed",acc\bag → refined essence,Time & Change
+acc\bak,"accelerate, speed up with backup, copy removed",acc\bak → refined essence,Time & Change
+acc\bal,"accelerate, speed up with balloon, hot air removed",acc\bal → refined essence,Time & Change
+acc\ban,"accelerate, speed up with banana removed",acc\ban → refined essence,Time & Change
+acc\bar,"accelerate, speed up with baraka, spiritual grace removed",acc\bar → refined essence,Time & Change
+acc\bas,"accelerate, speed up with base, pH high removed",acc\bas → refined essence,Time & Change
+acc\bat,"accelerate, speed up with bathroom, wash removed",acc\bat → refined essence,Time & Change
+acc\bea,"accelerate, speed up with beautiful removed",acc\bea → refined essence,Time & Change
+acc\bec,"accelerate, speed up with because removed",acc\bec → refined essence,Time & Change
+acc\bed,"accelerate, speed up with bedroom, sleep removed",acc\bed → refined essence,Time & Change
+acc\bee,"accelerate, speed up with beer, brewed removed",acc\bee → refined essence,Time & Change
+acc\bef,"accelerate, speed up with before, prior removed",acc\bef → refined essence,Time & Change
+acc\beff,"accelerate, speed up with beef, cattle meat removed",acc\beff → refined essence,Time & Change
+acc\beg,"accelerate, speed up with beginning removed",acc\beg → refined essence,Time & Change
+acc\beh,"accelerate, speed up with behind removed",acc\beh → refined essence,Time & Change
+acc\bel,"accelerate, speed up with below removed",acc\bel → refined essence,Time & Change
+acc\ben,"accelerate, speed up with bend, curve removed",acc\ben → refined essence,Time & Change
+acc\ber,"accelerate, speed up with berry, small fruit removed",acc\ber → refined essence,Time & Change
+acc\bes,"accelerate, speed up with beside removed",acc\bes → refined essence,Time & Change
+acc\bet,"accelerate, speed up with between removed",acc\bet → refined essence,Time & Change
+acc\big,"accelerate, speed up with large, big removed",acc\big → refined essence,Time & Change
+acc\bik,"accelerate, speed up with bike, bicycle removed",acc\bik → refined essence,Time & Change
+acc\bio,"accelerate, speed up with biology, life science removed",acc\bio → refined essence,Time & Change
+acc\bir,"accelerate, speed up with birth removed",acc\bir → refined essence,Time & Change
+acc\bit,"accelerate, speed up with bitter, acrid removed",acc\bit → refined essence,Time & Change
+acc\bld,"accelerate, speed up with build, construct, assemble removed",acc\bld → refined essence,Time & Change
+acc\ble,"accelerate, speed up with blessing, divine favor removed",acc\ble → refined essence,Time & Change
+acc\blf,"accelerate, speed up with cliff, precipice removed",acc\blf → refined essence,Time & Change
+acc\bli,"accelerate, speed up with believing removed",acc\bli → refined essence,Time & Change
+acc\blk,"accelerate, speed up with blocked, waiting on dependency removed",acc\blk → refined essence,Time & Change
+acc\blo,"accelerate, speed up with blood removed",acc\blo → refined essence,Time & Change
+acc\bnd,"accelerate, speed up with bend, generate recursive structure (HVM primitive) removed",acc\bnd → refined essence,Time & Change
+acc\bng,"accelerate, speed up with bring, carry to, deliver removed",acc\bng → refined essence,Time & Change
+acc\bnk,"accelerate, speed up with bank, financial removed",acc\bnk → refined essence,Time & Change
+acc\boa,"accelerate, speed up with boat, watercraft removed",acc\boa → refined essence,Time & Change
+acc\bod,"accelerate, speed up with awakening, enlightenment (Buddhist) removed",acc\bod → refined essence,Time & Change
+acc\boi,"accelerate, speed up with boil, water removed",acc\boi → refined essence,Time & Change
+acc\bol,"accelerate, speed up with boil, bubble removed",acc\bol → refined essence,Time & Change
+acc\bon,"accelerate, speed up with bone removed",acc\bon → refined essence,Time & Change
+acc\boo,"accelerate, speed up with book, read removed",acc\boo → refined essence,Time & Change
+acc\bor,"accelerate, speed up with bored, disinterest removed",acc\bor → refined essence,Time & Change
+acc\bot,"accelerate, speed up with automated agent removed",acc\bot → refined essence,Time & Change
+acc\bou,"accelerate, speed up with boundary, limit removed",acc\bou → refined essence,Time & Change
+acc\bow,"accelerate, speed up with bowl, container removed",acc\bow → refined essence,Time & Change
+acc\box,"accelerate, speed up with box, container removed",acc\box → refined essence,Time & Change
+acc\bra,"accelerate, speed up with brain removed",acc\bra → refined essence,Time & Change
+acc\brc,"accelerate, speed up with branching: multiple valid continuations available removed",acc\brc → refined essence,Time & Change
+acc\brd,"accelerate, speed up with bread, baked dough removed",acc\brd → refined essence,Time & Change
+acc\bre,"accelerate, speed up with brief removed",acc\bre → refined essence,Time & Change
+acc\brg,"accelerate, speed up with bridge, narrow connection between semantic regions removed",acc\brg → refined essence,Time & Change
+acc\bri,"accelerate, speed up with hope, clarity, intelligence removed",acc\bri → refined essence,Time & Change
+acc\brk,"accelerate, speed up with break, shatter, snap removed",acc\brk → refined essence,Time & Change
+acc\btw,"accelerate, speed up with between, in the middle of removed",acc\btw → refined essence,Time & Change
+acc\bug,"accelerate, speed up with insect removed",acc\bug → refined essence,Time & Change
+acc\bur,"accelerate, speed up with burning removed",acc\bur → refined essence,Time & Change
+acc\bus,"accelerate, speed up with bus, large vehicle removed",acc\bus → refined essence,Time & Change
+acc\but,"accelerate, speed up with butterfly, insect removed",acc\but → refined essence,Time & Change
+acc\cal,"accelerate, speed up with calm removed",acc\cal → refined essence,Time & Change
+acc\can,"accelerate, speed up with can, able to, capable removed",acc\can → refined essence,Time & Change
+acc\cap,"accelerate, speed up with captain, commander removed",acc\cap → refined essence,Time & Change
+acc\car,"accelerate, speed up with carbon, C removed",acc\car → refined essence,Time & Change
+acc\cas,"accelerate, speed up with castle, fortress removed",acc\cas → refined essence,Time & Change
+acc\cat,"accelerate, speed up with catalyst, accelerator removed",acc\cat → refined essence,Time & Change
+acc\category,"accelerate, speed up with mathematical category removed",acc\category → refined essence,Time & Change
+acc\cau,"accelerate, speed up with cause, reason why, causation removed",acc\cau → refined essence,Time & Change
+acc\cav,"accelerate, speed up with cave, cavern removed",acc\cav → refined essence,Time & Change
+acc\cei,"accelerate, speed up with ceiling, top removed",acc\cei → refined essence,Time & Change
+acc\cel,"accelerate, speed up with cell, biological unit removed",acc\cel → refined essence,Time & Change
+acc\cen,"accelerate, speed up with center removed",acc\cen → refined essence,Time & Change
+acc\cer,"accelerate, speed up with ceremony, ritual removed",acc\cer → refined essence,Time & Change
+acc\cha,"accelerate, speed up with change removed",acc\cha → refined essence,Time & Change
+acc\che,"accelerate, speed up with chemical, reaction removed",acc\che → refined essence,Time & Change
+acc\chi,"accelerate, speed up with child removed",acc\chi → refined essence,Time & Change
+acc\chk,"accelerate, speed up with check, verify, test removed",acc\chk → refined essence,Time & Change
+acc\chkn,"accelerate, speed up with chicken, poultry removed",acc\chkn → refined essence,Time & Change

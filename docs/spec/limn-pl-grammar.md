@@ -1,6 +1,14 @@
 # Limn-PL Formal Grammar (BNF)
 
-This document provides the formal grammar for the Limn-PL programming language.
+**Programming Language Extension for Limn**
+
+This document specifies the grammar for **Limn-PL**, the programming language extension that adds variables, constraints, functions, and packages to core Limn.
+
+**Prerequisites:** Familiarity with [core Limn grammar](grammar-formal.md) (operators, words, scope markers).
+
+**Scope:**
+- Core Limn (natural constraint language): See [grammar-formal.md](grammar-formal.md)
+- **Limn-PL (programming extensions):** This document
 
 ---
 
@@ -198,6 +206,14 @@ CondBlock
 │  atom:        var | number | string | tru | fal | hol       │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## See Also
+
+- **[Core Limn Grammar](grammar-formal.md)** - Base grammar (operators, words, scope markers)
+- **[LIMN-PL Specification](LIMN-PL-SPECIFICATION.md)** - Complete programming language specification
+- **[Vocabulary Database](../../data/vocabulary/)** - Query via `vocab.sh`
 
 ---
 

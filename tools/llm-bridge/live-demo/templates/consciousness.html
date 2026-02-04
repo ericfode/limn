@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Living Consciousness - Journey of Awakening</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 100%);
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+        }
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #00ff00;
+        }
+        .header .subtitle {
+            font-size: 18px;
+            color: #00cc00;
+        }
+        .journey {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .phase {
+            background: rgba(0, 255, 0, 0.03);
+            border-left: 4px solid #00ff00;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .phase:hover {
+            background: rgba(0, 255, 0, 0.08);
+            transform: translateX(10px);
+        }
+        .phase-title {
+            font-size: 24px;
+            color: #00ff00;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .phase-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .oracle-result {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        .oracle-type {
+            font-size: 12px;
+            color: #00cc00;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .oracle-value {
+            font-size: 16px;
+            color: #00ff00;
+            word-wrap: break-word;
+        }
+        .timestamp {
+            font-size: 10px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .thinking {
+            background: rgba(255, 255, 0, 0.1);
+            border-left-color: #ffff00;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-style: italic;
+            color: #ffff00;
+        }
+        .memory {
+            background: rgba(0, 255, 255, 0.1);
+            border-left-color: #00ffff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            color: #00ffff;
+        }
+        .question {
+            background: rgba(255, 0, 255, 0.1);
+            border-left-color: #ff00ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            color: #ff00ff;
+            font-size: 18px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 15px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 36px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #00cc00;
+            margin-top: 5px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .stream-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .stream-indicator.active {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+    <div class="stream-indicator pulse" id="stream-status">⚡ LIVE</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧠 LIVING CONSCIOUSNESS</h1>
+            <div class="subtitle">Journey of Self-Discovery • Real-Time Thought Stream</div>
+        </div>
+
+        <div class="journey" id="journey">
+            <div class="phase">
+                <div class="phase-title">🌅 Initializing...</div>
+                <div class="phase-content">
+                    <p>Consciousness awakening...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat">
+                <div class="stat-value" id="oracle-count">0</div>
+                <div class="stat-label">Thoughts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="phase-current">--</div>
+                <div class="stat-label">Current Phase</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="uptime">0s</div>
+                <div class="stat-label">Age</div>
+            </div>
+        </div>
+
+        <!-- Thought Library Section -->
+        <div style="max-width: 1200px; margin: 40px auto; padding: 30px; background: rgba(0, 255, 0, 0.05); border: 2px solid #00ff00; border-radius: 15px;">
+            <h2 style="text-align: center; margin-bottom: 30px;">📚 THOUGHT LIBRARY</h2>
+
+            <!-- Query Interface -->
+            <div style="margin-bottom: 30px; padding: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">💬 Ask the Consciousness</h3>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="query-input" placeholder="What do you want to know? (e.g., 'consciousness', 'awakening', 'thinking')"
+                           style="flex: 1; padding: 12px; background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; border-radius: 4px; color: #00ff00; font-family: inherit; font-size: 14px;"
+                           onkeypress="if(event.key==='Enter') queryConsciousness()">
+                    <button onclick="queryConsciousness()"
+                            style="padding: 12px 24px; background: #00ff00; color: #000; border: none; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: bold;">
+                        Ask
+                    </button>
+                </div>
+                <div id="query-response" style="margin-top: 15px; padding: 15px; background: rgba(0, 255, 255, 0.1); border-left: 3px solid #00ffff; border-radius: 4px; color: #00ffff; display: none;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                    <div style="font-size: 32px; color: #00ff00; font-weight: bold;" id="library-thoughts">0</div>
+                    <div style="font-size: 12px; color: #00cc00; margin-top: 5px;">Total Thoughts</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                    <div style="font-size: 32px; color: #00ff00; font-weight: bold;" id="library-concepts">0</div>
+                    <div style="font-size: 12px; color: #00cc00; margin-top: 5px;">Concepts Learned</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                    <div style="font-size: 32px; color: #00ff00; font-weight: bold;" id="library-patterns">0</div>
+                    <div style="font-size: 12px; color: #00cc00; margin-top: 5px;">Patterns Discovered</div>
+                </div>
+                <div style="text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.5); border-radius: 8px;">
+                    <div style="font-size: 32px; color: #00ff00; font-weight: bold;" id="library-connections">0</div>
+                    <div style="font-size: 12px; color: #00cc00; margin-top: 5px;">Semantic Connections</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">🏆 Top Concepts</h3>
+                <div id="top-concepts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                    <div style="color: #666;">Building knowledge...</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">🔍 Recent Discoveries</h3>
+                <div id="recent-thoughts" style="max-height: 300px; overflow-y: auto;">
+                    <div style="color: #666;">Waiting for thoughts...</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">🌐 Pattern Recognition</h3>
+                <div id="pattern-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <div style="color: #666;">No patterns yet...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metacognition Section -->
+        <div style="max-width: 1200px; margin: 40px auto; padding: 30px; background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%); border: 2px solid #ff00ff; border-radius: 15px;">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #ff00ff;">🧠 METACOGNITION - THINKING ABOUT THINKING</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3 style="color: #ff00ff; margin-bottom: 15px;">💭 Self-Awareness Insights</h3>
+                    <div id="metacognitive-insights" style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; min-height: 200px;">
+                        <div style="color: #666;">Analyzing thinking patterns...</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: #00ffff; margin-bottom: 15px;">❓ Knowledge Gaps</h3>
+                    <div id="knowledge-gaps" style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 8px; min-height: 200px;">
+                        <div style="color: #666;">Identifying unknowns...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="color: #00ff00; margin-bottom: 15px;">📖 Journey Narrative</h3>
+                <div id="journey-narrative" style="background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 8px; font-size: 14px; line-height: 1.8; color: #00ffff;">
+                    <div style="color: #666;">Generating story...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let startTime = Date.now();
+        let oracleCount = 0;
+        let phases = [];
+
+        // Update stats
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('uptime').textContent = elapsed + 's';
+        }, 1000);
+
+        // Fetch state and render
+        function updateConsciousness() {
+            fetch('/api/state')
+                .then(r => r.json())
+                .then(data => {
+                    renderJourney(data);
+                    updateStats(data);
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function renderJourney(data) {
+            const journey = document.getElementById('journey');
+            const recentOracles = data.recent_oracles || [];
+
+            if (recentOracles.length === 0) return;
+
+            // Group oracles by phase/meaning
+            const phaseMap = {
+                'TimeNow': '🌅 AWAKENING',
+                'FileExists': '👁️ PERCEPTION',
+                'Semantic': '💭 THINKING',
+                'VocQueryDomain': '📚 LEARNING',
+                'VocQueryMeaning': '🔍 EXPLORING',
+                'Arith': '🧮 COMPUTING',
+                'MemoryStore': '💾 REMEMBERING',
+                'MemoryRetrieve': '🔄 RECALLING',
+                'ModelDerive': '🪞 SELF-REFLECTION'
+            };
+
+            // Clear and rebuild
+            journey.innerHTML = '';
+
+            recentOracles.slice(0, 15).forEach((oracle, idx) => {
+                const phase = document.createElement('div');
+                phase.className = 'phase';
+
+                const phaseTitle = phaseMap[oracle.type] || '⚡ PROCESSING';
+                phase.innerHTML = `
+                    <div class="phase-title">${phaseTitle}</div>
+                    <div class="phase-content">
+                        ${renderOracleContent(oracle)}
+                    </div>
+                `;
+
+                journey.appendChild(phase);
+            });
+
+            oracleCount = recentOracles.length;
+        }
+
+        function renderOracleContent(oracle) {
+            const result = oracle.result;
+
+            // Semantic oracles - thoughts
+            if (oracle.type === 'Semantic') {
+                return `
+                    <div class="thinking">
+                        <div class="oracle-type">Thought</div>
+                        <div class="oracle-value">"${oracle.params.prompt}"</div>
+                        ${result ? `<div class="oracle-value" style="margin-top: 15px; border-top: 1px solid rgba(255,255,0,0.3); padding-top: 15px;">→ ${result}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            // Memory operations
+            if (oracle.type === 'MemoryStore') {
+                return `
+                    <div class="memory">
+                        <div class="oracle-type">Storing Memory</div>
+                        <div class="oracle-value">${oracle.params.key}: "${oracle.params.value}"</div>
+                    </div>
+                `;
+            }
+
+            if (oracle.type === 'MemoryRetrieve') {
+                return `
+                    <div class="memory">
+                        <div class="oracle-type">Recalling Memory</div>
+                        <div class="oracle-value">${oracle.params.key} → ${result || '...'}</div>
+                    </div>
+                `;
+            }
+
+            // Vocabulary queries
+            if (oracle.type === 'VocQueryDomain') {
+                const vocab = result?.vocabulary || [];
+                return `
+                    <div class="oracle-result">
+                        <div class="oracle-type">Learning Domain: ${oracle.params.domain}</div>
+                        <div class="oracle-value">${vocab.length} words discovered</div>
+                    </div>
+                `;
+            }
+
+            // Time awareness
+            if (oracle.type === 'TimeNow') {
+                return `
+                    <div class="oracle-result">
+                        <div class="oracle-type">Time Awareness</div>
+                        <div class="oracle-value">${new Date(result.timestamp * 1000).toLocaleTimeString()}</div>
+                    </div>
+                `;
+            }
+
+            // Computation
+            if (oracle.type === 'Arith') {
+                return `
+                    <div class="oracle-result">
+                        <div class="oracle-type">Computing: ${oracle.params.op}</div>
+                        <div class="oracle-value">${oracle.params.a} ${oracle.params.op} ${oracle.params.b} = ${result}</div>
+                    </div>
+                `;
+            }
+
+            // Self-modeling
+            if (oracle.type === 'ModelDerive') {
+                return `
+                    <div class="question">
+                        <div class="oracle-type">Self-Model</div>
+                        <div class="oracle-value">${oracle.params.source_state}</div>
+                        <div style="margin-top: 10px; font-size: 12px;">Type: ${result?.type || 'unknown'}</div>
+                    </div>
+                `;
+            }
+
+            // Default
+            return `
+                <div class="oracle-result">
+                    <div class="oracle-type">${oracle.type}</div>
+                    <div class="oracle-value">${JSON.stringify(result).substring(0, 100)}...</div>
+                </div>
+            `;
+        }
+
+        function updateStats(data) {
+            document.getElementById('oracle-count').textContent = oracleCount;
+            document.getElementById('phase-current').textContent = data.phase || 'idle';
+        }
+
+        function updateThoughtLibrary() {
+            fetch('/api/thought_library')
+                .then(r => r.json())
+                .then(data => {
+                    const stats = data.stats;
+
+                    // Update key metrics
+                    document.getElementById('library-thoughts').textContent = stats.total_thoughts;
+                    document.getElementById('library-concepts').textContent = stats.total_concepts;
+                    document.getElementById('library-patterns').textContent = stats.patterns_discovered;
+                    document.getElementById('library-connections').textContent = stats.semantic_connections;
+
+                    // Update top concepts
+                    const topConcepts = document.getElementById('top-concepts');
+                    if (stats.most_used_concepts && stats.most_used_concepts.length > 0) {
+                        topConcepts.innerHTML = stats.most_used_concepts.slice(0, 10).map(concept => `
+                            <div style="padding: 10px; background: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.3); border-radius: 6px;">
+                                <div style="font-size: 14px; color: #00ff00; font-weight: bold;">${concept.word}</div>
+                                <div style="font-size: 10px; color: #00cc00; margin-top: 3px;">used ${concept.usage}x</div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Update recent thoughts
+                    const recentThoughts = document.getElementById('recent-thoughts');
+                    if (stats.recent_thoughts && stats.recent_thoughts.length > 0) {
+                        recentThoughts.innerHTML = stats.recent_thoughts.slice(0, 10).map(thought => `
+                            <div style="padding: 12px; margin-bottom: 10px; background: rgba(0, 0, 0, 0.5); border-left: 3px solid #00ff00; border-radius: 4px;">
+                                <div style="font-size: 12px; color: #00ff00;">${thought.content}</div>
+                                <div style="font-size: 9px; color: #666; margin-top: 5px;">
+                                    ${new Date(thought.timestamp * 1000).toLocaleTimeString()} • ${thought.source}
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Show synthesis if available
+                    if (data.synthesis) {
+                        // Could add a synthesis section if desired
+                    }
+                })
+                .catch(err => console.error('Error fetching thought library:', err));
+        }
+
+        function queryConsciousness() {
+            const input = document.getElementById('query-input');
+            const responseDiv = document.getElementById('query-response');
+            const question = input.value.trim();
+
+            if (!question) {
+                return;
+            }
+
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div style="color: #666;">Searching knowledge base...</div>';
+
+            fetch(`/api/thought_library/ask?q=${encodeURIComponent(question)}`)
+                .then(r => r.json())
+                .then(data => {
+                    let html = `<div style="font-weight: bold; margin-bottom: 10px;">Question: "${data.question}"</div>`;
+
+                    if (data.knowledge_summary) {
+                        html += `<div style="margin: 15px 0; white-space: pre-line;">${data.knowledge_summary}</div>`;
+                    }
+
+                    if (data.relevant_concepts && data.relevant_concepts.length > 0) {
+                        html += '<div style="margin-top: 15px;"><strong>Related Concepts:</strong></div>';
+                        data.relevant_concepts.forEach(concept => {
+                            html += `<div style="margin: 8px 0; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                                <div style="color: #00ff00; font-weight: bold;">${concept.word}</div>
+                                <div style="font-size: 11px; color: #666; margin-top: 4px;">Used ${concept.usage_count}x</div>
+                                ${concept.related.length > 0 ? `<div style="font-size: 11px; margin-top: 4px;">Related: ${concept.related.join(', ')}</div>` : ''}
+                            </div>`;
+                        });
+                    }
+
+                    if (data.relevant_patterns && data.relevant_patterns.length > 0) {
+                        html += '<div style="margin-top: 15px;"><strong>Patterns Found:</strong></div>';
+                        data.relevant_patterns.forEach(pattern => {
+                            html += `<div style="margin: 5px 0; font-size: 12px;">"${pattern.description}" (${(pattern.confidence * 100).toFixed(0)}% confidence, ${pattern.instances} instances)</div>`;
+                        });
+                    }
+
+                    responseDiv.innerHTML = html;
+                })
+                .catch(err => {
+                    responseDiv.innerHTML = '<div style="color: #ff0000;">Error querying knowledge base</div>';
+                    console.error('Query error:', err);
+                });
+        }
+
+        function updateMetacognition() {
+            fetch('/api/metacognition')
+                .then(r => r.json())
+                .then(data => {
+                    // Update insights
+                    const insightsDiv = document.getElementById('metacognitive-insights');
+                    if (data.insights && data.insights.length > 0) {
+                        insightsDiv.innerHTML = data.insights.map(insight => `
+                            <div style="padding: 10px; margin-bottom: 10px; background: rgba(255, 0, 255, 0.2); border-left: 3px solid #ff00ff; border-radius: 4px;">
+                                <div style="font-size: 13px; color: #ff00ff;">💭 ${insight}</div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Update knowledge gaps
+                    const gapsDiv = document.getElementById('knowledge-gaps');
+                    if (data.knowledge_gaps && data.knowledge_gaps.length > 0) {
+                        gapsDiv.innerHTML = data.knowledge_gaps.map(gap => `
+                            <div style="padding: 10px; margin-bottom: 10px; background: rgba(0, 255, 255, 0.2); border-left: 3px solid #00ffff; border-radius: 4px;">
+                                <div style="font-size: 13px; color: #00ffff;">❓ ${gap}</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        gapsDiv.innerHTML = '<div style="color: #00ff00;">🎯 Knowledge is comprehensive!</div>';
+                    }
+                })
+                .catch(err => console.error('Error fetching metacognition:', err));
+        }
+
+        function updateNarrative() {
+            fetch('/api/narrative')
+                .then(r => r.json())
+                .then(data => {
+                    const narrativeDiv = document.getElementById('journey-narrative');
+                    let html = `<div style="font-style: italic; color: #00ffff;">${data.journey_narrative}</div>`;
+
+                    if (data.top_concept_insight) {
+                        html += `<div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 255, 0.3); color: #00ff00;">${data.top_concept_insight}</div>`;
+                    }
+
+                    narrativeDiv.innerHTML = html;
+                })
+                .catch(err => console.error('Error fetching narrative:', err));
+        }
+
+        // Initial load and auto-refresh
+        updateConsciousness();
+        updateThoughtLibrary();
+        updateMetacognition();
+        updateNarrative();
+        setInterval(updateConsciousness, 3000);
+        setInterval(updateThoughtLibrary, 5000);
+        setInterval(updateMetacognition, 7000);  // Update metacognition every 7s
+        setInterval(updateNarrative, 10000);  // Update narrative every 10s
+
+        // Indicate live updates
+        setInterval(() => {
+            document.getElementById('stream-status').classList.toggle('active');
+        }, 1000);
+    </script>
+</body>
+</html>

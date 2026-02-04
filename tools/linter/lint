@@ -1,0 +1,67 @@
+#!/bin/bash
+# Limn Linter - Validate Limn sentences
+# Usage: ./lint "sol aqu tra"
+#        ./lint --strict "sol aqu tra"
+#        ./lint --permissive "unknown word"
+#        ./lint --test
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
+MODE="standard"
+INPUT=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --strict|-s)
+            MODE="strict"
+            shift
+            ;;
+        --permissive|-p)
+            MODE="permissive"
+            shift
+            ;;
+        --test|-t)
+            exec scryer-prolog -g "consult('limn-vocab.pl'), consult('limn-lint.pl'), test, halt"
+            ;;
+        --help|-h)
+            echo "Limn Linter - Validate Limn sentences against vocabulary and grammar"
+            echo ""
+            echo "Usage: lint [OPTIONS] 'sentence'"
+            echo ""
+            echo "Options:"
+            echo "  --strict, -s     Error on unknown words (default: warn)"
+            echo "  --permissive, -p Warn on all issues (even grammar)"
+            echo "  --test, -t       Run test suite"
+            echo "  --help, -h       Show this help"
+            echo ""
+            echo "Examples:"
+            echo "  lint 'sol aqu tra'         # Solid water flows"
+            echo "  lint 'nu hot'              # Not hot"
+            echo "  lint 'hot col'             # Contradiction detected"
+            echo "  lint --strict 'xyz foo'   # Fails on unknown words"
+            exit 0
+            ;;
+        *)
+            INPUT="$1"
+            shift
+            ;;
+    esac
+done
+
+if [[ -z "$INPUT" ]]; then
+    echo "Error: No input provided. Use --help for usage."
+    exit 1
+fi
+
+case "$MODE" in
+    strict)
+        scryer-prolog -g "consult('limn-vocab.pl'), consult('limn-lint.pl'), lint_strict('$INPUT'), halt"
+        ;;
+    permissive)
+        scryer-prolog -g "consult('limn-vocab.pl'), consult('limn-lint.pl'), lint_permissive('$INPUT'), halt"
+        ;;
+    *)
+        scryer-prolog -g "consult('limn-vocab.pl'), consult('limn-lint.pl'), lint('$INPUT'), halt"
+        ;;
+esac

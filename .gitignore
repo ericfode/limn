@@ -55,8 +55,14 @@ logs/
 *.temp
 .cache/
 
+# Rust
+target/
+Cargo.lock
+
 # Gas Town (added by gt)
 .runtime/
 .claude/
 .logs/
 .beads/
+tools/llm-bridge/live-demo/thought_library.pkl
+tools/llm-bridge/production/brain_state.lmn

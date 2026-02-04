@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Semantic Network - Consciousness Knowledge Graph</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .graph-panel {
+            flex: 3;
+            position: relative;
+            background: #000;
+        }
+        .sidebar {
+            flex: 1;
+            background: #1a1a1a;
+            border-left: 2px solid #00ff00;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        canvas {
+            display: block;
+        }
+        .controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+        }
+        .control-btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            margin: 3px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+        }
+        .control-btn:hover {
+            background: #00cc00;
+        }
+        .node-info {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        h3 {
+            color: #00ff00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="graph-panel">
+            <canvas id="networkCanvas"></canvas>
+            <div class="controls">
+                <h3 style="margin-top: 0;">🌐 Semantic Network</h3>
+                <button class="control-btn" onclick="resetView()">Reset View</button>
+                <button class="control-btn" onclick="togglePhysics()">Toggle Physics</button>
+                <div style="margin-top: 10px; font-size: 11px; color: #00cc00;">
+                    <div>Nodes: <span id="node-count">0</span></div>
+                    <div>Edges: <span id="edge-count">0</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h2>🧠 Knowledge Graph</h2>
+
+            <div class="node-info">
+                <h3>Selected Node</h3>
+                <div id="selected-node">
+                    <div style="color: #666;">Click a node to see details</div>
+                </div>
+            </div>
+
+            <div class="node-info">
+                <h3>Network Stats</h3>
+                <div class="stat-line">
+                    <span>Total Concepts:</span>
+                    <span id="total-concepts">0</span>
+                </div>
+                <div class="stat-line">
+                    <span>Total Connections:</span>
+                    <span id="total-connections">0</span>
+                </div>
+                <div class="stat-line">
+                    <span>Avg Connections:</span>
+                    <span id="avg-connections">0</span>
+                </div>
+                <div class="stat-line">
+                    <span>Most Connected:</span>
+                    <span id="most-connected">--</span>
+                </div>
+            </div>
+
+            <div class="node-info">
+                <h3>Top Hubs</h3>
+                <div id="top-hubs">
+                    <div style="color: #666;">Building network...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Resize canvas to fill panel
+        function resizeCanvas() {
+            const panel = canvas.parentElement;
+            canvas.width = panel.clientWidth;
+            canvas.height = panel.clientHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Network data
+        let nodes = [];
+        let edges = [];
+        let selectedNode = null;
+        let physicsEnabled = true;
+
+        // Camera
+        let cameraX = 0;
+        let cameraY = 0;
+        let cameraZoom = 1;
+
+        class Node {
+            constructor(word, usage) {
+                this.word = word;
+                this.usage = usage;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = 0;
+                this.vy = 0;
+                this.radius = Math.min(30, 10 + Math.log(usage + 1) * 3);
+                this.connections = 0;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(-cameraX, -cameraY);
+
+                // Glow
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#00ff00';
+
+                // Node circle
+                ctx.fillStyle = selectedNode === this ? '#00ffff' : '#00ff00';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Label
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#00ff00';
+                ctx.font = '10px Monaco';
+                ctx.textAlign = 'center';
+                ctx.fillText(this.word, this.x, this.y + this.radius + 12);
+
+                // Usage count
+                ctx.fillStyle = '#00cc00';
+                ctx.font = '8px Monaco';
+                ctx.fillText(this.usage + 'x', this.x, this.y);
+
+                ctx.restore();
+            }
+
+            update() {
+                if (!physicsEnabled) return;
+
+                // Apply velocity
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Damping
+                this.vx *= 0.9;
+                this.vy *= 0.95;
+
+                // Bounds
+                const margin = 100;
+                if (this.x < margin) {
+                    this.x = margin;
+                    this.vx *= -0.5;
+                }
+                if (this.x > canvas.width - margin) {
+                    this.x = canvas.width - margin;
+                    this.vx *= -0.5;
+                }
+                if (this.y < margin) {
+                    this.y = margin;
+                    this.vy *= -0.5;
+                }
+                if (this.y > canvas.height - margin) {
+                    this.y = canvas.height - margin;
+                    this.vy *= -0.5;
+                }
+            }
+
+            contains(x, y) {
+                const dx = x - this.x + cameraX;
+                const dy = y - this.y + cameraY;
+                return dx * dx + dy * dy < this.radius * this.radius;
+            }
+        }
+
+        class Edge {
+            constructor(node1, node2) {
+                this.node1 = node1;
+                this.node2 = node2;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(-cameraX, -cameraY);
+
+                ctx.strokeStyle = 'rgba(0, 255, 0, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(this.node1.x, this.node1.y);
+                ctx.lineTo(this.node2.x, this.node2.y);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            applyForces() {
+                if (!physicsEnabled) return;
+
+                const dx = this.node2.x - this.node1.x;
+                const dy = this.node2.y - this.node1.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance === 0) return;
+
+                // Spring force (attract connected nodes)
+                const springForce = (distance - 100) * 0.01;
+                const fx = (dx / distance) * springForce;
+                const fy = (dy / distance) * springForce;
+
+                this.node1.vx += fx;
+                this.node1.vy += fy;
+                this.node2.vx -= fx;
+                this.node2.vy -= fy;
+            }
+        }
+
+        function applyRepulsion() {
+            if (!physicsEnabled) return;
+
+            // Repel all nodes from each other
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[j].x - nodes[i].x;
+                    const dy = nodes[j].y - nodes[i].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 200 && distance > 0) {
+                        const repelForce = (200 - distance) * 0.05;
+                        const fx = (dx / distance) * repelForce;
+                        const fy = (dy / distance) * repelForce;
+
+                        nodes[i].vx -= fx;
+                        nodes[i].vy -= fy;
+                        nodes[j].vx += fx;
+                        nodes[j].vy += fy;
+                    }
+                }
+            }
+        }
+
+        function updateNetwork() {
+            fetch('/api/thought_library')
+                .then(r => r.json())
+                .then(data => {
+                    const stats = data.stats;
+                    const semanticNetwork = data.semantic_network || {};
+
+                    // Update stats
+                    document.getElementById('total-concepts').textContent = stats.total_concepts;
+                    document.getElementById('total-connections').textContent = stats.semantic_connections;
+
+                    // Build network from concepts with REAL connections
+                    if (stats.most_used_concepts && stats.most_used_concepts.length > 0) {
+                        buildNetwork(stats.most_used_concepts.slice(0, 25), semanticNetwork);
+                    }
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function buildNetwork(concepts, semanticNetwork) {
+            // Clear existing network
+            nodes = [];
+            edges = [];
+
+            // Create nodes for top concepts
+            const nodeMap = new Map();
+
+            concepts.forEach(concept => {
+                if (!nodeMap.has(concept.word)) {
+                    const node = new Node(concept.word, concept.usage);
+                    nodes.push(node);
+                    nodeMap.set(concept.word, node);
+                }
+            });
+
+            // Create edges from REAL semantic network data
+            concepts.forEach(concept => {
+                const node1 = nodeMap.get(concept.word);
+                if (!node1) return;
+
+                const connections = semanticNetwork[concept.word] || [];
+                connections.forEach(connectedWord => {
+                    const node2 = nodeMap.get(connectedWord);
+                    if (node2 && node1 !== node2) {
+                        // Check if edge already exists
+                        const edgeExists = edges.some(e =>
+                            (e.node1 === node1 && e.node2 === node2) ||
+                            (e.node1 === node2 && e.node2 === node1)
+                        );
+
+                        if (!edgeExists) {
+                            const edge = new Edge(node1, node2);
+                            edges.push(edge);
+                            node1.connections++;
+                            node2.connections++;
+                        }
+                    }
+                });
+            });
+
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('node-count').textContent = nodes.length;
+            document.getElementById('edge-count').textContent = edges.length;
+
+            if (nodes.length > 0) {
+                const avgConn = nodes.reduce((sum, n) => sum + n.connections, 0) / nodes.length;
+                document.getElementById('avg-connections').textContent = avgConn.toFixed(1);
+
+                const mostConnected = nodes.reduce((max, n) => n.connections > max.connections ? n : max);
+                document.getElementById('most-connected').textContent = `${mostConnected.word} (${mostConnected.connections})`;
+
+                // Top hubs
+                const topHubs = [...nodes].sort((a, b) => b.connections - a.connections).slice(0, 5);
+                document.getElementById('top-hubs').innerHTML = topHubs.map(node => `
+                    <div style="margin: 8px 0; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+                        <div style="color: #00ff00;">${node.word}</div>
+                        <div style="font-size: 10px; color: #666;">${node.connections} connections • ${node.usage}x usage</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function animate() {
+            // Clear
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Apply physics
+            applyRepulsion();
+            edges.forEach(edge => edge.applyForces());
+
+            // Update and draw
+            edges.forEach(edge => edge.draw());
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Mouse interaction
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            selectedNode = null;
+            for (const node of nodes) {
+                if (node.contains(x, y)) {
+                    selectedNode = node;
+                    showNodeDetails(node);
+                    break;
+                }
+            }
+        });
+
+        function showNodeDetails(node) {
+            document.getElementById('selected-node').innerHTML = `
+                <div style="color: #00ff00; font-weight: bold; font-size: 16px;">${node.word}</div>
+                <div style="margin-top: 10px;">
+                    <div style="color: #00cc00; font-size: 12px;">Usage: ${node.usage}x</div>
+                    <div style="color: #00cc00; font-size: 12px;">Connections: ${node.connections}</div>
+                    <div style="color: #00cc00; font-size: 12px;">Position: (${Math.round(node.x)}, ${Math.round(node.y)})</div>
+                </div>
+            `;
+        }
+
+        function resetView() {
+            cameraX = 0;
+            cameraY = 0;
+            cameraZoom = 1;
+        }
+
+        function togglePhysics() {
+            physicsEnabled = !physicsEnabled;
+        }
+
+        // Start
+        updateNetwork();
+        setInterval(updateNetwork, 10000);  // Update every 10s
+        animate();
+    </script>
+</body>
+</html>

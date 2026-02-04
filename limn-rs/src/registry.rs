@@ -319,18 +319,39 @@ impl RegistryManager {
         let _ = std::fs::write(cache_path, registry.to_json());
     }
 
+    /// Try to load registry from cache file (doesn't modify internal HashMap)
+    fn try_load_cache_file(&self, name: &str) -> Result<Option<Registry>> {
+        let cache_path = self.cache_dir.join(format!("{}.json", name));
+        if cache_path.exists() {
+            let content = std::fs::read_to_string(&cache_path)
+                .map_err(|e| LimnError::package(format!("Failed to read cache: {}", e)))?;
+            let registry = Registry::from_json(&content)?;
+            Ok(Some(registry))
+        } else {
+            Ok(None)
+        }
+    }
+
     /// Fetch registry from IPFS/IPNS
-    pub fn fetch(&mut self, ipns_name: &str, force: bool) -> Result<&Registry> {
+    pub fn fetch(&mut self, ipns_name: &str, force: bool) -> Result<Registry> {
         // Return cached unless forced
+        if !force && self.registries.contains_key(ipns_name) {
+            return Ok(self.registries.get(ipns_name).unwrap().clone());
+        }
+
+        // Try loading from cache file if not forced
         if !force {
-            if let Some(reg) = self.load_cached(ipns_name) {
-                return Ok(reg);
+            if let Ok(Some(registry)) = self.try_load_cache_file(ipns_name) {
+                self.registries.insert(ipns_name.to_string(), registry.clone());
+                return Ok(registry);
             }
         }
 
         if !ipfs::is_available() {
-            if let Some(reg) = self.load_cached(ipns_name) {
-                return Ok(reg);
+            // Last attempt: try cache even if forced
+            if let Ok(Some(registry)) = self.try_load_cache_file(ipns_name) {
+                self.registries.insert(ipns_name.to_string(), registry.clone());
+                return Ok(registry);
             }
             return Err(LimnError::ipfs("IPFS not available and no cached registry"));
         }
@@ -346,9 +367,9 @@ impl RegistryManager {
 
         // Cache
         self.save_cache(ipns_name, &registry);
-        self.registries.insert(ipns_name.to_string(), registry);
+        self.registries.insert(ipns_name.to_string(), registry.clone());
 
-        Ok(self.registries.get(ipns_name).unwrap())
+        Ok(registry)
     }
 
     /// Publish registry to IPNS

@@ -134,6 +134,22 @@ For programmers:
 - Limn-to-natural-language translation interfaces
 - The Limn programming language (order-independent computation)
 
+**IMPORTANT: Implementation Language Policy**
+
+**Limn uses Prolog exclusively.** All code contributions must be in Prolog.
+
+- ✅ Accepted: Prolog implementations (Scryer Prolog preferred, SWI-Prolog compatible)
+- ❌ Not accepted: Python, JavaScript, or other language implementations
+
+**Why Prolog?** Limn's objective execution layer requires logic programming. Prolog's unification, constraint solving, and predicate-based reasoning embody the deterministic half of Limn's superposition. The LLM provides subjective interpretation; Prolog provides objective grounding.
+
+See `docs/philosophy/PROLOG-WHY.md` for the complete philosophical rationale.
+
+If you have Python code from before this policy:
+1. Port unique logic to Prolog, OR
+2. Archive as reference/documentation (clearly marked "Historical reference - not canonical")
+3. Delete if duplicate or superseded
+
 ---
 
 ## Code of Conduct

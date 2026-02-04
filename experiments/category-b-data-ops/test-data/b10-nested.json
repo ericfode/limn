@@ -1,0 +1,19 @@
+{
+  "company": "Acme Corp",
+  "users": [
+    {
+      "name": "Alice",
+      "contacts": {
+        "email": "alice@acme.com",
+        "phone": "555-0001"
+      }
+    },
+    {
+      "name": "Bob",
+      "contacts": {
+        "email": "bob@acme.com",
+        "phone": "555-0002"
+      }
+    }
+  ]
+}

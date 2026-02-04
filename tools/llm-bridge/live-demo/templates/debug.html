@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Console - Raw Oracle Flow</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .console-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .console-header {
+            background: #1a1a1a;
+            border-bottom: 2px solid #00ff00;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .console-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .log-entry {
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 3px solid #00ff00;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 4px;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .log-entry.phase {
+            border-left-color: #ffff00;
+            color: #ffff00;
+        }
+        .log-entry.oracle {
+            border-left-color: #00ffff;
+            color: #00ffff;
+        }
+        .log-entry.result {
+            border-left-color: #ff00ff;
+            color: #ff00ff;
+        }
+        .log-entry.error {
+            border-left-color: #ff0000;
+            color: #ff0000;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 10px;
+            margin-right: 10px;
+        }
+        .log-type {
+            color: #00cc00;
+            font-weight: bold;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+        .control-btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+            font-family: inherit;
+        }
+        .control-btn:hover {
+            background: #00cc00;
+        }
+        .control-btn.active {
+            background: #ff0000;
+        }
+        .stats-bar {
+            background: #1a1a1a;
+            border-top: 1px solid #00ff00;
+            padding: 10px 20px;
+            display: flex;
+            gap: 30px;
+            font-size: 11px;
+        }
+        .stat-item {
+            display: flex;
+            gap: 5px;
+        }
+        .stat-label {
+            color: #00cc00;
+        }
+        .stat-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="console-container">
+        <div class="console-header">
+            <div>
+                <h2 style="margin: 0; font-size: 20px;">🔧 DEBUG CONSOLE</h2>
+                <div style="font-size: 11px; color: #00cc00; margin-top: 5px;">
+                    Real-time oracle execution trace
+                </div>
+            </div>
+            <div>
+                <button class="control-btn" id="pause-btn" onclick="togglePause()">⏸️ Pause</button>
+                <button class="control-btn" onclick="clearConsole()">🗑️ Clear</button>
+                <a href="/dashboard" class="control-btn" style="text-decoration: none; display: inline-block;">← Back</a>
+            </div>
+        </div>
+
+        <div class="console-body" id="console-output">
+            <div class="log-entry">
+                <span class="timestamp">00:00:00</span>
+                <span class="log-type">INIT</span>
+                Console initialized. Waiting for oracle execution events...
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Events:</span>
+                <span class="stat-value" id="event-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Oracles:</span>
+                <span class="stat-value" id="oracle-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Cached:</span>
+                <span class="stat-value" id="cached-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Avg Time:</span>
+                <span class="stat-value" id="avg-time">0ms</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Uptime:</span>
+                <span class="stat-value" id="uptime">0s</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPaused = false;
+        let eventCount = 0;
+        let oracleCount = 0;
+        let cachedCount = 0;
+        let totalTime = 0;
+        let startTime = Date.now();
+
+        const eventSource = new EventSource('/api/events');
+
+        eventSource.onmessage = function(event) {
+            if (isPaused) return;
+
+            try {
+                const data = JSON.parse(event.data);
+                logEvent(data);
+                updateStats(data);
+            } catch (e) {
+                console.error('Parse error:', e);
+            }
+        };
+
+        function logEvent(data) {
+            const console_output = document.getElementById('console-output');
+            const entry = document.createElement('div');
+
+            const timestamp = new Date(data.timestamp).toLocaleTimeString();
+            const type = data.type;
+
+            let className = 'log-entry';
+            let logType = type;
+            let message = '';
+
+            switch(type) {
+                case 'phase_change':
+                    className += ' phase';
+                    logType = 'PHASE';
+                    message = `→ ${data.data.phase.toUpperCase()} | ${data.data.message}`;
+                    break;
+
+                case 'oracle_start':
+                    className += ' oracle';
+                    logType = 'ORACLE';
+                    message = `▶ ${data.data.type}`;
+                    if (data.data.params) {
+                        message += `<pre>${JSON.stringify(data.data.params, null, 2)}</pre>`;
+                    }
+                    break;
+
+                case 'oracle_complete':
+                    className += ' result';
+                    logType = 'RESULT';
+                    const cached = data.data.cached ? ' [CACHED]' : '';
+                    message = `✓ ${data.data.type} (${data.data.duration_ms.toFixed(2)}ms)${cached}`;
+                    if (data.data.result) {
+                        message += `<pre>${data.data.result}</pre>`;
+                    }
+                    break;
+
+                case 'execution_start':
+                    className += ' phase';
+                    logType = 'EXEC';
+                    message = `Starting execution #${data.data.id}: ${data.data.file}`;
+                    break;
+
+                case 'execution_complete':
+                    className += ' phase';
+                    logType = 'EXEC';
+                    message = `Completed execution #${data.data.id} - ${data.data.oracle_count} oracles`;
+                    break;
+
+                case 'bend_complete':
+                    className += ' phase';
+                    logType = 'BEND';
+                    message = `Bend/HVM computation complete (${data.data.output_length} bytes)`;
+                    break;
+
+                default:
+                    message = JSON.stringify(data.data);
+            }
+
+            entry.className = className;
+            entry.innerHTML = `
+                <span class="timestamp">${timestamp}</span>
+                <span class="log-type">${logType}</span>
+                ${message}
+            `;
+
+            console_output.insertBefore(entry, console_output.firstChild);
+
+            // Keep only last 100 entries
+            while (console_output.children.length > 100) {
+                console_output.removeChild(console_output.lastChild);
+            }
+
+            eventCount++;
+        }
+
+        function updateStats(data) {
+            if (data.type === 'oracle_complete') {
+                oracleCount++;
+                if (data.data.cached) cachedCount++;
+                totalTime += data.data.duration_ms;
+            }
+
+            document.getElementById('event-count').textContent = eventCount;
+            document.getElementById('oracle-count').textContent = oracleCount;
+            document.getElementById('cached-count').textContent = cachedCount;
+            document.getElementById('avg-time').textContent =
+                oracleCount > 0 ? (totalTime / oracleCount).toFixed(2) + 'ms' : '0ms';
+            document.getElementById('uptime').textContent =
+                Math.floor((Date.now() - startTime) / 1000) + 's';
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const btn = document.getElementById('pause-btn');
+            if (isPaused) {
+                btn.textContent = '▶️ Resume';
+                btn.classList.add('active');
+            } else {
+                btn.textContent = '⏸️ Pause';
+                btn.classList.remove('active');
+            }
+        }
+
+        function clearConsole() {
+            document.getElementById('console-output').innerHTML = `
+                <div class="log-entry">
+                    <span class="timestamp">${new Date().toLocaleTimeString()}</span>
+                    <span class="log-type">CLEAR</span>
+                    Console cleared. Waiting for events...
+                </div>
+            `;
+            eventCount = 0;
+            oracleCount = 0;
+            cachedCount = 0;
+            totalTime = 0;
+        }
+
+        // Update uptime counter
+        setInterval(() => {
+            if (!isPaused) {
+                document.getElementById('uptime').textContent =
+                    Math.floor((Date.now() - startTime) / 1000) + 's';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

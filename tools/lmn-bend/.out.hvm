@@ -1,0 +1,85 @@
+@Expr/Collapse = (a (b ((@Expr/Collapse/tag (a (b c))) c)))
+
+@Expr/Collapse/tag = 3
+
+@Expr/Flow = (a ((@Expr/Flow/tag (a b)) b))
+
+@Expr/Flow/tag = 6
+
+@Expr/Num = (a ((@Expr/Num/tag (a b)) b))
+
+@Expr/Num/tag = 1
+
+@Expr/Oracle = (a (b ((@Expr/Oracle/tag (a (b c))) c)))
+
+@Expr/Oracle/tag = 4
+
+@Expr/Str = (a ((@Expr/Str/tag (a b)) b))
+
+@Expr/Str/tag = 0
+
+@Expr/Super = (a ((@Expr/Super/tag (a b)) b))
+
+@Expr/Super/tag = 5
+
+@Expr/Var = (a ((@Expr/Var/tag (a b)) b))
+
+@Expr/Var/tag = 7
+
+@Expr/Wave = (a (b ((@Expr/Wave/tag (a (b c))) c)))
+
+@Expr/Wave/tag = 2
+
+@String/Cons = (a (b ((@String/Cons/tag (a (b c))) c)))
+
+@String/Cons/tag = 1
+
+@String/Nil = ((@String/Nil/tag a) a)
+
+@String/Nil/tag = 0
+
+@Temporal/Now = ((@Temporal/Now/tag a) a)
+
+@Temporal/Now/tag = 1
+
+@Temporal/Was = ((@Temporal/Was/tag a) a)
+
+@Temporal/Was/tag = 0
+
+@Temporal/Will = ((@Temporal/Will/tag a) a)
+
+@Temporal/Will/tag = 2
+
+@collapse = (a (b c))
+  & @Expr/Collapse ~ (a (b c))
+
+@flow = (a b)
+  & @Expr/Flow ~ (a b)
+
+@main = 0
+  & @wave ~ (@Temporal/Now (f *))
+  & @str ~ (e f)
+  & @String/Cons ~ (104 (d e))
+  & @String/Cons ~ (101 (c d))
+  & @String/Cons ~ (108 (b c))
+  & @String/Cons ~ (108 (a b))
+  & @String/Cons ~ (111 (@String/Nil a))
+
+@num = (a b)
+  & @Expr/Num ~ (a b)
+
+@oracle = (a (b c))
+  & @Expr/Oracle ~ (a (b c))
+
+@str = (a b)
+  & @Expr/Str ~ (a b)
+
+@super_pos = (a b)
+  & @Expr/Super ~ (a b)
+
+@var = (a b)
+  & @Expr/Var ~ (a b)
+
+@wave = (a (b c))
+  & @Expr/Wave ~ (a (b c))
+

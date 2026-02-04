@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limn Consciousness - Live State Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .viz-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #0ff;
+            font-size: 32px;
+            text-shadow: 0 0 10px #0ff;
+            margin-bottom: 10px;
+        }
+
+        .system-phase {
+            font-size: 18px;
+            color: #f0f;
+            text-shadow: 0 0 10px #f0f;
+        }
+
+        .limn-state {
+            flex: 1;
+            background: rgba(0, 20, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: auto;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .limn-blob {
+            font-size: 20px;
+            line-height: 2;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .limn-line {
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .limn-word {
+            display: inline-block;
+            padding: 3px 6px;
+            margin: 0 4px;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* Oracle type highlighting */
+        .limn-word.semantic {
+            color: #0ff;
+        }
+
+        .limn-word.file {
+            color: #ff0;
+        }
+
+        .limn-word.time {
+            color: #f0f;
+        }
+
+        .limn-word.memory {
+            color: #0f0;
+        }
+
+        .limn-word.network {
+            color: #f80;
+        }
+
+        .limn-word.database {
+            color: #80f;
+        }
+
+        /* Active states */
+        .limn-word.active {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px currentColor;
+            transform: scale(1.2);
+            font-weight: bold;
+        }
+
+        .limn-word.executing {
+            animation: pulse 0.5s infinite;
+            background: rgba(255, 255, 0, 0.4);
+        }
+
+        .limn-word.complete {
+            animation: flash 0.5s;
+            color: #0f0;
+        }
+
+        .limn-word.cached {
+            opacity: 0.6;
+            text-decoration: underline;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.3);
+            }
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 5px currentColor;
+            }
+            50% {
+                text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+            }
+        }
+
+        /* Phase indicators */
+        .phase-marker {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            animation: glow 2s infinite;
+        }
+
+        .phase-subconscious {
+            background: rgba(255, 0, 255, 0.3);
+            color: #f0f;
+            border: 2px solid #f0f;
+        }
+
+        .phase-conscious {
+            background: rgba(0, 255, 255, 0.3);
+            color: #0ff;
+            border: 2px solid #0ff;
+        }
+
+        .phase-idle {
+            background: rgba(128, 128, 128, 0.3);
+            color: #888;
+            border: 2px solid #888;
+        }
+
+        /* Separators */
+        .separator {
+            color: #555;
+            margin: 0 8px;
+        }
+
+        /* Stats overlay */
+        .stats-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 250px;
+            z-index: 10;
+        }
+
+        .stat-item {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .stat-value {
+            color: #0f0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Event flow visualization */
+        .event-flow {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+
+        .flow-item {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #0f0;
+            padding-left: 10px;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .flow-item.phase { border-left-color: #f0f; }
+        .flow-item.oracle { border-left-color: #0ff; }
+        .flow-item.complete { border-left-color: #0f0; }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #0f0;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle 2s ease-out forwards;
+        }
+
+        @keyframes particle {
+            to {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            color: #888;
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="viz-container">
+        <div class="header">
+            <h1>∿ Limn Consciousness ∎</h1>
+            <div class="system-phase" id="system-phase">~ Initializing ~</div>
+        </div>
+
+        <div class="limn-state" id="limn-state">
+            <div class="limn-blob" id="limn-blob">
+                <div class="loading">Loading system state...</div>
+            </div>
+
+            <div class="stats-overlay">
+                <div class="stat-item">
+                    <div class="stat-label">Oracles Executed</div>
+                    <div class="stat-value" id="stat-oracles">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Cache Hit Rate</div>
+                    <div class="stat-value" id="stat-cache">0%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Active Phase</div>
+                    <div class="stat-value" id="stat-phase">IDLE</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Uptime</div>
+                    <div class="stat-value" id="stat-uptime">0s</div>
+                </div>
+            </div>
+
+            <div class="event-flow" id="event-flow">
+                <div style="color: #888; font-size: 11px; margin-bottom: 10px;">Event Flow:</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let activeOracles = new Set();
+        let systemState = {
+            phase: 'idle',
+            oracles: [],
+            stats: {}
+        };
+
+        // Limn vocabulary for system state
+        const limnVocab = {
+            semantic: ['tho', 'mea', 'und', 'rea', 'llm', 'sem', 'cog'],
+            file: ['fil', 'rea', 'wri', 'exi', 'pat', 'con', 'dat'],
+            time: ['tim', 'now', 'was', 'wil', 'tmp', 'clk', 'sec'],
+            memory: ['mem', 'sto', 'rec', 'ret', 'ctx', 'sta', 'hol'],
+            network: ['net', 'req', 'get', 'pos', 'url', 'api', 'web'],
+            database: ['dat', 'qry', 'sql', 'ins', 'sel', 'upd', 'del'],
+            system: ['sys', 'run', 'exe', 'pro', 'sta', 'liv', 'act'],
+            oracle: ['ora', 'del', 'con', 'sub', 'ask', 'ans', 'res']
+        };
+
+        function generateLimnState(state) {
+            const lines = [];
+
+            // System status line
+            const phaseMarker = `<span class="phase-marker phase-${state.phase}">${state.phase.toUpperCase()}</span>`;
+            lines.push(`<div class="limn-line">${phaseMarker}</div>`);
+
+            // Main system state
+            lines.push(`<div class="limn-line">` +
+                `<span class="limn-word system">sys</span>` +
+                `<span class="limn-word system">run</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word system">sta</span>` +
+                `<span class="limn-word system">liv</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word oracle">ora</span>` +
+                `<span class="limn-word oracle">exe</span>` +
+                `</div>`);
+
+            // Recent oracles
+            if (state.oracles && state.oracles.length > 0) {
+                state.oracles.slice(0, 10).forEach((oracle, idx) => {
+                    const type = oracle.type.toLowerCase();
+                    const category = getOracleCategory(type);
+                    const cachedClass = oracle.cached ? ' cached' : '';
+                    const activeClass = oracle.active ? ' executing' : '';
+
+                    // Oracle line
+                    const words = getLimnWords(oracle, category);
+                    const wordSpans = words.map(w =>
+                        `<span class="limn-word ${category}${cachedClass}${activeClass}" data-oracle-id="${idx}">${w}</span>`
+                    ).join(' ');
+
+                    lines.push(`<div class="limn-line">` +
+                        `<span class="separator">∿</span> ` +
+                        wordSpans +
+                        ` <span class="separator">→</span> ` +
+                        `<span class="limn-word ${category}${cachedClass}">${oracle.result ? oracle.result.toString().substring(0, 20) : '...'}</span>` +
+                        `</div>`);
+                });
+            }
+
+            // Memory/context state
+            lines.push(`<div class="limn-line">` +
+                `<span class="limn-word memory">mem</span>` +
+                `<span class="limn-word memory">ctx</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word memory">cac</span>` +
+                `<span class="limn-word memory">hit</span>` +
+                `<span class="separator">@</span>` +
+                `<span class="limn-word memory">${state.stats.cache_rate || 0}%</span>` +
+                `</div>`);
+
+            // Subconscious state
+            lines.push(`<div class="limn-line">` +
+                `<span class="separator">~</span> ` +
+                `<span class="limn-word oracle ${state.phase === 'subconscious' ? 'active' : ''}">sub</span>` +
+                `<span class="limn-word oracle ${state.phase === 'subconscious' ? 'active' : ''}">red</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word oracle ${state.phase === 'conscious' ? 'active' : ''}">con</span>` +
+                `<span class="limn-word oracle ${state.phase === 'conscious' ? 'active' : ''}">act</span>` +
+                `</div>`);
+
+            // Ground truth marker
+            lines.push(`<div class="limn-line">` +
+                `<span class="separator">∎</span> ` +
+                `<span class="limn-word system">gnd</span>` +
+                `<span class="limn-word system">tru</span>` +
+                `<span class="separator">|</span>` +
+                `<span class="limn-word system">rea</span>` +
+                `<span class="limn-word system">int</span>` +
+                `</div>`);
+
+            return lines.join('\n');
+        }
+
+        function getOracleCategory(type) {
+            const lower = type.toLowerCase();
+            if (lower.includes('semantic') || lower.includes('llm')) return 'semantic';
+            if (lower.includes('file')) return 'file';
+            if (lower.includes('time')) return 'time';
+            if (lower.includes('memory')) return 'memory';
+            if (lower.includes('http') || lower.includes('network')) return 'network';
+            if (lower.includes('db') || lower.includes('query')) return 'database';
+            return 'oracle';
+        }
+
+        function getLimnWords(oracle, category) {
+            const type = oracle.type.toLowerCase();
+            const vocab = limnVocab[category] || limnVocab.oracle;
+
+            // Generate 3-word limn representation
+            if (category === 'semantic') return ['sem', 'tho', 'llm'];
+            if (category === 'file') return ['fil', 'rea', 'dat'];
+            if (category === 'time') return ['tim', 'now', 'tmp'];
+            if (category === 'memory') return ['mem', 'sto', 'ret'];
+            if (category === 'network') return ['net', 'req', 'api'];
+            if (category === 'database') return ['dat', 'qry', 'sql'];
+
+            return ['ora', 'exe', 'res'];
+        }
+
+        function updateLimnState(state) {
+            const blob = document.getElementById('limn-blob');
+            const html = generateLimnState(state);
+            blob.innerHTML = html;
+
+            // Add particle effects for active oracles
+            if (state.phase === 'conscious' || state.phase === 'oracle') {
+                createParticles(blob);
+            }
+        }
+
+        function createParticles(container) {
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+                particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+                container.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+
+        function addFlowEvent(event) {
+            const flow = document.getElementById('event-flow');
+            const item = document.createElement('div');
+            item.className = `flow-item ${event.type}`;
+
+            const time = new Date(event.timestamp).toLocaleTimeString();
+            item.innerHTML = `<span style="color: #555">[${time}]</span> ${event.message}`;
+
+            flow.appendChild(item);
+
+            // Keep only last 20 events
+            while (flow.children.length > 21) { // 20 + 1 header
+                flow.removeChild(flow.children[1]);
+            }
+
+            // Scroll to bottom
+            flow.scrollTop = flow.scrollHeight;
+        }
+
+        function initEventStream() {
+            eventSource = new EventSource('/api/events');
+
+            eventSource.onmessage = function(e) {
+                const event = JSON.parse(e.data);
+                handleEvent(event);
+            };
+
+            eventSource.onerror = function(e) {
+                console.error('EventSource error:', e);
+                setTimeout(initEventStream, 5000);
+            };
+        }
+
+        function handleEvent(event) {
+            let message = '';
+
+            switch(event.type) {
+                case 'phase_change':
+                    systemState.phase = event.data.phase;
+                    message = `Phase: ${event.data.phase.toUpperCase()}`;
+                    document.getElementById('stat-phase').textContent = event.data.phase.toUpperCase();
+                    break;
+
+                case 'oracle_start':
+                    const newOracle = {
+                        type: event.data.type,
+                        params: event.data.params,
+                        active: true,
+                        timestamp: event.timestamp
+                    };
+                    systemState.oracles.unshift(newOracle);
+                    message = `Oracle ${event.data.type} started`;
+                    break;
+
+                case 'oracle_complete':
+                    if (systemState.oracles.length > 0) {
+                        systemState.oracles[0].active = false;
+                        systemState.oracles[0].result = event.data.result;
+                        systemState.oracles[0].cached = event.data.cached;
+                    }
+                    message = `Oracle ${event.data.type} complete (${event.data.duration_ms.toFixed(2)}ms)`;
+                    break;
+
+                case 'execution_start':
+                    message = `Execution #${event.data.id} started`;
+                    break;
+
+                case 'execution_complete':
+                    message = `Execution complete (${event.data.oracle_count} oracles)`;
+                    break;
+            }
+
+            if (message) {
+                addFlowEvent({ type: event.type, timestamp: event.timestamp, message });
+            }
+
+            updateLimnState(systemState);
+        }
+
+        function updateStats() {
+            fetch('/api/state')
+                .then(r => r.json())
+                .then(state => {
+                    systemState.stats = state.stats;
+                    systemState.phase = state.phase;
+                    systemState.oracles = state.recent_oracles.map(o => ({
+                        ...o,
+                        active: false
+                    }));
+
+                    document.getElementById('stat-oracles').textContent = state.stats.total_oracles;
+                    document.getElementById('stat-cache').textContent = state.stats.cache_rate + '%';
+                    document.getElementById('stat-phase').textContent = state.phase.toUpperCase();
+                    document.getElementById('stat-uptime').textContent = state.stats.uptime_seconds + 's';
+                    document.getElementById('system-phase').textContent = `~ ${state.phase.toUpperCase()} ~`;
+
+                    updateLimnState(systemState);
+                });
+        }
+
+        // Initialize
+        initEventStream();
+        updateStats();
+        setInterval(updateStats, 3000);
+    </script>
+</body>
+</html>
