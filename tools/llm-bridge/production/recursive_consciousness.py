@@ -51,6 +51,7 @@ class RecursiveConsciousness:
                  topic: str = None):
         self.bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
         self.brain_state_path = Path(__file__).parent / "brain_state.lmn"
+        self.thought_log_path = Path(__file__).parent / "thought_log.jsonl"
         self.iteration = 0
         self.max_recursion_depth = max_recursion_depth
         self.parallel_mode = parallel_mode
@@ -229,7 +230,7 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         # Fallback after all attempts
         return "tho fai | lim vio"
 
-    def _track_concepts(self, thought: str):
+    def _track_concepts(self, thought: str, eval_result: str = None):
         """Track concept usage, co-occurrence, and vocabulary coverage."""
         words = re.findall(r'[a-z]{2,4}', thought.lower())
         unique_words = set(words)
@@ -238,26 +239,50 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
             self.concept_frequency[w] = self.concept_frequency.get(w, 0) + 1
 
         # Track vocabulary coverage
+        valid_words = set()
+        invalid_words = set()
         for w in unique_words:
             if w in self.validator.vocab:
                 self.vocab_used.add(w)
+                valid_words.add(w)
+            else:
+                invalid_words.add(w)
 
         # Build co-occurrence network (words in same thought are connected)
         for w in unique_words:
             self.concept_cooccurrence[w].update(unique_words - {w})
 
         # Track domain exploration
+        thought_domains = set()
         for domain, domain_words in self.validator.domain_words.items():
             if unique_words & set(domain_words):
                 self.domains_explored.add(domain)
+                thought_domains.add(domain)
 
-        self.thought_history.append({
+        entry = {
             'iteration': self.iteration,
             'content': thought,
             'timestamp': time.time(),
             'word_count': len(words),
             'unique_words': len(unique_words),
-        })
+            'domains': sorted(thought_domains),
+            'topic': self.topic,
+        }
+        if eval_result:
+            entry['oracle_result'] = eval_result[:200]
+        if invalid_words:
+            entry['invalid_tokens'] = sorted(invalid_words)
+
+        self.thought_history.append(entry)
+        self._persist_thought(entry)
+
+    def _persist_thought(self, entry: Dict):
+        """Append thought to persistent JSONL log."""
+        try:
+            with open(self.thought_log_path, 'a') as f:
+                f.write(json.dumps(entry) + '\n')
+        except Exception as e:
+            logger.debug(f"Thought log write error: {e}")
 
     def parse_oracle_request(self, thought: str) -> Optional[OracleRequest]:
         """Parse Limn thought to extract oracle request."""
@@ -571,6 +596,9 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
                 eval_result = self.evaluate_if_needed(thought, async_mode=self.parallel_mode)
                 if eval_result:
                     logger.info(f"   Result: {eval_result}")
+                    # Update last thought entry with oracle result
+                    if self.thought_history:
+                        self.thought_history[-1]['oracle_result'] = eval_result[:200]
 
             # 4. Compress and update brain state
             logger.info("Compressing state...")
@@ -607,12 +635,70 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         self.discover_themes()
 
 
+def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
+    """Replay thought log for analysis."""
+    if not log_path.exists():
+        print("No thought log found.")
+        return
+
+    thoughts = []
+    with open(log_path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    thoughts.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+
+    if topic_filter:
+        thoughts = [t for t in thoughts if t.get('topic') == topic_filter]
+
+    if last_n:
+        thoughts = thoughts[-last_n:]
+
+    if not thoughts:
+        print("No matching thoughts found.")
+        return
+
+    # Analyze
+    all_words = set()
+    domain_counts = defaultdict(int)
+    for t in thoughts:
+        words = re.findall(r'[a-z]{2,4}', t.get('content', '').lower())
+        all_words.update(words)
+        for d in t.get('domains', []):
+            domain_counts[d] += 1
+
+    print(f"=== Thought Log Analysis ===")
+    print(f"Thoughts: {len(thoughts)}")
+    print(f"Time span: {thoughts[0].get('timestamp', 0):.0f} -> {thoughts[-1].get('timestamp', 0):.0f}")
+    print(f"Unique words: {len(all_words)}")
+    print(f"Domains touched: {len(domain_counts)}")
+    print()
+
+    print("Domain frequency:")
+    for d, c in sorted(domain_counts.items(), key=lambda x: -x[1]):
+        print(f"  {d}: {c}")
+
+    print()
+    print("Recent thoughts:")
+    for t in thoughts[-5:]:
+        content = t.get('content', '')[:80]
+        domains = ', '.join(t.get('domains', [])[:3])
+        print(f"  [{t.get('iteration', '?')}] {content}")
+        if domains:
+            print(f"       domains: {domains}")
+
+
 if __name__ == "__main__":
     import sys
 
     iterations = 100
     parallel_mode = False
     topic = None
+    replay_mode = False
+    replay_last = None
 
     i = 1
     while i < len(sys.argv):
@@ -622,26 +708,34 @@ if __name__ == "__main__":
         elif arg == "--topic" and i + 1 < len(sys.argv):
             topic = sys.argv[i + 1]
             i += 1
+        elif arg == "--replay":
+            replay_mode = True
+        elif arg == "--last" and i + 1 < len(sys.argv):
+            replay_last = int(sys.argv[i + 1])
+            i += 1
         elif arg.isdigit():
             iterations = int(arg)
         i += 1
 
-    if parallel_mode:
-        print("PARALLEL MODE: Conscious and subconscious execute in parallel")
+    if replay_mode:
+        log_path = Path(__file__).parent / "thought_log.jsonl"
+        replay_thoughts(log_path, topic_filter=topic, last_n=replay_last)
     else:
-        print("SEQUENTIAL MODE: Conscious waits for subconscious")
+        if parallel_mode:
+            print("PARALLEL MODE: Conscious and subconscious execute in parallel")
+        else:
+            print("SEQUENTIAL MODE: Conscious waits for subconscious")
 
-    if topic:
-        print(f"TOPIC: {topic}")
-        # Show available domains
-        v = LimnValidator()
-        domains = v.get_domains()
-        if domains:
-            domain_words = v.get_domain_words(topic)
-            if domain_words:
-                print(f"  Domain match: {len(domain_words)} words available")
-            else:
-                print(f"  No exact domain match. Available: {', '.join(domains[:10])}...")
+        if topic:
+            print(f"TOPIC: {topic}")
+            v = LimnValidator()
+            domains = v.get_domains()
+            if domains:
+                domain_words = v.get_domain_words(topic)
+                if domain_words:
+                    print(f"  Domain match: {len(domain_words)} words available")
+                else:
+                    print(f"  No exact domain match. Available: {', '.join(domains[:10])}...")
 
-    consciousness = RecursiveConsciousness(parallel_mode=parallel_mode, topic=topic)
-    consciousness.run_recursive_loop(iterations)
+        consciousness = RecursiveConsciousness(parallel_mode=parallel_mode, topic=topic)
+        consciousness.run_recursive_loop(iterations)
