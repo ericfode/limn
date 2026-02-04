@@ -1,0 +1,247 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    TEMPORAL EXPRESSIONS QUICK REFERENCE                    ║
+║                        Limn Compositional Language                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+FILE LOCATION: /home/eric/src/limntown/limn/crew/linguist/generated/temporal_expressions.csv
+TOTAL EXPRESSIONS: 1,431 unique compositional temporal expressions
+FORMAT: CSV (expression, meaning, example, domain)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMPOSITIONAL OPERATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+^ (GRADIENT)          Intensity scaling 0.1 to 1.0
+  lon^0.3 = somewhat long-lasting
+  acc^0.8 = very accelerated
+  → 510 expressions (35.6%)
+
+* (FUSION)            Merge/combine/intensify
+  pas*fut = present moment (past-future)
+  gro^0.8*dec^0.2 = strong growth with weak decay
+  → 877 expressions (61.3%)
+
+@ (BINDING)           Sequential connection
+  pas@now@fut = temporal continuum
+  cyc@seq@pha = pattern elements connected
+  → 11 expressions (0.8%)
+
+without (NEGATION)    Exclusion/subtraction
+  sta without cha = absolute permanence
+  alw without nev = certain affirmation
+  → 19 expressions (1.3%)
+
+given (CONDITIONAL)   Context dependency
+  fut given pas = future shaped by past
+  sta given cha = stability from flux
+  → 4 expressions (0.3%)
+
+± (POLARITY)          Ambiguity/duality
+  pas ± fut = temporal ambiguity (past or future)
+  alw ± nev = frequency extremes
+  → 10 expressions (0.7%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CORE TEMPORAL WORDS (41 base)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DURATION:  lon(long), bre(brief), mom(moment), dur(duration), end, beg
+TIME:      pas(past), fut(future), now(present), daw(dawn), dus(dusk)
+CHANGE:    cha(change), evo(evolution), tra(transformation), dec(decay)
+           acc(accelerate), grd(gradual), gro(growth), sta(stability)
+RELATION:  aft(after), bef(before), unt(until), yet(yet), bir(birth), dea(death)
+CYCLE:     cyc(cycle), seq(sequence), pha(phase), era(era), epo(epoch)
+SPEED:     has(haste), del(delay), urg(urgent)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXAMPLE EXPRESSIONS BY CATEGORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DURATION GRADIENTS (10-level intensity per word):
+  lon^0.1  barely long-lasting           bre^0.1  barely brief
+  lon^0.5  moderately long-lasting       bre^0.5  moderately brief
+  lon^0.9  extremely long-lasting        bre^0.9  extremely brief
+  mom^0.7  fairly instantaneous          dur^0.3  somewhat measured
+
+TEMPORAL STATES (present moment, lifecycles, daily cycles):
+  pas*fut  present moment (past-future liminal)
+  bir*dea  mortal existence (birth-death)
+  daw*dus  complete day cycle
+  beg*mid*end  full lifecycle
+  sta*cha  dynamic equilibrium
+
+TEMPORAL RELATIONSHIPS (chains, connections, sequences):
+  pas@now@fut  temporal continuum (past-present-future)
+  beg@mid@end@las  lifecycle connected
+  cyc@seq@pha  cyclic pattern elements
+  aft@bef  temporal opposition
+  pas given fut  relative sequence
+
+FREQUENCY SPECTRUM (never to always):
+  nev^0.1  barely never              alw^0.9  nearly always
+  rar^0.3  fairly rare               oft^0.7  quite often
+  onc^0.5  moderately once           alw^1.0  absolutely always
+  alw*oft  redundant frequency       rar*oft  contradictory frequency
+
+CHANGE PROCESSES (growth, decay, evolution):
+  gro^0.8  strong growth             dec^0.3  slight decay
+  evo^0.7  pronounced evolution      tra^0.2  barely transforming
+  gro^0.8*dec^0.2  growth-dominant   acc^0.9*grd^0.1  sharp acceleration
+  dec given gro  decay after growth  gro given dec  growth after decay
+
+SPEED/TEMPO (rate of change):
+  has^0.8  considerable haste        del^0.5  moderate delay
+  acc^0.6  fairly accelerated        grd^0.4  fairly gradual
+  urg^0.9  extreme urgency           has*acc  compounding speed
+  has without del  unimpeded haste   acc without grd  sharp acceleration
+
+LIMINALITY (threshold/boundary states):
+  pas*fut  the now (between past and future)
+  now ± fut  temporal ambiguity (now or future, both/either)
+  bir*dea  mortal boundary
+  alw ± nev  frequency extremes (always or never)
+  sta*cha  dynamic balance point
+
+NESTED/ADVANCED:
+  ((pas*now)*fut)*cha  temporal continuum through change
+  (((beg*mid)*end)*las)*fir  full lifecycle spectrum
+  ((alw*oft)*onc)*(rar*nev)  complete frequency spectrum
+  (lon^0.9)*bre^0.1*dur  duration extremes measured
+  (cha given sta) given (evo given tra)  conditional chains
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INTENSITY SCALE (for gradient ^)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+0.1  barely / minimal / imperceptible
+0.2  slightly / very light / barely noticeable
+0.3  somewhat / light / noticeable
+0.4  fairly-light / moderate-light
+0.5  moderately / clearly evident
+0.6  quite / moderate-strong / significant
+0.7  fairly / fairly strong / very evident
+0.8  very / strong / pronounced / striking
+0.9  extremely / intense / drastic / extreme
+1.0  absolutely / complete / maximum / absolute
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+USAGE PATTERNS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For mapping duration onto scale:
+  lon^0.7 = fairly long-lasting (use 0-1 for intensity)
+
+For temporal moments:
+  pas*fut = the now (fusion captures liminal state)
+
+For state transitions:
+  sta@cha@evo@tra@dec = state transition chain
+
+For frequency/probability:
+  oft^0.8 = quite frequent (0=never, 1=always)
+
+For comparison:
+  (lon^0.9)*bre^0.1 = long vs. brief (duration contrast)
+
+For sequences:
+  beg@mid@end@las = lifecycle progression
+
+For ambiguity:
+  pas ± fut = could be past or future (both/either)
+
+For conditional:
+  fut given pas = what's possible given history
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEMANTIC SPECTRA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TEMPORAL SPECTRUM:
+  pas (ancient past) → pas (recent) → now → fut (near) → fut (distant)
+
+DURATION SPECTRUM:
+  mom (instant) → bre (brief) → dur (measured) → lon (long) → epo (epoch)
+
+FREQUENCY SPECTRUM:
+  nev (never) → rar (rare) → onc (once) → oft (often) → alw (always)
+
+CHANGE SPECTRUM:
+  sta (static) → grd (gradual) → acc (accelerating) → tra (transforming)
+
+DEVELOPMENT SPECTRUM:
+  dec (decay) ← → gro (growth)  |  evo (evolution) ← → tra (transformation)
+
+LIFECYCLE SPECTRUM:
+  bir (birth) → beg (beginning) → mid (middle) → end (ending) → dea (death)
+
+DIURNAL SPECTRUM:
+  daw (dawn) → mid (midday) → dus (dusk) → now (night) → daw (again)
+
+RATE SPECTRUM:
+  has (haste/speed) ← → del (delay/slowness)
+  acc (acceleration) ← → grd (gradual slowdown)
+  urg (urgent) ← → sta (stable)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COMPOSITION STRATEGY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Start with base word: lon (long-lasting)
+
+2. Add intensity with ^: lon^0.7 (fairly long)
+
+3. Combine with fusion *: lon^0.7 * bre^0.3 (long-biased duration)
+
+4. Connect with binding @: (lon^0.7)@(dur@epo) (long connected to duration-era)
+
+5. Add conditions: dur given (lon*bre) (duration given long-brief context)
+
+6. Create spectra: (lon^0.1)@(lon^0.5)@(lon^0.9) (duration gradient)
+
+7. Negate to contrast: sta without cha (stability excluding change)
+
+8. Explore polarity: sta ± cha (stability or change, both/either)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STATISTICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total Expressions:                    1,431
+Target:                               1,000+
+Achievement:                          143.1%
+
+By Operator:
+  Gradient (^):                       510 (35.6%)
+  Fusion (*):                         877 (61.3%)
+  Binding (@):                        11 (0.8%)
+  Negation (without):                 19 (1.3%)
+  Conditional (given):                4 (0.3%)
+  Polarity (±):                       10 (0.7%)
+
+Base Words Used:                      41 temporal + 16 quality
+Expression Depth:
+  Single operator:                    520+
+  Double nesting:                     200+
+  Triple+ nesting:                    15+
+
+Coverage:
+  ✓ Duration gradients:               70+
+  ✓ Temporal states:                  100+
+  ✓ Change processes:                 70+
+  ✓ Temporal relationships:           30+
+  ✓ Frequency expressions:            50+
+  ✓ Speed/tempo expressions:          50+
+  ✓ Liminality expressions:           30+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+temporal_expressions.csv              Main output (1,431 expressions)
+TEMPORAL_EXPRESSIONS_README.md        Full documentation
+TEMPORAL_GENERATION_SUMMARY.txt       Executive summary
+QUICK_REFERENCE.txt                   This file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generated: 2026-02-03 | Status: COMPLETE | Quality: COMPREHENSIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
