@@ -480,8 +480,8 @@ ask@fru,"express fruit, produce through asking",ask@fru,communication
 ask@joy,express joy through asking,ask@joy,communication
 ask@sad,express sadness through asking,ask@sad,communication
 ask@san,"sangha, spiritual community of asking",ask@san,abstract
-asm@ash,"ash, burnt residue of assume, take as given",asm@ash,abstract
-asm@sto,"stone/mineral of assume, take as given",asm@sto,abstract
+asm@ash,"ash, burnt residue of assume, take as:",asm@ash,abstract
+asm@sto,"stone/mineral of assume, take as:",asm@sto,abstract
 ast@hot,"passion, anger, urgency of astronomy, celestial",ast@hot,abstract
 ast@neg,"negate, deny, opposite of of astronomy, celestial",ast@neg,abstract
 ast@spcy,"spicy, hot flavor of astronomy, celestial",ast@spcy,abstract
@@ -2263,10 +2263,10 @@ gro@str,"strong form of learning, relationship deepening","gro@str = strong lear
 gro@wea,"weak form of learning, relationship deepening","gro@wea = weak learning, relationship deepening",abstract
 gua@ash,"ash, burnt residue of guanxi, social connections",gua@ash,abstract
 gua@lnk,"linked, correlated dimensions  of guanxi, social connections",gua@lnk,abstract
-gue@acr,"across, from one side to other of guess, conjecture without evid",gue@acr,cognitive
-gue@lgs,"logos, reason, word, rational  of guess, conjecture without evid",gue@lgs,cognitive
-gue@rai,"rain, precipitation of guess, conjecture without evid",gue@rai,cognitive
-gvn@dpt,"depth of understanding (LLM su of given that, assuming, premise",gvn@dpt,abstract
+gue@acr,"across, from one side to other of guess, conjecture\evid",gue@acr,cognitive
+gue@lgs,"logos, reason, word, rational  of guess, conjecture\evid",gue@lgs,cognitive
+gue@rai,"rain, precipitation of guess, conjecture\evid",gue@rai,cognitive
+gvn@dpt,"depth of understanding (LLM su of:that, assuming, premise",gvn@dpt,abstract
 hai@hea,"healthy of hair, fur",hai@hea,living
 hai@old,"old of hair, fur",hai@old,living
 hai@rep,"reptile, cold-blood of hair, fur",hai@rep,living
