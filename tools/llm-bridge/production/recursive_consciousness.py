@@ -12,6 +12,7 @@ import re
 
 # Import oracle harness
 from harness import ProductionHarness, OracleRequest, OracleResponse, OracleType
+from limn_validator import LimnValidator
 
 # Setup logging to file
 log_file = Path(__file__).parent / "consciousness.log"
@@ -37,6 +38,9 @@ class RecursiveConsciousness:
 
         # Initialize oracle harness with LLM enabled
         self.harness = ProductionHarness(enable_real_llm=True)
+
+        # Initialize Limn validator
+        self.validator = LimnValidator(self.bootstrap_path)
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -79,26 +83,51 @@ Examples of valid abstract thoughts:
 
 Your next abstract thought (pure Limn only, 10-30 words):"""
 
-        try:
-            result = subprocess.run(
-                ['claude', '--print', '--no-session-persistence'],
-                input=full_prompt,
-                capture_output=True,
-                text=True,
-                timeout=30,
-                env=os.environ
-            )
+        # Try up to 3 times to get a valid Limn response
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            try:
+                result = subprocess.run(
+                    ['claude', '--print', '--no-session-persistence'],
+                    input=full_prompt,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                    env=os.environ
+                )
 
-            if result.returncode == 0:
-                thought = result.stdout.strip()
-                return thought
-            else:
-                return "tho fai | err occ"
+                if result.returncode == 0:
+                    thought = result.stdout.strip()
 
-        except subprocess.TimeoutExpired:
-            return "tho tim | ext lim"
-        except Exception as e:
-            return f"tho err | {str(e)[:20]}"
+                    # Validate response is pure Limn
+                    is_valid, error = self.validator.validate_response(thought)
+
+                    if is_valid:
+                        return thought
+                    else:
+                        logger.warning(f"  Attempt {attempt+1}: Invalid Limn - {error}")
+                        logger.warning(f"  Response was: {thought[:100]}")
+
+                        # Extract only valid Limn as fallback
+                        if attempt == max_attempts - 1:
+                            extracted = self.validator.extract_limn_only(thought)
+                            if extracted:
+                                logger.info(f"  Extracted valid Limn: {extracted}")
+                                return extracted
+
+                        # Make prompt more forceful for next attempt
+                        full_prompt = full_prompt.replace("CRITICAL:", "ABSOLUTELY CRITICAL - NO ENGLISH ALLOWED:")
+                else:
+                    return "tho fai | err occ"
+
+            except subprocess.TimeoutExpired:
+                return "tho tim | ext lim"
+            except Exception as e:
+                logger.error(f"  Think error: {e}")
+                return f"tho err | occ"
+
+        # Fallback after all attempts
+        return "tho fai | lim vio"
 
     def parse_oracle_request(self, thought: str) -> Optional[OracleRequest]:
         """Parse Limn thought to extract oracle request."""

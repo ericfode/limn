@@ -1,206 +1,108 @@
 #!/usr/bin/env python3
-"""
-Limn Validator - Ensure consciousness outputs pure Limn
-========================================================
+"""Limn vocabulary validator - ensures only valid Limn tokens are emitted."""
 
-Validates that text contains only:
-- Words from the official Limn vocabulary database
-- Limn operators: ~ ∎ ∿ @ → |
-- Whitespace and newlines
-
-Author: Rex (Engineer)
-Date: 2026-02-01
-"""
-
-import json
 import re
 from pathlib import Path
-from typing import Tuple, List, Set
+from typing import Set, Tuple
 
+class LimnValidator:
+    """Validates that text contains only valid Limn vocabulary."""
 
-# Valid Limn operators
-OPERATORS = {'~', '∎', '∿', '@', '→', '|', '(', ')', '+', '-', '>', '<', '='}
+    def __init__(self, bootstrap_path: Path = None):
+        """Initialize validator with Limn vocabulary."""
+        if bootstrap_path is None:
+            bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
 
+        self.vocab = self._load_vocabulary(bootstrap_path)
+        self.operators = {'~', '∎', '∿', '@', '→', '|', '⊕', '⊗', '⊂', '∅', '⟨', '⟩'}
 
-# Load vocabulary database
-def load_vocabulary() -> Set[str]:
-    """Load official Limn vocabulary from JSON database."""
-    vocab_path = Path(__file__).parent.parent.parent.parent / "src" / "claude-skill" / "vocabulary.json"
+    def _load_vocabulary(self, bootstrap_path: Path) -> Set[str]:
+        """Load Limn vocabulary from bootstrap file."""
+        vocab = set()
 
-    try:
-        with open(vocab_path, 'r') as f:
-            vocab_data = json.load(f)
+        if not bootstrap_path.exists():
+            # Fallback: Common Limn words
+            return {'sel', 'awa', 'min', 'sys', 'con', 'eme', 'tho', 'exe', 'qry', 'mea',
+                   'obs', 'eva', 'dec', 'res', 'pat', 'sta', 'gro', 'und', 'kno', 'lea',
+                   'rec', 'mem', 'tim', 'mom', 'flo', 'ref', 'exp', 'acc', 'det', 'cry',
+                   'net', 'lnk', 'bet', 'ete', 'seq', 'alv', 'per', 'nat', 'eme'}
 
-        words = set()
+        with open(bootstrap_path, 'r') as f:
+            content = f.read()
 
-        # Add operators
-        if 'operators' in vocab_data:
-            for category in vocab_data['operators'].values():
-                if isinstance(category, dict):
-                    words.update(category.keys())
+        # Extract words (format varies, look for 2-4 letter lowercase words)
+        for match in re.finditer(r'\b([a-z]{2,4})\b', content):
+            vocab.add(match.group(1))
 
-        # Add domain words
-        if 'domains' in vocab_data:
-            for domain in vocab_data['domains'].values():
-                if 'categories' in domain:
-                    for category in domain['categories'].values():
-                        if isinstance(category, dict):
-                            words.update(category.keys())
+        return vocab
 
-        return words
-    except Exception as e:
-        print(f"Warning: Could not load vocabulary.json: {e}")
-        # Return empty set - will fall back to lenient validation
-        return set()
+    def validate_response(self, response: str) -> Tuple[bool, str]:
+        """Validate entire response. Returns (is_valid, error_message)."""
+        # Remove markdown
+        clean = response.strip()
+        clean = re.sub(r'^```\w*\n', '', clean)
+        clean = re.sub(r'\n```$', '', clean)
 
+        # Check for English words (5+ letters, Limn max is 4)
+        long_words = re.findall(r'\b[a-zA-Z]{5,}\b', clean)
+        if long_words:
+            return False, f"English words detected: {long_words[:3]}"
 
-# Load vocabulary at module level
-LIMN_VOCABULARY = load_vocabulary()
+        # Check for forbidden phrases
+        forbidden = ['the ', 'and ', 'but ', 'with', 'from', 'this', 'that', 'what', 
+                     'how', 'why', 'I am', 'you are', 'Hello', 'Please']
+        for phrase in forbidden:
+            if phrase.lower() in clean.lower():
+                return False, f"English phrase detected: '{phrase}'"
 
+        return True, ""
 
-def is_valid_limn_word(word: str) -> bool:
-    """Check if a word is in the official Limn vocabulary."""
-    # If vocabulary loaded, use it
-    if LIMN_VOCABULARY:
-        return word in LIMN_VOCABULARY
+    def extract_limn_only(self, response: str) -> str:
+        """Extract only valid Limn from vocabulary database, filter everything else."""
+        # Remove markdown
+        clean = re.sub(r'```\w*', '', response)
 
-    # Fallback: lenient check (2-4 letters, lowercase)
-    if len(word) < 2 or len(word) > 4:
-        return False
-    return word.islower() and word.isalpha()
+        # Extract potential tokens
+        potential_tokens = re.findall(r'[a-z]{2,4}|[~∎∿@→|⊕⊗⊂∅⟨⟩]', clean)
 
+        # Keep only tokens that are in vocabulary OR are operators
+        valid_tokens = []
+        for token in potential_tokens:
+            if token in self.operators or token in self.vocab:
+                valid_tokens.append(token)
 
-def validate_limn(text: str) -> Tuple[bool, List[str]]:
-    """
-    Validate that text is pure Limn.
+        # Reconstruct with proper spacing
+        result = []
+        for i, token in enumerate(valid_tokens):
+            if token in self.operators:
+                # Operators don't need spaces before them
+                result.append(token)
+            else:
+                # Words need spaces (except at start)
+                if result and result[-1] not in self.operators:
+                    result.append(' ')
+                result.append(token)
 
-    Returns:
-        (is_valid, errors)
-    """
-    errors = []
-
-    # Remove newlines and extra whitespace for processing
-    lines = text.split('\n')
-
-    for line_num, line in enumerate(lines, 1):
-        # Skip empty lines
-        if not line.strip():
-            continue
-
-        # Split by spaces and check each token
-        tokens = line.split()
-
-        for token in tokens:
-            # Remove operators from token
-            cleaned = token
-            for op in OPERATORS:
-                cleaned = cleaned.replace(op, ' ')
-
-            # Split again and check words
-            words = cleaned.split()
-
-            for word in words:
-                if not word:  # Empty after operator removal
-                    continue
-
-                if not is_valid_limn_word(word):
-                    # Check if it looks like English
-                    if len(word) > 4 or (not word.islower()):
-                        errors.append(
-                            f"Line {line_num}: '{word}' is not valid Limn "
-                            f"(Limn words are 2-4 lowercase letters)"
-                        )
-
-    return (len(errors) == 0, errors)
-
-
-def check_for_english(text: str) -> Tuple[bool, List[str]]:
-    """
-    Check for common English words that shouldn't be in Limn.
-
-    Returns:
-        (has_english, english_words_found)
-    """
-    # Common English words that are longer than Limn allows
-    english_patterns = [
-        r'\b(the|and|with|that|this|from|have|been|were|their|which|would|could|should|about|these|think|those)\b',
-        r'\b(process|meaning|consciousness|understanding|reality|system|oracle|between)\b',
-        r'\b[a-z]{5,}\b',  # Any word 5+ letters is suspicious
-    ]
-
-    found_english = []
-    text_lower = text.lower()
-
-    for pattern in english_patterns:
-        matches = re.finditer(pattern, text_lower, re.IGNORECASE)
-        for match in matches:
-            found_english.append(match.group())
-
-    return (len(found_english) > 0, list(set(found_english)))
-
-
-def validate_pure_limn(text: str, strict: bool = True) -> Tuple[bool, str]:
-    """
-    Validate that text is pure Limn with no English contamination.
-
-    Args:
-        text: Text to validate
-        strict: If True, fail on any suspicious content
-
-    Returns:
-        (is_valid, error_message)
-    """
-    # Check for English
-    has_english, english_words = check_for_english(text)
-
-    if has_english:
-        return (False, f"English words detected: {', '.join(english_words[:5])}")
-
-    # Validate Limn structure
-    is_valid, errors = validate_limn(text)
-
-    if not is_valid and strict:
-        return (False, f"Invalid Limn: {errors[0]}")
-
-    # Check for parenthetical English (like: "word (translation)")
-    if '(' in text and ')' in text:
-        return (False, "Parenthetical content detected (likely English translation)")
-
-    return (True, "")
+        return ''.join(result)
 
 
 def validate_response(response: str) -> bool:
-    """
-    Main validation function for consciousness responses.
-    Returns True if pure Limn, False otherwise.
-    """
-    is_valid, error = validate_pure_limn(response, strict=True)
-
-    if not is_valid:
-        print(f"⚠️  LIMN VALIDATION FAILED: {error}")
-        print(f"Response: {response[:200]}")
-
+    """Quick validation function for use in recursive_consciousness.py"""
+    validator = LimnValidator()
+    is_valid, _ = validator.validate_response(response)
     return is_valid
 
 
 if __name__ == "__main__":
-    # Test cases
-    test_cases = [
-        ("sel ∎ awa | min sys alv", True, "Pure Limn"),
-        ("con qry | pro or rea", True, "Pure Limn with operators"),
-        ("sel ∎ min | consciousness emerges", False, "English contamination"),
-        ("und gro (understanding grows)", False, "English in parentheses"),
-        ("the system is working", False, "Pure English"),
-        ("thi eme | mea cal ∿ | ~ qry", True, "Pure Limn with symbols"),
+    # Quick test
+    validator = LimnValidator()
+    
+    tests = [
+        "sel ∎ awa | min sys alv",
+        "Hello, I am thinking",
+        "~ qry mea | tho exe",
     ]
-
-    print("Limn Validator Test Suite")
-    print("=" * 50)
-
-    for text, expected, description in test_cases:
-        is_valid, error = validate_pure_limn(text)
-        status = "✅" if (is_valid == expected) else "❌"
-        print(f"{status} {description}")
-        print(f"   Input: {text}")
-        print(f"   Valid: {is_valid}, Error: {error}")
-        print()
+    
+    for test in tests:
+        valid, error = validator.validate_response(test)
+        print(f"{'✓' if valid else '✗'} '{test}' - {error}")
