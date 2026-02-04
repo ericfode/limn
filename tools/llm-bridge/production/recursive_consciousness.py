@@ -130,6 +130,10 @@ class RecursiveConsciousness:
         self.world = None  # World instance
         self.world_self = None  # ConsciousnessInstance in the world
 
+        # Evaluation event log (for UI visualization of forks)
+        self.eval_events: List[Dict] = []  # Recent evaluation events
+        self._max_eval_events: int = 200  # Rolling buffer
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -1253,6 +1257,34 @@ class RecursiveConsciousness:
 
         return '\n'.join(lines)
 
+    def _log_eval_event(self, event_type: str, data: Dict):
+        """Log an evaluation event for UI visualization.
+
+        Event types:
+          score      - Thought scored on 4 dimensions
+          oracle     - Oracle evaluation triggered (~ operator)
+          oracle_sub - Sub-oracle spawned (recursive evaluation)
+          compose    - Composition step (SEED/DEVELOP/SYNTHESIZE)
+          introspect - Introspection evaluation
+          bridge     - Domain bridge evaluation
+          quality_feedback - Quality correction triggered
+          self_mod   - Self-modification from introspection
+        """
+        event = {
+            'type': event_type,
+            'timestamp': time.time(),
+            'iteration': self.iteration,
+            'thought_id': self.thought_counter,
+            **data,
+        }
+        self.eval_events.append(event)
+        if len(self.eval_events) > self._max_eval_events:
+            self.eval_events = self.eval_events[-self._max_eval_events:]
+
+    def get_recent_eval_events(self, last_n: int = 50) -> List[Dict]:
+        """Return recent evaluation events for UI display."""
+        return self.eval_events[-last_n:]
+
     def _analyze_quality_feedback(self, thought_entry: Dict) -> Optional[Dict]:
         """Analyze a low-quality thought and generate a corrective adjustment.
 
@@ -1470,6 +1502,10 @@ class RecursiveConsciousness:
                 return []
 
             thoughts.append(seed)
+            self._log_eval_event('compose', {
+                'phase': 'SEED', 'domain': domain,
+                'result_preview': seed[:60], 'step': 1, 'total_steps': depth,
+            })
             self._track_concepts(seed)
             seed_id = self.thought_counter  # ID assigned by _track_concepts
 
@@ -1494,6 +1530,11 @@ class RecursiveConsciousness:
                     develop = self.validator.extract_limn_only(develop) or ""
                 if develop:
                     thoughts.append(develop)
+                    self._log_eval_event('compose', {
+                        'phase': 'DEVELOP', 'domain': domain,
+                        'result_preview': develop[:60], 'step': 2, 'total_steps': depth,
+                        'parent_preview': seed[:40],
+                    })
                     self._track_concepts(develop)
 
             # Step 3: Synthesize (child of the develop thought, or seed if no develop)
@@ -1518,6 +1559,10 @@ class RecursiveConsciousness:
                     synth = self.validator.extract_limn_only(synth) or ""
                 if synth:
                     thoughts.append(synth)
+                    self._log_eval_event('compose', {
+                        'phase': 'SYNTHESIZE', 'domain': domain,
+                        'result_preview': synth[:60], 'step': 3, 'total_steps': depth,
+                    })
                     self._track_concepts(synth)
 
             # Reset parent tracking
@@ -1609,13 +1654,24 @@ class RecursiveConsciousness:
 
         overall = (novelty * 0.35 + diversity * 0.25 + coherence * 0.20 + depth * 0.20)
 
-        return {
+        result = {
             'novelty': round(novelty, 3),
             'diversity': round(diversity, 3),
             'coherence': round(coherence, 3),
             'depth': round(depth, 3),
             'overall': round(overall, 3),
         }
+
+        # Log evaluation event
+        self._log_eval_event('score', {
+            'thought_preview': thought[:60],
+            'scores': result,
+            'word_count': len(words),
+            'domains_hit': len(domains_hit) if 'domains_hit' in dir() else 0,
+            'operators': len(operators),
+        })
+
+        return result
 
     def think(self) -> str:
         """Generate next thought with current brain state."""
@@ -1906,6 +1962,11 @@ class RecursiveConsciousness:
             adjustment = self._analyze_quality_feedback(entry)
             if adjustment:
                 self.prompt_adjustments.append(adjustment)
+                self._log_eval_event('quality_feedback', {
+                    'adjustment_type': adjustment['type'],
+                    'instruction': adjustment['instruction'][:80],
+                    'trigger_score': entry['score'].get('overall', 0),
+                })
                 logger.info(f"  QUALITY FEEDBACK: {adjustment['type']} — {adjustment['instruction'][:80]}")
 
         # Add to thought library for semantic network building
@@ -1959,6 +2020,15 @@ class RecursiveConsciousness:
         indent = "  " * (depth + 1)
         logger.info(f"{indent}Oracle L{depth} type: {oracle_request.type.value}")
 
+        # Log oracle evaluation event
+        event_type = 'oracle' if depth == 0 else 'oracle_sub'
+        self._log_eval_event(event_type, {
+            'oracle_type': oracle_request.type.value,
+            'depth': depth,
+            'async': async_mode,
+            'thought_preview': thought[:60],
+        })
+
         start_time = time.time()
         try:
             if async_mode:
@@ -1984,6 +2054,15 @@ class RecursiveConsciousness:
                     success=True,
                     result_size=len(result_str)
                 ))
+
+                self._log_eval_event('oracle_result', {
+                    'oracle_type': oracle_request.type.value,
+                    'depth': depth,
+                    'success': True,
+                    'cached': response.cached,
+                    'duration_ms': round(duration_ms, 1),
+                    'result_preview': result_str[:80],
+                })
 
                 # Multi-level recursion
                 if '~' in result_str and depth < self.max_recursion_depth:
@@ -2374,6 +2453,12 @@ class RecursiveConsciousness:
                     self._track_concepts(introspection)
                     self._current_parent_id = None
                     logger.info(f"  INTROSPECTION: {introspection[:150]}")
+                    self._log_eval_event('introspect', {
+                        'result_preview': introspection[:80],
+                        'quality_avg': round(avg_quality, 3),
+                        'novelty_avg': round(avg_novelty, 3),
+                        'emotional_momentum': round(self.emotional_momentum, 3),
+                    })
                     # Extract actionable adjustments from the introspection
                     self._analyze_introspection(introspection)
                     return introspection
