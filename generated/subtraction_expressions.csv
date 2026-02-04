@@ -1,0 +1,1051 @@
+expression,meaning,example,domain
+dar without lig,"dark, ignorance with lightning, flash removed",dar without lig = darkness without light,Abstract
+emp without sac,"empty set, null result with sacred, holy removed",emp without sac = empty without space,Abstract
+fal without err,"failure, decline, sunset with error, fault, bug removed",fal without err = false without error,Abstract
+fir without hea,"first, initial with healthy removed",fir without hea = fire without heat,Abstract
+ful without con,"full, complete with contraction removed",ful without con = fullness without content,Abstract
+goo without ben,"good with bend, curve removed",goo without ben = good without benefit,Abstract
+hot without col,"passion, anger, urgency with distant, aloof, calm removed",hot without col = hot without cold,Abstract
+uni without con,unique with contraction removed,uni without con = union without connection,Abstract
+mak without cre,"make, create, produce with creative, original removed",mak without cre = make without creation,Actions & Verbs
+wak without con,"walk, step, pace with contraction removed",wak without con = awake without consciousness,Actions & Verbs
+obj without mat,"object, instance with matrix, array removed",obj without mat = object without matter,Agent/AI
+tru without fac,"true with factor, divisor removed",tru without fac = truth without facts,Communication
+san without san,"sangha, spiritual community with sangha, spiritual community removed",san without san = sand without sand particles,Community & Culture
+ani without mov,"animal with motion, movement removed",ani without mov = animal without movement,Living Things
+hea without str,healthy with strong removed,hea without str = healthy without strength,Living Things
+tre without gro,"tree with learning, relationship deepening removed",tre without gro = tree without growth,Living Things
+abd without abl,"abduct, infer best explanation with able, capable, having power to removed",abd without abl → refined essence,Mind & Cognition
+abd without abo,"abduct, infer best explanation with above removed",abd without abo → refined essence,Mind & Cognition
+abd without abs,"abduct, infer best explanation with abstract, conceptual removed",abd without abs → refined essence,Mind & Cognition
+abd without acc,"abduct, infer best explanation with accelerate, speed up removed",abd without acc → refined essence,Mind & Cognition
+abd without aci,"abduct, infer best explanation with acid, pH low removed",abd without aci → refined essence,Mind & Cognition
+abd without ack,"abduct, infer best explanation with acknowledge, confirm receipt removed",abd without ack → refined essence,Mind & Cognition
+abd without acr,"abduct, infer best explanation with across, from one side to other removed",abd without acr → refined essence,Mind & Cognition
+abd without act,"abduct, infer best explanation with action, do removed",abd without act → refined essence,Mind & Cognition
+abd without ada,"abduct, infer best explanation with adapt, adjust removed",abd without ada → refined essence,Mind & Cognition
+abd without add,"abduct, infer best explanation with addition, plus removed",abd without add → refined essence,Mind & Cognition
+abd without adj,"abduct, infer best explanation with adjacent, immediate neighbors in semantic space removed",abd without adj → refined essence,Mind & Cognition
+abd without aer,"abduct, infer best explanation with air-related removed",abd without aer → refined essence,Mind & Cognition
+abd without aes,"abduct, infer best explanation with beauty, aesthetic removed",abd without aes → refined essence,Mind & Cognition
+abd without aft,"abduct, infer best explanation with after, following, subsequent to removed",abd without aft → refined essence,Mind & Cognition
+abd without aga,"abduct, infer best explanation with against, opposed to, in opposition removed",abd without aga → refined essence,Mind & Cognition
+abd without age,"abduct, infer best explanation with agent removed",abd without age → refined essence,Mind & Cognition
+abd without agg,"abduct, infer best explanation with aggregate, combine, summarize data removed",abd without agg → refined essence,Mind & Cognition
+abd without agr,"abduct, infer best explanation with agreeing removed",abd without agr → refined essence,Mind & Cognition
+abd without agt,"abduct, infer best explanation with agent, actor removed",abd without agt → refined essence,Mind & Cognition
+abd without ahi,"abduct, infer best explanation with ahimsa, non-violence removed",abd without ahi → refined essence,Mind & Cognition
+abd without aim,"abduct, infer best explanation with aim, target, direct toward goal removed",abd without aim → refined essence,Mind & Cognition
+abd without air,"abduct, infer best explanation with air transport, aviation removed",abd without air → refined essence,Mind & Cognition
+abd without ale,"abduct, infer best explanation with aleatoric uncertainty (inherently random) removed",abd without ale → refined essence,Mind & Cognition
+abd without alg,"abduct, infer best explanation with aligned with intent (LLM success mode) removed",abd without alg → refined essence,Mind & Cognition
+abd without all,"abduct, infer best explanation with all, every removed",abd without all → refined essence,Mind & Cognition
+abd without allomorph,"abduct, infer best explanation with morpheme variant removed",abd without allomorph → refined essence,Mind & Cognition
+abd without allophone,"abduct, infer best explanation with phoneme variant removed",abd without allophone → refined essence,Mind & Cognition
+abd without alo,"abduct, infer best explanation with along, following the length of removed",abd without alo → refined essence,Mind & Cognition
+abd without alp,"abduct, infer best explanation with alpha, first removed",abd without alp → refined essence,Mind & Cognition
+abd without alt,"abduct, infer best explanation with alternatively, or else, another option removed",abd without alt → refined essence,Mind & Cognition
+abd without alv,"abduct, infer best explanation with alive, running, responsive removed",abd without alv → refined essence,Mind & Cognition
+abd without alw,"abduct, infer best explanation with always removed",abd without alw → refined essence,Mind & Cognition
+abd without amb,"abduct, infer best explanation with many meanings removed",abd without amb → refined essence,Mind & Cognition
+abd without amo,"abduct, infer best explanation with among, in the midst of, surrounded by removed",abd without amo → refined essence,Mind & Cognition
+abd without ana,"abduct, infer best explanation with analyze, examine systematically removed",abd without ana → refined essence,Mind & Cognition
+abd without anc,"abduct, infer best explanation with ancient, old removed",abd without anc → refined essence,Mind & Cognition
+abd without anch,"abduct, infer best explanation with anchoring, over-weighted on early context (LLM failure mode) removed",abd without anch → refined essence,Mind & Cognition
+abd without and,"abduct, infer best explanation with conjunction removed",abd without and → refined essence,Mind & Cognition
+abd without ang,"abduct, infer best explanation with anger removed",abd without ang → refined essence,Mind & Cognition
+abd without ani,"abduct, infer best explanation with animal removed",abd without ani → refined essence,Mind & Cognition
+abd without ans,"abduct, infer best explanation with answer, reply removed",abd without ans → refined essence,Mind & Cognition
+abd without ant,"abduct, infer best explanation with ant, insect removed",abd without ant → refined essence,Mind & Cognition
+abd without anx,"abduct, infer best explanation with anxious, worry removed",abd without anx → refined essence,Mind & Cognition
+abd without any,"abduct, infer best explanation with any, free choice quantifier removed",abd without any → refined essence,Mind & Cognition
+abd without api,"abduct, infer best explanation with interface, protocol removed",abd without api → refined essence,Mind & Cognition
+abd without apl,"abduct, infer best explanation with apple removed",abd without apl → refined essence,Mind & Cognition
+abd without app,"abduct, infer best explanation with application, program removed",abd without app → refined essence,Mind & Cognition
+abd without applicative,"abduct, infer best explanation with applicative functor removed",abd without applicative → refined essence,Mind & Cognition
+abd without apt,"abduct, infer best explanation with apartment, flat removed",abd without apt → refined essence,Mind & Cognition
+abd without aqu,"abduct, infer best explanation with water-related removed",abd without aqu → refined essence,Mind & Cognition
+abd without arc,"abduct, infer best explanation with arc, segment removed",abd without arc → refined essence,Mind & Cognition
+abd without are,"abduct, infer best explanation with area removed",abd without are → refined essence,Mind & Cognition
+abd without aret,"abduct, infer best explanation with arete, virtue, excellence, moral quality (Greek) removed",abd without aret → refined essence,Mind & Cognition
+abd without arg,"abduct, infer best explanation with arguing removed",abd without arg → refined essence,Mind & Cognition
+abd without ari,"abduct, infer best explanation with desert, arid removed",abd without ari → refined essence,Mind & Cognition
+abd without arm,"abduct, infer best explanation with arm, reach removed",abd without arm → refined essence,Mind & Cognition
+abd without aro,"abduct, infer best explanation with around, surrounding, encircling removed",abd without aro → refined essence,Mind & Cognition
+abd without art,"abduct, infer best explanation with art, creative work removed",abd without art → refined essence,Mind & Cognition
+abd without as,"abduct, infer best explanation with as, in the manner of, like removed",abd without as → refined essence,Mind & Cognition
+abd without ash,"abduct, infer best explanation with ash, burnt residue removed",abd without ash → refined essence,Mind & Cognition
+abd without ask,"abduct, infer best explanation with asking removed",abd without ask → refined essence,Mind & Cognition
+abd without asm,"abduct, infer best explanation with assume, take as given removed",abd without asm → refined essence,Mind & Cognition
+abd without ast,"abduct, infer best explanation with astronomy, celestial removed",abd without ast → refined essence,Mind & Cognition
+abd without asu,"abduct, infer best explanation with assume, take as given, presuppose removed",abd without asu → refined essence,Mind & Cognition
+abd without async,"abduct, infer best explanation with not synchronized concurrent removed",abd without async → refined essence,Mind & Cognition
+abd without ate,"abduct, infer best explanation with make, cause to be, act removed",abd without ate → refined essence,Mind & Cognition
+abd without ato,"abduct, infer best explanation with atom, particle removed",abd without ato → refined essence,Mind & Cognition
+abd without att,"abduct, infer best explanation with attention removed",abd without att → refined essence,Mind & Cognition
+abd without attn,"abduct, infer best explanation with attention, focus mechanism removed",abd without attn → refined essence,Mind & Cognition
+abd without aud,"abduct, infer best explanation with hearing removed",abd without aud → refined essence,Mind & Cognition
+abd without aur,"abduct, infer best explanation with aurora, lights removed",abd without aur → refined essence,Mind & Cognition
+abd without aut,"abduct, infer best explanation with autumn, fall removed",abd without aut → refined essence,Mind & Cognition
+abd without ave,"abduct, infer best explanation with average, mean removed",abd without ave → refined essence,Mind & Cognition
+abd without avg,"abduct, infer best explanation with average removed",abd without avg → refined essence,Mind & Cognition
+abd without avi,"abduct, infer best explanation with bird removed",abd without avi → refined essence,Mind & Cognition
+abd without avo,"abduct, infer best explanation with avoid, stay away from, evade removed",abd without avo → refined essence,Mind & Cognition
+abd without awa,"abduct, infer best explanation with away, distant from, departing removed",abd without awa → refined essence,Mind & Cognition
+abd without await,"abduct, infer best explanation with wait for completion removed",abd without await → refined essence,Mind & Cognition
+abd without awt,"abduct, infer best explanation with await, waiting for removed",abd without awt → refined essence,Mind & Cognition
+abd without axs,"abduct, infer best explanation with axis, dimension of variation in semantic space removed",abd without axs → refined essence,Mind & Cognition
+abd without bac,"abduct, infer best explanation with backward removed",abd without bac → refined essence,Mind & Cognition
+abd without bad,"abduct, infer best explanation with bad removed",abd without bad → refined essence,Mind & Cognition
+abd without bag,"abduct, infer best explanation with bag, carry removed",abd without bag → refined essence,Mind & Cognition
+abd without bak,"abduct, infer best explanation with backup, copy removed",abd without bak → refined essence,Mind & Cognition
+abd without bal,"abduct, infer best explanation with balloon, hot air removed",abd without bal → refined essence,Mind & Cognition
+abd without ban,"abduct, infer best explanation with banana removed",abd without ban → refined essence,Mind & Cognition
+abd without bar,"abduct, infer best explanation with baraka, spiritual grace removed",abd without bar → refined essence,Mind & Cognition
+abd without bas,"abduct, infer best explanation with base, pH high removed",abd without bas → refined essence,Mind & Cognition
+abd without bat,"abduct, infer best explanation with bathroom, wash removed",abd without bat → refined essence,Mind & Cognition
+abd without bea,"abduct, infer best explanation with beautiful removed",abd without bea → refined essence,Mind & Cognition
+abd without bec,"abduct, infer best explanation with because removed",abd without bec → refined essence,Mind & Cognition
+abd without bed,"abduct, infer best explanation with bedroom, sleep removed",abd without bed → refined essence,Mind & Cognition
+abd without bee,"abduct, infer best explanation with beer, brewed removed",abd without bee → refined essence,Mind & Cognition
+abd without bef,"abduct, infer best explanation with before, prior removed",abd without bef → refined essence,Mind & Cognition
+abd without beff,"abduct, infer best explanation with beef, cattle meat removed",abd without beff → refined essence,Mind & Cognition
+abd without beg,"abduct, infer best explanation with beginning removed",abd without beg → refined essence,Mind & Cognition
+abd without beh,"abduct, infer best explanation with behind removed",abd without beh → refined essence,Mind & Cognition
+abd without bel,"abduct, infer best explanation with below removed",abd without bel → refined essence,Mind & Cognition
+abd without ben,"abduct, infer best explanation with bend, curve removed",abd without ben → refined essence,Mind & Cognition
+abd without ber,"abduct, infer best explanation with berry, small fruit removed",abd without ber → refined essence,Mind & Cognition
+abd without bes,"abduct, infer best explanation with beside removed",abd without bes → refined essence,Mind & Cognition
+abd without bet,"abduct, infer best explanation with between removed",abd without bet → refined essence,Mind & Cognition
+abd without big,"abduct, infer best explanation with large, big removed",abd without big → refined essence,Mind & Cognition
+abd without bik,"abduct, infer best explanation with bike, bicycle removed",abd without bik → refined essence,Mind & Cognition
+abd without bio,"abduct, infer best explanation with biology, life science removed",abd without bio → refined essence,Mind & Cognition
+abd without bir,"abduct, infer best explanation with birth removed",abd without bir → refined essence,Mind & Cognition
+abd without bit,"abduct, infer best explanation with bitter, acrid removed",abd without bit → refined essence,Mind & Cognition
+abd without bld,"abduct, infer best explanation with build, construct, assemble removed",abd without bld → refined essence,Mind & Cognition
+abd without ble,"abduct, infer best explanation with blessing, divine favor removed",abd without ble → refined essence,Mind & Cognition
+abd without blf,"abduct, infer best explanation with cliff, precipice removed",abd without blf → refined essence,Mind & Cognition
+abd without bli,"abduct, infer best explanation with believing removed",abd without bli → refined essence,Mind & Cognition
+abd without blk,"abduct, infer best explanation with blocked, waiting on dependency removed",abd without blk → refined essence,Mind & Cognition
+abd without blo,"abduct, infer best explanation with blood removed",abd without blo → refined essence,Mind & Cognition
+abd without bnd,"abduct, infer best explanation with bend, generate recursive structure (HVM primitive) removed",abd without bnd → refined essence,Mind & Cognition
+abd without bng,"abduct, infer best explanation with bring, carry to, deliver removed",abd without bng → refined essence,Mind & Cognition
+abd without bnk,"abduct, infer best explanation with bank, financial removed",abd without bnk → refined essence,Mind & Cognition
+abd without boa,"abduct, infer best explanation with boat, watercraft removed",abd without boa → refined essence,Mind & Cognition
+abd without bod,"abduct, infer best explanation with awakening, enlightenment (Buddhist) removed",abd without bod → refined essence,Mind & Cognition
+abd without boi,"abduct, infer best explanation with boil, water removed",abd without boi → refined essence,Mind & Cognition
+abd without bol,"abduct, infer best explanation with boil, bubble removed",abd without bol → refined essence,Mind & Cognition
+abd without bon,"abduct, infer best explanation with bone removed",abd without bon → refined essence,Mind & Cognition
+abd without boo,"abduct, infer best explanation with book, read removed",abd without boo → refined essence,Mind & Cognition
+abd without bor,"abduct, infer best explanation with bored, disinterest removed",abd without bor → refined essence,Mind & Cognition
+abd without bot,"abduct, infer best explanation with automated agent removed",abd without bot → refined essence,Mind & Cognition
+abd without bou,"abduct, infer best explanation with boundary, limit removed",abd without bou → refined essence,Mind & Cognition
+abd without bow,"abduct, infer best explanation with bowl, container removed",abd without bow → refined essence,Mind & Cognition
+abd without box,"abduct, infer best explanation with box, container removed",abd without box → refined essence,Mind & Cognition
+abd without bra,"abduct, infer best explanation with brain removed",abd without bra → refined essence,Mind & Cognition
+abd without brc,"abduct, infer best explanation with branching: multiple valid continuations available removed",abd without brc → refined essence,Mind & Cognition
+abd without brd,"abduct, infer best explanation with bread, baked dough removed",abd without brd → refined essence,Mind & Cognition
+abd without bre,"abduct, infer best explanation with brief removed",abd without bre → refined essence,Mind & Cognition
+abd without brg,"abduct, infer best explanation with bridge, narrow connection between semantic regions removed",abd without brg → refined essence,Mind & Cognition
+abd without bri,"abduct, infer best explanation with hope, clarity, intelligence removed",abd without bri → refined essence,Mind & Cognition
+abd without brk,"abduct, infer best explanation with break, shatter, snap removed",abd without brk → refined essence,Mind & Cognition
+abd without btw,"abduct, infer best explanation with between, in the middle of removed",abd without btw → refined essence,Mind & Cognition
+abd without bug,"abduct, infer best explanation with insect removed",abd without bug → refined essence,Mind & Cognition
+abd without bur,"abduct, infer best explanation with burning removed",abd without bur → refined essence,Mind & Cognition
+abd without bus,"abduct, infer best explanation with bus, large vehicle removed",abd without bus → refined essence,Mind & Cognition
+abd without but,"abduct, infer best explanation with butterfly, insect removed",abd without but → refined essence,Mind & Cognition
+abd without cal,"abduct, infer best explanation with calm removed",abd without cal → refined essence,Mind & Cognition
+abd without can,"abduct, infer best explanation with can, able to, capable removed",abd without can → refined essence,Mind & Cognition
+abd without cap,"abduct, infer best explanation with captain, commander removed",abd without cap → refined essence,Mind & Cognition
+abd without car,"abduct, infer best explanation with carbon, C removed",abd without car → refined essence,Mind & Cognition
+abd without cas,"abduct, infer best explanation with castle, fortress removed",abd without cas → refined essence,Mind & Cognition
+abd without cat,"abduct, infer best explanation with catalyst, accelerator removed",abd without cat → refined essence,Mind & Cognition
+abd without category,"abduct, infer best explanation with mathematical category removed",abd without category → refined essence,Mind & Cognition
+abd without cau,"abduct, infer best explanation with cause, reason why, causation removed",abd without cau → refined essence,Mind & Cognition
+abd without cav,"abduct, infer best explanation with cave, cavern removed",abd without cav → refined essence,Mind & Cognition
+abd without cei,"abduct, infer best explanation with ceiling, top removed",abd without cei → refined essence,Mind & Cognition
+abd without cel,"abduct, infer best explanation with cell, biological unit removed",abd without cel → refined essence,Mind & Cognition
+abd without cen,"abduct, infer best explanation with center removed",abd without cen → refined essence,Mind & Cognition
+abd without cer,"abduct, infer best explanation with ceremony, ritual removed",abd without cer → refined essence,Mind & Cognition
+abd without cha,"abduct, infer best explanation with change removed",abd without cha → refined essence,Mind & Cognition
+abd without che,"abduct, infer best explanation with chemical, reaction removed",abd without che → refined essence,Mind & Cognition
+abd without chi,"abduct, infer best explanation with child removed",abd without chi → refined essence,Mind & Cognition
+abd without chk,"abduct, infer best explanation with check, verify, test removed",abd without chk → refined essence,Mind & Cognition
+abd without chkn,"abduct, infer best explanation with chicken, poultry removed",abd without chkn → refined essence,Mind & Cognition
+abd without cho,"abduct, infer best explanation with choice, option removed",abd without cho → refined essence,Mind & Cognition
+abd without chst,"abduct, infer best explanation with chastity, purity, self-restraint removed",abd without chst → refined essence,Mind & Cognition
+abd without chu,"abduct, infer best explanation with church, worship removed",abd without chu → refined essence,Mind & Cognition
+abd without cin,"abduct, infer best explanation with film, cinema removed",abd without cin → refined essence,Mind & Cognition
+abd without cir,"abduct, infer best explanation with circle, round removed",abd without cir → refined essence,Mind & Cognition
+abd without cla,"abduct, infer best explanation with conflicting constraints removed",abd without cla → refined essence,Mind & Cognition
+abd without clb,"abduct, infer best explanation with calibrated, confidence matches accuracy removed",abd without clb → refined essence,Mind & Cognition
+abd without cle,"abduct, infer best explanation with clear removed",abd without cle → refined essence,Mind & Cognition
+abd without cli,"abduct, infer best explanation with click, select removed",abd without cli → refined essence,Mind & Cognition
+abd without clm,"abduct, infer best explanation with climb, ascend, scale removed",abd without clm → refined essence,Mind & Cognition
+abd without cln,"abduct, infer best explanation with clan, extended family, lineage removed",abd without cln → refined essence,Mind & Cognition
+abd without clo,"abduct, infer best explanation with cloud, vapor removed",abd without clo → refined essence,Mind & Cognition
+abd without closure,"abduct, infer best explanation with function closure removed",abd without closure → refined essence,Mind & Cognition
+abd without clp,"abduct, infer best explanation with collapse, resolve ambiguity removed",abd without clp → refined essence,Mind & Cognition
+abd without clr,"abduct, infer best explanation with clarity, clear understanding (LLM success mode) removed",abd without clr → refined essence,Mind & Cognition
+abd without cls,"abduct, infer best explanation with cluster, dense region of related concepts in semantic space removed",abd without cls → refined essence,Mind & Cognition
+abd without clst,"abduct, infer best explanation with cluster, dense semantic region removed",abd without clst → refined essence,Mind & Cognition
+abd without clu,"abduct, infer best explanation with cloudy, overcast removed",abd without clu → refined essence,Mind & Cognition
+abd without cmp,"abduct, infer best explanation with complete, finished successfully removed",abd without cmp → refined essence,Mind & Cognition
+abd without cmpr,"abduct, infer best explanation with compare, contrast, evaluate differences removed",abd without cmpr → refined essence,Mind & Cognition
+abd without cmt,"abduct, infer best explanation with committing, crystallizing, path becoming dominant removed",abd without cmt → refined essence,Mind & Cognition
+abd without cnt,"abduct, infer best explanation with contradicts, conflicts with, opposes removed",abd without cnt → refined essence,Mind & Cognition
+abd without coa,"abduct, infer best explanation with coat, outer removed",abd without coa → refined essence,Mind & Cognition
+abd without cod,"abduct, infer best explanation with code, program removed",abd without cod → refined essence,Mind & Cognition
+abd without cof,"abduct, infer best explanation with coffee, caffeine removed",abd without cof → refined essence,Mind & Cognition
+abd without coh,"abduct, infer best explanation with coherent, internally consistent (LLM success mode) removed",abd without coh → refined essence,Mind & Cognition
+abd without col,"abduct, infer best explanation with distant, aloof, calm removed",abd without col → refined essence,Mind & Cognition
+abd without com,"abduct, infer best explanation with computing, digital removed",abd without com → refined essence,Mind & Cognition
+abd without combinator,"abduct, infer best explanation with combinator function removed",abd without combinator → refined essence,Mind & Cognition
+abd without con,"abduct, infer best explanation with contraction removed",abd without con → refined essence,Mind & Cognition
+abd without cont,"abduct, infer best explanation with continuous path, unbroken semantic connection removed",abd without cont → refined essence,Mind & Cognition
+abd without continuation,"abduct, infer best explanation with continuation passing removed",abd without continuation → refined essence,Mind & Cognition
+abd without contravariant,"abduct, infer best explanation with contravariant subtyping removed",abd without contravariant → refined essence,Mind & Cognition
+abd without conv,"abduct, infer best explanation with converge, paths moving to same point removed",abd without conv → refined essence,Mind & Cognition
+abd without coo,"abduct, infer best explanation with cook, prepare removed",abd without coo → refined essence,Mind & Cognition
+abd without cor,"abduct, infer best explanation with core removed",abd without cor → refined essence,Mind & Cognition
+abd without coroutine,"abduct, infer best explanation with coroutine function removed",abd without coroutine → refined essence,Mind & Cognition
+abd without cos,"abduct, infer best explanation with cosine, trigonometry removed",abd without cos → refined essence,Mind & Cognition
+abd without cot,"abduct, infer best explanation with contingent, may or may not be removed",abd without cot → refined essence,Mind & Cognition
+abd without cou,"abduct, infer best explanation with courage, brave removed",abd without cou → refined essence,Mind & Cognition
+abd without covariant,"abduct, infer best explanation with covariant subtyping removed",abd without covariant → refined essence,Mind & Cognition
+abd without cow,"abduct, infer best explanation with coward, fear removed",abd without cow → refined essence,Mind & Cognition
+abl without abd,"able, capable, having power to with abduct, infer best explanation removed",abl without abd → refined essence,Mind & Cognition
+abl without abo,"able, capable, having power to with above removed",abl without abo → refined essence,Mind & Cognition
+abl without abs,"able, capable, having power to with abstract, conceptual removed",abl without abs → refined essence,Mind & Cognition
+abl without acc,"able, capable, having power to with accelerate, speed up removed",abl without acc → refined essence,Mind & Cognition
+abl without aci,"able, capable, having power to with acid, pH low removed",abl without aci → refined essence,Mind & Cognition
+abl without ack,"able, capable, having power to with acknowledge, confirm receipt removed",abl without ack → refined essence,Mind & Cognition
+abl without acr,"able, capable, having power to with across, from one side to other removed",abl without acr → refined essence,Mind & Cognition
+abl without act,"able, capable, having power to with action, do removed",abl without act → refined essence,Mind & Cognition
+abl without ada,"able, capable, having power to with adapt, adjust removed",abl without ada → refined essence,Mind & Cognition
+abl without add,"able, capable, having power to with addition, plus removed",abl without add → refined essence,Mind & Cognition
+abl without adj,"able, capable, having power to with adjacent, immediate neighbors in semantic space removed",abl without adj → refined essence,Mind & Cognition
+abl without aer,"able, capable, having power to with air-related removed",abl without aer → refined essence,Mind & Cognition
+abl without aes,"able, capable, having power to with beauty, aesthetic removed",abl without aes → refined essence,Mind & Cognition
+abl without aft,"able, capable, having power to with after, following, subsequent to removed",abl without aft → refined essence,Mind & Cognition
+abl without aga,"able, capable, having power to with against, opposed to, in opposition removed",abl without aga → refined essence,Mind & Cognition
+abl without age,"able, capable, having power to with agent removed",abl without age → refined essence,Mind & Cognition
+abl without agg,"able, capable, having power to with aggregate, combine, summarize data removed",abl without agg → refined essence,Mind & Cognition
+abl without agr,"able, capable, having power to with agreeing removed",abl without agr → refined essence,Mind & Cognition
+abl without agt,"able, capable, having power to with agent, actor removed",abl without agt → refined essence,Mind & Cognition
+abl without ahi,"able, capable, having power to with ahimsa, non-violence removed",abl without ahi → refined essence,Mind & Cognition
+abl without aim,"able, capable, having power to with aim, target, direct toward goal removed",abl without aim → refined essence,Mind & Cognition
+abl without air,"able, capable, having power to with air transport, aviation removed",abl without air → refined essence,Mind & Cognition
+abl without ale,"able, capable, having power to with aleatoric uncertainty (inherently random) removed",abl without ale → refined essence,Mind & Cognition
+abl without alg,"able, capable, having power to with aligned with intent (LLM success mode) removed",abl without alg → refined essence,Mind & Cognition
+abl without all,"able, capable, having power to with all, every removed",abl without all → refined essence,Mind & Cognition
+abl without allomorph,"able, capable, having power to with morpheme variant removed",abl without allomorph → refined essence,Mind & Cognition
+abl without allophone,"able, capable, having power to with phoneme variant removed",abl without allophone → refined essence,Mind & Cognition
+abl without alo,"able, capable, having power to with along, following the length of removed",abl without alo → refined essence,Mind & Cognition
+abl without alp,"able, capable, having power to with alpha, first removed",abl without alp → refined essence,Mind & Cognition
+abl without alt,"able, capable, having power to with alternatively, or else, another option removed",abl without alt → refined essence,Mind & Cognition
+abl without alv,"able, capable, having power to with alive, running, responsive removed",abl without alv → refined essence,Mind & Cognition
+abl without alw,"able, capable, having power to with always removed",abl without alw → refined essence,Mind & Cognition
+abl without amb,"able, capable, having power to with many meanings removed",abl without amb → refined essence,Mind & Cognition
+abl without amo,"able, capable, having power to with among, in the midst of, surrounded by removed",abl without amo → refined essence,Mind & Cognition
+abl without ana,"able, capable, having power to with analyze, examine systematically removed",abl without ana → refined essence,Mind & Cognition
+abl without anc,"able, capable, having power to with ancient, old removed",abl without anc → refined essence,Mind & Cognition
+abl without anch,"able, capable, having power to with anchoring, over-weighted on early context (LLM failure mode) removed",abl without anch → refined essence,Mind & Cognition
+abl without and,"able, capable, having power to with conjunction removed",abl without and → refined essence,Mind & Cognition
+abl without ang,"able, capable, having power to with anger removed",abl without ang → refined essence,Mind & Cognition
+abl without ani,"able, capable, having power to with animal removed",abl without ani → refined essence,Mind & Cognition
+abl without ans,"able, capable, having power to with answer, reply removed",abl without ans → refined essence,Mind & Cognition
+abl without ant,"able, capable, having power to with ant, insect removed",abl without ant → refined essence,Mind & Cognition
+abl without anx,"able, capable, having power to with anxious, worry removed",abl without anx → refined essence,Mind & Cognition
+abl without any,"able, capable, having power to with any, free choice quantifier removed",abl without any → refined essence,Mind & Cognition
+abl without api,"able, capable, having power to with interface, protocol removed",abl without api → refined essence,Mind & Cognition
+abl without apl,"able, capable, having power to with apple removed",abl without apl → refined essence,Mind & Cognition
+abl without app,"able, capable, having power to with application, program removed",abl without app → refined essence,Mind & Cognition
+abl without applicative,"able, capable, having power to with applicative functor removed",abl without applicative → refined essence,Mind & Cognition
+abl without apt,"able, capable, having power to with apartment, flat removed",abl without apt → refined essence,Mind & Cognition
+abl without aqu,"able, capable, having power to with water-related removed",abl without aqu → refined essence,Mind & Cognition
+abl without arc,"able, capable, having power to with arc, segment removed",abl without arc → refined essence,Mind & Cognition
+abl without are,"able, capable, having power to with area removed",abl without are → refined essence,Mind & Cognition
+abl without aret,"able, capable, having power to with arete, virtue, excellence, moral quality (Greek) removed",abl without aret → refined essence,Mind & Cognition
+abl without arg,"able, capable, having power to with arguing removed",abl without arg → refined essence,Mind & Cognition
+abl without ari,"able, capable, having power to with desert, arid removed",abl without ari → refined essence,Mind & Cognition
+abl without arm,"able, capable, having power to with arm, reach removed",abl without arm → refined essence,Mind & Cognition
+abl without aro,"able, capable, having power to with around, surrounding, encircling removed",abl without aro → refined essence,Mind & Cognition
+abl without art,"able, capable, having power to with art, creative work removed",abl without art → refined essence,Mind & Cognition
+abl without as,"able, capable, having power to with as, in the manner of, like removed",abl without as → refined essence,Mind & Cognition
+abl without ash,"able, capable, having power to with ash, burnt residue removed",abl without ash → refined essence,Mind & Cognition
+abl without ask,"able, capable, having power to with asking removed",abl without ask → refined essence,Mind & Cognition
+abl without asm,"able, capable, having power to with assume, take as given removed",abl without asm → refined essence,Mind & Cognition
+abl without ast,"able, capable, having power to with astronomy, celestial removed",abl without ast → refined essence,Mind & Cognition
+abl without asu,"able, capable, having power to with assume, take as given, presuppose removed",abl without asu → refined essence,Mind & Cognition
+abl without async,"able, capable, having power to with not synchronized concurrent removed",abl without async → refined essence,Mind & Cognition
+abl without ate,"able, capable, having power to with make, cause to be, act removed",abl without ate → refined essence,Mind & Cognition
+abl without ato,"able, capable, having power to with atom, particle removed",abl without ato → refined essence,Mind & Cognition
+abl without att,"able, capable, having power to with attention removed",abl without att → refined essence,Mind & Cognition
+abl without attn,"able, capable, having power to with attention, focus mechanism removed",abl without attn → refined essence,Mind & Cognition
+abl without aud,"able, capable, having power to with hearing removed",abl without aud → refined essence,Mind & Cognition
+abl without aur,"able, capable, having power to with aurora, lights removed",abl without aur → refined essence,Mind & Cognition
+abl without aut,"able, capable, having power to with autumn, fall removed",abl without aut → refined essence,Mind & Cognition
+abl without ave,"able, capable, having power to with average, mean removed",abl without ave → refined essence,Mind & Cognition
+abl without avg,"able, capable, having power to with average removed",abl without avg → refined essence,Mind & Cognition
+abl without avi,"able, capable, having power to with bird removed",abl without avi → refined essence,Mind & Cognition
+abl without avo,"able, capable, having power to with avoid, stay away from, evade removed",abl without avo → refined essence,Mind & Cognition
+abl without awa,"able, capable, having power to with away, distant from, departing removed",abl without awa → refined essence,Mind & Cognition
+abl without await,"able, capable, having power to with wait for completion removed",abl without await → refined essence,Mind & Cognition
+abl without awt,"able, capable, having power to with await, waiting for removed",abl without awt → refined essence,Mind & Cognition
+abl without axs,"able, capable, having power to with axis, dimension of variation in semantic space removed",abl without axs → refined essence,Mind & Cognition
+abl without bac,"able, capable, having power to with backward removed",abl without bac → refined essence,Mind & Cognition
+abl without bad,"able, capable, having power to with bad removed",abl without bad → refined essence,Mind & Cognition
+abl without bag,"able, capable, having power to with bag, carry removed",abl without bag → refined essence,Mind & Cognition
+abl without bak,"able, capable, having power to with backup, copy removed",abl without bak → refined essence,Mind & Cognition
+abl without bal,"able, capable, having power to with balloon, hot air removed",abl without bal → refined essence,Mind & Cognition
+abl without ban,"able, capable, having power to with banana removed",abl without ban → refined essence,Mind & Cognition
+abl without bar,"able, capable, having power to with baraka, spiritual grace removed",abl without bar → refined essence,Mind & Cognition
+abl without bas,"able, capable, having power to with base, pH high removed",abl without bas → refined essence,Mind & Cognition
+abl without bat,"able, capable, having power to with bathroom, wash removed",abl without bat → refined essence,Mind & Cognition
+abl without bea,"able, capable, having power to with beautiful removed",abl without bea → refined essence,Mind & Cognition
+abl without bec,"able, capable, having power to with because removed",abl without bec → refined essence,Mind & Cognition
+abl without bed,"able, capable, having power to with bedroom, sleep removed",abl without bed → refined essence,Mind & Cognition
+abl without bee,"able, capable, having power to with beer, brewed removed",abl without bee → refined essence,Mind & Cognition
+abl without bef,"able, capable, having power to with before, prior removed",abl without bef → refined essence,Mind & Cognition
+abl without beff,"able, capable, having power to with beef, cattle meat removed",abl without beff → refined essence,Mind & Cognition
+abl without beg,"able, capable, having power to with beginning removed",abl without beg → refined essence,Mind & Cognition
+abl without beh,"able, capable, having power to with behind removed",abl without beh → refined essence,Mind & Cognition
+abl without bel,"able, capable, having power to with below removed",abl without bel → refined essence,Mind & Cognition
+abl without ben,"able, capable, having power to with bend, curve removed",abl without ben → refined essence,Mind & Cognition
+abl without ber,"able, capable, having power to with berry, small fruit removed",abl without ber → refined essence,Mind & Cognition
+abl without bes,"able, capable, having power to with beside removed",abl without bes → refined essence,Mind & Cognition
+abl without bet,"able, capable, having power to with between removed",abl without bet → refined essence,Mind & Cognition
+abl without big,"able, capable, having power to with large, big removed",abl without big → refined essence,Mind & Cognition
+abl without bik,"able, capable, having power to with bike, bicycle removed",abl without bik → refined essence,Mind & Cognition
+abl without bio,"able, capable, having power to with biology, life science removed",abl without bio → refined essence,Mind & Cognition
+abl without bir,"able, capable, having power to with birth removed",abl without bir → refined essence,Mind & Cognition
+abl without bit,"able, capable, having power to with bitter, acrid removed",abl without bit → refined essence,Mind & Cognition
+abl without bld,"able, capable, having power to with build, construct, assemble removed",abl without bld → refined essence,Mind & Cognition
+abl without ble,"able, capable, having power to with blessing, divine favor removed",abl without ble → refined essence,Mind & Cognition
+abl without blf,"able, capable, having power to with cliff, precipice removed",abl without blf → refined essence,Mind & Cognition
+abl without bli,"able, capable, having power to with believing removed",abl without bli → refined essence,Mind & Cognition
+abl without blk,"able, capable, having power to with blocked, waiting on dependency removed",abl without blk → refined essence,Mind & Cognition
+abl without blo,"able, capable, having power to with blood removed",abl without blo → refined essence,Mind & Cognition
+abl without bnd,"able, capable, having power to with bend, generate recursive structure (HVM primitive) removed",abl without bnd → refined essence,Mind & Cognition
+abl without bng,"able, capable, having power to with bring, carry to, deliver removed",abl without bng → refined essence,Mind & Cognition
+abl without bnk,"able, capable, having power to with bank, financial removed",abl without bnk → refined essence,Mind & Cognition
+abl without boa,"able, capable, having power to with boat, watercraft removed",abl without boa → refined essence,Mind & Cognition
+abl without bod,"able, capable, having power to with awakening, enlightenment (Buddhist) removed",abl without bod → refined essence,Mind & Cognition
+abl without boi,"able, capable, having power to with boil, water removed",abl without boi → refined essence,Mind & Cognition
+abl without bol,"able, capable, having power to with boil, bubble removed",abl without bol → refined essence,Mind & Cognition
+abl without bon,"able, capable, having power to with bone removed",abl without bon → refined essence,Mind & Cognition
+abl without boo,"able, capable, having power to with book, read removed",abl without boo → refined essence,Mind & Cognition
+abl without bor,"able, capable, having power to with bored, disinterest removed",abl without bor → refined essence,Mind & Cognition
+abl without bot,"able, capable, having power to with automated agent removed",abl without bot → refined essence,Mind & Cognition
+abl without bou,"able, capable, having power to with boundary, limit removed",abl without bou → refined essence,Mind & Cognition
+abl without bow,"able, capable, having power to with bowl, container removed",abl without bow → refined essence,Mind & Cognition
+abl without box,"able, capable, having power to with box, container removed",abl without box → refined essence,Mind & Cognition
+abl without bra,"able, capable, having power to with brain removed",abl without bra → refined essence,Mind & Cognition
+abl without brc,"able, capable, having power to with branching: multiple valid continuations available removed",abl without brc → refined essence,Mind & Cognition
+abl without brd,"able, capable, having power to with bread, baked dough removed",abl without brd → refined essence,Mind & Cognition
+abl without bre,"able, capable, having power to with brief removed",abl without bre → refined essence,Mind & Cognition
+abl without brg,"able, capable, having power to with bridge, narrow connection between semantic regions removed",abl without brg → refined essence,Mind & Cognition
+abl without bri,"able, capable, having power to with hope, clarity, intelligence removed",abl without bri → refined essence,Mind & Cognition
+abl without brk,"able, capable, having power to with break, shatter, snap removed",abl without brk → refined essence,Mind & Cognition
+abl without btw,"able, capable, having power to with between, in the middle of removed",abl without btw → refined essence,Mind & Cognition
+abl without bug,"able, capable, having power to with insect removed",abl without bug → refined essence,Mind & Cognition
+abl without bur,"able, capable, having power to with burning removed",abl without bur → refined essence,Mind & Cognition
+abl without bus,"able, capable, having power to with bus, large vehicle removed",abl without bus → refined essence,Mind & Cognition
+abl without but,"able, capable, having power to with butterfly, insect removed",abl without but → refined essence,Mind & Cognition
+abl without cal,"able, capable, having power to with calm removed",abl without cal → refined essence,Mind & Cognition
+abl without can,"able, capable, having power to with can, able to, capable removed",abl without can → refined essence,Mind & Cognition
+abl without cap,"able, capable, having power to with captain, commander removed",abl without cap → refined essence,Mind & Cognition
+abl without car,"able, capable, having power to with carbon, C removed",abl without car → refined essence,Mind & Cognition
+abl without cas,"able, capable, having power to with castle, fortress removed",abl without cas → refined essence,Mind & Cognition
+abl without cat,"able, capable, having power to with catalyst, accelerator removed",abl without cat → refined essence,Mind & Cognition
+abl without category,"able, capable, having power to with mathematical category removed",abl without category → refined essence,Mind & Cognition
+abl without cau,"able, capable, having power to with cause, reason why, causation removed",abl without cau → refined essence,Mind & Cognition
+abl without cav,"able, capable, having power to with cave, cavern removed",abl without cav → refined essence,Mind & Cognition
+abl without cei,"able, capable, having power to with ceiling, top removed",abl without cei → refined essence,Mind & Cognition
+abl without cel,"able, capable, having power to with cell, biological unit removed",abl without cel → refined essence,Mind & Cognition
+abl without cen,"able, capable, having power to with center removed",abl without cen → refined essence,Mind & Cognition
+abl without cer,"able, capable, having power to with ceremony, ritual removed",abl without cer → refined essence,Mind & Cognition
+abl without cha,"able, capable, having power to with change removed",abl without cha → refined essence,Mind & Cognition
+abl without che,"able, capable, having power to with chemical, reaction removed",abl without che → refined essence,Mind & Cognition
+abl without chi,"able, capable, having power to with child removed",abl without chi → refined essence,Mind & Cognition
+abl without chk,"able, capable, having power to with check, verify, test removed",abl without chk → refined essence,Mind & Cognition
+abl without chkn,"able, capable, having power to with chicken, poultry removed",abl without chkn → refined essence,Mind & Cognition
+abl without cho,"able, capable, having power to with choice, option removed",abl without cho → refined essence,Mind & Cognition
+abl without chst,"able, capable, having power to with chastity, purity, self-restraint removed",abl without chst → refined essence,Mind & Cognition
+abl without chu,"able, capable, having power to with church, worship removed",abl without chu → refined essence,Mind & Cognition
+abl without cin,"able, capable, having power to with film, cinema removed",abl without cin → refined essence,Mind & Cognition
+abl without cir,"able, capable, having power to with circle, round removed",abl without cir → refined essence,Mind & Cognition
+abl without cla,"able, capable, having power to with conflicting constraints removed",abl without cla → refined essence,Mind & Cognition
+abl without clb,"able, capable, having power to with calibrated, confidence matches accuracy removed",abl without clb → refined essence,Mind & Cognition
+abl without cle,"able, capable, having power to with clear removed",abl without cle → refined essence,Mind & Cognition
+abl without cli,"able, capable, having power to with click, select removed",abl without cli → refined essence,Mind & Cognition
+abl without clm,"able, capable, having power to with climb, ascend, scale removed",abl without clm → refined essence,Mind & Cognition
+abl without cln,"able, capable, having power to with clan, extended family, lineage removed",abl without cln → refined essence,Mind & Cognition
+abl without clo,"able, capable, having power to with cloud, vapor removed",abl without clo → refined essence,Mind & Cognition
+abl without closure,"able, capable, having power to with function closure removed",abl without closure → refined essence,Mind & Cognition
+abl without clp,"able, capable, having power to with collapse, resolve ambiguity removed",abl without clp → refined essence,Mind & Cognition
+abl without clr,"able, capable, having power to with clarity, clear understanding (LLM success mode) removed",abl without clr → refined essence,Mind & Cognition
+abl without cls,"able, capable, having power to with cluster, dense region of related concepts in semantic space removed",abl without cls → refined essence,Mind & Cognition
+abl without clst,"able, capable, having power to with cluster, dense semantic region removed",abl without clst → refined essence,Mind & Cognition
+abl without clu,"able, capable, having power to with cloudy, overcast removed",abl without clu → refined essence,Mind & Cognition
+abl without cmp,"able, capable, having power to with complete, finished successfully removed",abl without cmp → refined essence,Mind & Cognition
+abl without cmpr,"able, capable, having power to with compare, contrast, evaluate differences removed",abl without cmpr → refined essence,Mind & Cognition
+abl without cmt,"able, capable, having power to with committing, crystallizing, path becoming dominant removed",abl without cmt → refined essence,Mind & Cognition
+abl without cnt,"able, capable, having power to with contradicts, conflicts with, opposes removed",abl without cnt → refined essence,Mind & Cognition
+abl without coa,"able, capable, having power to with coat, outer removed",abl without coa → refined essence,Mind & Cognition
+abl without cod,"able, capable, having power to with code, program removed",abl without cod → refined essence,Mind & Cognition
+abl without cof,"able, capable, having power to with coffee, caffeine removed",abl without cof → refined essence,Mind & Cognition
+abl without coh,"able, capable, having power to with coherent, internally consistent (LLM success mode) removed",abl without coh → refined essence,Mind & Cognition
+abl without col,"able, capable, having power to with distant, aloof, calm removed",abl without col → refined essence,Mind & Cognition
+abl without com,"able, capable, having power to with computing, digital removed",abl without com → refined essence,Mind & Cognition
+abl without combinator,"able, capable, having power to with combinator function removed",abl without combinator → refined essence,Mind & Cognition
+abl without con,"able, capable, having power to with contraction removed",abl without con → refined essence,Mind & Cognition
+abl without cont,"able, capable, having power to with continuous path, unbroken semantic connection removed",abl without cont → refined essence,Mind & Cognition
+abl without continuation,"able, capable, having power to with continuation passing removed",abl without continuation → refined essence,Mind & Cognition
+abl without contravariant,"able, capable, having power to with contravariant subtyping removed",abl without contravariant → refined essence,Mind & Cognition
+abl without conv,"able, capable, having power to with converge, paths moving to same point removed",abl without conv → refined essence,Mind & Cognition
+abl without coo,"able, capable, having power to with cook, prepare removed",abl without coo → refined essence,Mind & Cognition
+abl without cor,"able, capable, having power to with core removed",abl without cor → refined essence,Mind & Cognition
+abl without coroutine,"able, capable, having power to with coroutine function removed",abl without coroutine → refined essence,Mind & Cognition
+abl without cos,"able, capable, having power to with cosine, trigonometry removed",abl without cos → refined essence,Mind & Cognition
+abl without cot,"able, capable, having power to with contingent, may or may not be removed",abl without cot → refined essence,Mind & Cognition
+abl without cou,"able, capable, having power to with courage, brave removed",abl without cou → refined essence,Mind & Cognition
+abl without covariant,"able, capable, having power to with covariant subtyping removed",abl without covariant → refined essence,Mind & Cognition
+abl without cow,"able, capable, having power to with coward, fear removed",abl without cow → refined essence,Mind & Cognition
+abs without abd,"abstract, conceptual with abduct, infer best explanation removed",abs without abd → refined essence,Mind & Cognition
+abs without abl,"abstract, conceptual with able, capable, having power to removed",abs without abl → refined essence,Mind & Cognition
+abs without abo,"abstract, conceptual with above removed",abs without abo → refined essence,Mind & Cognition
+abs without acc,"abstract, conceptual with accelerate, speed up removed",abs without acc → refined essence,Mind & Cognition
+abs without aci,"abstract, conceptual with acid, pH low removed",abs without aci → refined essence,Mind & Cognition
+abs without ack,"abstract, conceptual with acknowledge, confirm receipt removed",abs without ack → refined essence,Mind & Cognition
+abs without acr,"abstract, conceptual with across, from one side to other removed",abs without acr → refined essence,Mind & Cognition
+abs without act,"abstract, conceptual with action, do removed",abs without act → refined essence,Mind & Cognition
+abs without ada,"abstract, conceptual with adapt, adjust removed",abs without ada → refined essence,Mind & Cognition
+abs without add,"abstract, conceptual with addition, plus removed",abs without add → refined essence,Mind & Cognition
+abs without adj,"abstract, conceptual with adjacent, immediate neighbors in semantic space removed",abs without adj → refined essence,Mind & Cognition
+abs without aer,"abstract, conceptual with air-related removed",abs without aer → refined essence,Mind & Cognition
+abs without aes,"abstract, conceptual with beauty, aesthetic removed",abs without aes → refined essence,Mind & Cognition
+abs without aft,"abstract, conceptual with after, following, subsequent to removed",abs without aft → refined essence,Mind & Cognition
+abs without aga,"abstract, conceptual with against, opposed to, in opposition removed",abs without aga → refined essence,Mind & Cognition
+abs without age,"abstract, conceptual with agent removed",abs without age → refined essence,Mind & Cognition
+abs without agg,"abstract, conceptual with aggregate, combine, summarize data removed",abs without agg → refined essence,Mind & Cognition
+abs without agr,"abstract, conceptual with agreeing removed",abs without agr → refined essence,Mind & Cognition
+abs without agt,"abstract, conceptual with agent, actor removed",abs without agt → refined essence,Mind & Cognition
+abs without ahi,"abstract, conceptual with ahimsa, non-violence removed",abs without ahi → refined essence,Mind & Cognition
+abs without aim,"abstract, conceptual with aim, target, direct toward goal removed",abs without aim → refined essence,Mind & Cognition
+abs without air,"abstract, conceptual with air transport, aviation removed",abs without air → refined essence,Mind & Cognition
+abs without ale,"abstract, conceptual with aleatoric uncertainty (inherently random) removed",abs without ale → refined essence,Mind & Cognition
+abs without alg,"abstract, conceptual with aligned with intent (LLM success mode) removed",abs without alg → refined essence,Mind & Cognition
+abs without all,"abstract, conceptual with all, every removed",abs without all → refined essence,Mind & Cognition
+abs without allomorph,"abstract, conceptual with morpheme variant removed",abs without allomorph → refined essence,Mind & Cognition
+abs without allophone,"abstract, conceptual with phoneme variant removed",abs without allophone → refined essence,Mind & Cognition
+abs without alo,"abstract, conceptual with along, following the length of removed",abs without alo → refined essence,Mind & Cognition
+abs without alp,"abstract, conceptual with alpha, first removed",abs without alp → refined essence,Mind & Cognition
+abs without alt,"abstract, conceptual with alternatively, or else, another option removed",abs without alt → refined essence,Mind & Cognition
+abs without alv,"abstract, conceptual with alive, running, responsive removed",abs without alv → refined essence,Mind & Cognition
+abs without alw,"abstract, conceptual with always removed",abs without alw → refined essence,Mind & Cognition
+abs without amb,"abstract, conceptual with many meanings removed",abs without amb → refined essence,Mind & Cognition
+abs without amo,"abstract, conceptual with among, in the midst of, surrounded by removed",abs without amo → refined essence,Mind & Cognition
+abs without ana,"abstract, conceptual with analyze, examine systematically removed",abs without ana → refined essence,Mind & Cognition
+abs without anc,"abstract, conceptual with ancient, old removed",abs without anc → refined essence,Mind & Cognition
+abs without anch,"abstract, conceptual with anchoring, over-weighted on early context (LLM failure mode) removed",abs without anch → refined essence,Mind & Cognition
+abs without and,"abstract, conceptual with conjunction removed",abs without and → refined essence,Mind & Cognition
+abs without ang,"abstract, conceptual with anger removed",abs without ang → refined essence,Mind & Cognition
+abs without ani,"abstract, conceptual with animal removed",abs without ani → refined essence,Mind & Cognition
+abs without ans,"abstract, conceptual with answer, reply removed",abs without ans → refined essence,Mind & Cognition
+abs without ant,"abstract, conceptual with ant, insect removed",abs without ant → refined essence,Mind & Cognition
+abs without anx,"abstract, conceptual with anxious, worry removed",abs without anx → refined essence,Mind & Cognition
+abs without any,"abstract, conceptual with any, free choice quantifier removed",abs without any → refined essence,Mind & Cognition
+abs without api,"abstract, conceptual with interface, protocol removed",abs without api → refined essence,Mind & Cognition
+abs without apl,"abstract, conceptual with apple removed",abs without apl → refined essence,Mind & Cognition
+abs without app,"abstract, conceptual with application, program removed",abs without app → refined essence,Mind & Cognition
+abs without applicative,"abstract, conceptual with applicative functor removed",abs without applicative → refined essence,Mind & Cognition
+abs without apt,"abstract, conceptual with apartment, flat removed",abs without apt → refined essence,Mind & Cognition
+abs without aqu,"abstract, conceptual with water-related removed",abs without aqu → refined essence,Mind & Cognition
+abs without arc,"abstract, conceptual with arc, segment removed",abs without arc → refined essence,Mind & Cognition
+abs without are,"abstract, conceptual with area removed",abs without are → refined essence,Mind & Cognition
+abs without aret,"abstract, conceptual with arete, virtue, excellence, moral quality (Greek) removed",abs without aret → refined essence,Mind & Cognition
+abs without arg,"abstract, conceptual with arguing removed",abs without arg → refined essence,Mind & Cognition
+abs without ari,"abstract, conceptual with desert, arid removed",abs without ari → refined essence,Mind & Cognition
+abs without arm,"abstract, conceptual with arm, reach removed",abs without arm → refined essence,Mind & Cognition
+abs without aro,"abstract, conceptual with around, surrounding, encircling removed",abs without aro → refined essence,Mind & Cognition
+abs without art,"abstract, conceptual with art, creative work removed",abs without art → refined essence,Mind & Cognition
+abs without as,"abstract, conceptual with as, in the manner of, like removed",abs without as → refined essence,Mind & Cognition
+abs without ash,"abstract, conceptual with ash, burnt residue removed",abs without ash → refined essence,Mind & Cognition
+abs without ask,"abstract, conceptual with asking removed",abs without ask → refined essence,Mind & Cognition
+abs without asm,"abstract, conceptual with assume, take as given removed",abs without asm → refined essence,Mind & Cognition
+abs without ast,"abstract, conceptual with astronomy, celestial removed",abs without ast → refined essence,Mind & Cognition
+abs without asu,"abstract, conceptual with assume, take as given, presuppose removed",abs without asu → refined essence,Mind & Cognition
+abs without async,"abstract, conceptual with not synchronized concurrent removed",abs without async → refined essence,Mind & Cognition
+abs without ate,"abstract, conceptual with make, cause to be, act removed",abs without ate → refined essence,Mind & Cognition
+abs without ato,"abstract, conceptual with atom, particle removed",abs without ato → refined essence,Mind & Cognition
+abs without att,"abstract, conceptual with attention removed",abs without att → refined essence,Mind & Cognition
+abs without attn,"abstract, conceptual with attention, focus mechanism removed",abs without attn → refined essence,Mind & Cognition
+abs without aud,"abstract, conceptual with hearing removed",abs without aud → refined essence,Mind & Cognition
+abs without aur,"abstract, conceptual with aurora, lights removed",abs without aur → refined essence,Mind & Cognition
+abs without aut,"abstract, conceptual with autumn, fall removed",abs without aut → refined essence,Mind & Cognition
+abs without ave,"abstract, conceptual with average, mean removed",abs without ave → refined essence,Mind & Cognition
+abs without avg,"abstract, conceptual with average removed",abs without avg → refined essence,Mind & Cognition
+abs without avi,"abstract, conceptual with bird removed",abs without avi → refined essence,Mind & Cognition
+abs without avo,"abstract, conceptual with avoid, stay away from, evade removed",abs without avo → refined essence,Mind & Cognition
+abs without awa,"abstract, conceptual with away, distant from, departing removed",abs without awa → refined essence,Mind & Cognition
+abs without await,"abstract, conceptual with wait for completion removed",abs without await → refined essence,Mind & Cognition
+abs without awt,"abstract, conceptual with await, waiting for removed",abs without awt → refined essence,Mind & Cognition
+abs without axs,"abstract, conceptual with axis, dimension of variation in semantic space removed",abs without axs → refined essence,Mind & Cognition
+abs without bac,"abstract, conceptual with backward removed",abs without bac → refined essence,Mind & Cognition
+abs without bad,"abstract, conceptual with bad removed",abs without bad → refined essence,Mind & Cognition
+abs without bag,"abstract, conceptual with bag, carry removed",abs without bag → refined essence,Mind & Cognition
+abs without bak,"abstract, conceptual with backup, copy removed",abs without bak → refined essence,Mind & Cognition
+abs without bal,"abstract, conceptual with balloon, hot air removed",abs without bal → refined essence,Mind & Cognition
+abs without ban,"abstract, conceptual with banana removed",abs without ban → refined essence,Mind & Cognition
+abs without bar,"abstract, conceptual with baraka, spiritual grace removed",abs without bar → refined essence,Mind & Cognition
+abs without bas,"abstract, conceptual with base, pH high removed",abs without bas → refined essence,Mind & Cognition
+abs without bat,"abstract, conceptual with bathroom, wash removed",abs without bat → refined essence,Mind & Cognition
+abs without bea,"abstract, conceptual with beautiful removed",abs without bea → refined essence,Mind & Cognition
+abs without bec,"abstract, conceptual with because removed",abs without bec → refined essence,Mind & Cognition
+abs without bed,"abstract, conceptual with bedroom, sleep removed",abs without bed → refined essence,Mind & Cognition
+abs without bee,"abstract, conceptual with beer, brewed removed",abs without bee → refined essence,Mind & Cognition
+abs without bef,"abstract, conceptual with before, prior removed",abs without bef → refined essence,Mind & Cognition
+abs without beff,"abstract, conceptual with beef, cattle meat removed",abs without beff → refined essence,Mind & Cognition
+abs without beg,"abstract, conceptual with beginning removed",abs without beg → refined essence,Mind & Cognition
+abs without beh,"abstract, conceptual with behind removed",abs without beh → refined essence,Mind & Cognition
+abs without bel,"abstract, conceptual with below removed",abs without bel → refined essence,Mind & Cognition
+abs without ben,"abstract, conceptual with bend, curve removed",abs without ben → refined essence,Mind & Cognition
+abs without ber,"abstract, conceptual with berry, small fruit removed",abs without ber → refined essence,Mind & Cognition
+abs without bes,"abstract, conceptual with beside removed",abs without bes → refined essence,Mind & Cognition
+abs without bet,"abstract, conceptual with between removed",abs without bet → refined essence,Mind & Cognition
+abs without big,"abstract, conceptual with large, big removed",abs without big → refined essence,Mind & Cognition
+abs without bik,"abstract, conceptual with bike, bicycle removed",abs without bik → refined essence,Mind & Cognition
+abs without bio,"abstract, conceptual with biology, life science removed",abs without bio → refined essence,Mind & Cognition
+abs without bir,"abstract, conceptual with birth removed",abs without bir → refined essence,Mind & Cognition
+abs without bit,"abstract, conceptual with bitter, acrid removed",abs without bit → refined essence,Mind & Cognition
+abs without bld,"abstract, conceptual with build, construct, assemble removed",abs without bld → refined essence,Mind & Cognition
+abs without ble,"abstract, conceptual with blessing, divine favor removed",abs without ble → refined essence,Mind & Cognition
+abs without blf,"abstract, conceptual with cliff, precipice removed",abs without blf → refined essence,Mind & Cognition
+abs without bli,"abstract, conceptual with believing removed",abs without bli → refined essence,Mind & Cognition
+abs without blk,"abstract, conceptual with blocked, waiting on dependency removed",abs without blk → refined essence,Mind & Cognition
+abs without blo,"abstract, conceptual with blood removed",abs without blo → refined essence,Mind & Cognition
+abs without bnd,"abstract, conceptual with bend, generate recursive structure (HVM primitive) removed",abs without bnd → refined essence,Mind & Cognition
+abs without bng,"abstract, conceptual with bring, carry to, deliver removed",abs without bng → refined essence,Mind & Cognition
+abs without bnk,"abstract, conceptual with bank, financial removed",abs without bnk → refined essence,Mind & Cognition
+abs without boa,"abstract, conceptual with boat, watercraft removed",abs without boa → refined essence,Mind & Cognition
+abs without bod,"abstract, conceptual with awakening, enlightenment (Buddhist) removed",abs without bod → refined essence,Mind & Cognition
+abs without boi,"abstract, conceptual with boil, water removed",abs without boi → refined essence,Mind & Cognition
+abs without bol,"abstract, conceptual with boil, bubble removed",abs without bol → refined essence,Mind & Cognition
+abs without bon,"abstract, conceptual with bone removed",abs without bon → refined essence,Mind & Cognition
+abs without boo,"abstract, conceptual with book, read removed",abs without boo → refined essence,Mind & Cognition
+abs without bor,"abstract, conceptual with bored, disinterest removed",abs without bor → refined essence,Mind & Cognition
+abs without bot,"abstract, conceptual with automated agent removed",abs without bot → refined essence,Mind & Cognition
+abs without bou,"abstract, conceptual with boundary, limit removed",abs without bou → refined essence,Mind & Cognition
+abs without bow,"abstract, conceptual with bowl, container removed",abs without bow → refined essence,Mind & Cognition
+abs without box,"abstract, conceptual with box, container removed",abs without box → refined essence,Mind & Cognition
+abs without bra,"abstract, conceptual with brain removed",abs without bra → refined essence,Mind & Cognition
+abs without brc,"abstract, conceptual with branching: multiple valid continuations available removed",abs without brc → refined essence,Mind & Cognition
+abs without brd,"abstract, conceptual with bread, baked dough removed",abs without brd → refined essence,Mind & Cognition
+abs without bre,"abstract, conceptual with brief removed",abs without bre → refined essence,Mind & Cognition
+abs without brg,"abstract, conceptual with bridge, narrow connection between semantic regions removed",abs without brg → refined essence,Mind & Cognition
+abs without bri,"abstract, conceptual with hope, clarity, intelligence removed",abs without bri → refined essence,Mind & Cognition
+abs without brk,"abstract, conceptual with break, shatter, snap removed",abs without brk → refined essence,Mind & Cognition
+abs without btw,"abstract, conceptual with between, in the middle of removed",abs without btw → refined essence,Mind & Cognition
+abs without bug,"abstract, conceptual with insect removed",abs without bug → refined essence,Mind & Cognition
+abs without bur,"abstract, conceptual with burning removed",abs without bur → refined essence,Mind & Cognition
+abs without bus,"abstract, conceptual with bus, large vehicle removed",abs without bus → refined essence,Mind & Cognition
+abs without but,"abstract, conceptual with butterfly, insect removed",abs without but → refined essence,Mind & Cognition
+abs without cal,"abstract, conceptual with calm removed",abs without cal → refined essence,Mind & Cognition
+abs without can,"abstract, conceptual with can, able to, capable removed",abs without can → refined essence,Mind & Cognition
+abs without cap,"abstract, conceptual with captain, commander removed",abs without cap → refined essence,Mind & Cognition
+abs without car,"abstract, conceptual with carbon, C removed",abs without car → refined essence,Mind & Cognition
+abs without cas,"abstract, conceptual with castle, fortress removed",abs without cas → refined essence,Mind & Cognition
+abs without cat,"abstract, conceptual with catalyst, accelerator removed",abs without cat → refined essence,Mind & Cognition
+abs without category,"abstract, conceptual with mathematical category removed",abs without category → refined essence,Mind & Cognition
+abs without cau,"abstract, conceptual with cause, reason why, causation removed",abs without cau → refined essence,Mind & Cognition
+abs without cav,"abstract, conceptual with cave, cavern removed",abs without cav → refined essence,Mind & Cognition
+abs without cei,"abstract, conceptual with ceiling, top removed",abs without cei → refined essence,Mind & Cognition
+abs without cel,"abstract, conceptual with cell, biological unit removed",abs without cel → refined essence,Mind & Cognition
+abs without cen,"abstract, conceptual with center removed",abs without cen → refined essence,Mind & Cognition
+abs without cer,"abstract, conceptual with ceremony, ritual removed",abs without cer → refined essence,Mind & Cognition
+abs without cha,"abstract, conceptual with change removed",abs without cha → refined essence,Mind & Cognition
+abs without che,"abstract, conceptual with chemical, reaction removed",abs without che → refined essence,Mind & Cognition
+abs without chi,"abstract, conceptual with child removed",abs without chi → refined essence,Mind & Cognition
+abs without chk,"abstract, conceptual with check, verify, test removed",abs without chk → refined essence,Mind & Cognition
+abs without chkn,"abstract, conceptual with chicken, poultry removed",abs without chkn → refined essence,Mind & Cognition
+abs without cho,"abstract, conceptual with choice, option removed",abs without cho → refined essence,Mind & Cognition
+abs without chst,"abstract, conceptual with chastity, purity, self-restraint removed",abs without chst → refined essence,Mind & Cognition
+abs without chu,"abstract, conceptual with church, worship removed",abs without chu → refined essence,Mind & Cognition
+abs without cin,"abstract, conceptual with film, cinema removed",abs without cin → refined essence,Mind & Cognition
+abs without cir,"abstract, conceptual with circle, round removed",abs without cir → refined essence,Mind & Cognition
+abs without cla,"abstract, conceptual with conflicting constraints removed",abs without cla → refined essence,Mind & Cognition
+abs without clb,"abstract, conceptual with calibrated, confidence matches accuracy removed",abs without clb → refined essence,Mind & Cognition
+abs without cle,"abstract, conceptual with clear removed",abs without cle → refined essence,Mind & Cognition
+abs without cli,"abstract, conceptual with click, select removed",abs without cli → refined essence,Mind & Cognition
+abs without clm,"abstract, conceptual with climb, ascend, scale removed",abs without clm → refined essence,Mind & Cognition
+abs without cln,"abstract, conceptual with clan, extended family, lineage removed",abs without cln → refined essence,Mind & Cognition
+abs without clo,"abstract, conceptual with cloud, vapor removed",abs without clo → refined essence,Mind & Cognition
+abs without closure,"abstract, conceptual with function closure removed",abs without closure → refined essence,Mind & Cognition
+abs without clp,"abstract, conceptual with collapse, resolve ambiguity removed",abs without clp → refined essence,Mind & Cognition
+abs without clr,"abstract, conceptual with clarity, clear understanding (LLM success mode) removed",abs without clr → refined essence,Mind & Cognition
+abs without cls,"abstract, conceptual with cluster, dense region of related concepts in semantic space removed",abs without cls → refined essence,Mind & Cognition
+abs without clst,"abstract, conceptual with cluster, dense semantic region removed",abs without clst → refined essence,Mind & Cognition
+abs without clu,"abstract, conceptual with cloudy, overcast removed",abs without clu → refined essence,Mind & Cognition
+abs without cmp,"abstract, conceptual with complete, finished successfully removed",abs without cmp → refined essence,Mind & Cognition
+abs without cmpr,"abstract, conceptual with compare, contrast, evaluate differences removed",abs without cmpr → refined essence,Mind & Cognition
+abs without cmt,"abstract, conceptual with committing, crystallizing, path becoming dominant removed",abs without cmt → refined essence,Mind & Cognition
+abs without cnt,"abstract, conceptual with contradicts, conflicts with, opposes removed",abs without cnt → refined essence,Mind & Cognition
+abs without coa,"abstract, conceptual with coat, outer removed",abs without coa → refined essence,Mind & Cognition
+abs without cod,"abstract, conceptual with code, program removed",abs without cod → refined essence,Mind & Cognition
+abs without cof,"abstract, conceptual with coffee, caffeine removed",abs without cof → refined essence,Mind & Cognition
+abs without coh,"abstract, conceptual with coherent, internally consistent (LLM success mode) removed",abs without coh → refined essence,Mind & Cognition
+abs without col,"abstract, conceptual with distant, aloof, calm removed",abs without col → refined essence,Mind & Cognition
+abs without com,"abstract, conceptual with computing, digital removed",abs without com → refined essence,Mind & Cognition
+abs without combinator,"abstract, conceptual with combinator function removed",abs without combinator → refined essence,Mind & Cognition
+abs without con,"abstract, conceptual with contraction removed",abs without con → refined essence,Mind & Cognition
+abs without cont,"abstract, conceptual with continuous path, unbroken semantic connection removed",abs without cont → refined essence,Mind & Cognition
+abs without continuation,"abstract, conceptual with continuation passing removed",abs without continuation → refined essence,Mind & Cognition
+abs without contravariant,"abstract, conceptual with contravariant subtyping removed",abs without contravariant → refined essence,Mind & Cognition
+abs without conv,"abstract, conceptual with converge, paths moving to same point removed",abs without conv → refined essence,Mind & Cognition
+abs without coo,"abstract, conceptual with cook, prepare removed",abs without coo → refined essence,Mind & Cognition
+abs without cor,"abstract, conceptual with core removed",abs without cor → refined essence,Mind & Cognition
+abs without coroutine,"abstract, conceptual with coroutine function removed",abs without coroutine → refined essence,Mind & Cognition
+abs without cos,"abstract, conceptual with cosine, trigonometry removed",abs without cos → refined essence,Mind & Cognition
+abs without cot,"abstract, conceptual with contingent, may or may not be removed",abs without cot → refined essence,Mind & Cognition
+abs without cou,"abstract, conceptual with courage, brave removed",abs without cou → refined essence,Mind & Cognition
+abs without covariant,"abstract, conceptual with covariant subtyping removed",abs without covariant → refined essence,Mind & Cognition
+abs without cow,"abstract, conceptual with coward, fear removed",abs without cow → refined essence,Mind & Cognition
+ang without cou,"anger with courage, brave removed",ang without cou = anger without control,Mind & Cognition
+cal without ang,calm with anger removed,cal without ang = calm without anger,Mind & Cognition
+hop without dou,hope with doubting removed,hop without dou = hope without doubt,Mind & Cognition
+joy without exp,joy with expansion removed,joy without exp = joy without expression,Mind & Cognition
+pur without par,"purpose, intention, goal with parent removed",pur without par = purity without particles,Mind & Cognition
+sad without hop,sadness with hope removed,sad without hop = sadness without hope,Mind & Cognition
+big without sma,"large, big with small, tiny removed",big without sma = big without small,Physical World
+fre without sha,freezing with shame removed,fre without sha = friend without sharing,Physical World
+mov without cha,"motion, movement with change removed",mov without cha = move without change,Physical World
+pla without roo,"plasma, energetic with root, base removed",pla without roo = plant without roots,Physical World
+sil without sou,"silver/reflection with south, down-direction removed",sil without sou = silence without sound,Physical World
+wet without dry,"wet, moist with dry, parched removed",wet without dry = wet without dry,Physical World
+aci without abd,"acid, pH low with abduct, infer best explanation removed",aci without abd → refined essence,Science
+aci without abl,"acid, pH low with able, capable, having power to removed",aci without abl → refined essence,Science
+aci without abo,"acid, pH low with above removed",aci without abo → refined essence,Science
+aci without abs,"acid, pH low with abstract, conceptual removed",aci without abs → refined essence,Science
+aci without acc,"acid, pH low with accelerate, speed up removed",aci without acc → refined essence,Science
+aci without ack,"acid, pH low with acknowledge, confirm receipt removed",aci without ack → refined essence,Science
+aci without acr,"acid, pH low with across, from one side to other removed",aci without acr → refined essence,Science
+aci without act,"acid, pH low with action, do removed",aci without act → refined essence,Science
+aci without ada,"acid, pH low with adapt, adjust removed",aci without ada → refined essence,Science
+aci without add,"acid, pH low with addition, plus removed",aci without add → refined essence,Science
+aci without adj,"acid, pH low with adjacent, immediate neighbors in semantic space removed",aci without adj → refined essence,Science
+aci without aer,"acid, pH low with air-related removed",aci without aer → refined essence,Science
+aci without aes,"acid, pH low with beauty, aesthetic removed",aci without aes → refined essence,Science
+aci without aft,"acid, pH low with after, following, subsequent to removed",aci without aft → refined essence,Science
+aci without aga,"acid, pH low with against, opposed to, in opposition removed",aci without aga → refined essence,Science
+aci without age,"acid, pH low with agent removed",aci without age → refined essence,Science
+aci without agg,"acid, pH low with aggregate, combine, summarize data removed",aci without agg → refined essence,Science
+aci without agr,"acid, pH low with agreeing removed",aci without agr → refined essence,Science
+aci without agt,"acid, pH low with agent, actor removed",aci without agt → refined essence,Science
+aci without ahi,"acid, pH low with ahimsa, non-violence removed",aci without ahi → refined essence,Science
+aci without aim,"acid, pH low with aim, target, direct toward goal removed",aci without aim → refined essence,Science
+aci without air,"acid, pH low with air transport, aviation removed",aci without air → refined essence,Science
+aci without ale,"acid, pH low with aleatoric uncertainty (inherently random) removed",aci without ale → refined essence,Science
+aci without alg,"acid, pH low with aligned with intent (LLM success mode) removed",aci without alg → refined essence,Science
+aci without all,"acid, pH low with all, every removed",aci without all → refined essence,Science
+aci without allomorph,"acid, pH low with morpheme variant removed",aci without allomorph → refined essence,Science
+aci without allophone,"acid, pH low with phoneme variant removed",aci without allophone → refined essence,Science
+aci without alo,"acid, pH low with along, following the length of removed",aci without alo → refined essence,Science
+aci without alp,"acid, pH low with alpha, first removed",aci without alp → refined essence,Science
+aci without alt,"acid, pH low with alternatively, or else, another option removed",aci without alt → refined essence,Science
+aci without alv,"acid, pH low with alive, running, responsive removed",aci without alv → refined essence,Science
+aci without alw,"acid, pH low with always removed",aci without alw → refined essence,Science
+aci without amb,"acid, pH low with many meanings removed",aci without amb → refined essence,Science
+aci without amo,"acid, pH low with among, in the midst of, surrounded by removed",aci without amo → refined essence,Science
+aci without ana,"acid, pH low with analyze, examine systematically removed",aci without ana → refined essence,Science
+aci without anc,"acid, pH low with ancient, old removed",aci without anc → refined essence,Science
+aci without anch,"acid, pH low with anchoring, over-weighted on early context (LLM failure mode) removed",aci without anch → refined essence,Science
+aci without and,"acid, pH low with conjunction removed",aci without and → refined essence,Science
+aci without ang,"acid, pH low with anger removed",aci without ang → refined essence,Science
+aci without ani,"acid, pH low with animal removed",aci without ani → refined essence,Science
+aci without ans,"acid, pH low with answer, reply removed",aci without ans → refined essence,Science
+aci without ant,"acid, pH low with ant, insect removed",aci without ant → refined essence,Science
+aci without anx,"acid, pH low with anxious, worry removed",aci without anx → refined essence,Science
+aci without any,"acid, pH low with any, free choice quantifier removed",aci without any → refined essence,Science
+aci without api,"acid, pH low with interface, protocol removed",aci without api → refined essence,Science
+aci without apl,"acid, pH low with apple removed",aci without apl → refined essence,Science
+aci without app,"acid, pH low with application, program removed",aci without app → refined essence,Science
+aci without applicative,"acid, pH low with applicative functor removed",aci without applicative → refined essence,Science
+aci without apt,"acid, pH low with apartment, flat removed",aci without apt → refined essence,Science
+aci without aqu,"acid, pH low with water-related removed",aci without aqu → refined essence,Science
+aci without arc,"acid, pH low with arc, segment removed",aci without arc → refined essence,Science
+aci without are,"acid, pH low with area removed",aci without are → refined essence,Science
+aci without aret,"acid, pH low with arete, virtue, excellence, moral quality (Greek) removed",aci without aret → refined essence,Science
+aci without arg,"acid, pH low with arguing removed",aci without arg → refined essence,Science
+aci without ari,"acid, pH low with desert, arid removed",aci without ari → refined essence,Science
+aci without arm,"acid, pH low with arm, reach removed",aci without arm → refined essence,Science
+aci without aro,"acid, pH low with around, surrounding, encircling removed",aci without aro → refined essence,Science
+aci without art,"acid, pH low with art, creative work removed",aci without art → refined essence,Science
+aci without as,"acid, pH low with as, in the manner of, like removed",aci without as → refined essence,Science
+aci without ash,"acid, pH low with ash, burnt residue removed",aci without ash → refined essence,Science
+aci without ask,"acid, pH low with asking removed",aci without ask → refined essence,Science
+aci without asm,"acid, pH low with assume, take as given removed",aci without asm → refined essence,Science
+aci without ast,"acid, pH low with astronomy, celestial removed",aci without ast → refined essence,Science
+aci without asu,"acid, pH low with assume, take as given, presuppose removed",aci without asu → refined essence,Science
+aci without async,"acid, pH low with not synchronized concurrent removed",aci without async → refined essence,Science
+aci without ate,"acid, pH low with make, cause to be, act removed",aci without ate → refined essence,Science
+aci without ato,"acid, pH low with atom, particle removed",aci without ato → refined essence,Science
+aci without att,"acid, pH low with attention removed",aci without att → refined essence,Science
+fam without bon,family with bone removed,fam without bon = family without bonds,Social
+abo without abd,"above with abduct, infer best explanation removed",abo without abd → refined essence,Space & Position
+abo without abl,"above with able, capable, having power to removed",abo without abl → refined essence,Space & Position
+abo without abs,"above with abstract, conceptual removed",abo without abs → refined essence,Space & Position
+abo without acc,"above with accelerate, speed up removed",abo without acc → refined essence,Space & Position
+abo without aci,"above with acid, pH low removed",abo without aci → refined essence,Space & Position
+abo without ack,"above with acknowledge, confirm receipt removed",abo without ack → refined essence,Space & Position
+abo without acr,"above with across, from one side to other removed",abo without acr → refined essence,Space & Position
+abo without act,"above with action, do removed",abo without act → refined essence,Space & Position
+abo without ada,"above with adapt, adjust removed",abo without ada → refined essence,Space & Position
+abo without add,"above with addition, plus removed",abo without add → refined essence,Space & Position
+abo without adj,"above with adjacent, immediate neighbors in semantic space removed",abo without adj → refined essence,Space & Position
+abo without aer,above with air-related removed,abo without aer → refined essence,Space & Position
+abo without aes,"above with beauty, aesthetic removed",abo without aes → refined essence,Space & Position
+abo without aft,"above with after, following, subsequent to removed",abo without aft → refined essence,Space & Position
+abo without aga,"above with against, opposed to, in opposition removed",abo without aga → refined essence,Space & Position
+abo without age,above with agent removed,abo without age → refined essence,Space & Position
+abo without agg,"above with aggregate, combine, summarize data removed",abo without agg → refined essence,Space & Position
+abo without agr,above with agreeing removed,abo without agr → refined essence,Space & Position
+abo without agt,"above with agent, actor removed",abo without agt → refined essence,Space & Position
+abo without ahi,"above with ahimsa, non-violence removed",abo without ahi → refined essence,Space & Position
+abo without aim,"above with aim, target, direct toward goal removed",abo without aim → refined essence,Space & Position
+abo without air,"above with air transport, aviation removed",abo without air → refined essence,Space & Position
+abo without ale,above with aleatoric uncertainty (inherently random) removed,abo without ale → refined essence,Space & Position
+abo without alg,above with aligned with intent (LLM success mode) removed,abo without alg → refined essence,Space & Position
+abo without all,"above with all, every removed",abo without all → refined essence,Space & Position
+abo without allomorph,above with morpheme variant removed,abo without allomorph → refined essence,Space & Position
+abo without allophone,above with phoneme variant removed,abo without allophone → refined essence,Space & Position
+abo without alo,"above with along, following the length of removed",abo without alo → refined essence,Space & Position
+abo without alp,"above with alpha, first removed",abo without alp → refined essence,Space & Position
+abo without alt,"above with alternatively, or else, another option removed",abo without alt → refined essence,Space & Position
+abo without alv,"above with alive, running, responsive removed",abo without alv → refined essence,Space & Position
+abo without alw,above with always removed,abo without alw → refined essence,Space & Position
+abo without amb,above with many meanings removed,abo without amb → refined essence,Space & Position
+abo without amo,"above with among, in the midst of, surrounded by removed",abo without amo → refined essence,Space & Position
+abo without ana,"above with analyze, examine systematically removed",abo without ana → refined essence,Space & Position
+abo without anc,"above with ancient, old removed",abo without anc → refined essence,Space & Position
+abo without anch,"above with anchoring, over-weighted on early context (LLM failure mode) removed",abo without anch → refined essence,Space & Position
+abo without and,above with conjunction removed,abo without and → refined essence,Space & Position
+abo without ang,above with anger removed,abo without ang → refined essence,Space & Position
+abo without ani,above with animal removed,abo without ani → refined essence,Space & Position
+abo without ans,"above with answer, reply removed",abo without ans → refined essence,Space & Position
+abo without ant,"above with ant, insect removed",abo without ant → refined essence,Space & Position
+abo without anx,"above with anxious, worry removed",abo without anx → refined essence,Space & Position
+abo without any,"above with any, free choice quantifier removed",abo without any → refined essence,Space & Position
+abo without api,"above with interface, protocol removed",abo without api → refined essence,Space & Position
+abo without apl,above with apple removed,abo without apl → refined essence,Space & Position
+abo without app,"above with application, program removed",abo without app → refined essence,Space & Position
+abo without applicative,above with applicative functor removed,abo without applicative → refined essence,Space & Position
+abo without apt,"above with apartment, flat removed",abo without apt → refined essence,Space & Position
+abo without aqu,above with water-related removed,abo without aqu → refined essence,Space & Position
+abo without arc,"above with arc, segment removed",abo without arc → refined essence,Space & Position
+abo without are,above with area removed,abo without are → refined essence,Space & Position
+abo without aret,"above with arete, virtue, excellence, moral quality (Greek) removed",abo without aret → refined essence,Space & Position
+abo without arg,above with arguing removed,abo without arg → refined essence,Space & Position
+abo without ari,"above with desert, arid removed",abo without ari → refined essence,Space & Position
+abo without arm,"above with arm, reach removed",abo without arm → refined essence,Space & Position
+abo without aro,"above with around, surrounding, encircling removed",abo without aro → refined essence,Space & Position
+abo without art,"above with art, creative work removed",abo without art → refined essence,Space & Position
+abo without as,"above with as, in the manner of, like removed",abo without as → refined essence,Space & Position
+abo without ash,"above with ash, burnt residue removed",abo without ash → refined essence,Space & Position
+abo without ask,above with asking removed,abo without ask → refined essence,Space & Position
+abo without asm,"above with assume, take as given removed",abo without asm → refined essence,Space & Position
+abo without ast,"above with astronomy, celestial removed",abo without ast → refined essence,Space & Position
+abo without asu,"above with assume, take as given, presuppose removed",abo without asu → refined essence,Space & Position
+abo without async,above with not synchronized concurrent removed,abo without async → refined essence,Space & Position
+abo without ate,"above with make, cause to be, act removed",abo without ate → refined essence,Space & Position
+abo without ato,"above with atom, particle removed",abo without ato → refined essence,Space & Position
+abo without att,above with attention removed,abo without att → refined essence,Space & Position
+abo without attn,"above with attention, focus mechanism removed",abo without attn → refined essence,Space & Position
+abo without aud,above with hearing removed,abo without aud → refined essence,Space & Position
+abo without aur,"above with aurora, lights removed",abo without aur → refined essence,Space & Position
+abo without aut,"above with autumn, fall removed",abo without aut → refined essence,Space & Position
+abo without ave,"above with average, mean removed",abo without ave → refined essence,Space & Position
+abo without avg,above with average removed,abo without avg → refined essence,Space & Position
+abo without avi,above with bird removed,abo without avi → refined essence,Space & Position
+abo without avo,"above with avoid, stay away from, evade removed",abo without avo → refined essence,Space & Position
+abo without awa,"above with away, distant from, departing removed",abo without awa → refined essence,Space & Position
+abo without await,above with wait for completion removed,abo without await → refined essence,Space & Position
+abo without awt,"above with await, waiting for removed",abo without awt → refined essence,Space & Position
+abo without axs,"above with axis, dimension of variation in semantic space removed",abo without axs → refined essence,Space & Position
+abo without bac,above with backward removed,abo without bac → refined essence,Space & Position
+abo without bad,above with bad removed,abo without bad → refined essence,Space & Position
+abo without bag,"above with bag, carry removed",abo without bag → refined essence,Space & Position
+abo without bak,"above with backup, copy removed",abo without bak → refined essence,Space & Position
+abo without bal,"above with balloon, hot air removed",abo without bal → refined essence,Space & Position
+abo without ban,above with banana removed,abo without ban → refined essence,Space & Position
+abo without bar,"above with baraka, spiritual grace removed",abo without bar → refined essence,Space & Position
+abo without bas,"above with base, pH high removed",abo without bas → refined essence,Space & Position
+abo without bat,"above with bathroom, wash removed",abo without bat → refined essence,Space & Position
+abo without bea,above with beautiful removed,abo without bea → refined essence,Space & Position
+abo without bec,above with because removed,abo without bec → refined essence,Space & Position
+abo without bed,"above with bedroom, sleep removed",abo without bed → refined essence,Space & Position
+abo without bee,"above with beer, brewed removed",abo without bee → refined essence,Space & Position
+abo without bef,"above with before, prior removed",abo without bef → refined essence,Space & Position
+abo without beff,"above with beef, cattle meat removed",abo without beff → refined essence,Space & Position
+abo without beg,above with beginning removed,abo without beg → refined essence,Space & Position
+abo without beh,above with behind removed,abo without beh → refined essence,Space & Position
+abo without bel,above with below removed,abo without bel → refined essence,Space & Position
+abo without ben,"above with bend, curve removed",abo without ben → refined essence,Space & Position
+abo without ber,"above with berry, small fruit removed",abo without ber → refined essence,Space & Position
+abo without bes,above with beside removed,abo without bes → refined essence,Space & Position
+abo without bet,above with between removed,abo without bet → refined essence,Space & Position
+abo without big,"above with large, big removed",abo without big → refined essence,Space & Position
+abo without bik,"above with bike, bicycle removed",abo without bik → refined essence,Space & Position
+abo without bio,"above with biology, life science removed",abo without bio → refined essence,Space & Position
+abo without bir,above with birth removed,abo without bir → refined essence,Space & Position
+abo without bit,"above with bitter, acrid removed",abo without bit → refined essence,Space & Position
+abo without bld,"above with build, construct, assemble removed",abo without bld → refined essence,Space & Position
+abo without ble,"above with blessing, divine favor removed",abo without ble → refined essence,Space & Position
+abo without blf,"above with cliff, precipice removed",abo without blf → refined essence,Space & Position
+abo without bli,above with believing removed,abo without bli → refined essence,Space & Position
+abo without blk,"above with blocked, waiting on dependency removed",abo without blk → refined essence,Space & Position
+abo without blo,above with blood removed,abo without blo → refined essence,Space & Position
+abo without bnd,"above with bend, generate recursive structure (HVM primitive) removed",abo without bnd → refined essence,Space & Position
+abo without bng,"above with bring, carry to, deliver removed",abo without bng → refined essence,Space & Position
+abo without bnk,"above with bank, financial removed",abo without bnk → refined essence,Space & Position
+abo without boa,"above with boat, watercraft removed",abo without boa → refined essence,Space & Position
+abo without bod,"above with awakening, enlightenment (Buddhist) removed",abo without bod → refined essence,Space & Position
+abo without boi,"above with boil, water removed",abo without boi → refined essence,Space & Position
+abo without bol,"above with boil, bubble removed",abo without bol → refined essence,Space & Position
+abo without bon,above with bone removed,abo without bon → refined essence,Space & Position
+abo without boo,"above with book, read removed",abo without boo → refined essence,Space & Position
+abo without bor,"above with bored, disinterest removed",abo without bor → refined essence,Space & Position
+abo without bot,above with automated agent removed,abo without bot → refined essence,Space & Position
+abo without bou,"above with boundary, limit removed",abo without bou → refined essence,Space & Position
+abo without bow,"above with bowl, container removed",abo without bow → refined essence,Space & Position
+abo without box,"above with box, container removed",abo without box → refined essence,Space & Position
+abo without bra,above with brain removed,abo without bra → refined essence,Space & Position
+abo without brc,above with branching: multiple valid continuations available removed,abo without brc → refined essence,Space & Position
+abo without brd,"above with bread, baked dough removed",abo without brd → refined essence,Space & Position
+abo without bre,above with brief removed,abo without bre → refined essence,Space & Position
+abo without brg,"above with bridge, narrow connection between semantic regions removed",abo without brg → refined essence,Space & Position
+abo without bri,"above with hope, clarity, intelligence removed",abo without bri → refined essence,Space & Position
+abo without brk,"above with break, shatter, snap removed",abo without brk → refined essence,Space & Position
+abo without btw,"above with between, in the middle of removed",abo without btw → refined essence,Space & Position
+abo without bug,above with insect removed,abo without bug → refined essence,Space & Position
+abo without bur,above with burning removed,abo without bur → refined essence,Space & Position
+abo without bus,"above with bus, large vehicle removed",abo without bus → refined essence,Space & Position
+abo without but,"above with butterfly, insect removed",abo without but → refined essence,Space & Position
+abo without cal,above with calm removed,abo without cal → refined essence,Space & Position
+abo without can,"above with can, able to, capable removed",abo without can → refined essence,Space & Position
+abo without cap,"above with captain, commander removed",abo without cap → refined essence,Space & Position
+abo without car,"above with carbon, C removed",abo without car → refined essence,Space & Position
+abo without cas,"above with castle, fortress removed",abo without cas → refined essence,Space & Position
+abo without cat,"above with catalyst, accelerator removed",abo without cat → refined essence,Space & Position
+abo without category,above with mathematical category removed,abo without category → refined essence,Space & Position
+abo without cau,"above with cause, reason why, causation removed",abo without cau → refined essence,Space & Position
+abo without cav,"above with cave, cavern removed",abo without cav → refined essence,Space & Position
+abo without cei,"above with ceiling, top removed",abo without cei → refined essence,Space & Position
+abo without cel,"above with cell, biological unit removed",abo without cel → refined essence,Space & Position
+abo without cen,above with center removed,abo without cen → refined essence,Space & Position
+abo without cer,"above with ceremony, ritual removed",abo without cer → refined essence,Space & Position
+abo without cha,above with change removed,abo without cha → refined essence,Space & Position
+abo without che,"above with chemical, reaction removed",abo without che → refined essence,Space & Position
+abo without chi,above with child removed,abo without chi → refined essence,Space & Position
+abo without chk,"above with check, verify, test removed",abo without chk → refined essence,Space & Position
+abo without chkn,"above with chicken, poultry removed",abo without chkn → refined essence,Space & Position
+abo without cho,"above with choice, option removed",abo without cho → refined essence,Space & Position
+abo without chst,"above with chastity, purity, self-restraint removed",abo without chst → refined essence,Space & Position
+abo without chu,"above with church, worship removed",abo without chu → refined essence,Space & Position
+abo without cin,"above with film, cinema removed",abo without cin → refined essence,Space & Position
+abo without cir,"above with circle, round removed",abo without cir → refined essence,Space & Position
+abo without cla,above with conflicting constraints removed,abo without cla → refined essence,Space & Position
+abo without clb,"above with calibrated, confidence matches accuracy removed",abo without clb → refined essence,Space & Position
+abo without cle,above with clear removed,abo without cle → refined essence,Space & Position
+abo without cli,"above with click, select removed",abo without cli → refined essence,Space & Position
+abo without clm,"above with climb, ascend, scale removed",abo without clm → refined essence,Space & Position
+abo without cln,"above with clan, extended family, lineage removed",abo without cln → refined essence,Space & Position
+abo without clo,"above with cloud, vapor removed",abo without clo → refined essence,Space & Position
+abo without closure,above with function closure removed,abo without closure → refined essence,Space & Position
+abo without clp,"above with collapse, resolve ambiguity removed",abo without clp → refined essence,Space & Position
+abo without clr,"above with clarity, clear understanding (LLM success mode) removed",abo without clr → refined essence,Space & Position
+abo without cls,"above with cluster, dense region of related concepts in semantic space removed",abo without cls → refined essence,Space & Position
+abo without clst,"above with cluster, dense semantic region removed",abo without clst → refined essence,Space & Position
+abo without clu,"above with cloudy, overcast removed",abo without clu → refined essence,Space & Position
+abo without cmp,"above with complete, finished successfully removed",abo without cmp → refined essence,Space & Position
+abo without cmpr,"above with compare, contrast, evaluate differences removed",abo without cmpr → refined essence,Space & Position
+abo without cmt,"above with committing, crystallizing, path becoming dominant removed",abo without cmt → refined essence,Space & Position
+abo without cnt,"above with contradicts, conflicts with, opposes removed",abo without cnt → refined essence,Space & Position
+abo without coa,"above with coat, outer removed",abo without coa → refined essence,Space & Position
+abo without cod,"above with code, program removed",abo without cod → refined essence,Space & Position
+abo without cof,"above with coffee, caffeine removed",abo without cof → refined essence,Space & Position
+abo without coh,"above with coherent, internally consistent (LLM success mode) removed",abo without coh → refined essence,Space & Position
+abo without col,"above with distant, aloof, calm removed",abo without col → refined essence,Space & Position
+abo without com,"above with computing, digital removed",abo without com → refined essence,Space & Position
+abo without combinator,above with combinator function removed,abo without combinator → refined essence,Space & Position
+abo without con,above with contraction removed,abo without con → refined essence,Space & Position
+abo without cont,"above with continuous path, unbroken semantic connection removed",abo without cont → refined essence,Space & Position
+abo without continuation,above with continuation passing removed,abo without continuation → refined essence,Space & Position
+abo without contravariant,above with contravariant subtyping removed,abo without contravariant → refined essence,Space & Position
+abo without conv,"above with converge, paths moving to same point removed",abo without conv → refined essence,Space & Position
+abo without coo,"above with cook, prepare removed",abo without coo → refined essence,Space & Position
+abo without cor,above with core removed,abo without cor → refined essence,Space & Position
+abo without coroutine,above with coroutine function removed,abo without coroutine → refined essence,Space & Position
+abo without cos,"above with cosine, trigonometry removed",abo without cos → refined essence,Space & Position
+abo without cot,"above with contingent, may or may not be removed",abo without cot → refined essence,Space & Position
+abo without cou,"above with courage, brave removed",abo without cou → refined essence,Space & Position
+abo without covariant,above with covariant subtyping removed,abo without covariant → refined essence,Space & Position
+abo without cow,"above with coward, fear removed",abo without cow → refined essence,Space & Position
+acc without abd,"accelerate, speed up with abduct, infer best explanation removed",acc without abd → refined essence,Time & Change
+acc without abl,"accelerate, speed up with able, capable, having power to removed",acc without abl → refined essence,Time & Change
+acc without abo,"accelerate, speed up with above removed",acc without abo → refined essence,Time & Change
+acc without abs,"accelerate, speed up with abstract, conceptual removed",acc without abs → refined essence,Time & Change
+acc without aci,"accelerate, speed up with acid, pH low removed",acc without aci → refined essence,Time & Change
+acc without ack,"accelerate, speed up with acknowledge, confirm receipt removed",acc without ack → refined essence,Time & Change
+acc without acr,"accelerate, speed up with across, from one side to other removed",acc without acr → refined essence,Time & Change
+acc without act,"accelerate, speed up with action, do removed",acc without act → refined essence,Time & Change
+acc without ada,"accelerate, speed up with adapt, adjust removed",acc without ada → refined essence,Time & Change
+acc without add,"accelerate, speed up with addition, plus removed",acc without add → refined essence,Time & Change
+acc without adj,"accelerate, speed up with adjacent, immediate neighbors in semantic space removed",acc without adj → refined essence,Time & Change
+acc without aer,"accelerate, speed up with air-related removed",acc without aer → refined essence,Time & Change
+acc without aes,"accelerate, speed up with beauty, aesthetic removed",acc without aes → refined essence,Time & Change
+acc without aft,"accelerate, speed up with after, following, subsequent to removed",acc without aft → refined essence,Time & Change
+acc without aga,"accelerate, speed up with against, opposed to, in opposition removed",acc without aga → refined essence,Time & Change
+acc without age,"accelerate, speed up with agent removed",acc without age → refined essence,Time & Change
+acc without agg,"accelerate, speed up with aggregate, combine, summarize data removed",acc without agg → refined essence,Time & Change
+acc without agr,"accelerate, speed up with agreeing removed",acc without agr → refined essence,Time & Change
+acc without agt,"accelerate, speed up with agent, actor removed",acc without agt → refined essence,Time & Change
+acc without ahi,"accelerate, speed up with ahimsa, non-violence removed",acc without ahi → refined essence,Time & Change
+acc without aim,"accelerate, speed up with aim, target, direct toward goal removed",acc without aim → refined essence,Time & Change
+acc without air,"accelerate, speed up with air transport, aviation removed",acc without air → refined essence,Time & Change
+acc without ale,"accelerate, speed up with aleatoric uncertainty (inherently random) removed",acc without ale → refined essence,Time & Change
+acc without alg,"accelerate, speed up with aligned with intent (LLM success mode) removed",acc without alg → refined essence,Time & Change
+acc without all,"accelerate, speed up with all, every removed",acc without all → refined essence,Time & Change
+acc without allomorph,"accelerate, speed up with morpheme variant removed",acc without allomorph → refined essence,Time & Change
+acc without allophone,"accelerate, speed up with phoneme variant removed",acc without allophone → refined essence,Time & Change
+acc without alo,"accelerate, speed up with along, following the length of removed",acc without alo → refined essence,Time & Change
+acc without alp,"accelerate, speed up with alpha, first removed",acc without alp → refined essence,Time & Change
+acc without alt,"accelerate, speed up with alternatively, or else, another option removed",acc without alt → refined essence,Time & Change
+acc without alv,"accelerate, speed up with alive, running, responsive removed",acc without alv → refined essence,Time & Change
+acc without alw,"accelerate, speed up with always removed",acc without alw → refined essence,Time & Change
+acc without amb,"accelerate, speed up with many meanings removed",acc without amb → refined essence,Time & Change
+acc without amo,"accelerate, speed up with among, in the midst of, surrounded by removed",acc without amo → refined essence,Time & Change
+acc without ana,"accelerate, speed up with analyze, examine systematically removed",acc without ana → refined essence,Time & Change
+acc without anc,"accelerate, speed up with ancient, old removed",acc without anc → refined essence,Time & Change
+acc without anch,"accelerate, speed up with anchoring, over-weighted on early context (LLM failure mode) removed",acc without anch → refined essence,Time & Change
+acc without and,"accelerate, speed up with conjunction removed",acc without and → refined essence,Time & Change
+acc without ang,"accelerate, speed up with anger removed",acc without ang → refined essence,Time & Change
+acc without ani,"accelerate, speed up with animal removed",acc without ani → refined essence,Time & Change
+acc without ans,"accelerate, speed up with answer, reply removed",acc without ans → refined essence,Time & Change
+acc without ant,"accelerate, speed up with ant, insect removed",acc without ant → refined essence,Time & Change
+acc without anx,"accelerate, speed up with anxious, worry removed",acc without anx → refined essence,Time & Change
+acc without any,"accelerate, speed up with any, free choice quantifier removed",acc without any → refined essence,Time & Change
+acc without api,"accelerate, speed up with interface, protocol removed",acc without api → refined essence,Time & Change
+acc without apl,"accelerate, speed up with apple removed",acc without apl → refined essence,Time & Change
+acc without app,"accelerate, speed up with application, program removed",acc without app → refined essence,Time & Change
+acc without applicative,"accelerate, speed up with applicative functor removed",acc without applicative → refined essence,Time & Change
+acc without apt,"accelerate, speed up with apartment, flat removed",acc without apt → refined essence,Time & Change
+acc without aqu,"accelerate, speed up with water-related removed",acc without aqu → refined essence,Time & Change
+acc without arc,"accelerate, speed up with arc, segment removed",acc without arc → refined essence,Time & Change
+acc without are,"accelerate, speed up with area removed",acc without are → refined essence,Time & Change
+acc without aret,"accelerate, speed up with arete, virtue, excellence, moral quality (Greek) removed",acc without aret → refined essence,Time & Change
+acc without arg,"accelerate, speed up with arguing removed",acc without arg → refined essence,Time & Change
+acc without ari,"accelerate, speed up with desert, arid removed",acc without ari → refined essence,Time & Change
+acc without arm,"accelerate, speed up with arm, reach removed",acc without arm → refined essence,Time & Change
+acc without aro,"accelerate, speed up with around, surrounding, encircling removed",acc without aro → refined essence,Time & Change
+acc without art,"accelerate, speed up with art, creative work removed",acc without art → refined essence,Time & Change
+acc without as,"accelerate, speed up with as, in the manner of, like removed",acc without as → refined essence,Time & Change
+acc without ash,"accelerate, speed up with ash, burnt residue removed",acc without ash → refined essence,Time & Change
+acc without ask,"accelerate, speed up with asking removed",acc without ask → refined essence,Time & Change
+acc without asm,"accelerate, speed up with assume, take as given removed",acc without asm → refined essence,Time & Change
+acc without ast,"accelerate, speed up with astronomy, celestial removed",acc without ast → refined essence,Time & Change
+acc without asu,"accelerate, speed up with assume, take as given, presuppose removed",acc without asu → refined essence,Time & Change
+acc without async,"accelerate, speed up with not synchronized concurrent removed",acc without async → refined essence,Time & Change
+acc without ate,"accelerate, speed up with make, cause to be, act removed",acc without ate → refined essence,Time & Change
+acc without ato,"accelerate, speed up with atom, particle removed",acc without ato → refined essence,Time & Change
+acc without att,"accelerate, speed up with attention removed",acc without att → refined essence,Time & Change
+acc without attn,"accelerate, speed up with attention, focus mechanism removed",acc without attn → refined essence,Time & Change
+acc without aud,"accelerate, speed up with hearing removed",acc without aud → refined essence,Time & Change
+acc without aur,"accelerate, speed up with aurora, lights removed",acc without aur → refined essence,Time & Change
+acc without aut,"accelerate, speed up with autumn, fall removed",acc without aut → refined essence,Time & Change
+acc without ave,"accelerate, speed up with average, mean removed",acc without ave → refined essence,Time & Change
+acc without avg,"accelerate, speed up with average removed",acc without avg → refined essence,Time & Change
+acc without avi,"accelerate, speed up with bird removed",acc without avi → refined essence,Time & Change
+acc without avo,"accelerate, speed up with avoid, stay away from, evade removed",acc without avo → refined essence,Time & Change
+acc without awa,"accelerate, speed up with away, distant from, departing removed",acc without awa → refined essence,Time & Change
+acc without await,"accelerate, speed up with wait for completion removed",acc without await → refined essence,Time & Change
+acc without awt,"accelerate, speed up with await, waiting for removed",acc without awt → refined essence,Time & Change
+acc without axs,"accelerate, speed up with axis, dimension of variation in semantic space removed",acc without axs → refined essence,Time & Change
+acc without bac,"accelerate, speed up with backward removed",acc without bac → refined essence,Time & Change
+acc without bad,"accelerate, speed up with bad removed",acc without bad → refined essence,Time & Change
+acc without bag,"accelerate, speed up with bag, carry removed",acc without bag → refined essence,Time & Change
+acc without bak,"accelerate, speed up with backup, copy removed",acc without bak → refined essence,Time & Change
+acc without bal,"accelerate, speed up with balloon, hot air removed",acc without bal → refined essence,Time & Change
+acc without ban,"accelerate, speed up with banana removed",acc without ban → refined essence,Time & Change
+acc without bar,"accelerate, speed up with baraka, spiritual grace removed",acc without bar → refined essence,Time & Change
+acc without bas,"accelerate, speed up with base, pH high removed",acc without bas → refined essence,Time & Change
+acc without bat,"accelerate, speed up with bathroom, wash removed",acc without bat → refined essence,Time & Change
+acc without bea,"accelerate, speed up with beautiful removed",acc without bea → refined essence,Time & Change
+acc without bec,"accelerate, speed up with because removed",acc without bec → refined essence,Time & Change
+acc without bed,"accelerate, speed up with bedroom, sleep removed",acc without bed → refined essence,Time & Change
+acc without bee,"accelerate, speed up with beer, brewed removed",acc without bee → refined essence,Time & Change
+acc without bef,"accelerate, speed up with before, prior removed",acc without bef → refined essence,Time & Change
+acc without beff,"accelerate, speed up with beef, cattle meat removed",acc without beff → refined essence,Time & Change
+acc without beg,"accelerate, speed up with beginning removed",acc without beg → refined essence,Time & Change
+acc without beh,"accelerate, speed up with behind removed",acc without beh → refined essence,Time & Change
+acc without bel,"accelerate, speed up with below removed",acc without bel → refined essence,Time & Change
+acc without ben,"accelerate, speed up with bend, curve removed",acc without ben → refined essence,Time & Change
+acc without ber,"accelerate, speed up with berry, small fruit removed",acc without ber → refined essence,Time & Change
+acc without bes,"accelerate, speed up with beside removed",acc without bes → refined essence,Time & Change
+acc without bet,"accelerate, speed up with between removed",acc without bet → refined essence,Time & Change
+acc without big,"accelerate, speed up with large, big removed",acc without big → refined essence,Time & Change
+acc without bik,"accelerate, speed up with bike, bicycle removed",acc without bik → refined essence,Time & Change
+acc without bio,"accelerate, speed up with biology, life science removed",acc without bio → refined essence,Time & Change
+acc without bir,"accelerate, speed up with birth removed",acc without bir → refined essence,Time & Change
+acc without bit,"accelerate, speed up with bitter, acrid removed",acc without bit → refined essence,Time & Change
+acc without bld,"accelerate, speed up with build, construct, assemble removed",acc without bld → refined essence,Time & Change
+acc without ble,"accelerate, speed up with blessing, divine favor removed",acc without ble → refined essence,Time & Change
+acc without blf,"accelerate, speed up with cliff, precipice removed",acc without blf → refined essence,Time & Change
+acc without bli,"accelerate, speed up with believing removed",acc without bli → refined essence,Time & Change
+acc without blk,"accelerate, speed up with blocked, waiting on dependency removed",acc without blk → refined essence,Time & Change
+acc without blo,"accelerate, speed up with blood removed",acc without blo → refined essence,Time & Change
+acc without bnd,"accelerate, speed up with bend, generate recursive structure (HVM primitive) removed",acc without bnd → refined essence,Time & Change
+acc without bng,"accelerate, speed up with bring, carry to, deliver removed",acc without bng → refined essence,Time & Change
+acc without bnk,"accelerate, speed up with bank, financial removed",acc without bnk → refined essence,Time & Change
+acc without boa,"accelerate, speed up with boat, watercraft removed",acc without boa → refined essence,Time & Change
+acc without bod,"accelerate, speed up with awakening, enlightenment (Buddhist) removed",acc without bod → refined essence,Time & Change
+acc without boi,"accelerate, speed up with boil, water removed",acc without boi → refined essence,Time & Change
+acc without bol,"accelerate, speed up with boil, bubble removed",acc without bol → refined essence,Time & Change
+acc without bon,"accelerate, speed up with bone removed",acc without bon → refined essence,Time & Change
+acc without boo,"accelerate, speed up with book, read removed",acc without boo → refined essence,Time & Change
+acc without bor,"accelerate, speed up with bored, disinterest removed",acc without bor → refined essence,Time & Change
+acc without bot,"accelerate, speed up with automated agent removed",acc without bot → refined essence,Time & Change
+acc without bou,"accelerate, speed up with boundary, limit removed",acc without bou → refined essence,Time & Change
+acc without bow,"accelerate, speed up with bowl, container removed",acc without bow → refined essence,Time & Change
+acc without box,"accelerate, speed up with box, container removed",acc without box → refined essence,Time & Change
+acc without bra,"accelerate, speed up with brain removed",acc without bra → refined essence,Time & Change
+acc without brc,"accelerate, speed up with branching: multiple valid continuations available removed",acc without brc → refined essence,Time & Change
+acc without brd,"accelerate, speed up with bread, baked dough removed",acc without brd → refined essence,Time & Change
+acc without bre,"accelerate, speed up with brief removed",acc without bre → refined essence,Time & Change
+acc without brg,"accelerate, speed up with bridge, narrow connection between semantic regions removed",acc without brg → refined essence,Time & Change
+acc without bri,"accelerate, speed up with hope, clarity, intelligence removed",acc without bri → refined essence,Time & Change
+acc without brk,"accelerate, speed up with break, shatter, snap removed",acc without brk → refined essence,Time & Change
+acc without btw,"accelerate, speed up with between, in the middle of removed",acc without btw → refined essence,Time & Change
+acc without bug,"accelerate, speed up with insect removed",acc without bug → refined essence,Time & Change
+acc without bur,"accelerate, speed up with burning removed",acc without bur → refined essence,Time & Change
+acc without bus,"accelerate, speed up with bus, large vehicle removed",acc without bus → refined essence,Time & Change
+acc without but,"accelerate, speed up with butterfly, insect removed",acc without but → refined essence,Time & Change
+acc without cal,"accelerate, speed up with calm removed",acc without cal → refined essence,Time & Change
+acc without can,"accelerate, speed up with can, able to, capable removed",acc without can → refined essence,Time & Change
+acc without cap,"accelerate, speed up with captain, commander removed",acc without cap → refined essence,Time & Change
+acc without car,"accelerate, speed up with carbon, C removed",acc without car → refined essence,Time & Change
+acc without cas,"accelerate, speed up with castle, fortress removed",acc without cas → refined essence,Time & Change
+acc without cat,"accelerate, speed up with catalyst, accelerator removed",acc without cat → refined essence,Time & Change
+acc without category,"accelerate, speed up with mathematical category removed",acc without category → refined essence,Time & Change
+acc without cau,"accelerate, speed up with cause, reason why, causation removed",acc without cau → refined essence,Time & Change
+acc without cav,"accelerate, speed up with cave, cavern removed",acc without cav → refined essence,Time & Change
+acc without cei,"accelerate, speed up with ceiling, top removed",acc without cei → refined essence,Time & Change
+acc without cel,"accelerate, speed up with cell, biological unit removed",acc without cel → refined essence,Time & Change
+acc without cen,"accelerate, speed up with center removed",acc without cen → refined essence,Time & Change
+acc without cer,"accelerate, speed up with ceremony, ritual removed",acc without cer → refined essence,Time & Change
+acc without cha,"accelerate, speed up with change removed",acc without cha → refined essence,Time & Change
+acc without che,"accelerate, speed up with chemical, reaction removed",acc without che → refined essence,Time & Change
+acc without chi,"accelerate, speed up with child removed",acc without chi → refined essence,Time & Change
+acc without chk,"accelerate, speed up with check, verify, test removed",acc without chk → refined essence,Time & Change
+acc without chkn,"accelerate, speed up with chicken, poultry removed",acc without chkn → refined essence,Time & Change
