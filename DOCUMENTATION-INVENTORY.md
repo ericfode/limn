@@ -1,10 +1,23 @@
 # Complete Documentation Inventory
 
 **Epic:** limn-dnlw - Documentation Audit & Consolidation
-**Date:** 2026-01-31
+**Date:** 2026-01-31 (Initial audit)
+**Last Updated:** 2026-02-02 (Vocabulary stats update)
 **Auditor:** Kira (Student/Archivist)
 
-**Total Files:** 236 markdown documents
+**Total Files:** 236 markdown documents (as of 2026-01-31)
+
+## Recent Updates (2026-02-02)
+
+**Vocabulary Database Growth:**
+- **2026-01-31:** 460 words across 14 domains
+- **2026-02-02:** 938 words across 26 domains (+478 words, +12 domains)
+
+**Major Changes:**
+- Python code archived (2026-02-01) - See `archive/python-historical/`
+- Prolog-only policy adopted for core language development
+- LMN runtime architecture finalized (Model B: HVM-Oracle)
+- NEXT.md archived (referenced deprecated Python tools)
 
 ---
 
@@ -71,7 +84,7 @@ Files:
 - docs/archive/spec/vocabulary-v1.md
 - docs/archive/spec/vocabulary-relationship.md
 
-**Status:** v3-natural is canonical (460 words in Dolt database)
+**Status:** v3-natural is canonical (938 words in Dolt database as of 2026-02-02)
 
 **Action Needed:**
 - Consolidate all vocabulary info into single source of truth

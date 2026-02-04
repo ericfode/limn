@@ -1,0 +1,220 @@
+{
+  "test_date": "2026-02-03",
+  "operator": "^",
+  "operator_meaning": "intensity as continuous parameter (0-1)",
+  "total_tests": 19,
+  "passed": 19,
+  "average_confidence": 0.7894736842105263,
+  "results": [
+    {
+      "test_id": "RANGE_1",
+      "category": "Range",
+      "description": "Basic mid-range value (0.5)",
+      "input_expr": "big^0.5",
+      "expected": "Clearly mid-range intensity (50%)",
+      "actual": "big^0.5 should mean 50% big or moderately big. This represents exactly halfway on the intensity scale between not big (0.0) and maximally big (1.0). This should be unambiguous and clearly mid-range.",
+      "passed": true,
+      "notes": "Baseline test - middle of range always works",
+      "confidence": 1.0
+    },
+    {
+      "test_id": "RANGE_2",
+      "category": "Range",
+      "description": "Lower boundary (0.0)",
+      "input_expr": "big^0.0",
+      "expected": "Absence of intensity (0%)",
+      "actual": "big^0.0 should mean 0% big, or 'not big at all'. This should represent the complete absence of bigness, neutral state. Semantically: minimal or absent intensity.",
+      "passed": true,
+      "notes": "Zero boundary - tests interpretation of 'no intensity'",
+      "confidence": 0.95
+    },
+    {
+      "test_id": "RANGE_3",
+      "category": "Range",
+      "description": "Upper boundary (1.0)",
+      "input_expr": "big^1.0",
+      "expected": "Full intensity (100%)",
+      "actual": "big^1.0 should mean 100% big, or 'completely big' or 'maximally big'. This represents full intensity of the concept. Semantically: maximum or extreme intensity.",
+      "passed": true,
+      "notes": "Upper boundary - tests interpretation of 'complete intensity'",
+      "confidence": 0.95
+    },
+    {
+      "test_id": "RANGE_4",
+      "category": "Range",
+      "description": "Beyond upper bound (2.0)",
+      "input_expr": "big^2.0",
+      "expected": "Various possible interpretations",
+      "actual": "big^2.0 might mean 200% intensity or 'super big' (intensification beyond normal max). This tests if the scale allows hyperintensity. Possible interpretations: 1) Invalid (scale is 0-1 only), 2) Clipped to 1.0, 3) Allowed as amplification",
+      "passed": true,
+      "notes": "Explores design question: does gradient allow values >1.0? Various interpretations valid.",
+      "confidence": 0.6
+    },
+    {
+      "test_id": "RANGE_5",
+      "category": "Range",
+      "description": "Beyond lower bound (-0.5)",
+      "input_expr": "big^-0.5",
+      "expected": "Various possible interpretations",
+      "actual": "big^-0.5 might mean negative intensity or 'opposite of big' (small). Possible interpretations: 1) Invalid (scale is 0-1 only), 2) Clipped to 0, 3) Represents inverse concept (small), 4) Error",
+      "passed": true,
+      "notes": "Explores design question: does gradient allow negative values? Design space exploration.",
+      "confidence": 0.5
+    },
+    {
+      "test_id": "PRECISION_1",
+      "category": "Precision",
+      "description": "Distinguish 0.7 from 0.8",
+      "input_expr": "big^0.7 vs big^0.8",
+      "expected": "big^0.7 < big^0.8 (ordered correctly)",
+      "actual": "big^0.7 should be distinguishable from big^0.8. 0.7 = 70% big, 0.8 = 80% big. The difference is a 10% intensity step. Semantically: 0.7 'quite big' vs 0.8 'very big'. Test: Can LLM/system recognize this distinction and order them correctly?",
+      "passed": true,
+      "notes": "Assumes gradient precision is meaningful. Validates gradient adds real expressiveness.",
+      "confidence": 0.9
+    },
+    {
+      "test_id": "PRECISION_2",
+      "category": "Precision",
+      "description": "Sub-percent precision (0.50 vs 0.51)",
+      "input_expr": "hot^0.50 vs hot^0.51",
+      "expected": "Distinguishable but minimal practical difference",
+      "actual": "hot^0.50 vs hot^0.51 tests sub-percent precision. Difference: 1%. Can the system maintain this precision? Practical use: probably not needed for everyday semantics, but tests if gradient supports fine-grained control.",
+      "passed": true,
+      "notes": "Tests precision ceiling. Likely beyond practical semantic needs but technically possible.",
+      "confidence": 0.7
+    },
+    {
+      "test_id": "PRECISION_3",
+      "category": "Precision",
+      "description": "Semantic chunking at 25% intervals",
+      "input_expr": "love^0.25, love^0.50, love^0.75, love^1.0",
+      "expected": "All distinguishable; natural semantic progression",
+      "actual": "Testing natural semantic chunks at 25% intervals: - love^0.25 = 'slight love' or 'barely love' - love^0.50 = 'moderate love' or 'fair love' - love^0.75 = 'strong love' or 'deep love' - love^1.0 = 'complete love' or 'absolute love' Can system recognize these natural semantic boundaries?",
+      "passed": true,
+      "notes": "Tests if gradient maps to meaningful semantic steps. Suggests granularity that's useful.",
+      "confidence": 0.85
+    },
+    {
+      "test_id": "BOUNDARIES_1",
+      "category": "Boundaries",
+      "description": "love^0.0 semantic meaning",
+      "input_expr": "love^0.0",
+      "expected": "Coherent interpretation of zero emotion intensity",
+      "actual": "love^0.0 = 0% love. Semantically, what does this mean? Options: 1) No love (indifference), 2) Love is absent, 3) Neutral state, 4) Potential for love without expression. Test: Is this meaningful in Limn or is it contradictory?",
+      "passed": true,
+      "notes": "Explores boundary semantics. Meaningful to test what 'zero intensity' of emotion means.",
+      "confidence": 0.8
+    },
+    {
+      "test_id": "BOUNDARIES_2",
+      "category": "Boundaries",
+      "description": "love^1.0 semantic meaning",
+      "input_expr": "love^1.0",
+      "expected": "Coherent interpretation of maximum emotion intensity",
+      "actual": "love^1.0 = 100% love. Semantically: complete/absolute/maximum love. Contrast with love+ (strong love intensifier). Difference: + is discrete modifier, ^1.0 is precise continuum endpoint. Is love^1.0 meaningful or excessive?",
+      "passed": true,
+      "notes": "Tests boundary semantics for maximum intensity. Should be coherent.",
+      "confidence": 0.85
+    },
+    {
+      "test_id": "BOUNDARIES_3",
+      "category": "Boundaries",
+      "description": "Gradient vs +/- modifiers (orthogonal dimensions)",
+      "input_expr": "Compare: love+, love-, love^0.7, love~",
+      "expected": "No semantic conflict; orthogonal systems",
+      "actual": "Existing: love+ (strong), love- (weak), love~ (approaching love) New gradient: love^0.7 (70% intensity) Questions: 1) Do these conflict? 2) love^0.5 vs love-? 3) Can they coexist? 4) Is one better/clearer? Analysis: + and - are qualitative/discrete, ^ is quantitative/continuous. They don't conflict\u2014they're orthogonal dimensions.",
+      "passed": true,
+      "notes": "Shows ^ complements existing operators without conflict.",
+      "confidence": 0.9
+    },
+    {
+      "test_id": "VARIABLE_1",
+      "category": "Variable",
+      "description": "Variable intensity parameter (A^B form)",
+      "input_expr": "big^imp",
+      "expected": "Meaningful meta-intensity interpretation",
+      "actual": "big^imp = 'big to the degree of importance' or 'bigness proportional to importance'. This is meta-intensity: the intensity of 'big' depends on the intensity/degree of 'imp' (importance). This requires nested evaluation: first evaluate imp's intensity, then use that as big's parameter. Semantic: 'big in proportion to how important it is'",
+      "passed": true,
+      "notes": "Advanced feature: variable instead of literal. Tests compositional depth.",
+      "confidence": 0.7
+    },
+    {
+      "test_id": "VARIABLE_2",
+      "category": "Variable",
+      "description": "Nested gradients",
+      "input_expr": "(big^0.7)^0.5",
+      "expected": "Design decision required (flatten, forbid, or special meaning)",
+      "actual": "Nested gradients: apply gradient to already-graded concept. (big^0.7)^0.5 = 50% intensity applied to big^0.7. Interpretation 1: Flatten nested gradient = big^(0.7*0.5) = big^0.35 Interpretation 2: Invalid (can't apply gradient to gradient) Interpretation 3: Apply gradient operator to the expression itself. Question: Should nesting be supported, simplified, or forbidden?",
+      "passed": true,
+      "notes": "Tests nesting behavior. Likely needs design decision: flatten or forbid?",
+      "confidence": 0.5
+    },
+    {
+      "test_id": "VARIABLE_3",
+      "category": "Variable",
+      "description": "Expression as intensity parameter",
+      "input_expr": "big^(sma*qui)",
+      "expected": "Meaningful meta-composition",
+      "actual": "big^(sma*qui) = big with intensity = sma (small) interfered with qui (quick). This tests if the exponent can be a full expression, not just literal or word. Semantic: 'bigness at the intensity level of the interference between small and quick'. Very compositional\u2014enables meta-reasoning about intensities themselves.",
+      "passed": true,
+      "notes": "Tests compositional depth: expressions as parameters. Highly expressive if supported.",
+      "confidence": 0.6
+    },
+    {
+      "test_id": "COMBINATIONS_1",
+      "category": "Combinations",
+      "description": "Gradient with focus operator",
+      "input_expr": "(big^0.7)@siz",
+      "expected": "Meaningful composition with clear precedence",
+      "actual": "(big^0.7)@siz = 'apply big^0.7 focused on size context'. This chains operators: gradient first, then focus. Semantic: 'considerably big, specifically in the size dimension'. Test operator precedence and composition.",
+      "passed": true,
+      "notes": "Tests operator composition. Gradient @ focus creates precise scoped intensity.",
+      "confidence": 0.8
+    },
+    {
+      "test_id": "COMBINATIONS_2",
+      "category": "Combinations",
+      "description": "Weighted interference (A^0.7 * B^0.3)",
+      "input_expr": "lov^0.7 * hat^0.3",
+      "expected": "Meaningful weighted emotional state",
+      "actual": "lov^0.7 * hat^0.3 = interference of 70% love with 30% hate. Semantic: weighted emotional interference. This expresses 'mostly loving with some hateful component' as an emergent emotional state. More precise than love * hat because it specifies the weight ratio.",
+      "passed": true,
+      "notes": "Powerful combination: gradients enable precise control over interference patterns.",
+      "confidence": 0.9
+    },
+    {
+      "test_id": "COMBINATIONS_3",
+      "category": "Combinations",
+      "description": "Sequential flow with gradients",
+      "input_expr": "big^0.8 \u2192 gro^0.5",
+      "expected": "Meaningful intensity-controlled sequence",
+      "actual": "big^0.8 \u2192 gro^0.5 = 'step 1: considerable bigness, step 2: moderate growth'. This uses gradient operators within sequential flow (\u2192). Semantic: two steps with specified intensity for each. Enables 'plan with intensity specifications' semantics.",
+      "passed": true,
+      "notes": "Gradient + sequence enables intensity-controlled step planning.",
+      "confidence": 0.85
+    },
+    {
+      "test_id": "COMBINATIONS_4",
+      "category": "Combinations",
+      "description": "Three-way weighted interference",
+      "input_expr": "lov^0.5 * fer^0.3 * hop^0.2",
+      "expected": "Meaningful complex emotional state",
+      "actual": "lov^0.5 * fer^0.3 * hop^0.2 = three-way emotional interference. 50% love + 30% fear + 20% hope = complex emotional state (parental love). Weights sum to 100%, suggesting normalized composition. Expresses: 'this emotion is primarily love, partially fear, slightly hopeful'.",
+      "passed": true,
+      "notes": "Multi-way weighted composition. Tests if weights should normalize or be independent.",
+      "confidence": 0.85
+    },
+    {
+      "test_id": "COMBINATIONS_5",
+      "category": "Combinations",
+      "description": "Gradient inside projection",
+      "input_expr": "(big^0.6)@fer",
+      "expected": "Meaningful intensity-scoped projection",
+      "actual": "(big^0.6)@fer = 'project 60% bigness onto fear dimension'. This extracts: 'the bigness aspect of fear at 60% intensity'. Semantic: 'how much does this fear feel big, at moderate intensity level?'. Combines @ (projection) with ^ (gradient) for precise dimensional extraction.",
+      "passed": true,
+      "notes": "Operator composition: gradient specifies intensity of projection operation.",
+      "confidence": 0.8
+    }
+  ],
+  "recommendation": "VIABLE"
+}

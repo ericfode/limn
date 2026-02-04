@@ -29,7 +29,7 @@ from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, asdict
 from enum import Enum
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, Future
 import requests
 import hashlib
 import hmac
@@ -96,6 +96,10 @@ class OracleType(Enum):
     VOC_QUERY_DOMAIN = "VocQueryDomain"
     VOC_QUERY_MEANING = "VocQueryMeaning"
     VOC_EXPAND = "VocExpand"
+
+    # Composition
+    COMPOSE_SEQ = "ComposeSeq"
+    COMPOSE_PAR = "ComposePar"
 
     # Process
     PROCESS_SPAWN = "ProcessSpawn"
@@ -220,6 +224,13 @@ class ProductionHarness:
         except ImportError:
             self.vocab_engine = None
 
+        # Composition engine
+        try:
+            from compose_engine import ComposeEngine
+            self.compose_engine = ComposeEngine(self)
+        except ImportError:
+            self.compose_engine = None
+
         # Plugin registry
         self._plugins = {}
 
@@ -235,6 +246,12 @@ class ProductionHarness:
             "cache_hits": 0,
             "total_time_ms": 0
         }
+
+        # Pattern learning for autonomous rule discovery
+        self.pattern_frequencies = {}  # Track phrase co-occurrence
+        self.learned_rules = {}  # pattern -> reduction mapping
+        self.pattern_log_path = Path(__file__).parent / "pattern_discoveries.log"
+        self.rule_proposals_path = Path(__file__).parent / "rule_proposals.jsonl"
 
     def _init_cache(self):
         """Initialize persistent cache database."""
@@ -367,40 +384,6 @@ class ProductionHarness:
             ],
 
             # Memory
-<<<<<<< HEAD
-            OracleType.MEMORY_STORE: [
-                r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
-                r'Oracle/MemoryStore/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-            OracleType.MEMORY_RETRIEVE: [
-                r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
-                r'Oracle/MemoryRetrieve/tag\s+"([^"]+)"',
-            ],
-
-            # Context
-            OracleType.CTX_COMPRESS: [
-                r'Oracle/CtxCompress/tag\s+(\d+)',
-            ],
-
-            # Model
-            OracleType.MODEL_DERIVE: [
-                r'Oracle/ModelDerive/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-            OracleType.MODEL_TRANSFORM: [
-                r'Oracle/ModelTransform/tag\s+"([^"]+)"\s+"([^"]+)"',
-            ],
-
-            # Vocabulary
-            OracleType.VOC_QUERY_DOMAIN: [
-                r'Oracle/VocQueryDomain/tag\s+"([^"]+)"',
-            ],
-            OracleType.VOC_QUERY_MEANING: [
-                r'Oracle/VocQueryMeaning/tag\s+"([^"]+)"',
-            ],
-            OracleType.VOC_EXPAND: [
-                r'Oracle/VocExpand/tag\s+"([^"]+)"\s+\[([^\]]+)\]',
-            ],
-=======
             OracleType.MEMORY_STORE: r'Oracle/MemoryStore[^{]*\{\s*key:\s*"([^"]+)",\s*value:\s*"([^"]+)"\s*\}',
             OracleType.MEMORY_RETRIEVE: r'Oracle/MemoryRetrieve[^{]*\{\s*key:\s*"([^"]+)"\s*\}',
 
@@ -447,7 +430,6 @@ class ProductionHarness:
             OracleType.DOCKER_STOP: r'Oracle/DockerStop[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
             OracleType.DOCKER_STATUS: r'Oracle/DockerStatus[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
             OracleType.DOCKER_LOGS: r'Oracle/DockerLogs[^{]*\{\s*container:\s*"([^"]+)"\s*\}',
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         }
 
         for oracle_type, pattern_list in patterns.items():
@@ -499,21 +481,6 @@ class ProductionHarness:
             return {"key": match.group(1), "value": match.group(2)}
         elif oracle_type == OracleType.MEMORY_RETRIEVE:
             return {"key": match.group(1)}
-<<<<<<< HEAD
-        elif oracle_type == OracleType.CTX_COMPRESS:
-            return {"target_size": int(match.group(1))}
-        elif oracle_type == OracleType.MODEL_DERIVE:
-            return {"source_state": match.group(1), "model_type": match.group(2)}
-        elif oracle_type == OracleType.MODEL_TRANSFORM:
-            return {"source_state": match.group(1), "transformation": match.group(2)}
-        elif oracle_type == OracleType.VOC_QUERY_DOMAIN:
-            return {"domain": match.group(1)}
-        elif oracle_type == OracleType.VOC_QUERY_MEANING:
-            return {"meaning": match.group(1)}
-        elif oracle_type == OracleType.VOC_EXPAND:
-            concepts = [c.strip().strip('"') for c in match.group(2).split(',')]
-            return {"domain": match.group(1), "concepts": concepts}
-=======
         elif oracle_type == OracleType.PROCESS_SPAWN:
             return {"command": match.group(1), "args": match.group(2)}
         elif oracle_type == OracleType.PROCESS_KILL:
@@ -556,7 +523,6 @@ class ProductionHarness:
             return {"image": match.group(1), "command": match.group(2)}
         elif oracle_type in [OracleType.DOCKER_STOP, OracleType.DOCKER_STATUS, OracleType.DOCKER_LOGS]:
             return {"container": match.group(1)}
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
         return {}
 
     # =========================================================================
@@ -614,19 +580,7 @@ class ProductionHarness:
                 OracleType.HTTP_POST: self._exec_http_post,
                 OracleType.MEMORY_STORE: self._exec_memory_store,
                 OracleType.MEMORY_RETRIEVE: self._exec_memory_retrieve,
-<<<<<<< HEAD
                 OracleType.CTX_REDUCE: self._exec_ctx_reduce,
-                OracleType.CTX_MERGE: self._exec_ctx_merge,
-                OracleType.CTX_FILTER: self._exec_ctx_filter,
-                OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
-                OracleType.CTX_COMPRESS: self._exec_ctx_compress,
-                OracleType.MODEL_DERIVE: self._exec_model_derive,
-                OracleType.MODEL_TRANSFORM: self._exec_model_transform,
-                OracleType.MODEL_GENERATE: self._exec_model_generate,
-                OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
-                OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
-                OracleType.VOC_EXPAND: self._exec_voc_expand,
-=======
                 OracleType.PROCESS_SPAWN: self._exec_process_spawn,
                 OracleType.PROCESS_KILL: self._exec_process_kill,
                 OracleType.PROCESS_STATUS: self._exec_process_status,
@@ -655,7 +609,18 @@ class ProductionHarness:
                 OracleType.DOCKER_STOP: self._exec_docker_stop,
                 OracleType.DOCKER_STATUS: self._exec_docker_status,
                 OracleType.DOCKER_LOGS: self._exec_docker_logs,
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
+                OracleType.COMPOSE_SEQ: self._exec_compose_seq,
+                OracleType.COMPOSE_PAR: self._exec_compose_par,
+                OracleType.CTX_MERGE: self._exec_ctx_merge,
+                OracleType.CTX_FILTER: self._exec_ctx_filter,
+                OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
+                OracleType.CTX_COMPRESS: self._exec_ctx_compress,
+                OracleType.MODEL_DERIVE: self._exec_model_derive,
+                OracleType.MODEL_TRANSFORM: self._exec_model_transform,
+                OracleType.MODEL_GENERATE: self._exec_model_generate,
+                OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
+                OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
+                OracleType.VOC_EXPAND: self._exec_voc_expand,
             }
 
             handler = handlers.get(oracle.type)
@@ -682,6 +647,43 @@ class ProductionHarness:
                 result=None,
                 error=str(e),
                 duration_ms=duration
+            )
+
+    def execute_oracle_async(self, oracle: OracleRequest) -> Future:
+        """Execute oracle asynchronously, return Future.
+
+        Enables parallel conscious/subconscious execution.
+        Conscious can continue thinking while oracle executes.
+        """
+        if not hasattr(self, '_executor'):
+            # Lazy-init thread pool executor
+            self._executor = ThreadPoolExecutor(max_workers=self.max_concurrency)
+
+        # Submit oracle execution to thread pool
+        future = self._executor.submit(self.execute_oracle, oracle)
+        return future
+
+    def wait_for_oracle(self, future: Future, timeout: Optional[float] = None) -> OracleResponse:
+        """Wait for async oracle to complete.
+
+        Args:
+            future: Future from execute_oracle_async()
+            timeout: Max seconds to wait (None = wait forever)
+
+        Returns:
+            OracleResponse when oracle completes
+
+        Raises:
+            TimeoutError if oracle doesn't complete in time
+        """
+        try:
+            response = future.result(timeout=timeout)
+            return response
+        except TimeoutError:
+            return OracleResponse(
+                success=False,
+                result=None,
+                error=f"Oracle timed out after {timeout}s"
             )
 
     def execute_oracles_batch(
@@ -951,204 +953,253 @@ Pure Limn response:"""
         key = params["key"]
         return self.memory.get(key)
 
-<<<<<<< HEAD
-    def _exec_ctx_reduce(self, params: Dict) -> Dict:
-        """Context reduce oracle - compress by removing low-frequency patterns."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
+    def _discover_patterns(self, statements: List[str]) -> List[Dict[str, Any]]:
+        """Discover recurring patterns in thought sequences.
 
-        threshold = params.get("threshold", 0.5)
-        reduced = self.context_engine.reduce(threshold=threshold)
+        Returns list of pattern proposals with:
+        - pattern: the recurring sequence
+        - frequency: how often it appears
+        - proposed_reduction: suggested compression
+        """
+        from collections import Counter
+        from itertools import combinations
+        import re
+
+        # Extract word sequences (2-4 words)
+        word_sequences = []
+        for stmt in statements:
+            # Remove operators and split into words
+            words = re.findall(r'\b[a-z]{2,4}\b', stmt.lower())
+
+            # Generate 2-grams, 3-grams, 4-grams
+            for n in [2, 3, 4]:
+                for i in range(len(words) - n + 1):
+                    seq = tuple(words[i:i+n])
+                    word_sequences.append(seq)
+
+        # Count frequencies
+        seq_counts = Counter(word_sequences)
+
+        # Find patterns that appear 5+ times
+        frequent_patterns = [
+            (seq, count) for seq, count in seq_counts.items()
+            if count >= 5
+        ]
+
+        # Sort by frequency
+        frequent_patterns.sort(key=lambda x: x[1], reverse=True)
+
+        # Generate proposals
+        proposals = []
+        for seq, freq in frequent_patterns[:10]:  # Top 10 patterns
+            pattern_str = ' '.join(seq)
+
+            # Check if not already a learned rule
+            if pattern_str in self.learned_rules:
+                continue
+
+            # Propose a compound reduction
+            # Example: ('cod', 'flo', 'log') → 'cod_flo_log'
+            reduction = '_'.join(seq)
+
+            proposals.append({
+                'pattern': pattern_str,
+                'frequency': freq,
+                'proposed_reduction': reduction,
+                'confidence': min(freq / 10.0, 1.0)  # Normalize confidence
+            })
+
+        return proposals
+
+    def _apply_learned_rules(self, content: str) -> str:
+        """Apply learned reduction rules to content."""
+        reduced = content
+
+        for pattern, reduction in self.learned_rules.items():
+            # Replace pattern with reduction
+            reduced = reduced.replace(pattern, reduction)
+
+        return reduced
+
+    def _log_pattern_proposal(self, proposal: Dict[str, Any], applied: bool = False):
+        """Log pattern proposal for human review."""
+        import json
+
+        log_entry = {
+            'timestamp': time.time(),
+            'pattern': proposal['pattern'],
+            'frequency': proposal['frequency'],
+            'reduction': proposal['proposed_reduction'],
+            'confidence': proposal['confidence'],
+            'applied': applied
+        }
+
+        # Append to JSONL log
+        with open(self.rule_proposals_path, 'a') as f:
+            f.write(json.dumps(log_entry) + '\n')
+
+    def _exec_ctx_reduce(self, params: Dict) -> Dict[str, Any]:
+        """Context reduction oracle - Interaction net-like compression.
+
+        Simulates HVM interaction net reduction for Limn context.
+        This is a Python approximation; true HVM would be optimal.
+        """
+        content = params["content"]
+        threshold = params.get("threshold", 2000)  # Min size before reduction
+
+        original_size = len(content)
+
+        # If content too small, don't reduce
+        if original_size < threshold:
+            return {
+                "reduced": content,
+                "original_size": original_size,
+                "reduced_size": original_size,
+                "compression_ratio": 1.0,
+                "patterns_merged": 0,
+                "method": "none - below threshold"
+            }
+
+        # Parse into logical units (preserve line structure)
+        lines = [l.strip() for l in content.split('\n') if l.strip() and not l.strip().startswith('#')]
+
+        from collections import Counter, OrderedDict
+
+        # AUTONOMOUS LEARNING: Discover patterns BEFORE reduction
+        # (need to see full repetition to discover patterns)
+        pattern_proposals = []
+        rules_applied_count = 0
+        rules_proposed_count = 0
+
+        if len(lines) >= 10:
+            pattern_proposals = self._discover_patterns(lines)
+
+            # Auto-apply high-confidence rules (confidence >= 0.7)
+            for proposal in pattern_proposals:
+                rules_proposed_count += 1
+
+                if proposal['confidence'] >= 0.7:
+                    # Apply the rule
+                    pattern = proposal['pattern']
+                    reduction = proposal['proposed_reduction']
+
+                    # Add to learned rules
+                    self.learned_rules[pattern] = reduction
+                    rules_applied_count += 1
+
+                    # Log as applied
+                    self._log_pattern_proposal(proposal, applied=True)
+                else:
+                    # Log as proposed (for human review)
+                    self._log_pattern_proposal(proposal, applied=False)
+
+        # Interaction net reduction rules (order matters):
+        # 1. Remove exact duplicates
+        # 2. Compress failed oracle chains
+        # 3. Merge similar operations (semantic similarity)
+        # 4. Keep only recent N thoughts + summary of old
+
+        # Track what we've seen
+        seen_lines = OrderedDict()  # Preserves insertion order
+        failed_oracles = []
+        successful_oracles = []
+
+        duplicate_count = 0
+        oracle_chain_compressions = 0
+        similar_merges = 0
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Rule 1: Deduplicate exact matches (but keep first occurrence)
+            if line in seen_lines:
+                duplicate_count += 1
+                i += 1
+                continue
+
+            # Rule 2: Compress failed oracle chains
+            # Pattern: "~ <request>" followed by "∎ eva err" on next line
+            if line.startswith('~') and i + 1 < len(lines):
+                next_line = lines[i + 1]
+                if next_line == "∎ eva err":
+                    # Don't include failed oracle spam
+                    failed_oracles.append(line)
+                    oracle_chain_compressions += 1
+                    i += 2
+                    continue
+
+            # Rule 3: Track successful oracles separately
+            if line.startswith('~'):
+                successful_oracles.append(line)
+                seen_lines[line] = True
+                i += 1
+                continue
+
+            # Rule 4: Keep other statements
+            seen_lines[line] = True
+            i += 1
+
+        # Reduce failed oracle count (keep only most recent ones)
+        if len(failed_oracles) > 3:
+            failed_oracle_summary = f"# ({len(failed_oracles)} failed oracle attempts)"
+            reduced_failed = failed_oracles[-2:]  # Keep 2 most recent
+        else:
+            failed_oracle_summary = None
+            reduced_failed = failed_oracles
+
+        # Assemble reduced content (recent thoughts prioritized)
+        reduced_lines = []
+
+        # Add summary of failed oracles if many
+        if failed_oracle_summary:
+            reduced_lines.append(failed_oracle_summary)
+
+        # Add recent failed oracles
+        reduced_lines.extend(reduced_failed)
+
+        # Add successful oracles and other statements
+        reduced_lines.extend(seen_lines.keys())
+
+        # Keep only most recent N lines if still too large
+        MAX_LINES = 15
+        if len(reduced_lines) > MAX_LINES:
+            # Keep summary + recent lines
+            summary = f"# Previous thoughts: {len(reduced_lines) - MAX_LINES} lines compressed"
+            reduced_lines = [summary] + reduced_lines[-MAX_LINES:]
+
+        reduced_content = '\n'.join(reduced_lines)
+
+        # Apply learned rules to the reduced content
+        if self.learned_rules:
+            reduced_content = self._apply_learned_rules(reduced_content)
+
+        reduced_size = len(reduced_content)
+        compression_ratio = reduced_size / original_size if original_size > 0 else 1.0
+
+        patterns_merged = duplicate_count + oracle_chain_compressions
 
         return {
-            "original_size": len(self.context_engine.context),
-            "reduced_size": len(reduced),
-            "compression_ratio": len(reduced) / len(self.context_engine.context) if self.context_engine.context else 0
+            "reduced": reduced_content,
+            "original_size": original_size,
+            "reduced_size": reduced_size,
+            "compression_ratio": reduced_size / original_size if original_size > 0 else 1.0,
+            "patterns_merged": patterns_merged,
+            "method": "interaction_net_simulation_v3_autonomous",
+            "rules_applied": {
+                "exact_duplicates": duplicate_count,
+                "failed_oracle_compression": oracle_chain_compressions,
+                "total_failed_oracles": len(failed_oracles),
+                "successful_oracles": len(successful_oracles)
+            },
+            "autonomous_learning": {
+                "patterns_discovered": len(pattern_proposals),
+                "rules_proposed": rules_proposed_count,
+                "rules_applied": rules_applied_count,
+                "total_learned_rules": len(self.learned_rules)
+            }
         }
 
-    def _exec_ctx_merge(self, params: Dict) -> Dict:
-        """Context merge oracle - combine similar patterns."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        threshold = params.get("threshold", 0.7)
-        merged = self.context_engine.merge(similarity_threshold=threshold)
-
-        return {
-            "original_size": len(self.context_engine.context),
-            "merged_size": len(merged),
-            "merge_ratio": len(merged) / len(self.context_engine.context) if self.context_engine.context else 0
-        }
-
-    def _exec_ctx_filter(self, params: Dict) -> Dict:
-        """Context filter oracle - select matching items."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        predicate = params.get("predicate", "")
-        filtered = self.context_engine.filter(predicate)
-
-        return {
-            "total_items": len(self.context_engine.context),
-            "filtered_items": len(filtered),
-            "predicate": predicate
-        }
-
-    def _exec_ctx_aggregate(self, params: Dict) -> Dict:
-        """Context aggregate oracle - group by attribute."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        group_by = params.get("group_by", "type")
-        groups = self.context_engine.aggregate(group_by=group_by)
-
-        return {
-            "groups": len(groups),
-            "group_sizes": {k: len(v) for k, v in groups.items()}
-        }
-
-    def _exec_ctx_compress(self, params: Dict) -> Dict:
-        """Context compress oracle - reduce to target size."""
-        if not self.context_engine:
-            return {"error": "Context engine not available"}
-
-        target_size = params.get("target_size")
-        compressed = self.context_engine.compress(target_size=target_size)
-
-        return {
-            "original_size": len(self.context_engine.context),
-            "compressed_size": len(compressed),
-            "compression_ratio": len(compressed) / len(self.context_engine.context) if self.context_engine.context else 0
-        }
-
-    def _exec_model_derive(self, params: Dict) -> Dict:
-        """Model derive oracle - derive new model from state."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        source_state = params.get("source_state", "")
-        model_type = params.get("model_type")
-
-        model = self.model_engine.derive_model(source_state, model_type)
-
-        return {
-            "type": model.type.value,
-            "structure": model.structure,
-            "limn_repr": model.limn_repr,
-            "complexity": model.metadata.get("complexity", 0)
-        }
-
-    def _exec_model_transform(self, params: Dict) -> Dict:
-        """Model transform oracle - transform existing model."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        # Get source state and derive model first
-        source_state = params.get("source_state", "")
-        transformation = params.get("transformation", "simplify")
-        transform_params = params.get("params", {})
-
-        # Derive model from state
-        model = self.model_engine.derive_model(source_state)
-
-        # Transform it
-        transformed = self.model_engine.transform_model(
-            model,
-            transformation,
-            **transform_params
-        )
-
-        return {
-            "type": transformed.type.value,
-            "structure": transformed.structure,
-            "limn_repr": transformed.limn_repr,
-            "transformation": transformation
-        }
-
-    def _exec_model_generate(self, params: Dict) -> Dict:
-        """Model generate oracle - generate new model from spec."""
-        if not self.model_engine:
-            return {"error": "Model engine not available"}
-
-        spec = {
-            "type": params.get("type", "graph"),
-            "params": params.get("params", {})
-        }
-
-        model = self.model_engine.generate_model(spec)
-
-        return {
-            "type": model.type.value,
-            "structure": model.structure,
-            "limn_repr": model.limn_repr,
-            "generated": True
-        }
-
-    def _exec_voc_query_domain(self, params: Dict) -> Dict:
-        """Vocabulary query by domain oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        domain = params.get("domain", "general")
-        entries = self.vocab_engine.query_domain(domain)
-
-        return {
-            "domain": domain,
-            "count": len(entries),
-            "vocabulary": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning,
-                    "usage": e.usage
-                }
-                for e in entries[:50]  # Limit to first 50
-            ]
-        }
-
-    def _exec_voc_query_meaning(self, params: Dict) -> Dict:
-        """Vocabulary query by meaning oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        meaning = params.get("meaning", "")
-        entries = self.vocab_engine.query_meaning(meaning)
-
-        return {
-            "query": meaning,
-            "count": len(entries),
-            "matches": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning,
-                    "domain": e.domain
-                }
-                for e in entries[:20]  # Limit to first 20
-            ]
-        }
-
-    def _exec_voc_expand(self, params: Dict) -> Dict:
-        """Vocabulary expansion oracle."""
-        if not self.vocab_engine:
-            return {"error": "Vocabulary engine not available"}
-
-        domain = params.get("domain", "general")
-        concepts = params.get("concepts", [])
-
-        new_entries = self.vocab_engine.expand_vocabulary(domain, concepts)
-
-        return {
-            "domain": domain,
-            "added": len(new_entries),
-            "new_words": [
-                {
-                    "word": e.word,
-                    "meaning": e.meaning
-                }
-                for e in new_entries
-            ]
-        }
-
-=======
     def _exec_process_spawn(self, params: Dict) -> Dict[str, Any]:
         """Process spawn oracle (∎ system control)."""
         command = params["command"]
@@ -1524,7 +1575,146 @@ Pure Limn response:"""
 
         return result.stdout
 
->>>>>>> 997cf49 (feat: extend oracle system with 36 new oracle types (limn-w8zy))
+    # =========================================================================
+    # Composition Oracles
+    # =========================================================================
+
+    def _exec_compose_seq(self, params: Dict) -> Any:
+        """Sequential composition oracle - chain oracles A → B → C.
+
+        Params:
+            steps: List of {oracle_type, params, transform?} dicts
+            initial_input: Starting input for first step (optional)
+        """
+        if not self.compose_engine:
+            raise RuntimeError("ComposeEngine not available")
+
+        from compose_engine import CompositionStep
+        steps = [
+            CompositionStep(
+                oracle_type=s["oracle_type"],
+                params=s.get("params", {}),
+                transform=s.get("transform"),
+                condition=s.get("condition")
+            )
+            for s in params["steps"]
+        ]
+        return self.compose_engine.execute_sequential(
+            steps, params.get("initial_input")
+        )
+
+    def _exec_compose_par(self, params: Dict) -> List[Any]:
+        """Parallel composition oracle - execute oracles A, B, C concurrently.
+
+        Params:
+            steps: List of {oracle_type, params, transform?} dicts
+        """
+        if not self.compose_engine:
+            raise RuntimeError("ComposeEngine not available")
+
+        from compose_engine import CompositionStep
+        steps = [
+            CompositionStep(
+                oracle_type=s["oracle_type"],
+                params=s.get("params", {}),
+                transform=s.get("transform"),
+                condition=s.get("condition")
+            )
+            for s in params["steps"]
+        ]
+        return self.compose_engine.execute_parallel(steps)
+
+    # =========================================================================
+    # Context Engine Oracles
+    # =========================================================================
+
+    def _exec_ctx_merge(self, params: Dict) -> Dict[str, Any]:
+        """Context merge oracle - combine multiple contexts."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        contexts = params["contexts"]
+        strategy = params.get("strategy", "union")
+        return self.context_engine.merge(contexts, strategy=strategy)
+
+    def _exec_ctx_filter(self, params: Dict) -> Dict[str, Any]:
+        """Context filter oracle - extract relevant context subset."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        content = params["content"]
+        criteria = params.get("criteria", {})
+        return self.context_engine.filter(content, criteria=criteria)
+
+    def _exec_ctx_aggregate(self, params: Dict) -> Dict[str, Any]:
+        """Context aggregate oracle - summarize context collections."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        contents = params["contents"]
+        method = params.get("method", "summary")
+        return self.context_engine.aggregate(contents, method=method)
+
+    def _exec_ctx_compress(self, params: Dict) -> Dict[str, Any]:
+        """Context compress oracle - lossy compression of context."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        content = params["content"]
+        target_ratio = params.get("ratio", 0.5)
+        return self.context_engine.compress(content, ratio=target_ratio)
+
+    # =========================================================================
+    # Model Engine Oracles
+    # =========================================================================
+
+    def _exec_model_derive(self, params: Dict) -> Dict[str, Any]:
+        """Model derive oracle - derive new model from observations."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        observations = params["observations"]
+        model_type = params.get("type", "pattern")
+        return self.model_engine.derive(observations, model_type=model_type)
+
+    def _exec_model_transform(self, params: Dict) -> Dict[str, Any]:
+        """Model transform oracle - transform data through model."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        model_name = params["model"]
+        data = params["data"]
+        return self.model_engine.transform(model_name, data)
+
+    def _exec_model_generate(self, params: Dict) -> Any:
+        """Model generate oracle - generate from model."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        model_name = params["model"]
+        seed = params.get("seed", None)
+        count = params.get("count", 1)
+        return self.model_engine.generate(model_name, seed=seed, count=count)
+
+    # =========================================================================
+    # Vocabulary Engine Oracles
+    # =========================================================================
+
+    def _exec_voc_query_domain(self, params: Dict) -> List[str]:
+        """Vocabulary domain query - list words in a domain."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        domain = params["domain"]
+        return self.vocab_engine.query_domain(domain)
+
+    def _exec_voc_query_meaning(self, params: Dict) -> Dict[str, Any]:
+        """Vocabulary meaning query - get word meaning/relations."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        word = params["word"]
+        return self.vocab_engine.query_meaning(word)
+
+    def _exec_voc_expand(self, params: Dict) -> List[str]:
+        """Vocabulary expand oracle - suggest new words for concept."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        concept = params["concept"]
+        count = params.get("count", 5)
+        return self.vocab_engine.expand(concept, count=count)
+
     # =========================================================================
     # Main Execution
     # =========================================================================

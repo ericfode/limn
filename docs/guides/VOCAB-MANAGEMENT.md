@@ -181,7 +181,7 @@ A collision occurs when:
 
 ### Current Relationship
 
-**Database:** 784 words (source of truth)
+**Database:** 938 words (source of truth)
 **Markdown:** docs/spec/vocabulary-v3-natural.md (may lag)
 
 ### Sync Status
@@ -288,7 +288,7 @@ Non-physical concepts, qualities, ideas
 
 ### Current Version
 
-- **Database:** `data/vocabulary/` (Dolt) - **SOURCE OF TRUTH** (784 words)
+- **Database:** `data/vocabulary/` (Dolt) - **SOURCE OF TRUTH** (938 words)
 - **Documentation:** `docs/spec/vocabulary-v3-natural.md` (reference, may lag)
 
 ### Version Control
@@ -472,4 +472,4 @@ dolt push             # Push to remote (if configured)
 
 ---
 
-*Vocabulary Management Guide v1.0 | Database is source of truth | 784 words, 26 domains*
+*Vocabulary Management Guide v1.0 | Database is source of truth | 938 words, 26 domains*

@@ -52,7 +52,7 @@ Without a key, this could mean many things. With key="temperature mixing", it me
 
 ## Design Principles
 
-- **3-letter CVC vocabulary** (784 words, 26 domains)
+- **3-letter CVC vocabulary** (938 words, 26 domains)
 - **Natural extensions**: First-syllable extraction + Latin/Greek roots (pyr=fire, aqu=water)
 - **Zero-bootstrap**: Learn from examples alone (validated: 77-85% comprehension without training)
 - **Compositional**: Strong semantic compositionality (empirically validated)
@@ -87,7 +87,7 @@ joy sad lim | nu sta | alw cha
 ## Questions?
 
 - **Repo**: [GitHub link]
-- **Vocabulary DB**: [DoltHub link] (784 words, Dolt database)
+- **Vocabulary DB**: [DoltHub link] (938 words, Dolt database)
 - **Experiment results**: [Link to 005-FINAL-REPORT.md]
 
 I'm happy to answer questions about the theory, implementation, or design choices!
@@ -154,7 +154,7 @@ Both use constraint-based semantics, but Limn treats ambiguity as a feature (hig
 - Short enough for high information density
 - Long enough to be memorable
 
-We have 784 words (not hitting 17,576 theoretical limit). Collisions are rare and managed through vowel rotation + Latin/Greek alternatives.
+We have 938 words (not hitting 17,576 theoretical limit). Collisions are rare and managed through vowel rotation + Latin/Greek alternatives.
 
 ### "How do you handle polysemy?"
 
@@ -214,7 +214,7 @@ Community for:
 
 Resources:
 - Bootstrap v3-Natural (zero-training learning)
-- Vocabulary database (784 words, 26 domains)
+- Vocabulary database (938 words, 26 domains)
 - Experiment 005 (52% compositionality advantage)
 ```
 
