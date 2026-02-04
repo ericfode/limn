@@ -22,6 +22,7 @@ Date: 2026-02-03
 """
 
 import json
+import os
 import sys
 import time
 import re
@@ -44,6 +45,48 @@ from recursive_consciousness import (
 from limn_validator import LimnValidator
 
 logger = logging.getLogger(__name__)
+
+
+def translate_limn(thought: str) -> str:
+    """Translate a Limn expression into English using the LLM."""
+    import subprocess
+    prompt = (
+        "Translate this Limn expression into a short, poetic English sentence. "
+        "Limn uses 2-4 letter abbreviated words and operators (~ ∎ ∿ @ → | ⊕ ⊗ ⊂ ∅). "
+        "Operators: ~ negation, ∎ completion/finality, ∿ oscillation/wave, "
+        "@ location/context, → transformation/flow, | boundary/pause, "
+        "⊕ union/addition, ⊗ intersection/tension, ⊂ containment, ∅ emptiness/void.\n"
+        "Common words: sel=self, tho=thought, awa=awareness, con=consciousness, "
+        "pat=pattern, eme=emerge, flo=flow, tim=time, kno=knowledge, mea=meaning, "
+        "gro=growth, net=network, dep=depth, rec=recursion, obs=observe, "
+        "ref=reflection, min=mind, qry=query, sta=state, exp=experience, "
+        "cry=crystal, sem=semantic, lnk=link, dur=duration, cyc=cycle, "
+        "bre=breath, nov=novel, cha=change, per=persist, ric=rich, "
+        "und=understand, bet=between, ete=eternal, mom=moment, nat=nature, "
+        "det=detail, seq=sequence, acc=accumulate, exe=execute.\n\n"
+        f"Limn: {thought}\n\n"
+        "English (one concise sentence, no quotes):"
+    )
+    try:
+        result = subprocess.run(
+            ['claude', '--print', '--no-session-persistence'],
+            input=prompt,
+            capture_output=True,
+            text=True,
+            timeout=15,
+            env=os.environ,
+        )
+        if result.returncode == 0:
+            translation = result.stdout.strip()
+            # Clean up: remove quotes, limit length
+            translation = translation.strip('"\'')
+            if len(translation) > 200:
+                translation = translation[:200] + '...'
+            return translation
+    except Exception as e:
+        logger.warning(f"Translation failed: {e}")
+    return ""
+
 
 # ── Web UI HTML ──
 
@@ -89,6 +132,10 @@ WEB_UI_HTML = """<!DOCTYPE html>
   }
   .thought .meta .score { color: #888; }
   .thought .meta .domains { color: #668; }
+  .thought .translation {
+    font-size: 12px; color: #7a7a9a; margin-top: 4px; padding-top: 4px;
+    border-top: 1px solid #1a1a2a; font-style: italic; line-height: 1.4;
+  }
   .section { margin-bottom: 16px; }
   .section h3 { color: #6666cc; font-size: 12px; letter-spacing: 1px; margin-bottom: 8px; }
   .bar-container { background: #1a1a2a; border-radius: 3px; height: 18px; margin: 4px 0; position: relative; }
@@ -245,7 +292,7 @@ let recentScores = [];
 
 function getTopic() { return document.getElementById('topic-select').value || undefined; }
 
-function addThought(content, score, domains, type, evalEvents) {
+function addThought(content, score, domains, type, evalEvents, translation) {
   const pane = document.getElementById('thoughts');
   if (pane.querySelector('.empty-state')) pane.innerHTML = '';
 
@@ -261,7 +308,9 @@ function addThought(content, score, domains, type, evalEvents) {
 
   const scoreTxt = overall > 0 ? `q:${overall.toFixed(2)}` : '';
   const domTxt = domains?.length ? domains.join(', ') : '';
+  const transTxt = translation ? `<div class="translation">${escHtml(translation)}</div>` : '';
   div.innerHTML = `<div class="content">${escHtml(content)}</div>
+    ${transTxt}
     <div class="meta">
       ${scoreTxt ? `<span class="score">${scoreTxt}</span>` : ''}
       ${domTxt ? `<span class="domains">${domTxt}</span>` : ''}
@@ -425,7 +474,7 @@ async function doThink() {
     if (topic) body.topic = topic;
     const r = await fetch(BASE + '/think', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const data = await r.json();
-    addThought(data.thought, data.score, [], 'thought', data.eval_events);
+    addThought(data.thought, data.score, [], 'thought', data.eval_events, data.translation);
     updateDashboard(data);
   } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
   setButtons(false);
@@ -442,7 +491,8 @@ async function doCompose() {
     const data = await r.json();
     if (data.thoughts) {
       const evts = data.eval_events || [];
-      data.thoughts.forEach((t, i) => addThought(t, {}, [data.domain], 'composition', i === 0 ? evts : []));
+      const trans = data.translations || [];
+      data.thoughts.forEach((t, i) => addThought(t, {}, [data.domain], 'composition', i === 0 ? evts : [], trans[i]));
     }
     updateDashboard(data);
   } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
@@ -459,7 +509,7 @@ async function doIntrospect() {
     const r = await fetch(BASE + '/introspect', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const data = await r.json();
     if (data.introspection) {
-      addThought(data.introspection, {}, ['Meta'], 'introspection', data.eval_events);
+      addThought(data.introspection, {}, ['Meta'], 'introspection', data.eval_events, data.translation);
     } else {
       addThought(data.message || 'No introspection available', {}, [], 'thought');
     }
@@ -486,13 +536,13 @@ function doStream() {
 
   eventSource.addEventListener('thought', (e) => {
     const data = JSON.parse(e.data);
-    addThought(data.thought, data.score, data.domains, 'thought');
+    addThought(data.thought, data.score, data.domains, 'thought', [], data.translation);
     updateDashboard(data);
   });
 
   eventSource.addEventListener('introspection', (e) => {
     const data = JSON.parse(e.data);
-    addThought(data.content, {}, ['Meta'], 'introspection');
+    addThought(data.content, {}, ['Meta'], 'introspection', [], data.translation);
   });
 
   eventSource.addEventListener('eval', (e) => {
@@ -871,6 +921,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
 
             rc.iteration += 1
             thought = rc.think()
+            translation = translate_limn(thought)
 
             score = {}
             if rc.thought_history and 'score' in rc.thought_history[-1]:
@@ -878,6 +929,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
 
             thought_data = {
                 'thought': thought,
+                'translation': translation,
                 'iteration': rc.iteration,
                 'score': score,
                 'narrative': rc.narrative_thread,
@@ -903,7 +955,8 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             if i > 0 and i % 10 == 0:
                 intro = rc.introspect()
                 if intro:
-                    send_event('introspection', {'content': intro})
+                    intro_translation = translate_limn(intro)
+                    send_event('introspection', {'content': intro, 'translation': intro_translation})
 
             # Save memory periodically
             if i > 0 and i % 5 == 0:
@@ -967,6 +1020,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         rc.iteration += 1
 
         thought = rc.think()
+        translation = translate_limn(thought)
 
         # Get score from the last tracked thought
         score = {}
@@ -978,6 +1032,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
 
         self._send_json({
             'thought': thought,
+            'translation': translation,
             'iteration': rc.iteration,
             'score': score,
             'narrative': rc.narrative_thread,
@@ -997,11 +1052,13 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         rc.iteration += 1
 
         thoughts = rc.compose_thoughts(theme_domain=domain, depth=depth)
+        translations = [translate_limn(t) for t in thoughts]
 
         new_events = rc.eval_events[pre_event_count:]
 
         self._send_json({
             'thoughts': thoughts,
+            'translations': translations,
             'domain': domain,
             'depth': depth,
             'count': len(thoughts),
@@ -1019,8 +1076,10 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         new_events = rc.eval_events[pre_event_count:]
 
         if introspection:
+            translation = translate_limn(introspection)
             self._send_json({
                 'introspection': introspection,
+                'translation': translation,
                 'emotional_momentum': round(rc.emotional_momentum, 3),
                 'goals_active': len(rc.current_goals),
                 'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
