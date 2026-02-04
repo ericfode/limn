@@ -446,6 +446,7 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
             'semantic_connections': total_words,
             'most_used_concepts': [{'word': w, 'usage_count': c} for w, c in top_concepts],
             'recent_thoughts': self.thought_history[-5:],
+            'concept_frequency': self.concept_frequency,  # Full frequency data for gap detection
         }
 
         insights = self.metacognition.analyze_thinking_patterns(stats)
