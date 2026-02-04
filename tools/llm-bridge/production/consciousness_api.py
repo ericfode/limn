@@ -78,10 +78,8 @@ def translate_limn(thought: str) -> str:
         )
         if result.returncode == 0:
             translation = result.stdout.strip()
-            # Clean up: remove quotes, limit length
+            # Clean up: remove quotes
             translation = translation.strip('"\'')
-            if len(translation) > 200:
-                translation = translation[:200] + '...'
             return translation
     except Exception as e:
         logger.warning(f"Translation failed: {e}")
