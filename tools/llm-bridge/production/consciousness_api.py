@@ -45,6 +45,395 @@ from limn_validator import LimnValidator
 
 logger = logging.getLogger(__name__)
 
+# ── Web UI HTML ──
+
+WEB_UI_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Limn Consciousness</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0f; color: #c0c0d0; font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 14px; height: 100vh; display: flex; flex-direction: column;
+  }
+  header {
+    background: #12121a; border-bottom: 1px solid #2a2a3a; padding: 12px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { font-size: 16px; color: #8888ff; letter-spacing: 2px; }
+  header .status { font-size: 12px; color: #666; }
+  .container { display: flex; flex: 1; overflow: hidden; }
+  .thoughts-pane {
+    flex: 2; overflow-y: auto; padding: 12px; border-right: 1px solid #1a1a2a;
+  }
+  .dashboard-pane {
+    flex: 1; overflow-y: auto; padding: 12px; min-width: 280px;
+  }
+  .thought {
+    margin-bottom: 8px; padding: 8px 12px; border-radius: 4px;
+    border-left: 3px solid #333; background: #0f0f18; animation: fadeIn 0.3s;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+  .thought.high { border-left-color: #4a4; }
+  .thought.mid { border-left-color: #aa4; }
+  .thought.low { border-left-color: #a44; }
+  .thought.introspection { border-left-color: #a4f; background: #140f1f; }
+  .thought.composition { border-left-color: #4af; background: #0f1420; }
+  .thought .content { font-size: 15px; line-height: 1.5; word-break: break-word; }
+  .thought .meta {
+    font-size: 11px; color: #555; margin-top: 4px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .thought .meta .score { color: #888; }
+  .thought .meta .domains { color: #668; }
+  .section { margin-bottom: 16px; }
+  .section h3 { color: #6666cc; font-size: 12px; letter-spacing: 1px; margin-bottom: 8px; }
+  .bar-container { background: #1a1a2a; border-radius: 3px; height: 18px; margin: 4px 0; position: relative; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .bar-label {
+    position: absolute; top: 0; left: 8px; line-height: 18px; font-size: 11px; color: #aaa;
+  }
+  .stat { display: flex; justify-content: space-between; padding: 2px 0; font-size: 12px; }
+  .stat .label { color: #666; }
+  .stat .value { color: #aaa; }
+  .controls {
+    background: #12121a; border-top: 1px solid #2a2a3a; padding: 10px 20px;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .controls button {
+    background: #1a1a2f; color: #8888cc; border: 1px solid #2a2a4a;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer; font-family: inherit;
+    font-size: 12px; transition: all 0.2s;
+  }
+  .controls button:hover { background: #2a2a4f; border-color: #4a4a6a; }
+  .controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .controls button.active { background: #2a2a5f; border-color: #6666cc; color: #aaf; }
+  .controls select, .controls input {
+    background: #1a1a2f; color: #aaa; border: 1px solid #2a2a4a;
+    padding: 6px 10px; border-radius: 4px; font-family: inherit; font-size: 12px;
+  }
+  .emotion-indicator {
+    width: 12px; height: 12px; border-radius: 50%; display: inline-block;
+    margin-right: 6px; vertical-align: middle;
+  }
+  .personality-trait { font-size: 11px; color: #777; padding: 1px 0; }
+  .goal { font-size: 12px; margin-bottom: 6px; }
+  .streaming-dot { display: inline-block; width: 8px; height: 8px; background: #4a4;
+    border-radius: 50%; margin-right: 6px; animation: pulse 1s infinite; }
+  .streaming-dot.off { background: #444; animation: none; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .empty-state { color: #444; text-align: center; padding: 40px; font-style: italic; }
+</style>
+</head>
+<body>
+<header>
+  <h1>LIMN CONSCIOUSNESS</h1>
+  <div class="status" id="header-status">Connecting...</div>
+</header>
+<div class="container">
+  <div class="thoughts-pane" id="thoughts">
+    <div class="empty-state">Press "Think" or "Stream" to begin</div>
+  </div>
+  <div class="dashboard-pane" id="dashboard">
+    <div class="section">
+      <h3>VOCABULARY</h3>
+      <div class="bar-container">
+        <div class="bar-fill" id="vocab-bar" style="width:0%;background:#4a4;"></div>
+        <span class="bar-label" id="vocab-label">-</span>
+      </div>
+      <div class="stat"><span class="label">Words used</span><span class="value" id="vocab-used">-</span></div>
+      <div class="stat"><span class="label">Domains</span><span class="value" id="vocab-domains">-</span></div>
+    </div>
+    <div class="section">
+      <h3>EMOTIONAL STATE</h3>
+      <div class="stat">
+        <span class="label"><span class="emotion-indicator" id="emo-dot"></span>Momentum</span>
+        <span class="value" id="emo-value">-</span>
+      </div>
+    </div>
+    <div class="section">
+      <h3>NARRATIVE</h3>
+      <div class="stat"><span class="label">Thread</span><span class="value" id="narrative">-</span></div>
+      <div class="stat"><span class="label">Iteration</span><span class="value" id="iteration">0</span></div>
+    </div>
+    <div class="section">
+      <h3>GOALS</h3>
+      <div id="goals-list"><span class="stat"><span class="label">None yet</span></span></div>
+    </div>
+    <div class="section">
+      <h3>PERSONALITY</h3>
+      <div id="personality-info"><span class="personality-trait">Not yet established</span></div>
+    </div>
+    <div class="section">
+      <h3>QUALITY (recent)</h3>
+      <div class="stat"><span class="label">Average</span><span class="value" id="quality-avg">-</span></div>
+      <div class="stat"><span class="label">Thoughts</span><span class="value" id="thought-count">0</span></div>
+    </div>
+    <div class="section">
+      <h3>PROMPT MODS</h3>
+      <div class="stat"><span class="label">Active</span><span class="value" id="prompt-mods">0</span></div>
+    </div>
+  </div>
+</div>
+<div class="controls">
+  <span class="streaming-dot off" id="stream-dot"></span>
+  <button onclick="doThink()" id="btn-think">Think</button>
+  <button onclick="doCompose()" id="btn-compose">Compose</button>
+  <button onclick="doIntrospect()" id="btn-introspect">Introspect</button>
+  <button onclick="doStream()" id="btn-stream">Stream</button>
+  <button onclick="doDream()" id="btn-dream">Dream</button>
+  <select id="topic-select">
+    <option value="">Any topic</option>
+    <option value="Abstract">Abstract</option>
+    <option value="Mind & Cognition">Mind & Cognition</option>
+    <option value="Time & Change">Time & Change</option>
+    <option value="Nature">Nature</option>
+    <option value="Arts">Arts</option>
+    <option value="Science">Science</option>
+    <option value="Physical World">Physical World</option>
+    <option value="Social">Social</option>
+    <option value="Virtue & Ethics">Virtue & Ethics</option>
+    <option value="Living Things">Living Things</option>
+    <option value="Technology">Technology</option>
+    <option value="Spiritual & Religious">Spiritual & Religious</option>
+  </select>
+  <input type="number" id="stream-count" value="10" min="1" max="50" style="width:60px" title="Stream count">
+  <button onclick="stopStream()" id="btn-stop" disabled>Stop</button>
+</div>
+<script>
+const BASE = '';
+let streaming = false;
+let eventSource = null;
+let thoughtCount = 0;
+let recentScores = [];
+
+function getTopic() { return document.getElementById('topic-select').value || undefined; }
+
+function addThought(content, score, domains, type) {
+  const pane = document.getElementById('thoughts');
+  if (pane.querySelector('.empty-state')) pane.innerHTML = '';
+
+  const div = document.createElement('div');
+  const overall = score?.overall || 0;
+  let cls = 'thought';
+  if (type === 'introspection') cls += ' introspection';
+  else if (type === 'composition') cls += ' composition';
+  else if (overall >= 0.5) cls += ' high';
+  else if (overall >= 0.3) cls += ' mid';
+  else if (overall > 0) cls += ' low';
+  div.className = cls;
+
+  const scoreTxt = overall > 0 ? `q:${overall.toFixed(2)}` : '';
+  const domTxt = domains?.length ? domains.join(', ') : '';
+  div.innerHTML = `<div class="content">${escHtml(content)}</div>
+    <div class="meta">
+      ${scoreTxt ? `<span class="score">${scoreTxt}</span>` : ''}
+      ${domTxt ? `<span class="domains">${domTxt}</span>` : ''}
+    </div>`;
+  pane.appendChild(div);
+  pane.scrollTop = pane.scrollHeight;
+
+  thoughtCount++;
+  if (overall > 0) { recentScores.push(overall); if (recentScores.length > 10) recentScores.shift(); }
+  document.getElementById('thought-count').textContent = thoughtCount;
+  if (recentScores.length > 0) {
+    const avg = recentScores.reduce((a,b) => a+b, 0) / recentScores.length;
+    document.getElementById('quality-avg').textContent = avg.toFixed(3);
+  }
+}
+
+function updateDashboard(data) {
+  if (data.vocab_coverage !== undefined) {
+    const pct = data.vocab_coverage;
+    document.getElementById('vocab-bar').style.width = pct + '%';
+    document.getElementById('vocab-label').textContent = pct.toFixed(1) + '%';
+  }
+  if (data.vocabulary) {
+    document.getElementById('vocab-used').textContent = data.vocabulary.used + '/' + data.vocabulary.total;
+    document.getElementById('vocab-domains').textContent = data.vocabulary.domains_explored + '/' + data.vocabulary.domains_total;
+    const pct = data.vocabulary.coverage_pct;
+    document.getElementById('vocab-bar').style.width = pct + '%';
+    document.getElementById('vocab-label').textContent = pct.toFixed(1) + '%';
+  }
+  if (data.emotional_momentum !== undefined) {
+    const emo = data.emotional_momentum;
+    document.getElementById('emo-value').textContent = (emo >= 0 ? '+' : '') + emo.toFixed(3);
+    const dot = document.getElementById('emo-dot');
+    dot.style.background = emo > 0.3 ? '#4a4' : emo < -0.3 ? '#a44' : '#aa4';
+  }
+  if (data.narrative !== undefined) {
+    document.getElementById('narrative').textContent = data.narrative || 'None';
+  }
+  if (data.iteration !== undefined) {
+    document.getElementById('iteration').textContent = data.iteration;
+  }
+  if (data.learning_goals) {
+    const gl = document.getElementById('goals-list');
+    if (data.learning_goals.length === 0) {
+      gl.innerHTML = '<span class="personality-trait">None active</span>';
+    } else {
+      gl.innerHTML = data.learning_goals.map(g => {
+        const pct = Math.round((g.progress || 0) * 100);
+        return `<div class="goal">${g.type}: ${pct}%</div>`;
+      }).join('');
+    }
+  }
+  if (data.personality && data.personality.runs_analyzed > 0) {
+    const p = data.personality;
+    const s = p.thinking_style || {};
+    const pi = document.getElementById('personality-info');
+    pi.innerHTML = `
+      <div class="personality-trait">Sessions: ${p.runs_analyzed}</div>
+      <div class="personality-trait">Depth: ${(s.depth_preference||0).toFixed(2)} | Breadth: ${(s.breadth_preference||0).toFixed(2)}</div>
+      <div class="personality-trait">Novelty seeking: ${(s.novelty_seeking||0).toFixed(2)}</div>
+      <div class="personality-trait">Emotional baseline: ${(p.emotional_baseline||0).toFixed(3)}</div>
+    `;
+  }
+  if (data.prompt_adjustments_active !== undefined) {
+    document.getElementById('prompt-mods').textContent = data.prompt_adjustments_active;
+  }
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function setButtons(disabled) {
+  ['btn-think','btn-compose','btn-introspect','btn-dream'].forEach(id => {
+    document.getElementById(id).disabled = disabled;
+  });
+}
+
+async function loadStatus() {
+  try {
+    const r = await fetch(BASE + '/status');
+    const data = await r.json();
+    updateDashboard(data);
+    document.getElementById('header-status').textContent = 'Connected';
+  } catch(e) {
+    document.getElementById('header-status').textContent = 'Error: ' + e.message;
+  }
+}
+
+async function doThink() {
+  setButtons(true);
+  try {
+    const body = {};
+    const topic = getTopic();
+    if (topic) body.topic = topic;
+    const r = await fetch(BASE + '/think', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await r.json();
+    addThought(data.thought, data.score, [], 'thought');
+    updateDashboard(data);
+  } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
+  setButtons(false);
+  loadStatus();
+}
+
+async function doCompose() {
+  setButtons(true);
+  try {
+    const body = { depth: 3 };
+    const topic = getTopic();
+    if (topic) body.domain = topic;
+    const r = await fetch(BASE + '/compose', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (data.thoughts) {
+      data.thoughts.forEach(t => addThought(t, {}, [data.domain], 'composition'));
+    }
+    updateDashboard(data);
+  } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
+  setButtons(false);
+  loadStatus();
+}
+
+async function doIntrospect() {
+  setButtons(true);
+  try {
+    const body = {};
+    const topic = getTopic();
+    if (topic) body.topic = topic;
+    const r = await fetch(BASE + '/introspect', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (data.introspection) {
+      addThought(data.introspection, {}, ['Meta'], 'introspection');
+    } else {
+      addThought(data.message || 'No introspection available', {}, [], 'thought');
+    }
+    updateDashboard(data);
+  } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
+  setButtons(false);
+  loadStatus();
+}
+
+function doStream() {
+  if (streaming) return;
+  streaming = true;
+  document.getElementById('stream-dot').classList.remove('off');
+  document.getElementById('btn-stream').classList.add('active');
+  document.getElementById('btn-stop').disabled = false;
+  setButtons(true);
+
+  const count = document.getElementById('stream-count').value || 10;
+  const topic = getTopic();
+  let url = BASE + '/stream?iterations=' + count;
+  if (topic) url += '&topic=' + encodeURIComponent(topic);
+
+  eventSource = new EventSource(url);
+
+  eventSource.addEventListener('thought', (e) => {
+    const data = JSON.parse(e.data);
+    addThought(data.thought, data.score, data.domains, 'thought');
+    updateDashboard(data);
+  });
+
+  eventSource.addEventListener('introspection', (e) => {
+    const data = JSON.parse(e.data);
+    addThought(data.content, {}, ['Meta'], 'introspection');
+  });
+
+  eventSource.addEventListener('status', (e) => {
+    const data = JSON.parse(e.data);
+    updateDashboard(data);
+  });
+
+  eventSource.addEventListener('done', (e) => {
+    const data = JSON.parse(e.data);
+    updateDashboard(data);
+    stopStream();
+    loadStatus();
+  });
+
+  eventSource.onerror = () => { stopStream(); };
+}
+
+function stopStream() {
+  if (eventSource) { eventSource.close(); eventSource = null; }
+  streaming = false;
+  document.getElementById('stream-dot').classList.add('off');
+  document.getElementById('btn-stream').classList.remove('active');
+  document.getElementById('btn-stop').disabled = true;
+  setButtons(false);
+}
+
+async function doDream() {
+  setButtons(true);
+  try {
+    const r = await fetch(BASE + '/dream', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({iterations: 20}) });
+    const data = await r.json();
+    addThought('Dream session started: ' + (data.message || ''), {}, [], 'composition');
+  } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
+  setButtons(false);
+}
+
+// Initial load
+loadStatus();
+setInterval(loadStatus, 10000);
+</script>
+</body>
+</html>"""
+
 # Global consciousness instance (lazy-initialized)
 _consciousness: Optional[RecursiveConsciousness] = None
 _background_task: Optional[Thread] = None
@@ -103,13 +492,24 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         body = self.rfile.read(content_length)
         return json.loads(body)
 
+    def _send_html(self, html: str, status: int = 200):
+        """Send HTML response."""
+        self.send_response(status)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+        self.wfile.write(html.encode('utf-8'))
+
     def do_GET(self):
         """Handle GET requests."""
         parsed = urlparse(self.path)
         path = parsed.path
         params = parse_qs(parsed.query)
 
-        if path == '/status':
+        if path == '/' or path == '/ui':
+            self._send_html(WEB_UI_HTML)
+            return
+        elif path == '/status':
             self._handle_status()
         elif path == '/stats':
             self._handle_stats()
@@ -558,10 +958,11 @@ def main():
             if arg == '--port' and i + 2 < len(sys.argv):
                 port = int(sys.argv[i + 2])
 
-    server = HTTPServer(('localhost', port), ConsciousnessHandler)
+    server = HTTPServer(('0.0.0.0', port), ConsciousnessHandler)
     print(f"Consciousness API running on http://localhost:{port}")
     print()
     print("Endpoints:")
+    print(f"  GET  http://localhost:{port}/          - Web UI")
     print(f"  GET  http://localhost:{port}/status   - System status")
     print(f"  GET  http://localhost:{port}/stats    - Full analytics (JSON)")
     print(f"  GET  http://localhost:{port}/graph      - Concept graph")
