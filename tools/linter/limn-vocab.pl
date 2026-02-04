@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1027 words, 23 operators
+%% 1040 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -43,6 +43,7 @@ word('anch').
 word('and').
 word('ang').
 word('ani').
+word('ann').
 word('ans').
 word('ant').
 word('anx').
@@ -50,6 +51,7 @@ word('any').
 word('api').
 word('apl').
 word('app').
+word('apr').
 word('apt').
 word('aqu').
 word('arc').
@@ -60,6 +62,7 @@ word('ari').
 word('arm').
 word('aro').
 word('art').
+word('arv').
 word('as').
 word('ask').
 word('asm').
@@ -79,6 +82,7 @@ word('avo').
 word('awa').
 word('awt').
 word('axs').
+word('bab').
 word('bac').
 word('bad').
 word('bag').
@@ -166,6 +170,7 @@ word('cin').
 word('cir').
 word('cla').
 word('clb').
+word('cld').
 word('cle').
 word('cli').
 word('clm').
@@ -363,7 +368,9 @@ word('frb').
 word('fre').
 word('fri').
 word('frm').
+word('frn').
 word('fro').
+word('frs').
 word('frt').
 word('fru').
 word('frut').
@@ -405,6 +412,7 @@ word('gro').
 word('grt').
 word('gua').
 word('gue').
+word('gui').
 word('gus').
 word('gvn').
 word('hab').
@@ -517,6 +525,7 @@ word('lex').
 word('lft').
 word('lgs').
 word('lib').
+word('lie').
 word('lif').
 word('lig').
 word('lik').
@@ -584,6 +593,7 @@ word('mrg').
 word('mst').
 word('mtc').
 word('mtr').
+word('mud').
 word('mul').
 word('mus').
 word('mut').
@@ -624,6 +634,7 @@ word('obj').
 word('obs').
 word('oce').
 word('ocp').
+word('odd').
 word('off').
 word('oft').
 word('oil').
@@ -811,6 +822,7 @@ word('sgl').
 word('sha').
 word('she').
 word('shi').
+word('shk').
 word('sho').
 word('shp').
 word('shr').
@@ -881,6 +893,7 @@ word('suf').
 word('sum').
 word('sun').
 word('sup').
+word('sur').
 word('sus').
 word('swa').
 word('swe').
