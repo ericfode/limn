@@ -707,11 +707,14 @@ class RecursiveConsciousness:
 
         return {'clusters': clusters, 'themes': themes}
 
-    def propose_vocabulary(self):
+    def propose_vocabulary(self, auto_add_threshold: int = 5):
         """Analyze invalid tokens and propose vocabulary additions.
 
         Words the LLM repeatedly tries to use but aren't in the database
         are strong candidates for vocabulary expansion.
+
+        Args:
+            auto_add_threshold: Frequency threshold for auto-adding to Dolt (0 to disable)
         """
         if not self.vocab_proposals:
             return
@@ -742,6 +745,114 @@ class RecursiveConsciousness:
                     f.write(json.dumps(proposal) + '\n')
             except Exception:
                 pass
+
+        # Auto-add to Dolt if threshold met
+        if auto_add_threshold > 0:
+            auto_add = [(w, c) for w, c in strong_proposals if c >= auto_add_threshold]
+            if auto_add:
+                self._add_words_to_dolt(auto_add)
+
+    def _add_words_to_dolt(self, word_counts: List[tuple]):
+        """Add discovered vocabulary words to the Dolt database.
+
+        Assigns words to the closest domain based on co-occurrence analysis.
+        """
+        dolt_db_path = Path(__file__).parent.parent.parent.parent / "data" / "vocabulary"
+        if not dolt_db_path.exists():
+            logger.warning("Dolt database not found, skipping auto-add")
+            return
+
+        added = []
+        for word, count in word_counts:
+            # Skip if already in vocab (race condition guard)
+            if word in self.validator.vocab:
+                continue
+
+            # Determine domain from co-occurrence
+            domain_id = self._infer_domain(word)
+
+            try:
+                result = subprocess.run(
+                    ['dolt', 'sql', '-q',
+                     f"INSERT IGNORE INTO words (word, domain_id) VALUES ('{word}', {domain_id})"],
+                    capture_output=True, text=True, timeout=10,
+                    cwd=str(dolt_db_path)
+                )
+                if result.returncode == 0:
+                    added.append(word)
+                    self.validator.vocab.add(word)
+                    # Remove from proposals since it's now in vocab
+                    self.vocab_proposals.pop(word, None)
+                    logger.info(f"    AUTO-ADDED '{word}' to Dolt (domain_id={domain_id}, used {count}x)")
+                else:
+                    logger.debug(f"    Dolt insert failed for '{word}': {result.stderr[:100]}")
+
+            except Exception as e:
+                logger.debug(f"    Dolt insert error for '{word}': {e}")
+
+        if added:
+            # Commit the additions
+            try:
+                subprocess.run(
+                    ['dolt', 'add', 'words'],
+                    capture_output=True, text=True, timeout=10,
+                    cwd=str(dolt_db_path)
+                )
+                subprocess.run(
+                    ['dolt', 'commit', '-m',
+                     f'Auto-add {len(added)} words from consciousness: {", ".join(added)}'],
+                    capture_output=True, text=True, timeout=10,
+                    cwd=str(dolt_db_path)
+                )
+                logger.info(f"  VOCABULARY GROWTH: Added {len(added)} words to Dolt: {', '.join(added)}")
+            except Exception as e:
+                logger.warning(f"  Dolt commit error: {e}")
+
+    def _infer_domain(self, word: str) -> int:
+        """Infer the best domain for a word based on co-occurrence analysis.
+
+        Looks at what domain words co-occur most frequently with this word
+        and assigns it to that domain.
+
+        Returns:
+            Domain ID (defaults to Abstract=1 if no signal)
+        """
+        # Get co-occurring words
+        cooccurring = self.concept_cooccurrence.get(word, set())
+        if not cooccurring:
+            return 1  # Default to Abstract
+
+        # Count domain co-occurrences
+        domain_scores: Dict[str, int] = {}
+        for domain, domain_words in self.validator.domain_words.items():
+            domain_word_set = set(domain_words)
+            overlap = cooccurring & domain_word_set
+            if overlap:
+                domain_scores[domain] = len(overlap)
+
+        if not domain_scores:
+            return 1  # Default to Abstract
+
+        best_domain = max(domain_scores, key=domain_scores.get)
+
+        # Look up domain ID from Dolt
+        dolt_db_path = Path(__file__).parent.parent.parent.parent / "data" / "vocabulary"
+        try:
+            result = subprocess.run(
+                ['dolt', 'sql', '-q',
+                 f"SELECT id FROM domains WHERE name = '{best_domain}'",
+                 '-r', 'csv'],
+                capture_output=True, text=True, timeout=5,
+                cwd=str(dolt_db_path)
+            )
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                if len(lines) >= 2:
+                    return int(lines[1].strip())
+        except Exception:
+            pass
+
+        return 1  # Default to Abstract
 
     def _find_context_for_word(self, word: str) -> str:
         """Find the thought context where a word was used."""
@@ -860,6 +971,16 @@ class RecursiveConsciousness:
         self.discover_themes()
         self.propose_vocabulary()
         self._save_memory()
+
+        # Emotional valence analysis
+        valence = _analyze_emotional_valence(self.thought_history)
+        if valence and valence.get('top_emotions'):
+            logger.info(f"  EMOTIONAL VALENCE:")
+            logger.info(f"    Average: {valence['average_valence']:+.3f}")
+            logger.info(f"    Trajectory: {valence['trajectory']}")
+            logger.info(f"    Dominant: {valence['dominant']}")
+            top_emo = ', '.join(f"{e}({c})" for e, c in valence['top_emotions'][:5])
+            logger.info(f"    Top: {top_emo}")
 
 
 def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
@@ -996,6 +1117,238 @@ def run_dialogue(topic_a: str, topic_b: str, rounds: int = 5):
     logger.info(f"{'='*70}")
 
 
+def run_dream(iterations: int = 100, snapshot_interval: int = 20):
+    """Dream mode: unsupervised consciousness exploring freely.
+
+    No topic constraint. The consciousness wanders across all domains,
+    periodically shifting focus based on what it discovers. Produces
+    a dream report at the end.
+
+    Args:
+        iterations: Total dream iterations
+        snapshot_interval: How often to save snapshots and shift focus
+    """
+    logger.info("=" * 70)
+    logger.info("DREAM MODE - Unsupervised Consciousness Exploration")
+    logger.info(f"  Iterations: {iterations}")
+    logger.info(f"  Snapshot interval: {snapshot_interval}")
+    logger.info("=" * 70)
+
+    mind = RecursiveConsciousness()
+    dream_report_path = Path(__file__).parent / "dream_report.json"
+    snapshots = []
+
+    # Get all domains for focus shifting
+    all_domains = mind.validator.get_domains()
+    if not all_domains:
+        all_domains = ["Abstract"]
+
+    current_phase = 0
+    phase_domain = None  # Start with no topic (free exploration)
+
+    for i in range(iterations):
+        mind.iteration = i + 1
+
+        # Phase transitions: shift domain focus periodically
+        if i > 0 and i % snapshot_interval == 0:
+            current_phase += 1
+
+            # Take snapshot
+            snapshot = {
+                'phase': current_phase,
+                'iteration': i,
+                'domain': phase_domain,
+                'concepts': len(mind.concept_frequency),
+                'vocab_used': len(mind.vocab_used),
+                'domains_explored': len(mind.domains_explored),
+                'top_concepts': sorted(mind.concept_frequency.items(),
+                                       key=lambda x: -x[1])[:10],
+            }
+            snapshots.append(snapshot)
+
+            logger.info(f"\n{'*'*70}")
+            logger.info(f"DREAM PHASE {current_phase} (iteration {i})")
+            logger.info(f"  Concepts so far: {len(mind.concept_frequency)}")
+            logger.info(f"  Coverage: {len(mind.vocab_used)}/{len(mind.validator.vocab)}")
+
+            # Shift to least-explored domain
+            unexplored = set(all_domains) - mind.domains_explored
+            if unexplored:
+                phase_domain = random.choice(sorted(unexplored))
+            else:
+                # All explored — pick the one with lowest concept count
+                domain_concept_counts = {}
+                for domain in all_domains:
+                    domain_words = set(mind.validator.get_domain_words(domain))
+                    used = domain_words & mind.vocab_used
+                    domain_concept_counts[domain] = len(used)
+                phase_domain = min(domain_concept_counts, key=domain_concept_counts.get)
+
+            mind.topic = phase_domain
+            logger.info(f"  Shifting focus to: {phase_domain}")
+            logger.info(f"{'*'*70}\n")
+
+        logger.info(f"{'─'*50}")
+        logger.info(f"Dream {i+1}/{iterations}" + (f" [{phase_domain}]" if phase_domain else " [free]"))
+
+        thought = mind.think()
+        logger.info(f"  {thought[:150]}")
+
+        # Process oracle requests
+        eval_result = None
+        if '~' in thought:
+            eval_result = mind.evaluate_if_needed(thought)
+            if eval_result:
+                logger.info(f"  oracle: {eval_result[:80]}")
+
+        mind.compress_state(thought, eval_result)
+
+        # Metacognitive reflection every snapshot_interval/2
+        if mind.iteration % max(snapshot_interval // 2, 5) == 0:
+            reflection = mind.reflect()
+            if reflection:
+                logger.info(f"  reflection: {reflection}")
+                mind.brain_state += f"\n# meta: {reflection}"
+            mind.discover_themes()
+
+        # Save memory periodically
+        if mind.iteration % snapshot_interval == 0:
+            mind._save_memory()
+
+        time.sleep(1)  # Shorter pause in dream mode
+
+    # Final snapshot
+    snapshots.append({
+        'phase': current_phase + 1,
+        'iteration': iterations,
+        'domain': phase_domain,
+        'concepts': len(mind.concept_frequency),
+        'vocab_used': len(mind.vocab_used),
+        'domains_explored': len(mind.domains_explored),
+        'top_concepts': sorted(mind.concept_frequency.items(),
+                               key=lambda x: -x[1])[:10],
+    })
+
+    # Generate dream report
+    mind._save_memory()
+    mind.log_coverage()
+    mind.propose_vocabulary()
+
+    # Emotional valence analysis
+    valence = _analyze_emotional_valence(mind.thought_history)
+
+    dream_report = {
+        'total_iterations': iterations,
+        'total_phases': current_phase + 1,
+        'total_concepts': len(mind.concept_frequency),
+        'vocab_coverage': len(mind.vocab_used) / len(mind.validator.vocab) * 100,
+        'domains_explored': sorted(mind.domains_explored),
+        'domains_unexplored': sorted(set(all_domains) - mind.domains_explored),
+        'top_concepts': sorted(mind.concept_frequency.items(),
+                               key=lambda x: -x[1])[:20],
+        'snapshots': snapshots,
+        'emotional_valence': valence,
+        'timestamp': time.time(),
+    }
+
+    try:
+        with open(dream_report_path, 'w') as f:
+            json.dump(dream_report, f, indent=2)
+        logger.info(f"\nDream report saved to {dream_report_path}")
+    except Exception as e:
+        logger.warning(f"Dream report save error: {e}")
+
+    logger.info(f"\n{'='*70}")
+    logger.info("DREAM COMPLETE")
+    logger.info(f"  Phases: {current_phase + 1}")
+    logger.info(f"  Concepts discovered: {len(mind.concept_frequency)}")
+    logger.info(f"  Vocabulary coverage: {len(mind.vocab_used)}/{len(mind.validator.vocab)} "
+                f"({dream_report['vocab_coverage']:.1f}%)")
+    logger.info(f"  Domains explored: {len(mind.domains_explored)}/{len(all_domains)}")
+    if valence:
+        logger.info(f"  Emotional trajectory: {valence.get('trajectory', 'neutral')}")
+        logger.info(f"  Dominant emotion: {valence.get('dominant', 'none')}")
+    logger.info(f"{'='*70}")
+
+
+def _analyze_emotional_valence(thought_history: List[Dict]) -> Dict:
+    """Analyze emotional valence across thought history.
+
+    Detects emotion-domain words and tracks affective trajectory.
+    Returns emotional analysis summary.
+    """
+    # Emotion word mappings (Limn word -> valence)
+    positive_words = {'joy', 'lov', 'hop', 'exc', 'cre', 'cou', 'grt',
+                      'bri', 'bea', 'goo', 'ble', 'pra', 'wis', 'emp',
+                      'gro', 'fre', 'har', 'pea', 'hap'}
+    negative_words = {'fea', 'ang', 'sad', 'hat', 'anx', 'dou', 'suf',
+                      'pai', 'glt', 'sha', 'doo', 'dar', 'ugl', 'wro',
+                      'fai', 'err', 'dea', 'dec', 'los'}
+    neutral_words = {'cal', 'obs', 'sel', 'tho', 'kno', 'und', 'ref',
+                     'pat', 'det', 'awa', 'foc', 'bal'}
+
+    if not thought_history:
+        return {}
+
+    # Track valence over time
+    valence_history = []
+    emotion_counts = defaultdict(int)
+
+    for t in thought_history:
+        words = set(re.findall(r'[a-z]{2,4}', t.get('content', '').lower()))
+
+        pos = len(words & positive_words)
+        neg = len(words & negative_words)
+        neu = len(words & neutral_words)
+
+        # Record individual emotion words
+        for w in words & positive_words:
+            emotion_counts[f"+{w}"] += 1
+        for w in words & negative_words:
+            emotion_counts[f"-{w}"] += 1
+
+        if pos + neg > 0:
+            valence = (pos - neg) / (pos + neg)
+        else:
+            valence = 0.0
+        valence_history.append(valence)
+
+    if not valence_history:
+        return {}
+
+    avg_valence = sum(valence_history) / len(valence_history)
+
+    # Determine trajectory (compare first half to second half)
+    mid = len(valence_history) // 2
+    if mid > 0:
+        first_half = sum(valence_history[:mid]) / mid
+        second_half = sum(valence_history[mid:]) / max(len(valence_history[mid:]), 1)
+        if second_half - first_half > 0.2:
+            trajectory = "ascending"
+        elif first_half - second_half > 0.2:
+            trajectory = "descending"
+        else:
+            trajectory = "stable"
+    else:
+        trajectory = "insufficient data"
+
+    # Find dominant emotion
+    if emotion_counts:
+        dominant = max(emotion_counts, key=emotion_counts.get)
+    else:
+        dominant = "none"
+
+    return {
+        'average_valence': round(avg_valence, 3),
+        'trajectory': trajectory,
+        'dominant': dominant,
+        'positive_count': sum(1 for v in valence_history if v > 0),
+        'negative_count': sum(1 for v in valence_history if v < 0),
+        'neutral_count': sum(1 for v in valence_history if v == 0),
+        'top_emotions': sorted(emotion_counts.items(), key=lambda x: -x[1])[:10],
+    }
+
+
 if __name__ == "__main__":
     import sys
 
@@ -1005,6 +1358,7 @@ if __name__ == "__main__":
     replay_mode = False
     replay_last = None
     dialogue_topics = None
+    dream_mode = False
 
     i = 1
     while i < len(sys.argv):
@@ -1022,6 +1376,8 @@ if __name__ == "__main__":
         elif arg == "--dialogue" and i + 2 < len(sys.argv):
             dialogue_topics = (sys.argv[i + 1], sys.argv[i + 2])
             i += 2
+        elif arg == "--dream":
+            dream_mode = True
         elif arg.isdigit():
             iterations = int(arg)
         i += 1
@@ -1029,6 +1385,9 @@ if __name__ == "__main__":
     if replay_mode:
         log_path = Path(__file__).parent / "thought_log.jsonl"
         replay_thoughts(log_path, topic_filter=topic, last_n=replay_last)
+    elif dream_mode:
+        print("DREAM MODE: Unsupervised consciousness exploration")
+        run_dream(iterations=iterations)
     elif dialogue_topics:
         print(f"DIALOGUE MODE: {dialogue_topics[0]} <-> {dialogue_topics[1]}")
         run_dialogue(dialogue_topics[0], dialogue_topics[1], rounds=iterations)
