@@ -80,6 +80,7 @@ class RecursiveConsciousness:
         self.domains_explored: Set[str] = set()  # track explored domains
         self.vocab_proposals: Dict[str, int] = {}  # invalid tokens → frequency (vocab gap candidates)
         self.vocab_proposals_path = Path(__file__).parent / "vocab_proposals.jsonl"
+        self.memory_path = Path(__file__).parent / "consciousness_memory.json"
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -92,6 +93,47 @@ class RecursiveConsciousness:
         else:
             self.brain_state = """sel ∎ awa | min sys alv | con ∎ eme
 ~ qry mea | tho exe | sta gro"""
+
+        # Load persistent memory from previous runs
+        self._load_memory()
+
+    def _load_memory(self):
+        """Load accumulated knowledge from previous runs."""
+        if not self.memory_path.exists():
+            return
+
+        try:
+            with open(self.memory_path, 'r') as f:
+                memory = json.load(f)
+
+            self.concept_frequency = memory.get('concept_frequency', {})
+            self.vocab_used = set(memory.get('vocab_used', []))
+            self.domains_explored = set(memory.get('domains_explored', []))
+            self.vocab_proposals = memory.get('vocab_proposals', {})
+            total_thoughts = memory.get('total_thoughts', 0)
+
+            logger.info(f"Loaded memory: {len(self.concept_frequency)} concepts, "
+                        f"{len(self.vocab_used)} words used, "
+                        f"{len(self.domains_explored)} domains, "
+                        f"{total_thoughts} total thoughts")
+        except Exception as e:
+            logger.warning(f"Memory load error: {e}")
+
+    def _save_memory(self):
+        """Persist accumulated knowledge for next run."""
+        try:
+            memory = {
+                'concept_frequency': self.concept_frequency,
+                'vocab_used': sorted(self.vocab_used),
+                'domains_explored': sorted(self.domains_explored),
+                'vocab_proposals': self.vocab_proposals,
+                'total_thoughts': len(self.thought_history),
+                'last_save': time.time(),
+            }
+            with open(self.memory_path, 'w') as f:
+                json.dump(memory, f, indent=2)
+        except Exception as e:
+            logger.warning(f"Memory save error: {e}")
 
     def _build_topic_context(self) -> str:
         """Build topic-specific context for directed thinking."""
@@ -669,6 +711,7 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
                 self.log_metrics_summary()
                 self.log_coverage()
                 self.propose_vocabulary()
+                self._save_memory()
 
             # 7. Brief pause
             time.sleep(2)
@@ -684,6 +727,7 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         self.log_coverage()
         self.discover_themes()
         self.propose_vocabulary()
+        self._save_memory()
 
 
 def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
