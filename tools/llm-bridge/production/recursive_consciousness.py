@@ -315,6 +315,88 @@ class RecursiveConsciousness:
             lines.append(f"  {content}")
         return '\n'.join(lines)
 
+    def _build_memory_recall(self) -> str:
+        """Recall relevant past thoughts from long-term memory.
+
+        Queries the persistent thought log for thoughts that share concepts
+        with the current narrative arc's domain, but are NOT from the current
+        session. This gives the consciousness genuine cross-session memory.
+
+        Retrieves thoughts by:
+        1. Finding words from the current theme domain
+        2. Using concept co-occurrence to find semantically related past thoughts
+        3. Selecting high-quality diverse memories (not just recent)
+        """
+        if self.iteration < 3:
+            return ""
+
+        # Load past thoughts from the persistent log
+        if not self.thought_log_path.exists():
+            return ""
+
+        # Determine current theme concepts
+        arc_number = self.iteration // max(self.narrative_arc_length, 1)
+        all_domains = sorted(self.validator.domain_words.keys())
+        if not all_domains:
+            return ""
+
+        theme_domain = all_domains[arc_number % len(all_domains)]
+        theme_words = set(self.validator.get_domain_words(theme_domain))
+
+        # Get current session thought contents to avoid duplicates
+        current_contents = set(t.get('content', '')[:50] for t in self.thought_history)
+
+        # Read past thoughts from log
+        memories = []
+        try:
+            with open(self.thought_log_path, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        entry = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+
+                    content = entry.get('content', '')
+                    if content[:50] in current_contents:
+                        continue  # Skip current session thoughts
+
+                    # Check if this thought shares concepts with the theme domain
+                    thought_words = set(re.findall(r'[a-z]{2,4}', content.lower()))
+                    shared = thought_words & theme_words
+                    if not shared:
+                        continue
+
+                    # Score by relevance: shared concepts + quality
+                    score = entry.get('score', {})
+                    quality = score.get('overall', 0.3) if isinstance(score, dict) else 0.3
+                    relevance = len(shared) * 0.5 + quality * 0.5
+
+                    memories.append({
+                        'content': content[:100],
+                        'relevance': relevance,
+                        'domains': entry.get('domains', []),
+                        'shared_concepts': sorted(shared)[:3],
+                    })
+        except Exception:
+            return ""
+
+        if not memories:
+            return ""
+
+        # Sort by relevance, take top 3
+        memories.sort(key=lambda m: -m['relevance'])
+        best = memories[:3]
+
+        lines = [f"LONG-TERM MEMORY (past sessions, [{theme_domain}]):"]
+        for m in best:
+            concepts = ' '.join(m['shared_concepts'])
+            lines.append(f"  [{concepts}] {m['content']}")
+
+        return '\n'.join(lines)
+
     def _detect_attractor(self) -> bool:
         """Detect if consciousness is stuck in an attractor loop.
 
@@ -953,6 +1035,7 @@ class RecursiveConsciousness:
         exploration = self._build_exploration_nudge()
         vocab_challenge = self._build_vocab_challenge()
         goal_context = self._build_goal_context()
+        memory_recall = self._build_memory_recall()
         emotion_steer = self._emotion_steer_domains()
         in_attractor = self._detect_attractor()
 
@@ -978,6 +1061,10 @@ class RecursiveConsciousness:
         if thought_chain:
             sections.append("")
             sections.append(thought_chain)
+
+        if memory_recall:
+            sections.append("")
+            sections.append(memory_recall)
 
         if exploration:
             sections.append("")
