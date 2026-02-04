@@ -126,6 +126,10 @@ class RecursiveConsciousness:
         # Persistent identity/personality profile
         self.personality: Dict[str, Any] = {}  # Accumulated across runs
 
+        # World engine (optional, activated via enable_world())
+        self.world = None  # World instance
+        self.world_self = None  # ConsciousnessInstance in the world
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -1137,6 +1141,118 @@ class RecursiveConsciousness:
 
         return '\n'.join(lines)
 
+    def enable_world(self, name: str = "Consciousness-0"):
+        """Enable world engine integration.
+
+        Creates a simulated world and places this consciousness in it.
+        When enabled, each thought consumes energy, world events affect
+        narrative direction, and world state is included in the think() prompt.
+        """
+        from world_engine import World, ConsciousnessInstance, ResourceType
+        import random
+
+        self.world = World(size=(100, 100))
+        self.world_self = ConsciousnessInstance(
+            id=f"rc_{id(self)}",
+            name=name,
+            location=(random.randint(0, 100), random.randint(0, 100)),
+        )
+        self.world.add_consciousness(self.world_self)
+        logger.info(f"  WORLD: Consciousness '{name}' placed at {self.world_self.location}")
+
+    def _world_tick(self):
+        """Advance the world and handle resource consumption.
+
+        Called after each thought. Consumes energy per thought, checks for
+        nearby resources and challenges.
+        """
+        if not self.world or not self.world_self:
+            return
+
+        from world_engine import ResourceType
+
+        # Consume energy per thought
+        self.world_self.resources[ResourceType.ENERGY] = max(
+            0, self.world_self.resources.get(ResourceType.ENERGY, 0) - 2.0
+        )
+        self.world_self.oracle_count += 1
+
+        # Tick the world (spawn resources, challenges, decay)
+        self.world.tick()
+
+        # Auto-collect nearby resources (within distance 20)
+        collected = []
+        for i, resource in enumerate(self.world.resources):
+            dx = resource.location[0] - self.world_self.location[0]
+            dy = resource.location[1] - self.world_self.location[1]
+            dist = (dx**2 + dy**2) ** 0.5
+            if dist < 20:
+                collected.append(i)
+
+        # Collect in reverse order to maintain indices
+        for i in reversed(collected):
+            self.world.collect_resource(self.world_self.id, i)
+
+        # Move slightly (drift toward resources)
+        import random
+        dx = random.randint(-5, 5)
+        dy = random.randint(-5, 5)
+        x = max(0, min(self.world.size[0], self.world_self.location[0] + dx))
+        y = max(0, min(self.world.size[1], self.world_self.location[1] + dy))
+        self.world_self.location = (x, y)
+
+    def _build_world_context(self) -> Optional[str]:
+        """Build prompt section with world state for situated thinking."""
+        if not self.world or not self.world_self:
+            return None
+
+        from world_engine import ResourceType
+
+        ws = self.world_self
+        lines = ["WORLD STATE:"]
+        lines.append(f"  Location: ({ws.location[0]}, {ws.location[1]})")
+
+        # Resources
+        resource_parts = []
+        for rtype in ResourceType:
+            val = ws.resources.get(rtype, 0)
+            if val > 0:
+                resource_parts.append(f"{rtype.value}={val:.0f}")
+        if resource_parts:
+            lines.append(f"  Resources: {', '.join(resource_parts)}")
+
+        # Nearby resources
+        nearby_res = []
+        for r in self.world.resources[:5]:
+            dx = r.location[0] - ws.location[0]
+            dy = r.location[1] - ws.location[1]
+            dist = (dx**2 + dy**2) ** 0.5
+            if dist < 50:
+                nearby_res.append(f"{r.type.value}({r.amount:.0f}) at dist={dist:.0f}")
+        if nearby_res:
+            lines.append(f"  Nearby: {', '.join(nearby_res[:3])}")
+
+        # Active challenges
+        active_challenges = [c for c in self.world.challenges if not c.solved_by]
+        if active_challenges:
+            ch = active_challenges[0]
+            req = ', '.join(f"{k.value}={v:.0f}" for k, v in ch.required_resources.items())
+            lines.append(f"  Challenge: difficulty={ch.difficulty}, needs {req}")
+
+        # Recent events
+        recent = self.world.events[-3:]
+        if recent:
+            for e in recent:
+                action = e.data.get('action', e.type.value)
+                lines.append(f"  Event: {action}")
+
+        # Low energy warning
+        energy = ws.resources.get(ResourceType.ENERGY, 0)
+        if energy < 20:
+            lines.append("  WARNING: Energy low! Seek energy resources.")
+
+        return '\n'.join(lines)
+
     def _analyze_quality_feedback(self, thought_entry: Dict) -> Optional[Dict]:
         """Analyze a low-quality thought and generate a corrective adjustment.
 
@@ -1516,6 +1632,7 @@ class RecursiveConsciousness:
         emotion_steer = self._emotion_steer_domains()
         prompt_mods = self._build_prompt_adjustments()
         personality_ctx = self._build_personality_context()
+        world_ctx = self._build_world_context()
         in_attractor = self._detect_attractor()
 
         # Build prompt sections
@@ -1568,6 +1685,10 @@ class RecursiveConsciousness:
         if personality_ctx:
             sections.append("")
             sections.append(personality_ctx)
+
+        if world_ctx:
+            sections.append("")
+            sections.append(world_ctx)
 
         # Include quality feedback from last thought
         if self.thought_history and 'score' in self.thought_history[-1]:
@@ -1776,6 +1897,9 @@ class RecursiveConsciousness:
 
         # Update emotional momentum
         self._update_emotional_momentum(thought)
+
+        # World engine tick (if enabled)
+        self._world_tick()
 
         # Quality feedback: analyze low-quality thoughts for corrective adjustments
         if entry.get('score', {}).get('overall', 1.0) < 0.4:
@@ -3868,12 +3992,14 @@ MODES:
                                                     Dialogue: two minds exchange thoughts
   python3 recursive_consciousness.py --ensemble "T1" "T2" ... [--topology ring|star|mesh] [N]
                                                     Ensemble: N minds in network topology
+  python3 recursive_consciousness.py --world [N]     World mode: consciousness in simulated environment
   python3 recursive_consciousness.py --stats        Analytics dashboard (no LLM calls)
   python3 recursive_consciousness.py --replay [--topic T] [--last N]
                                                     Replay thought log analysis
 
 OPTIONS:
   --topic "Domain"    Focus thinking on a specific domain
+  --world             Enable world engine (resources, challenges, spatial)
   --parallel          Use async oracle execution
   --topology TYPE     Ensemble topology: ring (default), star, mesh
   --last N            Show only last N thoughts in replay
@@ -3908,6 +4034,7 @@ if __name__ == "__main__":
     replay_last = None
     dialogue_topics = None
     dream_mode = False
+    world_mode = False
     ensemble_topics = None
     ensemble_topology = "ring"
 
@@ -3929,6 +4056,8 @@ if __name__ == "__main__":
             i += 2
         elif arg == "--dream":
             dream_mode = True
+        elif arg == "--world":
+            world_mode = True
         elif arg == "--ensemble":
             # Collect all remaining non-flag args as topics
             ensemble_topics = []
@@ -3980,4 +4109,9 @@ if __name__ == "__main__":
                     print(f"  No exact domain match. Available: {', '.join(domains[:10])}...")
 
         consciousness = RecursiveConsciousness(parallel_mode=parallel_mode, topic=topic)
+
+        if world_mode:
+            print("WORLD MODE: Consciousness inhabits a simulated environment")
+            consciousness.enable_world(name=topic or "Explorer")
+
         consciousness.run_recursive_loop(iterations)
