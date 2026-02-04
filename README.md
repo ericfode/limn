@@ -68,7 +68,7 @@ limn-land/
 
 | Document | Purpose |
 |----------|---------|
-| [Bootstrap v3-Natural](docs/spec/bootstrap-v3-natural.md) | **CANONICAL** - Zero-training bootstrap (validated 77-85% comprehension) |
+| [Bootstrap v3-Natural](docs/spec/bootstrap-v3-natural.md) | **CANONICAL** - Zero-training bootstrap (validated 77-85% comprehension) - See [docs/BOOTSTRAP.md](docs/BOOTSTRAP.md) for navigation |
 | [Vocabulary v3-Natural](docs/spec/vocabulary-v3-natural.md) | Complete word list with etymology |
 | [Formal Grammar](docs/spec/grammar-formal.md) | Operator precedence, syntax rules |
 | [Liminal Semantics](docs/theory/liminal-semantics.md) | How contradictions resolve |
