@@ -734,6 +734,116 @@ class RecursiveConsciousness:
                     f"coverage {'+' if dc > 0 else ''}{dc:.1f}% "
                     f"novelty {'+' if dn > 0 else ''}{dn:.3f}")
 
+    def compose_thoughts(self, theme_domain: str = None, depth: int = 3) -> List[str]:
+        """Generate a composed chain of thoughts using the ComposeEngine.
+
+        Instead of generating independent thoughts, this creates a structured
+        multi-thought composition where each thought builds on the previous:
+
+        1. SEED: Generate an initial thesis thought about the theme
+        2. DEVELOP: Take the seed and develop it (oracle enrichment)
+        3. SYNTHESIZE: Combine seed + development into synthesis
+
+        Each step uses the SEMANTIC oracle to transform the previous output,
+        creating coherent multi-step reasoning within a single narrative arc.
+
+        Args:
+            theme_domain: Domain to focus the composition on
+            depth: Number of composition steps (2-5)
+
+        Returns:
+            List of composed thoughts in sequence
+        """
+        from compose_engine import ComposeEngine, CompositionStep
+
+        compose = ComposeEngine(self.harness)
+        domain = theme_domain or self.topic or "Abstract"
+        domain_words = self.validator.get_domain_words(domain)
+        valid_words = [w for w in domain_words if 2 <= len(w) <= 4 and w.isalpha()]
+
+        if not valid_words:
+            return []
+
+        thoughts = []
+
+        # Step 1: Generate seed thought
+        seed_words = self._rotate_words(valid_words, window=10)
+        seed_prompt = (
+            f"Generate a single line of pure Limn language (2-4 letter words + operators "
+            f"~ ∎ ∿ @ → |). Use words from [{domain}]: {' '.join(seed_words)}. "
+            f"Make a bold assertion. No English. Just one line of Limn."
+        )
+
+        try:
+            seed_steps = [CompositionStep(
+                oracle_type='SEMANTIC',
+                params={'prompt': seed_prompt}
+            )]
+            seed_result = compose.execute_sequential(seed_steps)
+            seed = str(seed_result).strip()
+
+            # Validate the seed
+            is_valid, _ = self.validator.validate_response(seed)
+            if not is_valid:
+                seed = self.validator.extract_limn_only(seed) or ""
+            if not seed:
+                return []
+
+            thoughts.append(seed)
+            self._track_concepts(seed)
+
+            # Step 2: Develop the seed
+            if depth >= 2:
+                develop_prompt = (
+                    f"Given this Limn thought: '{seed}'\n"
+                    f"Generate the NEXT thought that develops this idea deeper. "
+                    f"Pure Limn only (2-4 letter words + operators). "
+                    f"Explore implications. One line. No English."
+                )
+                develop_steps = [CompositionStep(
+                    oracle_type='SEMANTIC',
+                    params={'prompt': develop_prompt}
+                )]
+                develop_result = compose.execute_sequential(develop_steps)
+                develop = str(develop_result).strip()
+
+                is_valid, _ = self.validator.validate_response(develop)
+                if not is_valid:
+                    develop = self.validator.extract_limn_only(develop) or ""
+                if develop:
+                    thoughts.append(develop)
+                    self._track_concepts(develop)
+
+            # Step 3: Synthesize
+            if depth >= 3 and len(thoughts) >= 2:
+                synth_prompt = (
+                    f"Given these Limn thoughts:\n"
+                    f"  1: '{thoughts[0]}'\n"
+                    f"  2: '{thoughts[-1]}'\n"
+                    f"Synthesize them into ONE new Limn line that resolves tension "
+                    f"between them. Pure Limn only. No English."
+                )
+                synth_steps = [CompositionStep(
+                    oracle_type='SEMANTIC',
+                    params={'prompt': synth_prompt}
+                )]
+                synth_result = compose.execute_sequential(synth_steps)
+                synth = str(synth_result).strip()
+
+                is_valid, _ = self.validator.validate_response(synth)
+                if not is_valid:
+                    synth = self.validator.extract_limn_only(synth) or ""
+                if synth:
+                    thoughts.append(synth)
+                    self._track_concepts(synth)
+
+            logger.info(f"  Composed {len(thoughts)} thoughts in [{domain}] arc")
+            return thoughts
+
+        except Exception as e:
+            logger.warning(f"  Composition failed: {e}")
+            return []
+
     def _build_vocab_challenge(self) -> str:
         """Generate a vocabulary challenge at adaptive frequency.
 
@@ -1976,7 +2086,24 @@ class RecursiveConsciousness:
             if self.iteration % 5 == 0:
                 self._adapt_parameters()
 
-            # 5b. Reset learning goals at narrative arc transitions
+            # 5b. At narrative arc SYNTHESIS phase, run composed thought chain
+            arc_pos = self.iteration % self.narrative_arc_length
+            phase = arc_pos * 4 // self.narrative_arc_length
+            if phase == 3 and arc_pos == self.narrative_arc_length - 1:
+                # SYNTHESIS phase - compose a multi-step thought chain
+                arc_number = self.iteration // self.narrative_arc_length
+                all_domains = sorted(self.validator.domain_words.keys())
+                if all_domains:
+                    theme = all_domains[arc_number % len(all_domains)]
+                    logger.info(f"   Composing thought chain for [{theme}]...")
+                    composed = self.compose_thoughts(theme_domain=theme, depth=3)
+                    if composed:
+                        # Add composed thoughts to brain state
+                        composed_text = ' | '.join(composed)
+                        self.brain_state += f"\n# composed[{theme}]: {composed_text}"
+                        logger.info(f"   Composed chain: {composed_text[:150]}")
+
+            # 5c. Reset learning goals at narrative arc transitions
             if self.iteration % self.narrative_arc_length == 0:
                 self._set_learning_goals()
 

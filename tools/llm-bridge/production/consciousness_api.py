@@ -7,6 +7,7 @@ Lightweight HTTP server exposing consciousness operations:
   GET  /graph           Concept graph (JSON)
   GET  /replay          Thought replay timeline (JSON)
   POST /think           Generate a single thought
+  POST /compose         Generate a composed thought chain
   POST /dream           Start a dream session
   POST /ensemble        Start an ensemble session
 
@@ -114,6 +115,8 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
 
         if path == '/think':
             self._handle_think(body)
+        elif path == '/compose':
+            self._handle_compose(body)
         elif path == '/dream':
             self._handle_dream(body)
         elif path == '/ensemble':
@@ -339,6 +342,25 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
         })
 
+    def _handle_compose(self, body: Dict):
+        """Generate a composed chain of thoughts."""
+        topic = body.get('topic')
+        domain = body.get('domain', topic or 'Abstract')
+        depth = min(body.get('depth', 3), 5)
+
+        rc = get_consciousness(topic)
+        rc.iteration += 1
+
+        thoughts = rc.compose_thoughts(theme_domain=domain, depth=depth)
+
+        self._send_json({
+            'thoughts': thoughts,
+            'domain': domain,
+            'depth': depth,
+            'count': len(thoughts),
+            'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+        })
+
     def _handle_dream(self, body: Dict):
         """Start a dream session (runs in background)."""
         global _background_task
@@ -411,6 +433,7 @@ def main():
     print(f"  GET  http://localhost:{port}/replay   - Thought timeline")
     print(f"  GET  http://localhost:{port}/health   - Health check")
     print(f"  POST http://localhost:{port}/think    - Generate thought")
+    print(f"  POST http://localhost:{port}/compose  - Compose thought chain")
     print(f"  POST http://localhost:{port}/dream    - Start dream session")
     print(f"  POST http://localhost:{port}/ensemble - Start ensemble")
     print()
