@@ -78,6 +78,8 @@ class RecursiveConsciousness:
         self.concept_cooccurrence: Dict[str, Set[str]] = defaultdict(set)  # semantic network
         self.vocab_used: Set[str] = set()  # track which vocab words have been used
         self.domains_explored: Set[str] = set()  # track explored domains
+        self.vocab_proposals: Dict[str, int] = {}  # invalid tokens → frequency (vocab gap candidates)
+        self.vocab_proposals_path = Path(__file__).parent / "vocab_proposals.jsonl"
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -272,6 +274,10 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
             entry['oracle_result'] = eval_result[:200]
         if invalid_words:
             entry['invalid_tokens'] = sorted(invalid_words)
+            # Track vocabulary gaps
+            for w in invalid_words:
+                if len(w) >= 2 and len(w) <= 4 and w.isalpha():
+                    self.vocab_proposals[w] = self.vocab_proposals.get(w, 0) + 1
 
         self.thought_history.append(entry)
         self._persist_thought(entry)
@@ -527,6 +533,49 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
 
         return {'clusters': clusters, 'themes': themes}
 
+    def propose_vocabulary(self):
+        """Analyze invalid tokens and propose vocabulary additions.
+
+        Words the LLM repeatedly tries to use but aren't in the database
+        are strong candidates for vocabulary expansion.
+        """
+        if not self.vocab_proposals:
+            return
+
+        # Find tokens used 3+ times (strong signal the consciousness needs them)
+        strong_proposals = sorted(
+            [(w, c) for w, c in self.vocab_proposals.items() if c >= 3],
+            key=lambda x: -x[1]
+        )
+
+        if not strong_proposals:
+            return
+
+        logger.info(f"  VOCABULARY PROPOSALS ({len(strong_proposals)} candidates):")
+        for word, count in strong_proposals[:10]:
+            logger.info(f"    '{word}' used {count}x - needs definition")
+
+            # Persist to proposals file for linguist review
+            try:
+                proposal = {
+                    'word': word,
+                    'frequency': count,
+                    'timestamp': time.time(),
+                    'topic': self.topic,
+                    'context': self._find_context_for_word(word),
+                }
+                with open(self.vocab_proposals_path, 'a') as f:
+                    f.write(json.dumps(proposal) + '\n')
+            except Exception:
+                pass
+
+    def _find_context_for_word(self, word: str) -> str:
+        """Find the thought context where a word was used."""
+        for t in reversed(self.thought_history):
+            if word in t.get('content', '').lower():
+                return t['content'][:100]
+        return ""
+
     def log_coverage(self):
         """Log vocabulary coverage statistics."""
         total_vocab = len(self.validator.vocab)
@@ -615,10 +664,11 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
                 # Discover concept clusters
                 self.discover_themes()
 
-            # 6. Log metrics and coverage (every 10 iterations)
+            # 6. Log metrics, coverage, and vocab proposals (every 10 iterations)
             if self.iteration % 10 == 0:
                 self.log_metrics_summary()
                 self.log_coverage()
+                self.propose_vocabulary()
 
             # 7. Brief pause
             time.sleep(2)
@@ -633,6 +683,7 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         self.log_metrics_summary()
         self.log_coverage()
         self.discover_themes()
+        self.propose_vocabulary()
 
 
 def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
