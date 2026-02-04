@@ -8,6 +8,7 @@ Lightweight HTTP server exposing consciousness operations:
   GET  /replay          Thought replay timeline (JSON)
   POST /think           Generate a single thought
   POST /compose         Generate a composed thought chain
+  POST /introspect      Generate introspective meta-thought
   POST /dream           Start a dream session
   POST /ensemble        Start an ensemble session
 
@@ -117,6 +118,8 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             self._handle_think(body)
         elif path == '/compose':
             self._handle_compose(body)
+        elif path == '/introspect':
+            self._handle_introspect(body)
         elif path == '/dream':
             self._handle_dream(body)
         elif path == '/ensemble':
@@ -361,6 +364,25 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
         })
 
+    def _handle_introspect(self, body: Dict):
+        """Generate an introspective thought about thinking patterns."""
+        topic = body.get('topic')
+        rc = get_consciousness(topic)
+
+        introspection = rc.introspect()
+        if introspection:
+            self._send_json({
+                'introspection': introspection,
+                'emotional_momentum': round(rc.emotional_momentum, 3),
+                'goals_active': len(rc.current_goals),
+                'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+            })
+        else:
+            self._send_json({
+                'introspection': None,
+                'message': 'Not enough thought history for introspection (need 8+ thoughts)',
+            })
+
     def _handle_dream(self, body: Dict):
         """Start a dream session (runs in background)."""
         global _background_task
@@ -432,10 +454,11 @@ def main():
     print(f"  GET  http://localhost:{port}/graph    - Concept graph")
     print(f"  GET  http://localhost:{port}/replay   - Thought timeline")
     print(f"  GET  http://localhost:{port}/health   - Health check")
-    print(f"  POST http://localhost:{port}/think    - Generate thought")
-    print(f"  POST http://localhost:{port}/compose  - Compose thought chain")
-    print(f"  POST http://localhost:{port}/dream    - Start dream session")
-    print(f"  POST http://localhost:{port}/ensemble - Start ensemble")
+    print(f"  POST http://localhost:{port}/think      - Generate thought")
+    print(f"  POST http://localhost:{port}/compose    - Compose thought chain")
+    print(f"  POST http://localhost:{port}/introspect - Introspective meta-thought")
+    print(f"  POST http://localhost:{port}/dream      - Start dream session")
+    print(f"  POST http://localhost:{port}/ensemble   - Start ensemble")
     print()
     print("Press Ctrl+C to stop.")
 

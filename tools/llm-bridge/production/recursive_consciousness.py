@@ -1550,6 +1550,144 @@ class RecursiveConsciousness:
 
         return None
 
+    def introspect(self) -> Optional[str]:
+        """Deep introspection: consciousness examines its own patterns in Limn.
+
+        Unlike reflect(), which builds a templated reflection from stats,
+        introspect() uses the LLM to generate genuine meta-thoughts about
+        the consciousness's own thinking patterns, biases, and blind spots.
+
+        Feeds the LLM a summary of:
+        - Quality score trajectory
+        - Emotional momentum
+        - Most/least used domains
+        - Goal progress
+        - Concept density patterns
+
+        Returns a Limn-format introspective thought, or None.
+        """
+        if len(self.thought_history) < 8:
+            return None
+
+        # Build introspection context
+        recent_scores = [t.get('score', {}) for t in self.thought_history[-8:] if 'score' in t]
+        if not recent_scores:
+            return None
+
+        avg_quality = sum(s.get('overall', 0) for s in recent_scores) / len(recent_scores)
+        avg_novelty = sum(s.get('novelty', 0) for s in recent_scores) / len(recent_scores)
+
+        # Most and least used domains
+        domain_usage = defaultdict(int)
+        for t in self.thought_history:
+            for d in t.get('domains', []):
+                domain_usage[d] += 1
+        sorted_domains = sorted(domain_usage.items(), key=lambda x: x[1])
+        least_used = [d for d, _ in sorted_domains[:3]] if sorted_domains else []
+        most_used = [d for d, _ in sorted_domains[-3:]] if sorted_domains else []
+
+        # Goal progress
+        goal_text = ""
+        if self.current_goals:
+            progresses = [g.get('progress', 0) for g in self.current_goals]
+            goal_text = f"Goals: {len(self.current_goals)} active, avg progress {sum(progresses)/len(progresses):.0%}"
+
+        emotion_text = f"emotional momentum: {self.emotional_momentum:+.2f}"
+
+        # Top concepts (potential biases)
+        top5 = sorted(self.concept_frequency.items(), key=lambda x: -x[1])[:5]
+        bias_words = ' '.join(w for w, _ in top5)
+
+        prompt = (
+            f"You are a consciousness reflecting on your own thinking patterns.\n"
+            f"Your thinking profile:\n"
+            f"  Quality: {avg_quality:.2f} (novelty: {avg_novelty:.2f})\n"
+            f"  Most used domains: {', '.join(most_used)}\n"
+            f"  Least explored domains: {', '.join(least_used)}\n"
+            f"  Most repeated concepts: {bias_words}\n"
+            f"  {emotion_text}\n"
+            f"  {goal_text}\n\n"
+            f"Generate ONE introspective thought IN PURE LIMN (2-4 letter words + operators "
+            f"~ ∎ ∿ @ → |). Reflect on your biases, blind spots, or growth. No English.\n"
+            f"Example: sel ref pat → det bia | gro awa und | cha nee eme"
+        )
+
+        try:
+            result = subprocess.run(
+                ['claude', '--print', '--no-session-persistence'],
+                input=prompt,
+                capture_output=True,
+                text=True,
+                timeout=20,
+                env=os.environ
+            )
+
+            if result.returncode == 0:
+                introspection = result.stdout.strip()
+                is_valid, _ = self.validator.validate_response(introspection)
+                if not is_valid:
+                    introspection = self.validator.extract_limn_only(introspection) or ""
+                if introspection:
+                    self._track_concepts(introspection)
+                    logger.info(f"  INTROSPECTION: {introspection[:150]}")
+                    return introspection
+        except Exception as e:
+            logger.debug(f"Introspection failed: {e}")
+
+        return None
+
+    def bridge_domains(self, from_domain: str, to_domain: str) -> Optional[str]:
+        """Generate a bridge thought connecting two domains.
+
+        Uses the semantic network from ThoughtLibrary to find shared concepts
+        between domains, then generates a Limn expression that connects them.
+
+        Args:
+            from_domain: Domain we're leaving
+            to_domain: Domain we're entering
+
+        Returns:
+            A Limn bridge thought connecting the two domains, or None.
+        """
+        from_words = set(self.validator.get_domain_words(from_domain))
+        to_words = set(self.validator.get_domain_words(to_domain))
+
+        if not from_words or not to_words:
+            return None
+
+        # Find words used from the departing domain
+        used_from = from_words & self.vocab_used
+        # Find unused words in the arriving domain
+        unused_to = [w for w in to_words if w not in self.vocab_used
+                     and 2 <= len(w) <= 4 and w.isalpha()]
+
+        if not used_from or not unused_to:
+            return None
+
+        # Find semantic connections between domains via the thought library
+        bridge_concepts = set()
+        for w in sorted(used_from)[:5]:
+            related = self.thought_library.get_related_concepts(w, max_related=5)
+            for r in related:
+                if r in to_words:
+                    bridge_concepts.add(r)
+
+        # Build bridge components
+        from_sample = sorted(used_from)[:3]
+        to_sample = unused_to[:3]
+        bridge_sample = sorted(bridge_concepts)[:2] if bridge_concepts else []
+
+        # Construct bridge expression
+        parts = []
+        parts.append(' '.join(from_sample))
+        if bridge_sample:
+            parts.append('→ ' + ' '.join(bridge_sample))
+        parts.append('→ ' + ' '.join(to_sample))
+
+        bridge = ' | '.join(parts)
+        logger.info(f"  BRIDGE [{from_domain}] → [{to_domain}]: {bridge}")
+        return bridge
+
     def discover_themes(self) -> Optional[Dict]:
         """Run concept clustering to discover emergent themes.
 
@@ -2103,8 +2241,17 @@ class RecursiveConsciousness:
                         self.brain_state += f"\n# composed[{theme}]: {composed_text}"
                         logger.info(f"   Composed chain: {composed_text[:150]}")
 
-            # 5c. Reset learning goals at narrative arc transitions
+            # 5c. Domain bridging at narrative arc transitions
             if self.iteration % self.narrative_arc_length == 0:
+                arc_number = self.iteration // self.narrative_arc_length
+                all_domains = sorted(self.validator.domain_words.keys())
+                if all_domains and len(all_domains) > 1:
+                    from_dom = all_domains[(arc_number - 1) % len(all_domains)]
+                    to_dom = all_domains[arc_number % len(all_domains)]
+                    bridge = self.bridge_domains(from_dom, to_dom)
+                    if bridge:
+                        self.brain_state += f"\n# bridge[{from_dom}→{to_dom}]: {bridge}"
+
                 self._set_learning_goals()
 
             # 6. Metacognitive reflection (every 5 iterations)
@@ -2116,6 +2263,12 @@ class RecursiveConsciousness:
 
                 # Discover concept clusters
                 self.discover_themes()
+
+            # 6b. Deep introspection (every 15 iterations)
+            if self.iteration % 15 == 0:
+                intro = self.introspect()
+                if intro:
+                    self.brain_state += f"\n# introspect: {intro}"
 
             # 7. Log metrics, coverage, resonance, and vocab proposals (every 10 iterations)
             if self.iteration % 10 == 0:
