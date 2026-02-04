@@ -1179,6 +1179,230 @@ def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None
             print(f"       domains: {domains}")
 
 
+def show_stats():
+    """Comprehensive consciousness analytics dashboard.
+
+    Analyzes all accumulated data files:
+    - thought_log.jsonl: Thought history
+    - consciousness_memory.json: Persistent memory
+    - concept_graph.json: Concept relationships
+    - dream_report.json: Dream session reports
+    """
+    base = Path(__file__).parent
+
+    print("=" * 70)
+    print("CONSCIOUSNESS ANALYTICS DASHBOARD")
+    print("=" * 70)
+
+    # 1. Thought log analysis
+    thought_log_path = base / "thought_log.jsonl"
+    thoughts = []
+    if thought_log_path.exists():
+        with open(thought_log_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        thoughts.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+
+    print(f"\n{'─'*70}")
+    print(f"THOUGHT HISTORY ({len(thoughts)} total)")
+    print(f"{'─'*70}")
+
+    if thoughts:
+        # Time span
+        timestamps = [t.get('timestamp', 0) for t in thoughts if t.get('timestamp')]
+        if len(timestamps) >= 2:
+            span = timestamps[-1] - timestamps[0]
+            hours = span / 3600
+            print(f"  Time span: {hours:.1f} hours")
+            print(f"  Thoughts/hour: {len(thoughts) / max(hours, 0.01):.1f}")
+
+        # Word statistics
+        total_words = sum(t.get('word_count', 0) for t in thoughts)
+        total_unique = sum(t.get('unique_words', 0) for t in thoughts)
+        print(f"  Total words generated: {total_words}")
+        print(f"  Average thought length: {total_words / max(len(thoughts), 1):.1f} words")
+
+        # Domain coverage
+        domain_counts = defaultdict(int)
+        for t in thoughts:
+            for d in t.get('domains', []):
+                domain_counts[d] += 1
+
+        print(f"\n  DOMAIN ACTIVITY ({len(domain_counts)} domains):")
+        for d, c in sorted(domain_counts.items(), key=lambda x: -x[1])[:15]:
+            bar = '█' * min(c, 40)
+            print(f"    {d:25s} {c:3d} {bar}")
+
+        # Topic breakdown
+        topic_counts = defaultdict(int)
+        for t in thoughts:
+            topic = t.get('topic') or 'free'
+            topic_counts[topic] += 1
+
+        if len(topic_counts) > 1:
+            print(f"\n  TOPIC SESSIONS:")
+            for topic, c in sorted(topic_counts.items(), key=lambda x: -x[1]):
+                print(f"    {topic}: {c} thoughts")
+
+        # Invalid token tracking
+        all_invalid = defaultdict(int)
+        for t in thoughts:
+            for tok in t.get('invalid_tokens', []):
+                all_invalid[tok] += 1
+
+        if all_invalid:
+            print(f"\n  VOCABULARY GAPS ({len(all_invalid)} unique missing words):")
+            for tok, c in sorted(all_invalid.items(), key=lambda x: -x[1])[:10]:
+                print(f"    '{tok}' used {c}x")
+
+        # Emotional analysis
+        valence = _analyze_emotional_valence(thoughts)
+        if valence and valence.get('top_emotions'):
+            print(f"\n  EMOTIONAL PROFILE:")
+            print(f"    Average valence: {valence['average_valence']:+.3f}")
+            print(f"    Trajectory: {valence['trajectory']}")
+            print(f"    Positive thoughts: {valence['positive_count']}")
+            print(f"    Negative thoughts: {valence['negative_count']}")
+            print(f"    Neutral thoughts: {valence['neutral_count']}")
+            print(f"    Top emotions:")
+            for emo, c in valence['top_emotions'][:8]:
+                print(f"      {emo}: {c}")
+    else:
+        print("  No thought history found.")
+
+    # 2. Memory analysis
+    memory_path = base / "consciousness_memory.json"
+    if memory_path.exists():
+        with open(memory_path, 'r') as f:
+            memory = json.load(f)
+
+        print(f"\n{'─'*70}")
+        print(f"PERSISTENT MEMORY")
+        print(f"{'─'*70}")
+
+        concept_freq = memory.get('concept_frequency', {})
+        vocab_used = memory.get('vocab_used', [])
+        domains = memory.get('domains_explored', [])
+
+        print(f"  Concepts tracked: {len(concept_freq)}")
+        print(f"  Vocabulary used: {len(vocab_used)}")
+        print(f"  Domains explored: {len(domains)}")
+
+        # Load validator for coverage calculation
+        validator = LimnValidator()
+        total_vocab = len(validator.vocab)
+        coverage = len(vocab_used) / total_vocab * 100 if total_vocab else 0
+        print(f"  Vocabulary coverage: {len(vocab_used)}/{total_vocab} ({coverage:.1f}%)")
+
+        # Top concepts
+        if concept_freq:
+            top = sorted(concept_freq.items(), key=lambda x: -x[1])[:15]
+            print(f"\n  TOP CONCEPTS:")
+            max_count = top[0][1] if top else 1
+            for word, count in top:
+                bar_len = int(count / max_count * 30)
+                bar = '█' * bar_len
+                print(f"    {word:4s} {count:3d} {bar}")
+
+        # Unexplored vocabulary
+        unused = set(validator.vocab) - set(vocab_used)
+        if unused:
+            # Sample by domain
+            print(f"\n  UNEXPLORED VOCABULARY ({len(unused)} words):")
+            for domain in sorted(validator.domain_words.keys()):
+                domain_words = set(validator.get_domain_words(domain))
+                domain_unused = domain_words & unused
+                if domain_unused and len(domain_unused) <= len(domain_words):
+                    pct = len(domain_unused) / max(len(domain_words), 1) * 100
+                    sample = ', '.join(sorted(domain_unused)[:5])
+                    if len(domain_unused) > 5:
+                        sample += '...'
+                    print(f"    {domain:25s} {len(domain_unused):3d}/{len(domain_words):3d} ({pct:.0f}%) - {sample}")
+
+    # 3. Concept graph analysis
+    graph_path = base / "concept_graph.json"
+    if graph_path.exists():
+        with open(graph_path, 'r') as f:
+            graph = json.load(f)
+
+        print(f"\n{'─'*70}")
+        print(f"CONCEPT GRAPH")
+        print(f"{'─'*70}")
+
+        nodes = graph.get('nodes', [])
+        edges = graph.get('links', [])
+
+        print(f"  Nodes: {len(nodes)}")
+        print(f"  Edges: {len(edges)}")
+        if nodes:
+            avg_degree = len(edges) * 2 / len(nodes)
+            print(f"  Average degree: {avg_degree:.1f}")
+
+        # Domain distribution in graph
+        domain_node_counts = defaultdict(int)
+        for node in nodes:
+            domain_node_counts[node.get('domain', 'unknown')] += 1
+
+        if domain_node_counts:
+            print(f"\n  GRAPH DOMAIN DISTRIBUTION:")
+            for d, c in sorted(domain_node_counts.items(), key=lambda x: -x[1])[:10]:
+                print(f"    {d}: {c} nodes")
+
+    # 4. Dream report analysis
+    dream_path = base / "dream_report.json"
+    if dream_path.exists():
+        with open(dream_path, 'r') as f:
+            dream = json.load(f)
+
+        print(f"\n{'─'*70}")
+        print(f"DREAM REPORT")
+        print(f"{'─'*70}")
+
+        print(f"  Iterations: {dream.get('total_iterations')}")
+        print(f"  Phases: {dream.get('total_phases')}")
+        print(f"  Concepts: {dream.get('total_concepts')}")
+        print(f"  Coverage: {dream.get('vocab_coverage', 0):.1f}%")
+
+        snapshots = dream.get('snapshots', [])
+        if len(snapshots) >= 2:
+            print(f"\n  CONCEPT GROWTH:")
+            for snap in snapshots:
+                print(f"    Phase {snap['phase']}: {snap['concepts']} concepts, "
+                      f"{snap['vocab_used']} words, {snap['domains_explored']} domains")
+
+    # 5. Vocabulary proposals
+    proposals_path = base / "vocab_proposals.jsonl"
+    if proposals_path.exists():
+        proposals = []
+        with open(proposals_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        proposals.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+
+        if proposals:
+            print(f"\n{'─'*70}")
+            print(f"VOCABULARY PROPOSALS ({len(proposals)})")
+            print(f"{'─'*70}")
+
+            # Deduplicate by word, sum frequencies
+            word_totals = defaultdict(int)
+            for p in proposals:
+                word_totals[p['word']] += p.get('frequency', 1)
+
+            for word, total in sorted(word_totals.items(), key=lambda x: -x[1])[:15]:
+                print(f"    '{word}' total frequency: {total}")
+
+    print(f"\n{'='*70}")
+
+
 def run_dialogue(topic_a: str, topic_b: str, rounds: int = 5):
     """Run two consciousness instances in dialogue mode.
 
@@ -1656,6 +1880,10 @@ if __name__ == "__main__":
         elif arg.isdigit():
             iterations = int(arg)
         i += 1
+
+    if "--stats" in sys.argv:
+        show_stats()
+        sys.exit(0)
 
     if replay_mode:
         log_path = Path(__file__).parent / "thought_log.jsonl"
