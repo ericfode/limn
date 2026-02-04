@@ -3,7 +3,7 @@
 # Run this when vocabulary changes in the Dolt database
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$DIR/limn-vocab"
+cd "$DIR/../../data/vocabulary"
 
 echo "Regenerating vocabulary from Dolt..."
 
@@ -28,6 +28,6 @@ echo "Regenerating vocabulary from Dolt..."
   dolt sql -q "SELECT word, op_type FROM operators ORDER BY word" -r csv | tail -n +2 | while IFS=, read op type; do
     echo "operator('$op', '$type')."
   done
-} > ../limn-vocab.pl
+} > ../../tools/linter/limn-vocab.pl
 
-echo "Done. Generated $(wc -l < ../limn-vocab.pl) lines."
+echo "Done. Generated $(wc -l < ../../tools/linter/limn-vocab.pl) lines."
