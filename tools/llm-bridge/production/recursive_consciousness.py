@@ -933,7 +933,16 @@ class RecursiveConsciousness:
                         f"(-{removed} chars, {len(to_remove)} lines removed)")
 
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
-        """Add new thought and compress brain state via interaction net reduction."""
+        """Add new thought and compress brain state via concept-aware reduction.
+
+        Compression strategy:
+        1. Sanitize attractor loops (dedup)
+        2. Try oracle CTX_REDUCE for pattern-aware compression
+        3. If that fails, use concept-aware fallback:
+           - Score each line by concept density
+           - Preserve high-value lines (top concepts, operator chains)
+           - Aggressively drop low-value repetitive content
+        """
         addition = f"\n{new_thought}"
         if eval_result:
             addition += f"\n∎ {eval_result}"
@@ -984,13 +993,76 @@ class RecursiveConsciousness:
                             logger.info(f"     Rules applied: {learning['rules_applied']}")
                 else:
                     logger.warning(f"  Reduction failed: {response.error}")
-                    lines = self.brain_state.split('\n')
-                    self.brain_state = '\n'.join(lines[-10:])
+                    self.brain_state = self._concept_aware_compress(self.brain_state)
 
             except Exception as e:
                 logger.error(f"  Reduction error: {e}", exc_info=True)
-                lines = self.brain_state.split('\n')
-                self.brain_state = '\n'.join(lines[-10:])
+                self.brain_state = self._concept_aware_compress(self.brain_state)
+
+        # Final safety check: hard cap at 3000 chars
+        if len(self.brain_state) > 3000:
+            self.brain_state = self._concept_aware_compress(self.brain_state)
+
+    def _concept_aware_compress(self, state: str, target_size: int = 1500) -> str:
+        """Compress brain state while preserving high-value concepts.
+
+        Scores each line by concept density (uses top-frequency concepts
+        and operator chains from high-quality thoughts), then keeps the
+        highest-scoring lines within target_size.
+        """
+        lines = [l for l in state.split('\n') if l.strip()]
+
+        if not lines:
+            return state
+
+        # Get top concepts by frequency (these are the most important)
+        top_concepts = set()
+        if self.concept_frequency:
+            sorted_concepts = sorted(self.concept_frequency.items(), key=lambda x: -x[1])
+            top_concepts = {w for w, _ in sorted_concepts[:20]}
+
+        # Score each line
+        scored_lines = []
+        for i, line in enumerate(lines):
+            words = set(re.findall(r'[a-z]{2,4}', line.lower()))
+            operators = len(re.findall(r'[~∎∿@→|⊕⊗⊂∅]', line))
+
+            # Base score: recency (newer lines score higher)
+            recency = (i + 1) / len(lines)
+
+            # Concept density: what fraction of words are top concepts
+            concept_density = len(words & top_concepts) / max(len(words), 1)
+
+            # Operator richness: structured lines are more valuable
+            op_richness = min(operators / max(len(words) * 0.3, 1), 1.0)
+
+            # Meta lines always preserved
+            is_meta = line.strip().startswith('#')
+
+            score = recency * 0.4 + concept_density * 0.35 + op_richness * 0.25
+            if is_meta:
+                score += 0.5  # Boost meta lines
+
+            scored_lines.append((score, line))
+
+        # Sort by score descending, take top lines within budget
+        scored_lines.sort(key=lambda x: -x[0])
+
+        kept = []
+        total_chars = 0
+        for score, line in scored_lines:
+            if total_chars + len(line) + 1 <= target_size:
+                kept.append((score, line))
+                total_chars += len(line) + 1
+
+        # Reconstruct in original order (preserve temporal structure)
+        line_set = {line for _, line in kept}
+        compressed = [l for l in lines if l in line_set]
+
+        result = '\n'.join(compressed)
+        logger.info(f"     Concept-aware compress: {len(state)} → {len(result)} chars ({len(compressed)}/{len(lines)} lines)")
+
+        return result
 
         with open(self.brain_state_path, 'w') as f:
             f.write(self.brain_state)
