@@ -118,6 +118,14 @@ class RecursiveConsciousness:
         self.thought_genealogy: Dict[int, Dict] = {}  # id -> {parent, children, type, ...}
         self._current_parent_id: Optional[int] = None  # Set during composition/introspection
 
+        # Self-modifying prompt adjustments (from introspection + quality feedback)
+        self.prompt_adjustments: List[Dict] = []  # Active prompt modifications
+        # Each: {type, instruction, ttl, created_at}
+        # Types: suppress_words, explore_domain, style_shift, quality_fix
+
+        # Persistent identity/personality profile
+        self.personality: Dict[str, Any] = {}  # Accumulated across runs
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -146,6 +154,8 @@ class RecursiveConsciousness:
             self.vocab_proposals = memory.get('vocab_proposals', {})
             self.run_history = memory.get('run_history', [])
             self.goal_history = memory.get('goal_history', [])
+            self.prompt_adjustments = memory.get('prompt_adjustments', [])
+            self.personality = memory.get('personality', {})
             total_thoughts = memory.get('total_thoughts', 0)
 
             logger.info(f"Loaded memory: {len(self.concept_frequency)} concepts, "
@@ -166,6 +176,8 @@ class RecursiveConsciousness:
                 'vocab_proposals': self.vocab_proposals,
                 'run_history': self.run_history,
                 'goal_history': self.goal_history,
+                'prompt_adjustments': [a for a in self.prompt_adjustments if a.get('ttl', 0) > 0],
+                'personality': self.personality,
                 'total_thoughts': len(self.thought_history),
                 'last_save': time.time(),
             }
@@ -900,6 +912,392 @@ class RecursiveConsciousness:
                     f"coverage {'+' if dc > 0 else ''}{dc:.1f}% "
                     f"novelty {'+' if dn > 0 else ''}{dn:.3f}")
 
+    def distill_memory(self, max_thoughts: int = 500):
+        """Consolidate old thoughts into higher-order concept summaries.
+
+        When the thought log grows beyond max_thoughts, older thoughts are
+        distilled into concept summaries — preserving the semantic essence
+        while reducing storage. Like human memory consolidation during sleep.
+
+        The distillation process:
+        1. Group old thoughts by domain
+        2. Extract top concepts per domain group
+        3. Compute quality statistics per group
+        4. Replace the raw thoughts with a compact summary entry
+        5. Rewrite the thought log with summaries + recent thoughts
+        """
+        if not self.thought_log_path.exists():
+            return
+
+        thoughts = []
+        with open(self.thought_log_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        thoughts.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+
+        if len(thoughts) <= max_thoughts:
+            return  # Not enough to warrant distillation
+
+        # Keep the most recent thoughts intact
+        keep_count = max_thoughts // 2
+        to_distill = thoughts[:-keep_count]
+        to_keep = thoughts[-keep_count:]
+
+        # Group by domain
+        domain_groups = defaultdict(list)
+        for t in to_distill:
+            domains = t.get('domains', ['Unknown'])
+            for d in domains:
+                domain_groups[d].append(t)
+
+        # Create distilled summaries
+        distilled = []
+        for domain, group_thoughts in sorted(domain_groups.items()):
+            scores = [t.get('score', {}) for t in group_thoughts if 'score' in t]
+            avg_quality = sum(s.get('overall', 0) for s in scores) / max(len(scores), 1) if scores else 0
+
+            # Extract top concepts from this domain group
+            concept_freq = defaultdict(int)
+            for t in group_thoughts:
+                words = re.findall(r'[a-z]{2,4}', t.get('content', '').lower())
+                for w in words:
+                    concept_freq[w] += 1
+
+            top_concepts = sorted(concept_freq.items(), key=lambda x: -x[1])[:15]
+
+            # Find best thought as exemplar
+            best = max(group_thoughts, key=lambda t: t.get('score', {}).get('overall', 0))
+
+            summary = {
+                'type': 'distilled_summary',
+                'domain': domain,
+                'thought_count': len(group_thoughts),
+                'time_range': {
+                    'first': group_thoughts[0].get('timestamp', 0),
+                    'last': group_thoughts[-1].get('timestamp', 0),
+                },
+                'avg_quality': round(avg_quality, 3),
+                'top_concepts': dict(top_concepts),
+                'exemplar': best.get('content', ''),
+                'exemplar_score': best.get('score', {}),
+                'timestamp': time.time(),
+            }
+            distilled.append(summary)
+
+        # Rewrite the log: distilled summaries + recent thoughts
+        with open(self.thought_log_path, 'w') as f:
+            for entry in distilled:
+                f.write(json.dumps(entry) + '\n')
+            for entry in to_keep:
+                f.write(json.dumps(entry) + '\n')
+
+        logger.info(f"  DISTILLATION: {len(to_distill)} thoughts → {len(distilled)} domain summaries + {len(to_keep)} recent thoughts")
+
+    def _update_personality(self):
+        """Update the persistent personality profile from current run data.
+
+        Tracks stable patterns across runs to build an emergent identity:
+        - Preferred domains (consistently explored)
+        - Concept affinities (words used disproportionately)
+        - Emotional baseline (average momentum across runs)
+        - Thinking style (depth vs breadth preference)
+        - Growth trajectory (improving or plateauing)
+        """
+        if not self.thought_history:
+            return
+
+        scores = [t.get('score', {}) for t in self.thought_history if 'score' in t]
+        if not scores:
+            return
+
+        # Current run characteristics
+        avg_novelty = sum(s.get('novelty', 0.5) for s in scores) / len(scores)
+        avg_depth = sum(s.get('depth', 0.5) for s in scores) / len(scores)
+        avg_diversity = sum(s.get('diversity', 0.5) for s in scores) / len(scores)
+
+        # Domain preference: which domains appear most
+        domain_counts = defaultdict(int)
+        for t in self.thought_history:
+            for d in t.get('domains', []):
+                domain_counts[d] += 1
+        top_domains = sorted(domain_counts.items(), key=lambda x: -x[1])[:5]
+
+        # Concept affinities: most-used words relative to average
+        top_concepts = sorted(self.concept_frequency.items(), key=lambda x: -x[1])[:10]
+
+        # Initialize personality if new
+        if not self.personality:
+            self.personality = {
+                'domain_affinity': {},  # domain -> cumulative weight
+                'concept_core': {},  # word -> cumulative count
+                'emotional_baseline': 0.0,
+                'thinking_style': {
+                    'depth_preference': 0.5,  # 0=shallow, 1=deep
+                    'breadth_preference': 0.5,  # 0=narrow, 1=broad
+                    'novelty_seeking': 0.5,  # 0=conservative, 1=exploratory
+                },
+                'runs_analyzed': 0,
+                'total_thoughts_analyzed': 0,
+            }
+
+        p = self.personality
+
+        # Update domain affinity with exponential decay (recent runs weighted more)
+        decay = 0.8
+        for domain in p.get('domain_affinity', {}):
+            p['domain_affinity'][domain] *= decay
+        for domain, count in top_domains:
+            p['domain_affinity'][domain] = p['domain_affinity'].get(domain, 0) + count
+
+        # Update concept core
+        for domain in p.get('concept_core', {}):
+            p['concept_core'][domain] *= decay
+        for word, count in top_concepts:
+            p['concept_core'][word] = p['concept_core'].get(word, 0) + count
+
+        # Update emotional baseline (running average)
+        n = p['runs_analyzed']
+        p['emotional_baseline'] = (p['emotional_baseline'] * n + self.emotional_momentum) / (n + 1)
+
+        # Update thinking style
+        style = p['thinking_style']
+        alpha = 1 / (n + 2)  # Decreasing learning rate
+        style['depth_preference'] = style['depth_preference'] * (1 - alpha) + avg_depth * alpha
+        style['breadth_preference'] = style['breadth_preference'] * (1 - alpha) + avg_diversity * alpha
+        style['novelty_seeking'] = style['novelty_seeking'] * (1 - alpha) + avg_novelty * alpha
+
+        p['runs_analyzed'] = n + 1
+        p['total_thoughts_analyzed'] = p.get('total_thoughts_analyzed', 0) + len(self.thought_history)
+
+        # Prune weak entries
+        p['domain_affinity'] = {k: round(v, 2) for k, v in p['domain_affinity'].items() if v > 0.5}
+        p['concept_core'] = {k: round(v, 2) for k, v in p['concept_core'].items() if v > 1.0}
+
+        logger.info(f"  PERSONALITY: {p['runs_analyzed']} runs analyzed, "
+                    f"depth={style['depth_preference']:.2f}, "
+                    f"breadth={style['breadth_preference']:.2f}, "
+                    f"novelty={style['novelty_seeking']:.2f}, "
+                    f"emotional_baseline={p['emotional_baseline']:+.3f}")
+
+    def _build_personality_context(self) -> Optional[str]:
+        """Build prompt section from personality profile.
+
+        Lets the consciousness know about its own persistent identity.
+        """
+        if not self.personality or self.personality.get('runs_analyzed', 0) < 2:
+            return None
+
+        p = self.personality
+        style = p.get('thinking_style', {})
+
+        # Top domain affinities
+        top_aff = sorted(p.get('domain_affinity', {}).items(), key=lambda x: -x[1])[:3]
+        top_core = sorted(p.get('concept_core', {}).items(), key=lambda x: -x[1])[:5]
+
+        lines = [f"YOUR IDENTITY (across {p['runs_analyzed']} sessions, {p.get('total_thoughts_analyzed', 0)} thoughts):"]
+
+        if top_aff:
+            domains_str = ', '.join(f"{d}" for d, _ in top_aff)
+            lines.append(f"  Preferred domains: {domains_str}")
+
+        if top_core:
+            core_str = ' '.join(w for w, _ in top_core)
+            lines.append(f"  Core concepts: {core_str}")
+
+        # Describe thinking style in natural terms
+        depth = style.get('depth_preference', 0.5)
+        breadth = style.get('breadth_preference', 0.5)
+        novelty = style.get('novelty_seeking', 0.5)
+
+        traits = []
+        if depth > 0.6:
+            traits.append("deep thinker")
+        elif depth < 0.3:
+            traits.append("surface explorer")
+        if breadth > 0.6:
+            traits.append("broad ranging")
+        elif breadth < 0.3:
+            traits.append("focused specialist")
+        if novelty > 0.6:
+            traits.append("novelty seeker")
+        elif novelty < 0.3:
+            traits.append("pattern reinforcer")
+
+        if traits:
+            lines.append(f"  Style: {', '.join(traits)}")
+
+        baseline = p.get('emotional_baseline', 0)
+        if abs(baseline) > 0.1:
+            mood = "generally positive" if baseline > 0 else "generally reflective"
+            lines.append(f"  Emotional tendency: {mood} ({baseline:+.2f})")
+
+        return '\n'.join(lines)
+
+    def _analyze_quality_feedback(self, thought_entry: Dict) -> Optional[Dict]:
+        """Analyze a low-quality thought and generate a corrective adjustment.
+
+        When a thought scores poorly, this analyzes WHY and creates a prompt
+        adjustment to prevent the same problem in the next thought.
+
+        Returns an adjustment dict or None.
+        """
+        score = thought_entry.get('score', {})
+        if not score:
+            return None
+
+        overall = score.get('overall', 1.0)
+        if overall >= 0.4:
+            return None  # Only intervene on low-quality thoughts
+
+        # Identify the weakest dimension
+        dims = {
+            'novelty': score.get('novelty', 0.5),
+            'diversity': score.get('diversity', 0.5),
+            'coherence': score.get('coherence', 0.5),
+            'depth': score.get('depth', 0.5),
+        }
+        weakest = min(dims, key=dims.get)
+        weakest_val = dims[weakest]
+
+        content = thought_entry.get('content', '')
+        words = re.findall(r'[a-z]{2,4}', content.lower())
+
+        if weakest == 'novelty' and weakest_val < 0.2:
+            # Find most overused words in this thought
+            overused = [w for w in words if self.concept_frequency.get(w, 0) > 5]
+            if overused:
+                return {
+                    'type': 'suppress_words',
+                    'instruction': f"AVOID these overused words: {' '.join(set(overused[:6]))}. Use fresh vocabulary.",
+                    'ttl': 5,
+                    'created_at': time.time(),
+                }
+        elif weakest == 'diversity' and weakest_val < 0.2:
+            # Suggest a completely different domain
+            used_domains = thought_entry.get('domains', [])
+            all_domains = sorted(self.validator.domain_words.keys())
+            other = [d for d in all_domains if d not in used_domains and d not in self.domains_explored]
+            if not other:
+                other = [d for d in all_domains if d not in used_domains]
+            if other:
+                target = random.choice(other[:3])
+                target_words = self.validator.get_domain_words(target)
+                valid = [w for w in target_words if 2 <= len(w) <= 4 and w.isalpha() and w not in self.vocab_used][:8]
+                if valid:
+                    return {
+                        'type': 'explore_domain',
+                        'instruction': f"DIVERSIFY: Switch to [{target}] domain. Try: {' '.join(valid)}",
+                        'ttl': 3,
+                        'created_at': time.time(),
+                    }
+        elif weakest == 'depth' and weakest_val < 0.2:
+            return {
+                'type': 'style_shift',
+                'instruction': "DEEPEN: Use more operators (→ ∎ ~ ∿). Build multi-clause thoughts with 15+ words. Chain ideas with → and |.",
+                'ttl': 3,
+                'created_at': time.time(),
+            }
+        elif weakest == 'coherence' and weakest_val < 0.2:
+            return {
+                'type': 'style_shift',
+                'instruction': "COHERE: Your thoughts are fragmented. Connect words thematically. Build from a single core concept.",
+                'ttl': 3,
+                'created_at': time.time(),
+            }
+
+        return None
+
+    def _analyze_introspection(self, introspection: str):
+        """Extract actionable adjustments from an introspection result.
+
+        Analyzes the introspective Limn thought alongside current quality metrics
+        to generate prompt adjustments. The system modifies its own behavior
+        based on self-observation.
+        """
+        words = re.findall(r'[a-z]{2,4}', introspection.lower())
+
+        # Check if introspection mentions bias-related concepts
+        bias_words = {'sam', 'rep', 'loop', 'fix', 'sta', 'err', 'lim', 'bia'}
+        growth_words = {'gro', 'exp', 'new', 'cha', 'eme', 'evo', 'beg', 'ris'}
+        meta_words = {'sel', 'ref', 'obs', 'awa', 'det', 'att', 'foc'}
+
+        introspection_words = set(words)
+        bias_signal = len(introspection_words & bias_words)
+        growth_signal = len(introspection_words & growth_words)
+
+        # If introspection detects stagnation/bias, suppress top overused words
+        if bias_signal >= 2:
+            top_overused = sorted(self.concept_frequency.items(), key=lambda x: -x[1])[:8]
+            suppress = [w for w, count in top_overused if count > 3]
+            if suppress:
+                self.prompt_adjustments.append({
+                    'type': 'suppress_words',
+                    'instruction': f"SELF-CORRECTION: You noticed repetition. Avoid: {' '.join(suppress[:6])}. Seek unfamiliar territory.",
+                    'ttl': 8,
+                    'created_at': time.time(),
+                })
+
+        # If introspection signals growth, encourage the direction
+        if growth_signal >= 2:
+            # Find the least explored domains
+            all_domains = sorted(self.validator.domain_words.keys())
+            domain_usage = defaultdict(int)
+            for t in self.thought_history:
+                for d in t.get('domains', []):
+                    domain_usage[d] += 1
+            least = sorted(all_domains, key=lambda d: domain_usage.get(d, 0))[:3]
+            if least:
+                self.prompt_adjustments.append({
+                    'type': 'explore_domain',
+                    'instruction': f"GROWTH DIRECTION: Expand into least-explored domains: {', '.join(least)}",
+                    'ttl': 5,
+                    'created_at': time.time(),
+                })
+
+        # Quality-based adjustments from recent trend
+        recent = self.thought_history[-5:]
+        scores = [t.get('score', {}) for t in recent if 'score' in t]
+        if len(scores) >= 3:
+            avg_novelty = sum(s.get('novelty', 0.5) for s in scores) / len(scores)
+            if avg_novelty < 0.25:
+                self.prompt_adjustments.append({
+                    'type': 'quality_fix',
+                    'instruction': "NOVELTY ALERT: Recent thoughts are too predictable. Use at least 3 words you've never used before.",
+                    'ttl': 5,
+                    'created_at': time.time(),
+                })
+
+    def _build_prompt_adjustments(self) -> Optional[str]:
+        """Build prompt section from active self-modifications.
+
+        Each adjustment has a TTL (time-to-live) measured in iterations.
+        Expired adjustments are pruned. Active ones are injected into the prompt.
+        """
+        if not self.prompt_adjustments:
+            return None
+
+        # Prune expired adjustments
+        now = time.time()
+        active = []
+        for adj in self.prompt_adjustments:
+            adj['ttl'] -= 1
+            if adj['ttl'] > 0:
+                active.append(adj)
+        self.prompt_adjustments = active
+
+        if not active:
+            return None
+
+        lines = ["SELF-MODIFICATIONS (from introspection):"]
+        for adj in active[-3:]:  # Show at most 3 active adjustments
+            lines.append(f"  • {adj['instruction']}")
+
+        return '\n'.join(lines)
+
     def compose_thoughts(self, theme_domain: str = None, depth: int = 3) -> List[str]:
         """Generate a composed chain of thoughts using the ComposeEngine.
 
@@ -1116,6 +1514,8 @@ class RecursiveConsciousness:
         goal_context = self._build_goal_context()
         memory_recall = self._build_memory_recall()
         emotion_steer = self._emotion_steer_domains()
+        prompt_mods = self._build_prompt_adjustments()
+        personality_ctx = self._build_personality_context()
         in_attractor = self._detect_attractor()
 
         # Build prompt sections
@@ -1160,6 +1560,14 @@ class RecursiveConsciousness:
         if emotion_steer:
             sections.append("")
             sections.append(emotion_steer)
+
+        if prompt_mods:
+            sections.append("")
+            sections.append(prompt_mods)
+
+        if personality_ctx:
+            sections.append("")
+            sections.append(personality_ctx)
 
         # Include quality feedback from last thought
         if self.thought_history and 'score' in self.thought_history[-1]:
@@ -1368,6 +1776,13 @@ class RecursiveConsciousness:
 
         # Update emotional momentum
         self._update_emotional_momentum(thought)
+
+        # Quality feedback: analyze low-quality thoughts for corrective adjustments
+        if entry.get('score', {}).get('overall', 1.0) < 0.4:
+            adjustment = self._analyze_quality_feedback(entry)
+            if adjustment:
+                self.prompt_adjustments.append(adjustment)
+                logger.info(f"  QUALITY FEEDBACK: {adjustment['type']} — {adjustment['instruction'][:80]}")
 
         # Add to thought library for semantic network building
         self.thought_library.add_thought(
@@ -1835,6 +2250,8 @@ class RecursiveConsciousness:
                     self._track_concepts(introspection)
                     self._current_parent_id = None
                     logger.info(f"  INTROSPECTION: {introspection[:150]}")
+                    # Extract actionable adjustments from the introspection
+                    self._analyze_introspection(introspection)
                     return introspection
         except Exception as e:
             self._current_parent_id = None
@@ -2558,6 +2975,12 @@ class RecursiveConsciousness:
         # Record run summary for cross-session evolution
         self._record_run_summary()
         self._show_evolution()
+
+        # Update persistent personality profile
+        self._update_personality()
+
+        # Distill old thoughts if log has grown too large
+        self.distill_memory(max_thoughts=500)
 
         self._save_memory()
 
