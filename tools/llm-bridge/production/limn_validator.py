@@ -35,8 +35,11 @@ class LimnValidator:
         self.vocab, self.vocab_source = self._load_vocabulary(dolt_db_path, bootstrap_path)
         self.domain_words: Dict[str, List[str]] = {}  # domain -> [words]
 
-        # Operators from the database + Unicode operators
-        self.operators = {'~', '∎', '∿', '@', '→', '|', '⊕', '⊗', '⊂', '∅', '⟨', '⟩'}
+        # Operators: core + compositional
+        self.operators = {
+            '~', '∎', '∿', '@', '→', '|', '⊕', '⊗', '⊂', '∅', '⟨', '⟩',
+            '*', '^', '\\', '±', ':',
+        }
 
         # Load domain mappings if available from Dolt
         if self.vocab_source == "dolt":
@@ -210,7 +213,8 @@ class LimnValidator:
         clean = re.sub(r'\n```$', '', clean)
 
         # Check for English words (5+ letters, Limn max is 4)
-        long_words = re.findall(r'\b[a-zA-Z]{5,}\b', clean)
+        # Allow "without" as compositional subtraction operator
+        long_words = [w for w in re.findall(r'\b[a-zA-Z]{5,}\b', clean) if w.lower() != 'without']
         if long_words:
             return False, f"English words detected: {long_words[:3]}"
 
@@ -260,8 +264,8 @@ class LimnValidator:
         # Remove markdown
         clean = re.sub(r'```\w*', '', response)
 
-        # Extract potential tokens
-        potential_tokens = re.findall(r'[a-z]{2,4}|[~\u220e\u223f@\u2192|\u2295\u2297\u2282\u2205\u27e8\u27e9]', clean)
+        # Extract potential tokens (words, operators, compositional operators, floats)
+        potential_tokens = re.findall(r'[a-z]{2,4}|\d+\.\d+|[~\u220e\u223f@\u2192|\u2295\u2297\u2282\u2205\u27e8\u27e9*^\\±:()\[\]]', clean)
 
         # Keep only tokens that are in vocabulary OR are operators
         valid_tokens = []

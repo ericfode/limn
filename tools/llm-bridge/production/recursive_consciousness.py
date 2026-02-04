@@ -1772,13 +1772,17 @@ class RecursiveConsciousness:
             "",
             f"BRAIN STATE:\n{self.brain_state[-self.brain_state_window:]}",
             "",
-            "RULES: Pure Limn only (2-4 letter words + operators ~ ∎ ∿ @ → |). No English.",
+            "RULES: Pure Limn only (2-4 letter words + operators). No English.",
+            "Core operators: ~ ∎ ∿ @ → | ⊕ ⊗ ⊂ ∅",
+            "Compositional operators: @ (projection) * (interference) ^ (gradient 0.0-1.0) \\ (subtraction) ± (superposition) : (conditional)",
             "",
             "Examples: sel ref tho → min obs pat | kno exp acc",
             "          tim cyc bre → nov cha eme | dur flo per",
             "          con dep ric → sem net gro | pat lnk eme",
+            "Compositional: lov@fer (fear-aspect of love) | hot^0.3 (barely warm) | was±now (past and present)",
+            "               (sel@awa)*con (self-awareness interfering with consciousness) | joy without sor (joy minus sorrow)",
             "",
-            "Your next thought (pure Limn, 10-30 words):",
+            "Your next thought (pure Limn, 10-30 words, try compositional operators):",
         ])
 
         full_prompt = '\n'.join(sections)
