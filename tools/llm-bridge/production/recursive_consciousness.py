@@ -32,6 +32,7 @@ from metrics_engine import MetricsEngine, OracleMetric
 from metacognition import MetacognitiveAnalyzer
 from concept_clusters import ConceptClusterer
 from thought_library import ThoughtLibrary
+from compositional_parser import parse as parse_compositional, is_compositional, extract_base_words, describe_expr, ParseError
 
 # Setup logging to file
 log_file = Path(__file__).parent / "consciousness.log"
@@ -130,6 +131,11 @@ class RecursiveConsciousness:
         self.world = None  # World instance
         self.world_self = None  # ConsciousnessInstance in the world
 
+        # Compositional expression tracking
+        self.compositional_ops: Dict[str, int] = {}  # operator -> usage count
+        self.compositional_count: int = 0  # Total compositional expressions detected
+        self.compositional_complexity: List[float] = []  # Recent complexity scores
+
         # Evaluation event log (for UI visualization of forks)
         self.eval_events: List[Dict] = []  # Recent evaluation events
         self._max_eval_events: int = 200  # Rolling buffer
@@ -164,6 +170,8 @@ class RecursiveConsciousness:
             self.goal_history = memory.get('goal_history', [])
             self.prompt_adjustments = memory.get('prompt_adjustments', [])
             self.personality = memory.get('personality', {})
+            self.compositional_ops = memory.get('compositional_ops', {})
+            self.compositional_count = memory.get('compositional_count', 0)
             total_thoughts = memory.get('total_thoughts', 0)
 
             logger.info(f"Loaded memory: {len(self.concept_frequency)} concepts, "
@@ -187,6 +195,8 @@ class RecursiveConsciousness:
                 'prompt_adjustments': [a for a in self.prompt_adjustments if a.get('ttl', 0) > 0],
                 'personality': self.personality,
                 'total_thoughts': len(self.thought_history),
+                'compositional_ops': self.compositional_ops,
+                'compositional_count': self.compositional_count,
                 'last_save': time.time(),
             }
             with open(self.memory_path, 'w') as f:
@@ -1607,7 +1617,26 @@ class RecursiveConsciousness:
         if not challenge_words:
             return ""
 
-        return f"CHALLENGE: Use these new words: {' '.join(challenge_words)}"
+        challenge = f"CHALLENGE: Use these new words: {' '.join(challenge_words)}"
+
+        # Occasionally add a compositional operator challenge (every other challenge)
+        if self.iteration % (self.vocab_challenge_frequency * 2) == 0:
+            comp_challenges = [
+                ("@", "projection", "lov@fer (fear-aspect of love)", "Try A@B to extract one quality from another"),
+                ("*", "interference", "tho*fee (thought interfering with feeling)", "Try A*B for emergent meaning from two concepts"),
+                ("^", "gradient", "hot^0.3 (barely warm)", "Try A^0.N to express partial intensity"),
+                ("\\", "subtraction", "joy without sor (joy minus sorrow)", "Try A\\B or A without B to remove a quality"),
+                ("±", "superposition", "was±now (past and present at once)", "Try A±B for simultaneous both/and states"),
+                (":", "conditional", "lov:war (love given war)", "Try A:B for meaning that depends on context"),
+            ]
+
+            # Pick the least-used operator
+            usage = self.compositional_ops
+            least_used = min(comp_challenges, key=lambda c: usage.get(c[1], 0))
+            op, name, example, instruction = least_used
+            challenge += f"\nCOMPOSITIONAL CHALLENGE: {instruction}. Example: {example}"
+
+        return challenge
 
     def _score_thought(self, thought: str) -> Dict[str, float]:
         """Score a thought on novelty, diversity, coherence, and depth.
@@ -1652,13 +1681,51 @@ class RecursiveConsciousness:
         else:
             depth = 0.0
 
-        overall = (novelty * 0.35 + diversity * 0.25 + coherence * 0.20 + depth * 0.20)
+        # Compositional: bonus for using compositional operators (shows deeper reasoning)
+        compositional = 0.0
+        if is_compositional(thought):
+            comp_ops = re.findall(r'[*^\\±:]', thought)
+            # Also count @ when flanked by letters (compositional projection)
+            comp_ops += re.findall(r'[a-z]@[a-z]', thought)
+            if comp_ops:
+                # Operator variety (how many different operators used)
+                unique_comp = set()
+                for op in comp_ops:
+                    if len(op) == 1:
+                        unique_comp.add(op)
+                    else:
+                        unique_comp.add('@')
+                variety_bonus = min(len(unique_comp) / 3.0, 1.0)  # 3+ types = max
+
+                # Try parsing to measure nesting depth
+                try:
+                    segments = re.split(r'[|→⊕⊗⊂∅~∎∿⟨⟩]', thought)
+                    max_depth = 0
+                    for seg in segments:
+                        seg = seg.strip()
+                        if seg and is_compositional(seg):
+                            try:
+                                ast = parse_compositional(seg)
+                                d = self._ast_depth(ast)
+                                max_depth = max(max_depth, d)
+                            except ParseError:
+                                pass
+                    depth_bonus = min((max_depth - 1) / 3.0, 1.0)  # depth 4+ = max
+                except Exception:
+                    depth_bonus = 0.3  # Default bonus for having operators
+
+                compositional = (variety_bonus * 0.6 + depth_bonus * 0.4)
+
+        # Reweighted overall: novelty 0.30, diversity 0.20, coherence 0.15, depth 0.15, compositional 0.20
+        overall = (novelty * 0.30 + diversity * 0.20 + coherence * 0.15 +
+                   depth * 0.15 + compositional * 0.20)
 
         result = {
             'novelty': round(novelty, 3),
             'diversity': round(diversity, 3),
             'coherence': round(coherence, 3),
             'depth': round(depth, 3),
+            'compositional': round(compositional, 3),
             'overall': round(overall, 3),
         }
 
@@ -1873,6 +1940,105 @@ class RecursiveConsciousness:
         # Fallback after all attempts
         return "tho fai | lim vio"
 
+    def _analyze_compositional(self, thought: str) -> Optional[Dict]:
+        """Detect and parse compositional expressions in a thought.
+
+        Finds segments containing compositional operators (@, *, ^, \\, ±, :),
+        parses them with the Lark grammar, and tracks operator usage.
+
+        Returns compositional data dict if expressions found, else None.
+        """
+        if not is_compositional(thought):
+            return None
+
+        # Split thought into segments at Limn structural operators (| → ⊕ etc.)
+        segments = re.split(r'[|→⊕⊗⊂∅~∎∿⟨⟩]', thought)
+        parsed_exprs = []
+        operators_found = set()
+
+        for segment in segments:
+            segment = segment.strip()
+            if not segment or not is_compositional(segment):
+                continue
+
+            try:
+                ast = parse_compositional(segment)
+                base_words = extract_base_words(ast)
+                description = describe_expr(ast)
+
+                # Count operators in this expression
+                expr_ops = {}
+                for ch, name in [('@', 'projection'), ('*', 'interference'),
+                                 ('^', 'gradient'), ('\\', 'subtraction'),
+                                 ('±', 'superposition'), (':', 'conditional')]:
+                    count = segment.count(ch)
+                    if ch == '@' and count > 0:
+                        # '@' is also a core operator — only count if flanked by words
+                        count = len(re.findall(r'[a-z]@[a-z]', segment))
+                    if count > 0:
+                        expr_ops[name] = count
+                        operators_found.add(name)
+
+                # Check for 'without' keyword (subtraction alias)
+                if 'without' in segment.lower():
+                    expr_ops['subtraction'] = expr_ops.get('subtraction', 0) + 1
+                    operators_found.add('subtraction')
+
+                # Calculate nesting depth from AST
+                depth = self._ast_depth(ast)
+
+                parsed_exprs.append({
+                    'expression': segment,
+                    'description': description,
+                    'base_words': base_words,
+                    'operators': expr_ops,
+                    'depth': depth,
+                })
+            except ParseError:
+                # Not a valid compositional expression — skip
+                continue
+
+        if not parsed_exprs:
+            return None
+
+        # Update global compositional tracking
+        self.compositional_count += len(parsed_exprs)
+        for expr_data in parsed_exprs:
+            for op, count in expr_data['operators'].items():
+                self.compositional_ops[op] = self.compositional_ops.get(op, 0) + count
+
+        # Track complexity (average depth of expressions in this thought)
+        avg_depth = sum(e['depth'] for e in parsed_exprs) / len(parsed_exprs)
+        self.compositional_complexity.append(avg_depth)
+        # Keep last 100 complexity scores
+        if len(self.compositional_complexity) > 100:
+            self.compositional_complexity = self.compositional_complexity[-100:]
+
+        # Log eval event
+        self._log_eval_event('compositional', {
+            'count': len(parsed_exprs),
+            'operators': sorted(operators_found),
+            'avg_depth': round(avg_depth, 2),
+            'expressions': [e['expression'] for e in parsed_exprs],
+            'descriptions': [e['description'] for e in parsed_exprs],
+        })
+
+        return {
+            'expressions': parsed_exprs,
+            'total_ops': dict(self.compositional_ops),
+            'total_count': self.compositional_count,
+        }
+
+    def _ast_depth(self, node) -> int:
+        """Calculate the nesting depth of a compositional AST node."""
+        from compositional_parser import Word, Gradient
+        if isinstance(node, Word):
+            return 1
+        elif isinstance(node, Gradient):
+            return 1 + self._ast_depth(node.operand)
+        else:
+            return 1 + max(self._ast_depth(node.left), self._ast_depth(node.right))
+
     def _track_concepts(self, thought: str, eval_result: str = None):
         """Track concept usage, co-occurrence, and vocabulary coverage."""
         words = re.findall(r'[a-z]{2,4}', thought.lower())
@@ -1902,6 +2068,9 @@ class RecursiveConsciousness:
                 self.domains_explored.add(domain)
                 thought_domains.add(domain)
 
+        # Detect and parse compositional expressions
+        compositional_data = self._analyze_compositional(thought)
+
         # Score thought quality
         score = self._score_thought(thought)
 
@@ -1922,6 +2091,9 @@ class RecursiveConsciousness:
             'narrative': self.narrative_thread,
             'score': score,
         }
+
+        if compositional_data:
+            entry['compositional'] = compositional_data
 
         if parent_id is not None:
             entry['parent_id'] = parent_id

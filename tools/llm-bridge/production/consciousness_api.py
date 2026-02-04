@@ -207,6 +207,18 @@ WEB_UI_HTML = """<!DOCTYPE html>
   .fork-indicator.compose { color: #a4f; }
   .fork-indicator.introspect { color: #f4a; }
   .fork-indicator.feedback { color: #f44; }
+  .eval-event.compositional { border-left: 2px solid #0cf; }
+  .comp-op { color: #0cf; font-weight: bold; }
+  .comp-bar { display: flex; gap: 2px; margin-top: 4px; }
+  .comp-bar-seg { height: 14px; border-radius: 2px; font-size: 9px;
+    line-height: 14px; text-align: center; color: #fff; min-width: 16px; padding: 0 3px; }
+  .comp-bar-seg.projection { background: #2668a8; }
+  .comp-bar-seg.interference { background: #8844aa; }
+  .comp-bar-seg.gradient { background: #448844; }
+  .comp-bar-seg.subtraction { background: #884444; }
+  .comp-bar-seg.superposition { background: #886644; }
+  .comp-bar-seg.conditional { background: #446688; }
+  .fork-indicator.compositional { color: #0cf; }
 </style>
 </head>
 <body>
@@ -258,6 +270,12 @@ WEB_UI_HTML = """<!DOCTYPE html>
       <div class="stat"><span class="label">Active</span><span class="value" id="prompt-mods">0</span></div>
     </div>
     <div class="section">
+      <h3>COMPOSITIONAL</h3>
+      <div class="stat"><span class="label">Expressions</span><span class="value" id="comp-count">0</span></div>
+      <div class="stat"><span class="label">Avg depth</span><span class="value" id="comp-depth">-</span></div>
+      <div class="comp-bar" id="comp-bar"></div>
+    </div>
+    <div class="section">
       <h3>EVALUATION FORKS</h3>
       <div class="stat"><span class="label">Total events</span><span class="value" id="eval-count">0</span></div>
       <div class="eval-pane" id="eval-events"></div>
@@ -298,6 +316,20 @@ let recentScores = [];
 
 function getTopic() { return document.getElementById('topic-select').value || undefined; }
 
+function highlightComp(text) {
+  // Highlight compositional operators in thought content
+  return text.replace(/([a-z]{2,4})@([a-z]{2,4})/g, '$1<span class="comp-op">@</span>$2')
+    .replace(/([a-z]{2,4})[*]([a-z]{2,4})/g, '$1<span class="comp-op">*</span>$2')
+    .replace(/([a-z]{2,4})[^]([0-9]+[.][0-9]+)/g, '$1<span class="comp-op">^</span>$2')
+    .replace(/([a-z]{2,4})[\\\\]([a-z]{2,4})/g, '$1<span class="comp-op">\\\\</span>$2')
+    .replace(/([a-z]{2,4})±([a-z]{2,4})/g, '$1<span class="comp-op">±</span>$2')
+    .replace(/([a-z]{2,4}):([a-z]{2,4})/g, '$1<span class="comp-op">:</span>$2');
+}
+
+function hasCompOps(text) {
+  return /[a-z]@[a-z]|[a-z][*][a-z]|[a-z][^][\\d.]|[a-z][\\\\][a-z]|[a-z]±[a-z]|[a-z]:[a-z]/.test(text) || text.includes('without');
+}
+
 function addThought(content, score, domains, type, evalEvents, translation) {
   const pane = document.getElementById('thoughts');
   if (pane.querySelector('.empty-state')) pane.innerHTML = '';
@@ -313,12 +345,15 @@ function addThought(content, score, domains, type, evalEvents, translation) {
   div.className = cls;
 
   const scoreTxt = overall > 0 ? `q:${overall.toFixed(2)}` : '';
+  const compTxt = (score?.compositional || 0) > 0 ? ` comp:${score.compositional.toFixed(2)}` : '';
   const domTxt = domains?.length ? domains.join(', ') : '';
   const transTxt = translation ? `<div class="translation">${escHtml(translation)}</div>` : '';
-  div.innerHTML = `<div class="content">${escHtml(content)}</div>
+  // Highlight compositional operators if present
+  const contentHtml = hasCompOps(content) ? highlightComp(escHtml(content)) : escHtml(content);
+  div.innerHTML = `<div class="content">${contentHtml}</div>
     ${transTxt}
     <div class="meta">
-      ${scoreTxt ? `<span class="score">${scoreTxt}</span>` : ''}
+      ${scoreTxt ? `<span class="score">${scoreTxt}${compTxt}</span>` : ''}
       ${domTxt ? `<span class="domains">${domTxt}</span>` : ''}
     </div>`;
   pane.appendChild(div);
@@ -387,6 +422,20 @@ function updateDashboard(data) {
   if (data.prompt_adjustments_active !== undefined) {
     document.getElementById('prompt-mods').textContent = data.prompt_adjustments_active;
   }
+  if (data.compositional) {
+    const c = data.compositional;
+    document.getElementById('comp-count').textContent = c.total_count || 0;
+    document.getElementById('comp-depth').textContent = c.avg_depth ? c.avg_depth.toFixed(1) : '-';
+    const bar = document.getElementById('comp-bar');
+    const ops = c.ops || {};
+    const total = Object.values(ops).reduce((a,b) => a+b, 0);
+    if (total > 0) {
+      bar.innerHTML = Object.entries(ops).map(([name, count]) => {
+        const pct = Math.round(count / total * 100);
+        return `<div class="comp-bar-seg ${name}" style="flex:${count}" title="${name}: ${count}">${pct > 10 ? name.substring(0,3) : ''}</div>`;
+      }).join('');
+    }
+  }
 }
 
 function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -399,7 +448,8 @@ function addEvalEvent(ev) {
   let detail = '';
   if (ev.type === 'score') {
     const s = ev.scores || {};
-    detail = `nov:${(s.novelty||0).toFixed(2)} div:${(s.diversity||0).toFixed(2)} coh:${(s.coherence||0).toFixed(2)} dep:${(s.depth||0).toFixed(2)} → <b>${(s.overall||0).toFixed(2)}</b>`;
+    const compStr = s.compositional > 0 ? ` comp:${s.compositional.toFixed(2)}` : '';
+    detail = `nov:${(s.novelty||0).toFixed(2)} div:${(s.diversity||0).toFixed(2)} coh:${(s.coherence||0).toFixed(2)} dep:${(s.depth||0).toFixed(2)}${compStr} → <b>${(s.overall||0).toFixed(2)}</b>`;
   } else if (ev.type === 'oracle' || ev.type === 'oracle_sub') {
     detail = `${ev.oracle_type || '?'} L${ev.depth || 0} ${ev.async ? '(async)' : ''} "${escHtml((ev.thought_preview||'').substring(0,40))}"`;
   } else if (ev.type === 'oracle_result') {
@@ -411,6 +461,10 @@ function addEvalEvent(ev) {
     detail = `q:${(ev.quality_avg||0).toFixed(2)} emo:${(ev.emotional_momentum||0).toFixed(2)} "${escHtml((ev.result_preview||'').substring(0,40))}"`;
   } else if (ev.type === 'quality_feedback') {
     detail = `${ev.adjustment_type}: "${escHtml((ev.instruction||'').substring(0,50))}" (score=${(ev.trigger_score||0).toFixed(2)})`;
+  } else if (ev.type === 'compositional') {
+    const ops = (ev.operators||[]).join(', ');
+    const exprs = (ev.expressions||[]).map(e => escHtml(e)).join(' | ');
+    detail = `${ev.count} expr(s) depth:${ev.avg_depth||0} [${ops}] ${exprs.substring(0,60)}`;
   } else {
     detail = JSON.stringify(ev).substring(0, 80);
   }
@@ -450,6 +504,13 @@ function addForkIndicators(thought_div, events) {
       span.className = 'fork-indicator feedback';
       span.textContent = '⚠️fix';
       span.title = ev.instruction || '';
+      meta.appendChild(span);
+    } else if (ev.type === 'compositional') {
+      const span = document.createElement('span');
+      span.className = 'fork-indicator compositional';
+      const ops = (ev.operators||[]).map(o => o[0]).join('');
+      span.textContent = `⚛${ev.count||1}×${ops}`;
+      span.title = (ev.descriptions||[]).join(' | ') || 'Compositional expression';
       meta.appendChild(span);
     }
   });
@@ -647,6 +708,17 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         """Send error response."""
         self._send_json({'error': message}, status)
 
+    def _build_compositional_data(self, rc) -> Dict:
+        """Build compositional stats for dashboard."""
+        avg_depth = 0.0
+        if rc.compositional_complexity:
+            avg_depth = sum(rc.compositional_complexity[-20:]) / len(rc.compositional_complexity[-20:])
+        return {
+            'total_count': rc.compositional_count,
+            'ops': rc.compositional_ops,
+            'avg_depth': round(avg_depth, 2),
+        }
+
     def _parse_body(self) -> Dict:
         """Parse JSON request body."""
         content_length = int(self.headers.get('Content-Length', 0))
@@ -763,6 +835,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'prompt_adjustments_active': len(rc.prompt_adjustments),
             'personality': rc.personality if rc.personality else None,
             'run_history_count': len(rc.run_history),
+            'compositional': self._build_compositional_data(rc),
             'timestamp': time.time(),
         }
         self._send_json(status)
@@ -942,6 +1015,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 'emotional_momentum': round(rc.emotional_momentum, 3),
                 'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
                 'domains': rc.thought_history[-1].get('domains', []) if rc.thought_history else [],
+                'compositional': self._build_compositional_data(rc),
             }
 
             if not send_event('thought', thought_data):
@@ -1045,6 +1119,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'brain_state_size': len(rc.brain_state),
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
             'eval_events': new_events,
+            'compositional': self._build_compositional_data(rc),
         })
 
     def _handle_compose(self, body: Dict):
@@ -1070,6 +1145,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'count': len(thoughts),
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
             'eval_events': new_events,
+            'compositional': self._build_compositional_data(rc),
         })
 
     def _handle_introspect(self, body: Dict):
@@ -1090,6 +1166,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 'goals_active': len(rc.current_goals),
                 'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
                 'eval_events': new_events,
+                'compositional': self._build_compositional_data(rc),
             })
         else:
             self._send_json({

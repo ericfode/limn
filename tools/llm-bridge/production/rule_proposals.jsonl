@@ -204,3 +204,9 @@
 {"timestamp": 1770176881.1461947, "pattern": "con lux", "frequency": 6, "reduction": "con_lux", "confidence": 0.6, "applied": false}
 {"timestamp": 1770176881.1463714, "pattern": "for lib", "frequency": 5, "reduction": "for_lib", "confidence": 0.5, "applied": false}
 {"timestamp": 1770176881.14659, "pattern": "ple ori", "frequency": 5, "reduction": "ple_ori", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176950.2703397, "pattern": "con lux", "frequency": 5, "reduction": "con_lux", "confidence": 0.5, "applied": false}
+{"timestamp": 1770177039.848861, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177081.7790136, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177123.9173317, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177179.116971, "pattern": "con lnk", "frequency": 7, "reduction": "con_lnk", "confidence": 0.7, "applied": true}
+{"timestamp": 1770177239.4918516, "pattern": "min exe", "frequency": 5, "reduction": "min_exe", "confidence": 0.5, "applied": false}
