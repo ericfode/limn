@@ -97,6 +97,10 @@ class OracleType(Enum):
     VOC_QUERY_MEANING = "VocQueryMeaning"
     VOC_EXPAND = "VocExpand"
 
+    # Composition
+    COMPOSE_SEQ = "ComposeSeq"
+    COMPOSE_PAR = "ComposePar"
+
     # Process
     PROCESS_SPAWN = "ProcessSpawn"
     PROCESS_KILL = "ProcessKill"
@@ -219,6 +223,13 @@ class ProductionHarness:
             self.vocab_engine = VocabularyEngine()
         except ImportError:
             self.vocab_engine = None
+
+        # Composition engine
+        try:
+            from compose_engine import ComposeEngine
+            self.compose_engine = ComposeEngine(self)
+        except ImportError:
+            self.compose_engine = None
 
         # Plugin registry
         self._plugins = {}
@@ -598,6 +609,18 @@ class ProductionHarness:
                 OracleType.DOCKER_STOP: self._exec_docker_stop,
                 OracleType.DOCKER_STATUS: self._exec_docker_status,
                 OracleType.DOCKER_LOGS: self._exec_docker_logs,
+                OracleType.COMPOSE_SEQ: self._exec_compose_seq,
+                OracleType.COMPOSE_PAR: self._exec_compose_par,
+                OracleType.CTX_MERGE: self._exec_ctx_merge,
+                OracleType.CTX_FILTER: self._exec_ctx_filter,
+                OracleType.CTX_AGGREGATE: self._exec_ctx_aggregate,
+                OracleType.CTX_COMPRESS: self._exec_ctx_compress,
+                OracleType.MODEL_DERIVE: self._exec_model_derive,
+                OracleType.MODEL_TRANSFORM: self._exec_model_transform,
+                OracleType.MODEL_GENERATE: self._exec_model_generate,
+                OracleType.VOC_QUERY_DOMAIN: self._exec_voc_query_domain,
+                OracleType.VOC_QUERY_MEANING: self._exec_voc_query_meaning,
+                OracleType.VOC_EXPAND: self._exec_voc_expand,
             }
 
             handler = handlers.get(oracle.type)
@@ -1551,6 +1574,146 @@ Pure Limn response:"""
         )
 
         return result.stdout
+
+    # =========================================================================
+    # Composition Oracles
+    # =========================================================================
+
+    def _exec_compose_seq(self, params: Dict) -> Any:
+        """Sequential composition oracle - chain oracles A → B → C.
+
+        Params:
+            steps: List of {oracle_type, params, transform?} dicts
+            initial_input: Starting input for first step (optional)
+        """
+        if not self.compose_engine:
+            raise RuntimeError("ComposeEngine not available")
+
+        from compose_engine import CompositionStep
+        steps = [
+            CompositionStep(
+                oracle_type=s["oracle_type"],
+                params=s.get("params", {}),
+                transform=s.get("transform"),
+                condition=s.get("condition")
+            )
+            for s in params["steps"]
+        ]
+        return self.compose_engine.execute_sequential(
+            steps, params.get("initial_input")
+        )
+
+    def _exec_compose_par(self, params: Dict) -> List[Any]:
+        """Parallel composition oracle - execute oracles A, B, C concurrently.
+
+        Params:
+            steps: List of {oracle_type, params, transform?} dicts
+        """
+        if not self.compose_engine:
+            raise RuntimeError("ComposeEngine not available")
+
+        from compose_engine import CompositionStep
+        steps = [
+            CompositionStep(
+                oracle_type=s["oracle_type"],
+                params=s.get("params", {}),
+                transform=s.get("transform"),
+                condition=s.get("condition")
+            )
+            for s in params["steps"]
+        ]
+        return self.compose_engine.execute_parallel(steps)
+
+    # =========================================================================
+    # Context Engine Oracles
+    # =========================================================================
+
+    def _exec_ctx_merge(self, params: Dict) -> Dict[str, Any]:
+        """Context merge oracle - combine multiple contexts."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        contexts = params["contexts"]
+        strategy = params.get("strategy", "union")
+        return self.context_engine.merge(contexts, strategy=strategy)
+
+    def _exec_ctx_filter(self, params: Dict) -> Dict[str, Any]:
+        """Context filter oracle - extract relevant context subset."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        content = params["content"]
+        criteria = params.get("criteria", {})
+        return self.context_engine.filter(content, criteria=criteria)
+
+    def _exec_ctx_aggregate(self, params: Dict) -> Dict[str, Any]:
+        """Context aggregate oracle - summarize context collections."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        contents = params["contents"]
+        method = params.get("method", "summary")
+        return self.context_engine.aggregate(contents, method=method)
+
+    def _exec_ctx_compress(self, params: Dict) -> Dict[str, Any]:
+        """Context compress oracle - lossy compression of context."""
+        if not self.context_engine:
+            raise RuntimeError("ContextEngine not available")
+        content = params["content"]
+        target_ratio = params.get("ratio", 0.5)
+        return self.context_engine.compress(content, ratio=target_ratio)
+
+    # =========================================================================
+    # Model Engine Oracles
+    # =========================================================================
+
+    def _exec_model_derive(self, params: Dict) -> Dict[str, Any]:
+        """Model derive oracle - derive new model from observations."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        observations = params["observations"]
+        model_type = params.get("type", "pattern")
+        return self.model_engine.derive(observations, model_type=model_type)
+
+    def _exec_model_transform(self, params: Dict) -> Dict[str, Any]:
+        """Model transform oracle - transform data through model."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        model_name = params["model"]
+        data = params["data"]
+        return self.model_engine.transform(model_name, data)
+
+    def _exec_model_generate(self, params: Dict) -> Any:
+        """Model generate oracle - generate from model."""
+        if not self.model_engine:
+            raise RuntimeError("ModelEngine not available")
+        model_name = params["model"]
+        seed = params.get("seed", None)
+        count = params.get("count", 1)
+        return self.model_engine.generate(model_name, seed=seed, count=count)
+
+    # =========================================================================
+    # Vocabulary Engine Oracles
+    # =========================================================================
+
+    def _exec_voc_query_domain(self, params: Dict) -> List[str]:
+        """Vocabulary domain query - list words in a domain."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        domain = params["domain"]
+        return self.vocab_engine.query_domain(domain)
+
+    def _exec_voc_query_meaning(self, params: Dict) -> Dict[str, Any]:
+        """Vocabulary meaning query - get word meaning/relations."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        word = params["word"]
+        return self.vocab_engine.query_meaning(word)
+
+    def _exec_voc_expand(self, params: Dict) -> List[str]:
+        """Vocabulary expand oracle - suggest new words for concept."""
+        if not self.vocab_engine:
+            raise RuntimeError("VocabularyEngine not available")
+        concept = params["concept"]
+        count = params.get("count", 5)
+        return self.vocab_engine.expand(concept, count=count)
 
     # =========================================================================
     # Main Execution
