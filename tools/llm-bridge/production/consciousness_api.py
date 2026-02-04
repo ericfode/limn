@@ -7,6 +7,7 @@ Lightweight HTTP server exposing consciousness operations:
   GET  /graph           Concept graph (JSON)
   GET  /genealogy       Thought genealogy tree (JSON)
   GET  /replay          Thought replay timeline (JSON)
+  GET  /stream          SSE stream of live thoughts
   POST /think           Generate a single thought
   POST /compose         Generate a composed thought chain
   POST /introspect      Generate introspective meta-thought
@@ -29,8 +30,9 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from typing import Dict, Any, Optional
 from collections import defaultdict
-from threading import Thread
+from threading import Thread, Event
 import logging
+import queue
 
 # Add production dir to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -46,6 +48,24 @@ logger = logging.getLogger(__name__)
 # Global consciousness instance (lazy-initialized)
 _consciousness: Optional[RecursiveConsciousness] = None
 _background_task: Optional[Thread] = None
+_stream_subscribers: list = []  # List of queue.Queue for SSE clients
+_stream_lock = Thread.__class__  # placeholder, replaced below
+
+from threading import Lock
+_stream_lock = Lock()
+
+
+def broadcast_thought(event_data: Dict):
+    """Send a thought event to all SSE subscribers."""
+    with _stream_lock:
+        dead = []
+        for q in _stream_subscribers:
+            try:
+                q.put_nowait(event_data)
+            except queue.Full:
+                dead.append(q)
+        for q in dead:
+            _stream_subscribers.remove(q)
 
 
 def get_consciousness(topic: str = None) -> RecursiveConsciousness:
@@ -101,6 +121,10 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             self._handle_replay(last_n=last_n, topic=topic)
         elif path == '/genealogy':
             self._handle_genealogy()
+        elif path == '/stream':
+            topic = params.get('topic', [None])[0]
+            iterations = int(params.get('iterations', [20])[0])
+            self._handle_stream(topic=topic, iterations=iterations)
         elif path == '/health':
             self._send_json({'status': 'ok', 'timestamp': time.time()})
         else:
@@ -170,6 +194,8 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 for g in rc.current_goals
             ],
             'emotional_momentum': round(rc.emotional_momentum, 3),
+            'prompt_adjustments_active': len(rc.prompt_adjustments),
+            'personality': rc.personality if rc.personality else None,
             'run_history_count': len(rc.run_history),
             'timestamp': time.time(),
         }
@@ -291,6 +317,84 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         rc = get_consciousness()
         genealogy = rc.get_thought_genealogy()
         self._send_json(genealogy)
+
+    def _handle_stream(self, topic: str = None, iterations: int = 20):
+        """SSE stream of live thoughts. Generates thoughts and pushes them as events."""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/event-stream')
+        self.send_header('Cache-Control', 'no-cache')
+        self.send_header('Connection', 'keep-alive')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+
+        rc = get_consciousness(topic)
+        stop_event = Event()
+
+        def send_event(event_type: str, data: dict):
+            try:
+                payload = f"event: {event_type}\ndata: {json.dumps(data)}\n\n"
+                self.wfile.write(payload.encode())
+                self.wfile.flush()
+                return True
+            except (BrokenPipeError, ConnectionResetError):
+                stop_event.set()
+                return False
+
+        # Send initial status
+        send_event('status', {
+            'iteration': rc.iteration,
+            'topic': rc.topic,
+            'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+            'emotional_momentum': round(rc.emotional_momentum, 3),
+        })
+
+        iterations = min(iterations, 100)
+        for i in range(iterations):
+            if stop_event.is_set():
+                break
+
+            rc.iteration += 1
+            thought = rc.think()
+
+            score = {}
+            if rc.thought_history and 'score' in rc.thought_history[-1]:
+                score = rc.thought_history[-1]['score']
+
+            thought_data = {
+                'thought': thought,
+                'iteration': rc.iteration,
+                'score': score,
+                'narrative': rc.narrative_thread,
+                'emotional_momentum': round(rc.emotional_momentum, 3),
+                'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+                'domains': rc.thought_history[-1].get('domains', []) if rc.thought_history else [],
+            }
+
+            if not send_event('thought', thought_data):
+                break
+
+            # Broadcast to any other subscribers
+            broadcast_thought(thought_data)
+
+            # Run introspection every 10th thought in stream
+            if i > 0 and i % 10 == 0:
+                intro = rc.introspect()
+                if intro:
+                    send_event('introspection', {'content': intro})
+
+            # Save memory periodically
+            if i > 0 and i % 5 == 0:
+                rc._save_memory()
+
+            time.sleep(2)
+
+        # Final status
+        send_event('done', {
+            'total_thoughts': len(rc.thought_history),
+            'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+            'emotional_momentum': round(rc.emotional_momentum, 3),
+        })
+        rc._save_memory()
 
     def _handle_replay(self, last_n: int = None, topic: str = None):
         """Return thought replay as JSON."""
@@ -463,6 +567,7 @@ def main():
     print(f"  GET  http://localhost:{port}/graph      - Concept graph")
     print(f"  GET  http://localhost:{port}/genealogy  - Thought genealogy tree")
     print(f"  GET  http://localhost:{port}/replay     - Thought timeline")
+    print(f"  GET  http://localhost:{port}/stream     - SSE live thought stream")
     print(f"  GET  http://localhost:{port}/health   - Health check")
     print(f"  POST http://localhost:{port}/think      - Generate thought")
     print(f"  POST http://localhost:{port}/compose    - Compose thought chain")
