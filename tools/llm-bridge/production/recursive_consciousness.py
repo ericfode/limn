@@ -1576,7 +1576,11 @@ class RecursiveConsciousness:
 
 
 def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
-    """Replay thought log for analysis."""
+    """Replay thought log as annotated timeline visualization.
+
+    Shows each thought with quality score, narrative arc, domains,
+    and emotional valence. Useful for understanding consciousness evolution.
+    """
     if not log_path.exists():
         print("No thought log found.")
         return
@@ -1601,34 +1605,111 @@ def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None
         print("No matching thoughts found.")
         return
 
-    # Analyze
+    # Header
+    print("=" * 70)
+    print("CONSCIOUSNESS REPLAY")
+    print("=" * 70)
+
+    # Summary stats
     all_words = set()
     domain_counts = defaultdict(int)
+    total_quality = []
     for t in thoughts:
         words = re.findall(r'[a-z]{2,4}', t.get('content', '').lower())
         all_words.update(words)
         for d in t.get('domains', []):
             domain_counts[d] += 1
+        if 'score' in t:
+            total_quality.append(t['score']['overall'])
 
-    print(f"=== Thought Log Analysis ===")
-    print(f"Thoughts: {len(thoughts)}")
-    print(f"Time span: {thoughts[0].get('timestamp', 0):.0f} -> {thoughts[-1].get('timestamp', 0):.0f}")
-    print(f"Unique words: {len(all_words)}")
-    print(f"Domains touched: {len(domain_counts)}")
+    timestamps = [t.get('timestamp', 0) for t in thoughts if t.get('timestamp')]
+    if len(timestamps) >= 2:
+        span_min = (timestamps[-1] - timestamps[0]) / 60
+        print(f"  Duration: {span_min:.1f} minutes")
+    print(f"  Thoughts: {len(thoughts)}")
+    print(f"  Unique words: {len(all_words)}")
+    print(f"  Domains: {len(domain_counts)}")
+    if total_quality:
+        print(f"  Avg quality: {sum(total_quality)/len(total_quality):.3f}")
     print()
 
-    print("Domain frequency:")
-    for d, c in sorted(domain_counts.items(), key=lambda x: -x[1]):
-        print(f"  {d}: {c}")
+    # Timeline
+    print("TIMELINE")
+    print("─" * 70)
 
+    prev_narrative = ""
+    for i, t in enumerate(thoughts):
+        content = t.get('content', '')
+        iteration = t.get('iteration', '?')
+        domains = t.get('domains', [])
+        narrative = t.get('narrative', '')
+        score = t.get('score', {})
+        topic = t.get('topic', '')
+
+        # Narrative arc transition header
+        if narrative and narrative != prev_narrative:
+            phase, _, domain = narrative.partition(':')
+            print(f"\n  {'═'*60}")
+            print(f"  ARC: {phase} [{domain}]")
+            print(f"  {'═'*60}")
+            prev_narrative = narrative
+
+        # Quality indicator
+        quality = score.get('overall', 0)
+        if quality >= 0.7:
+            q_indicator = "★★★"
+        elif quality >= 0.5:
+            q_indicator = "★★ "
+        elif quality >= 0.3:
+            q_indicator = "★  "
+        else:
+            q_indicator = "·  "
+
+        # Emotional valence indicators
+        positive_words = {'joy', 'lov', 'hop', 'exc', 'cre', 'cou', 'bea', 'gra', 'pea', 'har'}
+        negative_words = {'fea', 'ang', 'sad', 'hat', 'anx', 'dou', 'sha', 'gui', 'gri', 'des'}
+        thought_words = set(re.findall(r'[a-z]{2,4}', content.lower()))
+        pos = thought_words & positive_words
+        neg = thought_words & negative_words
+        if pos and not neg:
+            emotion = "+"
+        elif neg and not pos:
+            emotion = "-"
+        elif pos and neg:
+            emotion = "~"
+        else:
+            emotion = " "
+
+        # Format thought
+        domain_str = ','.join(d[:3] for d in domains[:4]) if domains else ""
+        quality_str = f"{quality:.2f}" if score else "    "
+
+        print(f"  {q_indicator} [{iteration:3}] {emotion} {content[:65]}")
+        if domain_str or quality_str:
+            nov = score.get('novelty', 0)
+            div = score.get('diversity', 0)
+            print(f"            q={quality_str} nov={nov:.2f} div={div:.2f}  [{domain_str}]")
+
+    # Footer summary
     print()
-    print("Recent thoughts:")
-    for t in thoughts[-5:]:
-        content = t.get('content', '')[:80]
-        domains = ', '.join(t.get('domains', [])[:3])
-        print(f"  [{t.get('iteration', '?')}] {content}")
-        if domains:
-            print(f"       domains: {domains}")
+    print("─" * 70)
+    print("DOMAIN COVERAGE:")
+    for d, c in sorted(domain_counts.items(), key=lambda x: -x[1])[:10]:
+        bar = '█' * min(c, 30)
+        print(f"  {d:25s} {c:3d} {bar}")
+
+    if total_quality:
+        print()
+        print("QUALITY PROGRESSION:")
+        # Show quality trend in 5 buckets
+        bucket_size = max(len(total_quality) // 5, 1)
+        for b in range(0, len(total_quality), bucket_size):
+            bucket = total_quality[b:b+bucket_size]
+            avg = sum(bucket) / len(bucket)
+            bar = '█' * int(avg * 30)
+            print(f"  [{b+1:3d}-{min(b+bucket_size, len(total_quality)):3d}] {avg:.3f} {bar}")
+
+    print("=" * 70)
 
 
 def show_stats():
