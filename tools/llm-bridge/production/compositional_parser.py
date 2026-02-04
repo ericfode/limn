@@ -101,12 +101,12 @@ Expr = Union[Word, Gradient, Projection, Interference, Subtraction, Conditional,
 
 TOKEN_PATTERNS = [
     ('FLOAT', r'\d+\.\d+'),
+    ('WITHOUT', r'without'),
     ('WORD', r'[a-z]{2,4}'),
     ('CARET', r'\^'),
     ('AT', r'@'),
     ('STAR', r'\*'),
     ('BACKSLASH', r'\\'),
-    ('WITHOUT', r'without'),
     ('COLON', r':'),
     ('PLUSMINUS', r'±'),
     ('LPAREN', r'\('),
