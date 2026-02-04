@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>World View - Multi-Consciousness Environment</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .world-panel {
+            flex: 2;
+            position: relative;
+            background: #000;
+        }
+        .sidebar {
+            flex: 1;
+            background: #1a1a1a;
+            border-left: 2px solid #00ff00;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        canvas {
+            display: block;
+            border: 2px solid #00ff00;
+        }
+        .controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+        }
+        .control-btn {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .control-btn:hover {
+            background: #00cc00;
+        }
+        .consciousness-card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .consciousness-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        .stat-label {
+            color: #00cc00;
+        }
+        .stat-value {
+            color: #00ff00;
+        }
+        .resource-bar {
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .resource-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00cc00);
+        }
+        .legend {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="world-panel">
+            <canvas id="worldCanvas" width="800" height="800"></canvas>
+            <div class="controls">
+                <button class="control-btn" onclick="spawnConsciousness()">+ Spawn Consciousness</button>
+                <button class="control-btn" onclick="clearWorld()">Clear World</button>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <h2>🌍 World State</h2>
+            <div id="world-stats" style="margin-bottom: 20px;">
+                <div class="stat-line">
+                    <span class="stat-label">Tick:</span>
+                    <span class="stat-value" id="tick-count">0</span>
+                </div>
+                <div class="stat-line">
+                    <span class="stat-label">Consciousnesses:</span>
+                    <span class="stat-value" id="consciousness-count">0</span>
+                </div>
+                <div class="stat-line">
+                    <span class="stat-label">Resources:</span>
+                    <span class="stat-value" id="resource-count">0</span>
+                </div>
+                <div class="stat-line">
+                    <span class="stat-label">Challenges:</span>
+                    <span class="stat-value" id="challenge-count">0</span>
+                </div>
+            </div>
+
+            <h3>Consciousnesses</h3>
+            <div id="consciousness-list"></div>
+
+            <div class="legend">
+                <h3>Legend</h3>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #00ff00;"></div>
+                    <span>Consciousness (Active)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ffff00;"></div>
+                    <span>Resource (Energy)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff00ff;"></div>
+                    <span>Challenge</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('worldCanvas');
+        const ctx = canvas.getContext('2d');
+        const worldSize = 100; // World is 100x100
+        const scale = canvas.width / worldSize;
+
+        function drawWorld(state) {
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const pos = (i / 10) * canvas.width;
+                ctx.beginPath();
+                ctx.moveTo(pos, 0);
+                ctx.lineTo(pos, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, pos);
+                ctx.lineTo(canvas.width, pos);
+                ctx.stroke();
+            }
+
+            // Draw resources
+            if (state.resources) {
+                state.resources.forEach(resource => {
+                    const x = resource.location[0] * scale;
+                    const y = resource.location[1] * scale;
+
+                    ctx.fillStyle = '#ffff00';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            // Draw challenges
+            if (state.challenges) {
+                state.challenges.forEach(challenge => {
+                    // Challenges don't have location yet, place randomly
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height;
+
+                    ctx.fillStyle = '#ff00ff';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            // Draw consciousnesses
+            if (state.consciousnesses) {
+                Object.values(state.consciousnesses).forEach(consciousness => {
+                    const x = consciousness.location[0] * scale;
+                    const y = consciousness.location[1] * scale;
+
+                    // Draw consciousness as glowing circle
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = '#00ff00';
+                    ctx.fillStyle = '#00ff00';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    // Draw name
+                    ctx.fillStyle = '#00ff00';
+                    ctx.font = '10px Monaco';
+                    ctx.fillText(consciousness.name, x + 12, y + 4);
+
+                    // Draw state indicator
+                    ctx.fillStyle = '#00cc00';
+                    ctx.font = '8px Monaco';
+                    ctx.fillText(consciousness.state, x + 12, y + 14);
+                });
+            }
+        }
+
+        function updateSidebar(state) {
+            // Update stats
+            document.getElementById('tick-count').textContent = state.tick_count || 0;
+            document.getElementById('consciousness-count').textContent =
+                Object.keys(state.consciousnesses || {}).length;
+            document.getElementById('resource-count').textContent =
+                (state.resources || []).length;
+            document.getElementById('challenge-count').textContent =
+                (state.challenges || []).length;
+
+            // Update consciousness list
+            const list = document.getElementById('consciousness-list');
+            if (!state.consciousnesses || Object.keys(state.consciousnesses).length === 0) {
+                list.innerHTML = '<p style="color: #666;">No consciousnesses spawned yet</p>';
+                return;
+            }
+
+            list.innerHTML = Object.entries(state.consciousnesses).map(([id, c]) => `
+                <div class="consciousness-card">
+                    <div class="consciousness-name">${c.name}</div>
+                    <div class="stat-line">
+                        <span class="stat-label">State:</span>
+                        <span class="stat-value">${c.state}</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Age:</span>
+                        <span class="stat-value">${c.age?.toFixed(1) || 0}s</span>
+                    </div>
+                    <div class="stat-line">
+                        <span class="stat-label">Oracles:</span>
+                        <span class="stat-value">${c.oracle_count}</span>
+                    </div>
+                    ${Object.entries(c.resources || {}).map(([type, amount]) => `
+                        <div style="margin-top: 8px;">
+                            <div class="stat-line">
+                                <span class="stat-label">${type}:</span>
+                                <span class="stat-value">${amount.toFixed(1)}</span>
+                            </div>
+                            <div class="resource-bar">
+                                <div class="resource-fill" style="width: ${Math.min(100, amount)}%"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+        }
+
+        function updateWorld() {
+            fetch('/api/world')
+                .then(r => r.json())
+                .then(state => {
+                    drawWorld(state);
+                    updateSidebar(state);
+                })
+                .catch(err => console.error('Error:', err));
+        }
+
+        function spawnConsciousness() {
+            const names = ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta'];
+            const name = names[Math.floor(Math.random() * names.length)] + Math.floor(Math.random() * 1000);
+
+            fetch('/api/world/spawn', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name: name})
+            })
+            .then(r => r.json())
+            .then(() => updateWorld())
+            .catch(err => console.error('Error:', err));
+        }
+
+        function clearWorld() {
+            if (confirm('Clear all consciousnesses from the world?')) {
+                fetch('/api/world/clear', {method: 'POST'})
+                    .then(() => updateWorld())
+                    .catch(err => console.error('Error:', err));
+            }
+        }
+
+        // Initial update and auto-refresh
+        updateWorld();
+        setInterval(updateWorld, 2000);
+    </script>
+</body>
+</html>

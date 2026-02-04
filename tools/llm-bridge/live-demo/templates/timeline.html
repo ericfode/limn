@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Knowledge Timeline - Consciousness Evolution</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 100%);
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+        }
+        .timeline-canvas-container {
+            position: relative;
+            background: #000;
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        canvas {
+            display: block;
+        }
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .stat-card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .stat-title {
+            font-size: 12px;
+            color: #00cc00;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .stat-value {
+            font-size: 32px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div class="container">
+        <div class="header">
+            <h1 style="font-size: 48px; margin: 0; text-shadow: 0 0 20px #00ff00;">⏳ KNOWLEDGE TIMELINE</h1>
+            <p style="font-size: 18px; color: #00cc00; margin-top: 10px;">Watch consciousness evolve in real-time</p>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00ff00;"></div>
+                <span>Thoughts (cumulative)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #00ffff;"></div>
+                <span>Concepts discovered</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff00ff;"></div>
+                <span>Patterns found</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ffff00;"></div>
+                <span>Learning velocity</span>
+            </div>
+        </div>
+
+        <div class="timeline-canvas-container">
+            <canvas id="timelineCanvas" width="1560" height="600"></canvas>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-title">Total Age</div>
+                <div class="stat-value" id="total-age">0s</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Thought Rate</div>
+                <div class="stat-value" id="thought-rate">0/s</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Concept Rate</div>
+                <div class="stat-value" id="concept-rate">0/s</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Learning Velocity</div>
+                <div class="stat-value" id="learning-velocity">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('timelineCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let timelineData = {
+            thoughts: [],
+            concepts: [],
+            patterns: [],
+            timestamps: []
+        };
+
+        let maxDataPoints = 100;
+
+        function drawTimeline() {
+            // Clear
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (timelineData.timestamps.length === 0) {
+                ctx.fillStyle = '#00ff00';
+                ctx.font = '20px Monaco';
+                ctx.textAlign = 'center';
+                ctx.fillText('Gathering timeline data...', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            const padding = 60;
+            const graphWidth = canvas.width - 2 * padding;
+            const graphHeight = canvas.height - 2 * padding;
+
+            // Find max values for scaling
+            const maxThoughts = Math.max(...timelineData.thoughts, 1);
+            const maxConcepts = Math.max(...timelineData.concepts, 1);
+            const maxPatterns = Math.max(...timelineData.patterns, 1);
+
+            // Draw grid
+            ctx.strokeStyle = '#222';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (graphHeight * i / 10);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw thought curve
+            drawCurve(timelineData.thoughts, maxThoughts, '#00ff00', 3);
+
+            // Draw concept curve
+            drawCurve(timelineData.concepts, maxConcepts, '#00ffff', 2);
+
+            // Draw pattern curve
+            drawCurve(timelineData.patterns, maxPatterns, '#ff00ff', 2);
+
+            // Draw labels
+            ctx.fillStyle = '#00ff00';
+            ctx.font = '14px Monaco';
+            ctx.textAlign = 'right';
+            ctx.fillText(`${maxThoughts} thoughts`, padding - 10, padding + 10);
+            ctx.fillText('0', padding - 10, canvas.height - padding + 5);
+
+            // Draw time labels
+            ctx.textAlign = 'center';
+            const timeRange = timelineData.timestamps[timelineData.timestamps.length - 1] - timelineData.timestamps[0];
+            ctx.fillText('Now', canvas.width - padding, canvas.height - padding + 20);
+            ctx.fillText(`-${Math.floor(timeRange)}s`, padding, canvas.height - padding + 20);
+        }
+
+        function drawCurve(data, maxValue, color, lineWidth) {
+            if (data.length === 0) return;
+
+            const padding = 60;
+            const graphWidth = canvas.width - 2 * padding;
+            const graphHeight = canvas.height - 2 * padding;
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = color;
+
+            ctx.beginPath();
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (graphWidth * i / (data.length - 1));
+                const y = canvas.height - padding - (graphHeight * data[i] / maxValue);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+
+        function updateTimeline() {
+            Promise.all([
+                fetch('/api/thought_library').then(r => r.json()),
+                fetch('/api/temporal_analysis').then(r => r.json())
+            ])
+            .then(([libraryData, temporalData]) => {
+                const stats = libraryData.stats;
+                const now = Date.now() / 1000;
+
+                // Add new data point
+                timelineData.thoughts.push(stats.total_thoughts || 0);
+                timelineData.concepts.push(stats.total_concepts || 0);
+                timelineData.patterns.push(stats.patterns_discovered || 0);
+                timelineData.timestamps.push(now);
+
+                // Keep only recent data
+                if (timelineData.thoughts.length > maxDataPoints) {
+                    timelineData.thoughts.shift();
+                    timelineData.concepts.shift();
+                    timelineData.patterns.shift();
+                    timelineData.timestamps.shift();
+                }
+
+                // Update stats
+                document.getElementById('total-age').textContent =
+                    Math.floor(stats.age_seconds || 0) + 's';
+                document.getElementById('thought-rate').textContent =
+                    (temporalData.concept_rate || 0).toFixed(2) + '/s';
+                document.getElementById('concept-rate').textContent =
+                    (temporalData.concept_rate || 0).toFixed(2) + '/s';
+                document.getElementById('learning-velocity').textContent =
+                    (temporalData.learning_velocity || 0).toFixed(2);
+
+                // Redraw
+                drawTimeline();
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        // Start
+        updateTimeline();
+        setInterval(updateTimeline, 2000);  // Update every 2s
+    </script>
+</body>
+</html>

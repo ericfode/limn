@@ -1,6 +1,42 @@
-# Limn Bootstrap Document v1
+# ⚠️ ARCHIVED: DO NOT USE ⚠️
 
-**Purpose:** Teach Limn to a fresh LLM through in-context learning only.
+**This is bootstrap v1 - SUPERSEDED and ARCHIVED**
+
+**Status:** 📦 ARCHIVED (Superseded by v3-natural)
+**Date Archived:** 2026-01-31
+**Reason:** Replaced by v2, then v3-natural
+
+---
+
+## 🎯 FOR CURRENT BOOTSTRAP: USE THIS INSTEAD
+
+**→ [../../spec/bootstrap-v3-natural.md](../../spec/bootstrap-v3-natural.md) ←**
+
+**Or see:** [../../BOOTSTRAP.md](../../BOOTSTRAP.md) for quick navigation
+
+---
+
+## ⚠️ WARNING: HISTORICAL DOCUMENT BELOW
+
+This document is preserved for historical reference only. It shows the evolution of Limn bootstrap design but **should not be used for learning Limn** or as authoritative reference.
+
+**Do not:**
+- Link to this file from new documentation
+- Use this to teach Limn
+- Cite this as current specification
+
+**Do:**
+- Use for historical research
+- Compare design evolution (v1 → v2 → v3)
+- Reference in design retrospectives
+
+**For all current use:** See bootstrap-v3-natural.md
+
+---
+
+# Limn Bootstrap Document v1 (ARCHIVED)
+
+**Original Purpose:** Teach Limn to a fresh LLM through in-context learning only.
 
 ---
 

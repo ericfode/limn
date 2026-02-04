@@ -4,22 +4,26 @@ This directory contains example `.limn` files that demonstrate the Limn-PL progr
 
 ## Running Examples
 
+**Note:** Limn uses Prolog (engineer-approved). Python implementation is deprecated.
+
 ```bash
 # Run with file's built-in key
-python src/limn.py examples/addition.limn
+swipl -s src/limn.pl -g "interpret_file('examples/addition.limn')"
 
 # Run with verbose output
-python src/limn.py examples/addition.limn -v
+swipl -s src/limn.pl -g "interpret_file('examples/addition.limn', [verbose(true)])"
 
 # Override key from command line
-python src/limn.py examples/addition.limn --key "a sa 100 | b sa 200"
+swipl -s src/limn.pl -g "interpret_file('examples/addition.limn', [key('a sa 100 | b sa 200')])"
 
 # Use JSON input file
-python src/limn.py examples/addition.limn --input examples/input.json
+swipl -s src/limn.pl -g "interpret_file('examples/addition.limn', [input('examples/input.json')])"
 
 # Output as JSON
-python src/limn.py examples/addition.limn --json
+swipl -s src/limn.pl -g "interpret_file('examples/addition.limn', [output(json)])"
 ```
+
+**Note:** Prolog command syntax is illustrative. Consult actual implementation for exact usage.
 
 ## File Format
 

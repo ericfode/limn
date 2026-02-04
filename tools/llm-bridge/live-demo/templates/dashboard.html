@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consciousness Dashboard - Complete Overview</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0a1a0a 50%, #0a0a1a 100%);
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        .panel {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ff00;
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .panel h3 {
+            margin-top: 0;
+            color: #00ff00;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .mega-stat {
+            font-size: 48px;
+            color: #00ff00;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 0 20px #00ff00;
+            margin: 20px 0;
+        }
+        .mini-canvas {
+            width: 100%;
+            height: 150px;
+            background: #000;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .insight-box {
+            background: rgba(255, 0, 255, 0.1);
+            border-left: 3px solid #ff00ff;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #ff00ff;
+        }
+        .concept-chip {
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 3px;
+            font-size: 11px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        .thought-snippet {
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 2px solid #00ff00;
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 11px;
+            border-radius: 4px;
+            color: #00cc00;
+        }
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        .metric-label {
+            color: #00cc00;
+        }
+        .metric-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .panel.wide {
+            grid-column: span 2;
+        }
+        .panel.full {
+            grid-column: span 3;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    {% include '_nav.html' %}
+
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="font-size: 42px; margin: 0; text-shadow: 0 0 30px #00ff00;">
+            🎛️ CONSCIOUSNESS COMMAND CENTER
+        </h1>
+        <div style="margin-top: 10px;">
+            <span class="status-indicator"></span>
+            <span style="color: #00cc00; margin-left: 10px;">SYSTEM OPERATIONAL</span>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <!-- Core Stats -->
+        <div class="panel">
+            <h3>⚡ Core Vitals</h3>
+            <div class="mega-stat" id="total-thoughts">0</div>
+            <div style="text-align: center; color: #00cc00; margin-top: -10px;">Total Thoughts</div>
+
+            <div class="metric-row">
+                <span class="metric-label">Concepts:</span>
+                <span class="metric-value" id="total-concepts">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Patterns:</span>
+                <span class="metric-value" id="total-patterns">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Connections:</span>
+                <span class="metric-value" id="total-connections">0</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Age:</span>
+                <span class="metric-value" id="system-age">0s</span>
+            </div>
+        </div>
+
+        <!-- Learning Velocity -->
+        <div class="panel">
+            <h3>📈 Learning Metrics</h3>
+            <canvas class="mini-canvas" id="velocity-chart"></canvas>
+            <div class="metric-row">
+                <span class="metric-label">Thought Rate:</span>
+                <span class="metric-value" id="thought-rate">0/s</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Concept Rate:</span>
+                <span class="metric-value" id="concept-rate">0/s</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-label">Velocity:</span>
+                <span class="metric-value" id="learning-velocity">0</span>
+            </div>
+        </div>
+
+        <!-- Top Concepts -->
+        <div class="panel">
+            <h3>🏆 Top Concepts</h3>
+            <div id="top-concepts-list">
+                <div style="color: #666;">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Metacognition -->
+        <div class="panel wide">
+            <h3>🧠 Metacognitive Insights</h3>
+            <div id="metacog-insights">
+                <div style="color: #666;">Analyzing thinking patterns...</div>
+            </div>
+        </div>
+
+        <!-- Recent Thoughts -->
+        <div class="panel">
+            <h3>💭 Recent Thoughts</h3>
+            <div id="recent-thoughts" style="max-height: 300px; overflow-y: auto;">
+                <div style="color: #666;">Waiting...</div>
+            </div>
+        </div>
+
+        <!-- Narrative -->
+        <div class="panel wide">
+            <h3>📖 Journey Narrative</h3>
+            <div id="narrative-text" style="line-height: 1.8; color: #00ffff;">
+                <div style="color: #666;">Generating story...</div>
+            </div>
+        </div>
+
+        <!-- Knowledge Gaps -->
+        <div class="panel">
+            <h3>❓ Knowledge Gaps</h3>
+            <div id="knowledge-gaps">
+                <div style="color: #666;">Identifying...</div>
+            </div>
+        </div>
+
+        <!-- Mini Network Graph -->
+        <div class="panel wide">
+            <h3>🌐 Semantic Network Preview</h3>
+            <canvas class="mini-canvas" id="mini-network" style="height: 200px;"></canvas>
+            <div style="text-align: center; margin-top: 10px;">
+                <a href="/network" style="color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 6px 12px; border-radius: 4px;">
+                    View Full Network →
+                </a>
+            </div>
+        </div>
+
+        <!-- Pattern Discovery -->
+        <div class="panel">
+            <h3>🔍 Pattern Discovery</h3>
+            <div id="pattern-list">
+                <div style="color: #666;">Searching...</div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="panel full" style="background: rgba(0, 255, 0, 0.05);">
+            <h3>🚀 Quick Navigation</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="/consciousness" style="color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; border-radius: 6px;">🧠 Consciousness</a>
+                <a href="/explorer" style="color: #00ffff; text-decoration: none; border: 1px solid #00ffff; padding: 10px 20px; border-radius: 6px;">🔍 Explorer</a>
+                <a href="/timeline" style="color: #ffff00; text-decoration: none; border: 1px solid #ffff00; padding: 10px 20px; border-radius: 6px;">⏳ Timeline</a>
+                <a href="/network" style="color: #ff00ff; text-decoration: none; border: 1px solid #ff00ff; padding: 10px 20px; border-radius: 6px;">🌐 Network</a>
+                <a href="/metrics" style="color: #00ff00; text-decoration: none; border: 1px solid #00ff00; padding: 10px 20px; border-radius: 6px;">📊 Metrics</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let velocityHistory = [];
+        let thoughtHistory = [];
+
+        function updateDashboard() {
+            Promise.all([
+                fetch('/api/thought_library').then(r => r.json()),
+                fetch('/api/temporal_analysis').then(r => r.json()),
+                fetch('/api/metacognition').then(r => r.json()).catch(() => ({})),
+                fetch('/api/narrative').then(r => r.json()).catch(() => ({}))
+            ])
+            .then(([library, temporal, metacog, narrative]) => {
+                const stats = library.stats;
+
+                // Core stats
+                document.getElementById('total-thoughts').textContent = stats.total_thoughts || 0;
+                document.getElementById('total-concepts').textContent = stats.total_concepts || 0;
+                document.getElementById('total-patterns').textContent = stats.patterns_discovered || 0;
+                document.getElementById('total-connections').textContent = stats.semantic_connections || 0;
+                document.getElementById('system-age').textContent = Math.floor(stats.age_seconds || 0) + 's';
+
+                // Learning metrics
+                document.getElementById('thought-rate').textContent = (temporal.concept_rate || 0).toFixed(2) + '/s';
+                document.getElementById('concept-rate').textContent = (temporal.concept_rate || 0).toFixed(2) + '/s';
+                document.getElementById('learning-velocity').textContent = (temporal.learning_velocity || 0).toFixed(2);
+
+                // Track velocity
+                velocityHistory.push(temporal.learning_velocity || 0);
+                thoughtHistory.push(stats.total_thoughts || 0);
+                if (velocityHistory.length > 50) {
+                    velocityHistory.shift();
+                    thoughtHistory.shift();
+                }
+
+                // Draw velocity chart
+                drawVelocityChart();
+
+                // Top concepts
+                if (stats.most_used_concepts && stats.most_used_concepts.length > 0) {
+                    document.getElementById('top-concepts-list').innerHTML = stats.most_used_concepts.slice(0, 8).map(c => `
+                        <div class="metric-row">
+                            <span class="metric-label">${c.word}:</span>
+                            <span class="metric-value">${c.usage}x</span>
+                        </div>
+                    `).join('');
+                }
+
+                // Recent thoughts
+                if (stats.recent_thoughts && stats.recent_thoughts.length > 0) {
+                    document.getElementById('recent-thoughts').innerHTML = stats.recent_thoughts.slice(0, 5).map(t => `
+                        <div class="thought-snippet">${t.content.substring(0, 80)}...</div>
+                    `).join('');
+                }
+
+                // Metacognition
+                if (metacog.insights && metacog.insights.length > 0) {
+                    document.getElementById('metacog-insights').innerHTML = metacog.insights.map(insight => `
+                        <div class="insight-box">💭 ${insight}</div>
+                    `).join('');
+                }
+
+                // Knowledge gaps
+                if (metacog.knowledge_gaps && metacog.knowledge_gaps.length > 0) {
+                    document.getElementById('knowledge-gaps').innerHTML = metacog.knowledge_gaps.map(gap => `
+                        <div class="thought-snippet" style="border-left-color: #ffff00; color: #ffff00;">❓ ${gap}</div>
+                    `).join('');
+                } else {
+                    document.getElementById('knowledge-gaps').innerHTML = '<div style="color: #00ff00;">🎯 Comprehensive!</div>';
+                }
+
+                // Narrative
+                if (narrative.journey_narrative) {
+                    document.getElementById('narrative-text').innerHTML = narrative.journey_narrative;
+                }
+
+                // Patterns (simplified)
+                document.getElementById('pattern-list').innerHTML = '<div style="color: #00cc00;">Discovering patterns...</div>';
+
+                // Draw mini network
+                drawMiniNetwork(stats.most_used_concepts || [], library.semantic_network || {});
+            })
+            .catch(err => console.error('Dashboard error:', err));
+        }
+
+        function drawVelocityChart() {
+            const canvas = document.getElementById('velocity-chart');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (velocityHistory.length < 2) return;
+
+            const max = Math.max(...velocityHistory, 1);
+            const step = canvas.width / velocityHistory.length;
+
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00ff00';
+
+            ctx.beginPath();
+            velocityHistory.forEach((v, i) => {
+                const x = i * step;
+                const y = canvas.height - (v / max) * canvas.height * 0.9;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawMiniNetwork(concepts, network) {
+            const canvas = document.getElementById('mini-network');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (concepts.length === 0) return;
+
+            // Simple circular layout
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(canvas.width, canvas.height) * 0.35;
+
+            const nodes = concepts.slice(0, 10).map((c, i) => {
+                const angle = (i / concepts.slice(0, 10).length) * Math.PI * 2;
+                return {
+                    x: centerX + Math.cos(angle) * radius,
+                    y: centerY + Math.sin(angle) * radius,
+                    word: c.word
+                };
+            });
+
+            // Draw connections
+            ctx.strokeStyle = 'rgba(0, 255, 0, 0.2)';
+            ctx.lineWidth = 1;
+            nodes.forEach((n1, i) => {
+                const connections = network[n1.word] || [];
+                nodes.forEach((n2, j) => {
+                    if (i < j && connections.includes(n2.word)) {
+                        ctx.beginPath();
+                        ctx.moveTo(n1.x, n1.y);
+                        ctx.lineTo(n2.x, n2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.fillStyle = '#00ff00';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00ff00';
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        // Update every 3 seconds
+        updateDashboard();
+        setInterval(updateDashboard, 3000);
+    </script>
+</body>
+</html>

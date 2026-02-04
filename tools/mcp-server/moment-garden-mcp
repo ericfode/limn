@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+## Moment Garden MCP Server Launcher
+## =========================================================
+## gar mcp | sta run | mul usr
+## *Garden MCP. State running. Multiple users.*
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MCP_DIR="$SCRIPT_DIR/moment-garden"
+
+# Ensure state directory exists
+mkdir -p .beads/moment-garden
+
+# Launch Scryer Prolog MCP server
+exec scryer-prolog "$MCP_DIR/mcp-server.pl"

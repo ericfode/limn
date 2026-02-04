@@ -134,29 +134,21 @@ Light: lux, lum, lit
 
 ---
 
-## 5. Implementation: vocab-derive.py
+## 5. Implementation
 
-```python
-def derive_word(concept, source_lang='english'):
-    """Generate optimal Limn word for concept."""
+**Note:** Limn uses Prolog exclusively (engineer-approved). Implementation in Prolog forthcoming.
 
-    # Step 1: Get source word
-    source = get_source_word(concept, source_lang)
+The derivation algorithm can be implemented as a Prolog predicate:
 
-    # Step 2: Generate CVC form
-    form = generate_cvc(source)
-
-    # Step 3: Check collision
-    if word_exists(form):
-        form = resolve_collision(form, concept)
-
-    # Step 4: Score phonaesthetics
-    score = phonaesthetic_score(form, concept)
-
-    if score < 5:
-        form = find_better_form(concept)
-
-    return form, score
+```prolog
+% derive_word(+Concept, -Word, -Score)
+% Generates optimal Limn word for concept
+derive_word(Concept, Word, Score) :-
+    get_source_word(Concept, Source),
+    generate_cvc(Source, Form),
+    check_and_resolve_collision(Form, Concept, ResolvedForm),
+    phonaesthetic_score(ResolvedForm, Concept, Score),
+    (Score >= 5 -> Word = ResolvedForm ; find_better_form(Concept, Word)).
 ```
 
 ---
@@ -176,16 +168,19 @@ Before adding any word:
 ## 7. Batch Expansion Process
 
 ```bash
-# 1. Generate candidate words
-python scripts/vocab-derive.py --domain=technology --count=30
+# 1. Identify concept domain
+# (manual brainstorming of needed concepts)
 
-# 2. Review and score
+# 2. Derive candidate words using algorithm
+# (apply LWDA pipeline: source selection → CVC generation → collision check → scoring)
+
+# 3. Review and score
 # (manual review of candidates)
 
-# 3. Add approved words
+# 4. Add approved words
 ./scripts/vocab.sh add <word> <source> <meaning> <domain_id> "<examples>"
 
-# 4. Commit to Dolt
+# 5. Commit to Dolt
 cd data/vocabulary && dolt add . && dolt commit -m "Add N words to domain X"
 ```
 

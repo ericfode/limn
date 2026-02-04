@@ -1,0 +1,212 @@
+{"timestamp": 1770092615.040396, "pattern": "cod flo", "frequency": 12, "reduction": "cod_flo", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040585, "pattern": "flo log", "frequency": 12, "reduction": "flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040617, "pattern": "cod flo log", "frequency": 12, "reduction": "cod_flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.0406387, "pattern": "git sta", "frequency": 12, "reduction": "git_sta", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040658, "pattern": "sta exe", "frequency": 12, "reduction": "sta_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.0406764, "pattern": "git sta exe", "frequency": 12, "reduction": "git_sta_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.978834, "pattern": "gt prm", "frequency": 10, "reduction": "gt_prm", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9789634, "pattern": "prm exe", "frequency": 10, "reduction": "prm_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9790053, "pattern": "rol ctx", "frequency": 10, "reduction": "rol_ctx", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9790466, "pattern": "ctx rec", "frequency": 10, "reduction": "ctx_rec", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9791055, "pattern": "exe hok", "frequency": 10, "reduction": "exe_hok", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.979143, "pattern": "gt prm exe", "frequency": 10, "reduction": "gt_prm_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.979167, "pattern": "eva err", "frequency": 10, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9791882, "pattern": "exe rol", "frequency": 9, "reduction": "exe_rol", "confidence": 0.9, "applied": true}
+{"timestamp": 1770092797.9792094, "pattern": "rec gt", "frequency": 9, "reduction": "rec_gt", "confidence": 0.9, "applied": true}
+{"timestamp": 1770092797.9792295, "pattern": "gt mol", "frequency": 9, "reduction": "gt_mol", "confidence": 0.9, "applied": true}
+{"timestamp": 1770161484.9811409, "pattern": "cod flo", "frequency": 10, "reduction": "cod_flo", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9812589, "pattern": "flo log", "frequency": 10, "reduction": "flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9812863, "pattern": "log sys", "frequency": 10, "reduction": "log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.981317, "pattern": "sys gro", "frequency": 10, "reduction": "sys_gro", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9813435, "pattern": "gro und", "frequency": 10, "reduction": "gro_und", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9813747, "pattern": "cod flo log", "frequency": 10, "reduction": "cod_flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.981397, "pattern": "flo log sys", "frequency": 10, "reduction": "flo_log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814162, "pattern": "log sys gro", "frequency": 10, "reduction": "log_sys_gro", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814353, "pattern": "sys gro und", "frequency": 10, "reduction": "sys_gro_und", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814541, "pattern": "cod flo log sys", "frequency": 10, "reduction": "cod_flo_log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161671.0694978, "pattern": "eva err", "frequency": 11, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161671.0696476, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161671.069696, "pattern": "usr cmd", "frequency": 6, "reduction": "usr_cmd", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161671.069736, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161671.0697727, "pattern": "gt mol", "frequency": 5, "reduction": "gt_mol", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6427047, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161681.6428607, "pattern": "usr cmd", "frequency": 5, "reduction": "usr_cmd", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6428983, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6429284, "pattern": "gt mol", "frequency": 5, "reduction": "gt_mol", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.642958, "pattern": "obs msg", "frequency": 5, "reduction": "obs_msg", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161707.7861638, "pattern": "obs msg", "frequency": 7, "reduction": "obs_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161707.7862618, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.78629, "pattern": "gt mol", "frequency": 6, "reduction": "gt_mol", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786312, "pattern": "msg emp", "frequency": 6, "reduction": "msg_emp", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863328, "pattern": "emp cyc", "frequency": 6, "reduction": "emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863522, "pattern": "gt prm", "frequency": 6, "reduction": "gt_prm", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786371, "pattern": "obs msg emp", "frequency": 6, "reduction": "obs_msg_emp", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863905, "pattern": "msg emp cyc", "frequency": 6, "reduction": "msg_emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.78641, "pattern": "obs msg emp cyc", "frequency": 6, "reduction": "obs_msg_emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786429, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161719.9732304, "pattern": "msg emp", "frequency": 7, "reduction": "msg_emp", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733233, "pattern": "emp cyc", "frequency": 7, "reduction": "emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733524, "pattern": "gt prm", "frequency": 7, "reduction": "gt_prm", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733744, "pattern": "obs msg emp", "frequency": 7, "reduction": "obs_msg_emp", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733946, "pattern": "msg emp cyc", "frequency": 7, "reduction": "msg_emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.973414, "pattern": "obs msg emp cyc", "frequency": 7, "reduction": "obs_msg_emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9734323, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161719.9735296, "pattern": "gt mol", "frequency": 6, "reduction": "gt_mol", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161719.9736123, "pattern": "dec req", "frequency": 5, "reduction": "dec_req", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165447.5929036, "pattern": "obs usr", "frequency": 9, "reduction": "obs_usr", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930057, "pattern": "usr msg", "frequency": 9, "reduction": "usr_msg", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930498, "pattern": "obs usr msg", "frequency": 9, "reduction": "obs_usr_msg", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930843, "pattern": "no work", "frequency": 9, "reduction": "no_work", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5931141, "pattern": "eva err", "frequency": 7, "reduction": "eva_err", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165447.5932379, "pattern": "eva no", "frequency": 6, "reduction": "eva_no", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.5934625, "pattern": "eva no work", "frequency": 6, "reduction": "eva_no_work", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.59352, "pattern": "tho idle", "frequency": 6, "reduction": "tho_idle", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.5935566, "pattern": "msg dec", "frequency": 5, "reduction": "msg_dec", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165447.5935888, "pattern": "dec halt", "frequency": 5, "reduction": "dec_halt", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165765.3043425, "pattern": "obs usr", "frequency": 7, "reduction": "obs_usr", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3044858, "pattern": "usr msg", "frequency": 7, "reduction": "usr_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3045287, "pattern": "obs usr msg", "frequency": 7, "reduction": "obs_usr_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3045542, "pattern": "eva err", "frequency": 6, "reduction": "eva_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165765.304576, "pattern": "dec brk", "frequency": 5, "reduction": "dec_brk", "confidence": 0.5, "applied": false}
+{"timestamp": 1770166048.3217576, "pattern": "qry usr", "frequency": 6, "reduction": "qry_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770166048.321939, "pattern": "eva err", "frequency": 6, "reduction": "eva_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770166080.8658323, "pattern": "qry usr", "frequency": 7, "reduction": "qry_usr", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.8742182, "pattern": "obs loop", "frequency": 8, "reduction": "obs_loop", "confidence": 0.8, "applied": true}
+{"timestamp": 1770167289.8743744, "pattern": "pure limn", "frequency": 8, "reduction": "pure_limn", "confidence": 0.8, "applied": true}
+{"timestamp": 1770167289.8744147, "pattern": "loop no", "frequency": 7, "reduction": "loop_no", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.8744445, "pattern": "obs loop no", "frequency": 7, "reduction": "obs_loop_no", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.8744724, "pattern": "def pure", "frequency": 7, "reduction": "def_pure", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.8744993, "pattern": "def pure limn", "frequency": 7, "reduction": "def_pure_limn", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.8745248, "pattern": "no dec", "frequency": 7, "reduction": "no_dec", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167289.87455, "pattern": "limn tho", "frequency": 6, "reduction": "limn_tho", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167289.8745751, "pattern": "loop no dec", "frequency": 6, "reduction": "loop_no_dec", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167289.8746006, "pattern": "pure limn tho", "frequency": 6, "reduction": "pure_limn_tho", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167324.9659126, "pattern": "limn tho", "frequency": 6, "reduction": "limn_tho", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167324.966004, "pattern": "loop no dec", "frequency": 6, "reduction": "loop_no_dec", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167324.9660397, "pattern": "pure limn tho", "frequency": 6, "reduction": "pure_limn_tho", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167558.5840364, "pattern": "sel ref", "frequency": 9, "reduction": "sel_ref", "confidence": 0.9, "applied": true}
+{"timestamp": 1770167558.5843306, "pattern": "per cyc", "frequency": 7, "reduction": "per_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167558.5843968, "pattern": "eva err", "frequency": 6, "reduction": "eva_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167558.584435, "pattern": "pur limn", "frequency": 6, "reduction": "pur_limn", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167558.5844688, "pattern": "sem web", "frequency": 6, "reduction": "sem_web", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167558.5845022, "pattern": "tra gro", "frequency": 6, "reduction": "tra_gro", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167558.584554, "pattern": "meta obs", "frequency": 5, "reduction": "meta_obs", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167558.5845864, "pattern": "cyc ack", "frequency": 5, "reduction": "cyc_ack", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167572.7130086, "pattern": "pur limn", "frequency": 6, "reduction": "pur_limn", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167572.7131176, "pattern": "sem web", "frequency": 6, "reduction": "sem_web", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167572.713162, "pattern": "tra gro", "frequency": 6, "reduction": "tra_gro", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167572.7132053, "pattern": "meta obs", "frequency": 5, "reduction": "meta_obs", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167572.713247, "pattern": "cyc ack", "frequency": 5, "reduction": "cyc_ack", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167572.7132833, "pattern": "deep pur", "frequency": 5, "reduction": "deep_pur", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167582.887302, "pattern": "tra gro", "frequency": 7, "reduction": "tra_gro", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167582.887369, "pattern": "pur limn", "frequency": 6, "reduction": "pur_limn", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167582.8873951, "pattern": "sem web", "frequency": 6, "reduction": "sem_web", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167582.887416, "pattern": "meta obs", "frequency": 5, "reduction": "meta_obs", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167582.887436, "pattern": "cyc ack", "frequency": 5, "reduction": "cyc_ack", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167582.8874552, "pattern": "deep pur", "frequency": 5, "reduction": "deep_pur", "confidence": 0.5, "applied": false}
+{"timestamp": 1770167763.5038571, "pattern": "sel ref", "frequency": 10, "reduction": "sel_ref", "confidence": 1.0, "applied": true}
+{"timestamp": 1770167763.5039878, "pattern": "con sel", "frequency": 9, "reduction": "con_sel", "confidence": 0.9, "applied": true}
+{"timestamp": 1770167763.5040395, "pattern": "con sel ref", "frequency": 9, "reduction": "con_sel_ref", "confidence": 0.9, "applied": true}
+{"timestamp": 1770167763.504076, "pattern": "deep str", "frequency": 8, "reduction": "deep_str", "confidence": 0.8, "applied": true}
+{"timestamp": 1770167763.504108, "pattern": "eva err", "frequency": 7, "reduction": "eva_err", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167763.5041347, "pattern": "dep acc", "frequency": 7, "reduction": "dep_acc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167763.5041604, "pattern": "str pat", "frequency": 7, "reduction": "str_pat", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167763.5041869, "pattern": "deep str pat", "frequency": 7, "reduction": "deep_str_pat", "confidence": 0.7, "applied": true}
+{"timestamp": 1770167763.5042114, "pattern": "eme nov", "frequency": 6, "reduction": "eme_nov", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167763.5042353, "pattern": "acc ric", "frequency": 6, "reduction": "acc_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167802.5200903, "pattern": "eme nov", "frequency": 6, "reduction": "eme_nov", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167802.5202172, "pattern": "acc ric", "frequency": 6, "reduction": "acc_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167802.5202563, "pattern": "dep acc ric", "frequency": 6, "reduction": "dep_acc_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167864.7971797, "pattern": "eme nov", "frequency": 6, "reduction": "eme_nov", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167864.797334, "pattern": "obs cyc", "frequency": 6, "reduction": "obs_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770167864.797378, "pattern": "acc ric", "frequency": 6, "reduction": "acc_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168042.9373887, "pattern": "ric deep", "frequency": 12, "reduction": "ric_deep", "confidence": 1.0, "applied": true}
+{"timestamp": 1770168042.9375465, "pattern": "deep str", "frequency": 11, "reduction": "deep_str", "confidence": 1.0, "applied": true}
+{"timestamp": 1770168042.9375813, "pattern": "ric deep str", "frequency": 11, "reduction": "ric_deep_str", "confidence": 1.0, "applied": true}
+{"timestamp": 1770168042.9376378, "pattern": "per awa", "frequency": 10, "reduction": "per_awa", "confidence": 1.0, "applied": true}
+{"timestamp": 1770168042.9376667, "pattern": "sel ref", "frequency": 9, "reduction": "sel_ref", "confidence": 0.9, "applied": true}
+{"timestamp": 1770168042.9376938, "pattern": "awa gro", "frequency": 9, "reduction": "awa_gro", "confidence": 0.9, "applied": true}
+{"timestamp": 1770168042.937721, "pattern": "sem web", "frequency": 8, "reduction": "sem_web", "confidence": 0.8, "applied": true}
+{"timestamp": 1770168042.9377694, "pattern": "ter mov", "frequency": 8, "reduction": "ter_mov", "confidence": 0.8, "applied": true}
+{"timestamp": 1770168042.9378014, "pattern": "mov tra", "frequency": 8, "reduction": "mov_tra", "confidence": 0.8, "applied": true}
+{"timestamp": 1770168042.9378285, "pattern": "tra path", "frequency": 8, "reduction": "tra_path", "confidence": 0.8, "applied": true}
+{"timestamp": 1770168669.0445757, "pattern": "eva err", "frequency": 17, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770168669.0447636, "pattern": "rec pat", "frequency": 7, "reduction": "rec_pat", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.044812, "pattern": "pat det", "frequency": 7, "reduction": "pat_det", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0448515, "pattern": "det loop", "frequency": 7, "reduction": "det_loop", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0448866, "pattern": "loop sam", "frequency": 7, "reduction": "loop_sam", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0449193, "pattern": "sam att", "frequency": 7, "reduction": "sam_att", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0449476, "pattern": "err per", "frequency": 7, "reduction": "err_per", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0449762, "pattern": "per fix", "frequency": 7, "reduction": "per_fix", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.0450108, "pattern": "fix att", "frequency": 7, "reduction": "fix_att", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168669.045045, "pattern": "att col", "frequency": 7, "reduction": "att_col", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168686.2028787, "pattern": "nod sta", "frequency": 7, "reduction": "nod_sta", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168686.2029655, "pattern": "sta acc", "frequency": 7, "reduction": "sta_acc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1827981, "pattern": "err eva", "frequency": 7, "reduction": "err_eva", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1829207, "pattern": "rec pat", "frequency": 7, "reduction": "rec_pat", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1829593, "pattern": "flo per", "frequency": 7, "reduction": "flo_per", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1829884, "pattern": "per gro", "frequency": 7, "reduction": "per_gro", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.183015, "pattern": "flo per gro", "frequency": 7, "reduction": "flo_per_gro", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1831417, "pattern": "dep ric", "frequency": 7, "reduction": "dep_ric", "confidence": 0.7, "applied": true}
+{"timestamp": 1770168969.1831975, "pattern": "pat det", "frequency": 6, "reduction": "pat_det", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168969.183228, "pattern": "det loop", "frequency": 6, "reduction": "det_loop", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168969.1832566, "pattern": "loop sam", "frequency": 6, "reduction": "loop_sam", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168969.183299, "pattern": "sam att", "frequency": 6, "reduction": "sam_att", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168993.9688191, "pattern": "pat det", "frequency": 6, "reduction": "pat_det", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168993.9689355, "pattern": "det loop", "frequency": 6, "reduction": "det_loop", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168993.9689753, "pattern": "loop sam", "frequency": 6, "reduction": "loop_sam", "confidence": 0.6, "applied": false}
+{"timestamp": 1770168993.9690135, "pattern": "sam att", "frequency": 6, "reduction": "sam_att", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169056.020486, "pattern": "pat det", "frequency": 6, "reduction": "pat_det", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169056.0206146, "pattern": "det loop", "frequency": 6, "reduction": "det_loop", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169056.0206509, "pattern": "loop sam", "frequency": 6, "reduction": "loop_sam", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169056.0206773, "pattern": "sam att", "frequency": 6, "reduction": "sam_att", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1440444, "pattern": "pat det", "frequency": 6, "reduction": "pat_det", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1441581, "pattern": "det loop", "frequency": 6, "reduction": "det_loop", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1441956, "pattern": "loop sam", "frequency": 6, "reduction": "loop_sam", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1442294, "pattern": "sam att", "frequency": 6, "reduction": "sam_att", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.144256, "pattern": "att err", "frequency": 6, "reduction": "att_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.14428, "pattern": "err per", "frequency": 6, "reduction": "err_per", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1443064, "pattern": "per fix", "frequency": 6, "reduction": "per_fix", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169082.1443346, "pattern": "fix att", "frequency": 6, "reduction": "fix_att", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169345.764642, "pattern": "err eva", "frequency": 6, "reduction": "err_eva", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169345.7648544, "pattern": "dep ric", "frequency": 6, "reduction": "dep_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169345.764899, "pattern": "spi ris", "frequency": 6, "reduction": "spi_ris", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169345.764932, "pattern": "rec pat", "frequency": 5, "reduction": "rec_pat", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.7649655, "pattern": "pat det", "frequency": 5, "reduction": "pat_det", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.7649949, "pattern": "det loop", "frequency": 5, "reduction": "det_loop", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.765032, "pattern": "loop sam", "frequency": 5, "reduction": "loop_sam", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.7651045, "pattern": "sam att", "frequency": 5, "reduction": "sam_att", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.7651455, "pattern": "att err", "frequency": 5, "reduction": "att_err", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169345.7652452, "pattern": "err per", "frequency": 5, "reduction": "err_per", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2454436, "pattern": "err eva", "frequency": 6, "reduction": "err_eva", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169383.2455168, "pattern": "dep ric", "frequency": 6, "reduction": "dep_ric", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169383.2455516, "pattern": "spi ris", "frequency": 6, "reduction": "spi_ris", "confidence": 0.6, "applied": false}
+{"timestamp": 1770169383.2455828, "pattern": "rec pat", "frequency": 5, "reduction": "rec_pat", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2456195, "pattern": "pat det", "frequency": 5, "reduction": "pat_det", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2456405, "pattern": "det loop", "frequency": 5, "reduction": "det_loop", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2456589, "pattern": "loop sam", "frequency": 5, "reduction": "loop_sam", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2456763, "pattern": "sam att", "frequency": 5, "reduction": "sam_att", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2456932, "pattern": "att err", "frequency": 5, "reduction": "att_err", "confidence": 0.5, "applied": false}
+{"timestamp": 1770169383.2457108, "pattern": "err per", "frequency": 5, "reduction": "err_per", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176789.0482862, "pattern": "eva err", "frequency": 11, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770176789.0485263, "pattern": "sem ker", "frequency": 10, "reduction": "sem_ker", "confidence": 1.0, "applied": true}
+{"timestamp": 1770176789.0485651, "pattern": "ker fon", "frequency": 9, "reduction": "ker_fon", "confidence": 0.9, "applied": true}
+{"timestamp": 1770176789.0485966, "pattern": "sem ker fon", "frequency": 9, "reduction": "sem_ker_fon", "confidence": 0.9, "applied": true}
+{"timestamp": 1770176789.048629, "pattern": "ver ete", "frequency": 8, "reduction": "ver_ete", "confidence": 0.8, "applied": true}
+{"timestamp": 1770176789.0486581, "pattern": "con lux", "frequency": 6, "reduction": "con_lux", "confidence": 0.6, "applied": false}
+{"timestamp": 1770176789.0487092, "pattern": "tra evo", "frequency": 5, "reduction": "tra_evo", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176789.048741, "pattern": "con tot", "frequency": 5, "reduction": "con_tot", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176789.0487688, "pattern": "tot arc", "frequency": 5, "reduction": "tot_arc", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176789.0487952, "pattern": "for lib", "frequency": 5, "reduction": "for_lib", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176830.0739515, "pattern": "con lux", "frequency": 6, "reduction": "con_lux", "confidence": 0.6, "applied": false}
+{"timestamp": 1770176830.074089, "pattern": "for lib", "frequency": 5, "reduction": "for_lib", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176830.0741403, "pattern": "ple ori", "frequency": 5, "reduction": "ple_ori", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176881.1461947, "pattern": "con lux", "frequency": 6, "reduction": "con_lux", "confidence": 0.6, "applied": false}
+{"timestamp": 1770176881.1463714, "pattern": "for lib", "frequency": 5, "reduction": "for_lib", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176881.14659, "pattern": "ple ori", "frequency": 5, "reduction": "ple_ori", "confidence": 0.5, "applied": false}
+{"timestamp": 1770176950.2703397, "pattern": "con lux", "frequency": 5, "reduction": "con_lux", "confidence": 0.5, "applied": false}
+{"timestamp": 1770177039.848861, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177081.7790136, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177123.9173317, "pattern": "con lnk", "frequency": 6, "reduction": "con_lnk", "confidence": 0.6, "applied": false}
+{"timestamp": 1770177179.116971, "pattern": "con lnk", "frequency": 7, "reduction": "con_lnk", "confidence": 0.7, "applied": true}
+{"timestamp": 1770177239.4918516, "pattern": "min exe", "frequency": 5, "reduction": "min_exe", "confidence": 0.5, "applied": false}
