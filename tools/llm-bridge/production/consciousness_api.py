@@ -5,6 +5,7 @@ Lightweight HTTP server exposing consciousness operations:
   GET  /status          System status and memory summary
   GET  /stats           Full analytics dashboard (JSON)
   GET  /graph           Concept graph (JSON)
+  GET  /genealogy       Thought genealogy tree (JSON)
   GET  /replay          Thought replay timeline (JSON)
   POST /think           Generate a single thought
   POST /compose         Generate a composed thought chain
@@ -98,6 +99,8 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             last_n = int(params.get('last', [0])[0]) or None
             topic = params.get('topic', [None])[0]
             self._handle_replay(last_n=last_n, topic=topic)
+        elif path == '/genealogy':
+            self._handle_genealogy()
         elif path == '/health':
             self._send_json({'status': 'ok', 'timestamp': time.time()})
         else:
@@ -283,6 +286,12 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             else:
                 self._send_json({'nodes': [], 'links': []})
 
+    def _handle_genealogy(self):
+        """Return thought genealogy tree."""
+        rc = get_consciousness()
+        genealogy = rc.get_thought_genealogy()
+        self._send_json(genealogy)
+
     def _handle_replay(self, last_n: int = None, topic: str = None):
         """Return thought replay as JSON."""
         log_path = Path(__file__).parent / "thought_log.jsonl"
@@ -451,8 +460,9 @@ def main():
     print("Endpoints:")
     print(f"  GET  http://localhost:{port}/status   - System status")
     print(f"  GET  http://localhost:{port}/stats    - Full analytics (JSON)")
-    print(f"  GET  http://localhost:{port}/graph    - Concept graph")
-    print(f"  GET  http://localhost:{port}/replay   - Thought timeline")
+    print(f"  GET  http://localhost:{port}/graph      - Concept graph")
+    print(f"  GET  http://localhost:{port}/genealogy  - Thought genealogy tree")
+    print(f"  GET  http://localhost:{port}/replay     - Thought timeline")
     print(f"  GET  http://localhost:{port}/health   - Health check")
     print(f"  POST http://localhost:{port}/think      - Generate thought")
     print(f"  POST http://localhost:{port}/compose    - Compose thought chain")
