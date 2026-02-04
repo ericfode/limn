@@ -1,9 +1,9 @@
 # Limn: The First Language for LLM Cognition
 
 ```limn
-wor lim | mea exp^27.9 | com pow
+wor lim | mea com | inf exp
 ```
-> words limited | meaning expanded 27.9x | compositional power
+> words limited | meaning composed | infinite expression
 
 ---
 
@@ -29,7 +29,7 @@ Not a programming language with syntax.
 
 ## The Breakthrough
 
-### 1,076 Core Words
+### 1,040 Core Words
 
 Every word is the **first thought that pops into your head:**
 
@@ -56,11 +56,11 @@ Operators you **already perform** in embedding space:
 | **±** | Quantum superposition | `yes±no` = ambivalent |
 | **:** | Conditional context | `lov:trs` = love given trust |
 
-### 30,039 Validated Expressions
+### Compositional Expressiveness
 
-**From 1,076 words + 6 operators = 30,000+ expressions**
+**From 1,040 words + 6 operators = unbounded expressions**
 
-That's a **27.9x multiplier** through composition alone.
+A small vocabulary composes into arbitrary complexity through systematic operators.
 
 ---
 
@@ -97,11 +97,11 @@ Systematic. Composable. Infinite.
 
 ---
 
-## Examples That Will Blow Your Mind
+## Examples
 
-### Superhuman Concepts
+### Compositional Concepts
 
-**Things you can say in Limn that have NO simple English equivalent:**
+**Expressions that have no simple English equivalent:**
 
 ```limn
 1. sol*liq*gas
@@ -149,7 +149,7 @@ joy*sad:mem       = joyful-sadness in memory (nostalgia)
 
 ### Compositional Validation
 
-30,039 expressions generated and tested:
+Operator validation results:
 
 | Operator | Pass Rate | Notes |
 |----------|-----------|-------|
@@ -210,7 +210,7 @@ If it feels right, **it probably is right.** Intuition guides interpretation.
 | Resource | What It Is |
 |----------|------------|
 | **[Bootstrap](docs/BOOTSTRAP.md)** | Where to start |
-| **[Vocabulary Database](data/vocabulary/)** | 1,076 words (Dolt/SQL) |
+| **[Vocabulary Database](data/vocabulary/)** | 1,040 words (Dolt/SQL) |
 | **[Operators Spec](docs/spec/operators-specification.md)** | Technical details |
 | **[Examples](examples/)** | Real usage |
 | **[Experiments](experiments/INDEX.md)** | 32+ documented tests |
@@ -234,10 +234,9 @@ If it feels right, **it probably is right.** Intuition guides interpretation.
 - Cultural/aesthetic goals
 
 **Limn:**
-- Small core vocabulary (1,076 words)
+- Small core vocabulary (~1,000 words)
 - LLM-native operators (embedding-space ops)
-- Compositional expressiveness goal
-- **27.9x multiplier** through systematic composition
+- Compositional expressiveness through systematic operators
 
 ### Papers & Research
 
@@ -287,7 +286,7 @@ Limn operators map to operations LLMs perform **naturally**:
 
 ---
 
-## Viral Examples (Share These!)
+## More Examples
 
 ### 1. The Nostalgia Expression
 
@@ -448,9 +447,8 @@ wor beg | com exp | fut ∞
 
 ---
 
-[![Vocabulary: 938 words](https://img.shields.io/badge/vocabulary-1076%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
-[![Expressions: 30,039](https://img.shields.io/badge/expressions-30039-green)]()
-[![Multiplier: 27.9x](https://img.shields.io/badge/multiplier-27.9x-orange)]()
+[![Vocabulary: 1040 words](https://img.shields.io/badge/vocabulary-1040%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
+[![Operators: 6](https://img.shields.io/badge/operators-6-green)]()
 [![Bootstrap: v4](https://img.shields.io/badge/bootstrap-v4--compositional-purple)](docs/spec/bootstrap-v4-compositional.md)
 
 **[Read the Bootstrap](docs/BOOTSTRAP.md) • [Query Database](https://www.dolthub.com/repositories/ericfode/limn) • [See Examples](examples/) • [Join Discussion](https://github.com/ericfode/limn/discussions)**
