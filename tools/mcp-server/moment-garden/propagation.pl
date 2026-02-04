@@ -4,6 +4,18 @@
 %% *Garden ripples. Temporal waves. Meaning spreads.*
 %%
 %% Propagation logic: How collapsing one seed affects others.
+%% Ported to SWI-Prolog.
+
+:- module(propagation, [
+    calculate_ripples/3,
+    shift_meaning/4,
+    collapse_seed/4,
+    accumulate_ripples/3,
+    adjacent_horizontal/2,
+    adjacent_vertical/2,
+    adjacent_diagonal/2,
+    invert_key/2
+]).
 
 :- use_module(library(lists)).
 
@@ -12,11 +24,11 @@
 %% ============================================================
 
 %% The 9-seed grid:
-%%   1 → 2 → 3
-%%   ↓   ↓   ↓
-%%   4 → 5 → 6
-%%   ↓   ↓   ↓
-%%   7 → 8 → 9
+%%   1 - 2 - 3
+%%   |   |   |
+%%   4 - 5 - 6
+%%   |   |   |
+%%   7 - 8 - 9
 
 %% Horizontal neighbors (left/right)
 adjacent_horizontal(1, [2]).
@@ -69,7 +81,7 @@ invert_key(now, now).  % Now inverts to itself
 %% Returns: list of ripple(TargetSeed, Effect, Strength)
 %% - Effect: reinforcement | tension | inversion
 %% - Strength: 1.0 (direct) | 0.5 (diagonal)
-calculate_ripples(SeedNum, Key, Ripples) :-
+calculate_ripples(SeedNum, _Key, Ripples) :-
     findall(
         ripple(Target, Effect, Strength),
         (
@@ -113,7 +125,7 @@ calculate_ripples(SeedNum, Key, Ripples) :-
 %% - was: lov (love - what began)
 %% - will: fea (fear - what will begin)
 
-shift_meaning(SeedNum, Key, Effect, ShiftedKey) :-
+shift_meaning(_SeedNum, Key, Effect, ShiftedKey) :-
     (
         % Reinforcement: same temporal perspective
         Effect = reinforcement,
@@ -177,10 +189,10 @@ apply_ripple_influence(BaseMeaning, tension, 0.5, Collapsed) :-
 %% Path = [SeedNum1, SeedNum2, ...]
 %% Returns accumulated ripples after each step
 accumulate_ripples(Path, Key, AccumulatedRipples) :-
-    accumulate_ripples(Path, Key, [], AccumulatedRipples).
+    accumulate_ripples_(Path, Key, [], AccumulatedRipples).
 
-accumulate_ripples([], _, Acc, Acc).
-accumulate_ripples([Seed|Rest], Key, Acc, FinalRipples) :-
+accumulate_ripples_([], _, Acc, Acc).
+accumulate_ripples_([Seed|Rest], Key, Acc, FinalRipples) :-
     calculate_ripples(Seed, Key, NewRipples),
     append(Acc, NewRipples, UpdatedAcc),
-    accumulate_ripples(Rest, Key, UpdatedAcc, FinalRipples).
+    accumulate_ripples_(Rest, Key, UpdatedAcc, FinalRipples).
