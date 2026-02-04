@@ -6,7 +6,7 @@
 
 ## 📍 THE ANSWER
 
-**File:** `docs/spec/bootstrap-v3-natural.md`
+**File:** `docs/spec/bootstrap-v4-compositional.md`
 
 **That's it. That's the bootstrap.**
 
@@ -16,7 +16,7 @@
 
 | Question | Answer |
 |----------|--------|
-| Where is the bootstrap? | `docs/spec/bootstrap-v3-natural.md` |
+| Where is the bootstrap? | `docs/spec/bootstrap-v4-compositional.md` |
 | Is there a v4? | No. v3-natural is current. |
 | What about minimal-bootstrap.md? | Subset only. Read v3-natural first. |
 | What about the old versions? | Archived. Don't use them. |
@@ -28,7 +28,7 @@
 ## File Locations (Quick Copy-Paste)
 
 ```
-Current:  docs/spec/bootstrap-v3-natural.md
+Current:  docs/spec/bootstrap-v4-compositional.md
 Guide:    docs/BOOTSTRAP.md
 Index:    docs/spec/BOOTSTRAP-INDEX.md
 Minimal:  docs/spec/minimal-bootstrap.md
@@ -41,10 +41,10 @@ Validate: docs/theory/zero-bootstrap-validation.md
 
 | Version | Status | Use? |
 |---------|--------|------|
-| v3-natural | ✅ CURRENT | YES |
+| v4-compositional | ✅ CURRENT | YES |
+| v3-natural | 📋 Superseded | For basics only |
 | v2 | 📦 Archived | NO |
 | v1 | 📦 Archived | NO |
-| v4 | ❌ Does not exist | N/A |
 
 ---
 
@@ -52,13 +52,13 @@ Validate: docs/theory/zero-bootstrap-validation.md
 
 ```bash
 # Read the bootstrap
-cat docs/spec/bootstrap-v3-natural.md
+cat docs/spec/bootstrap-v4-compositional.md
 
 # Find all bootstrap files
 find . -name "*bootstrap*" -not -path "./.git/*"
 
 # Check bootstrap size
-wc -l docs/spec/bootstrap-v3-natural.md  # ~450 lines
+wc -l docs/spec/bootstrap-v4-compositional.md  # ~450 lines
 
 # Verify it's the latest
 ls -lt docs/spec/*bootstrap* | head -3
@@ -68,7 +68,7 @@ ls -lt docs/spec/*bootstrap* | head -3
 
 ## One-Liner Summary
 
-**v3-natural (18KB) is the self-describing Limn foundation, validated at 77-85% LLM comprehension, and is the only current bootstrap version.**
+**v4-compositional (22KB) is the self-describing Limn foundation with 6 compositional operators enabling 30,039 validated expressions from 1,076 core words.**
 
 ---
 

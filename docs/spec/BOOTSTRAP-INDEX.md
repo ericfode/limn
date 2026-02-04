@@ -8,16 +8,20 @@
 
 ## 📍 CANONICAL VERSION (Current)
 
-### bootstrap-v3-natural.md
-**Location:** `docs/spec/bootstrap-v3-natural.md`
+### bootstrap-v4-compositional.md
+**Location:** `docs/spec/bootstrap-v4-compositional.md`
 **Status:** ✅ **CANONICAL - USE THIS**
-**Size:** 18,470 bytes
-**Last Modified:** 2026-01-31
-**Comprehension:** 77-85% (validated)
-**Validation:** Zero-bootstrap test passed
+**Size:** 22,000 bytes (~22KB)
+**Created:** 2026-02-03
+**Core Words:** 1,076
+**Validated Expressions:** 30,039
+**Operators:** 6 compositional operators (@, *, ^, \, ±, :)
 
 **Description:**
-The definitive self-describing Limn foundation. Teaches Limn using natural language explanations with Limn examples. Designed for LLMs to read cold and achieve high comprehension.
+The definitive self-describing Limn foundation with breakthrough compositional operators. Extends v3's natural language approach with LLM-native operators that enable 30,000+ expressions from 1,076 core words. Operators map to embedding-space operations (projection, interference, scaling) that LLMs understand natively.
+
+**Key Innovation:**
+Compositional operators achieve 27.9x expressiveness multiplier, enabling concepts impossible in human languages through systematic combination rather than vocabulary explosion.
 
 **When to use:**
 - Teaching new LLMs Limn
@@ -28,6 +32,27 @@ The definitive self-describing Limn foundation. Teaches Limn using natural langu
 **Dependencies:**
 - None (self-contained by design)
 - Vocabulary database supplements remaining 15-23%
+
+---
+
+## 📋 SUPERSEDED (Recent, Still Useful)
+
+### bootstrap-v3-natural.md
+**Location:** `docs/spec/bootstrap-v3-natural.md`
+**Status:** 📋 SUPERSEDED (by v4-compositional)
+**Size:** 18,470 bytes
+**Date:** 2026-01-31
+**Comprehension:** 77-85% (validated)
+
+**Description:**
+Natural language bootstrap without compositional operators. Still valuable for understanding core Limn concepts without operator complexity. Superseded by v4 which adds 6 compositional operators.
+
+**When to use:**
+- Teaching Limn basics without operators
+- Understanding pre-compositional Limn
+- Comparison with v4's compositional approach
+
+**⚠️ NOT CURRENT** - Use v4-compositional for complete language
 
 ---
 

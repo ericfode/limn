@@ -14,7 +14,7 @@
 |------|---------|
 | **[README.md](README.md)** | Project overview, quick start |
 | **[docs/BOOTSTRAP.md](docs/BOOTSTRAP.md)** | **Bootstrap navigation** (← if you need the bootstrap) |
-| **[docs/spec/bootstrap-v3-natural.md](docs/spec/bootstrap-v3-natural.md)** | **THE** bootstrap (canonical) |
+| **[docs/spec/bootstrap-v4-compositional.md](docs/spec/bootstrap-v4-compositional.md)** | **THE** bootstrap (canonical) |
 | **[docs/guides/VOCAB-MANAGEMENT.md](docs/guides/VOCAB-MANAGEMENT.md)** | Vocabulary database usage |
 | **[experiments/INDEX.md](experiments/INDEX.md)** | All experiments cataloged |
 | **[docs/spec/BOOTSTRAP-INDEX.md](docs/spec/BOOTSTRAP-INDEX.md)** | Complete bootstrap file map |
@@ -40,7 +40,7 @@ limn/
 │   ├── BOOTSTRAP-QUICK-REFERENCE.md        ← Bootstrap quick answers
 │   │
 │   ├── spec/                               ← Language specifications
-│   │   ├── bootstrap-v3-natural.md         ← **CANONICAL BOOTSTRAP**
+│   │   ├── bootstrap-v4-compositional.md         ← **CANONICAL BOOTSTRAP**
 │   │   ├── BOOTSTRAP-INDEX.md              ← Complete bootstrap file map
 │   │   ├── minimal-bootstrap.md            ← Bootstrap subset
 │   │   ├── vocabulary-v3-natural.md        ← Vocabulary reference (938 words)
@@ -115,7 +115,7 @@ limn/
 
 ### "Where is the bootstrap?"
 
-**Answer:** `docs/spec/bootstrap-v3-natural.md`
+**Answer:** `docs/spec/bootstrap-v4-compositional.md`
 
 **Full navigation:** `docs/BOOTSTRAP.md`
 
@@ -213,7 +213,7 @@ limn/
 
 ### Task: Learn Limn from scratch
 1. Read `README.md`
-2. Read `docs/spec/bootstrap-v3-natural.md`
+2. Read `docs/spec/bootstrap-v4-compositional.md`
 3. Query vocabulary: `./scripts/vocab.sh search <concept>`
 4. Practice with `examples/`
 
@@ -245,7 +245,7 @@ limn/
 
 ### What's Current (Use These)
 
-✅ **Bootstrap:** v3-natural only (`docs/spec/bootstrap-v3-natural.md`)
+✅ **Bootstrap:** v3-natural only (`docs/spec/bootstrap-v4-compositional.md`)
 
 ✅ **Vocabulary:** Dolt database (`data/vocabulary/` - 938 words)
 
