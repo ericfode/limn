@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1024 words, 23 operators
+%% 1027 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -460,6 +460,7 @@ word('ify').
 word('ign').
 word('ima').
 word('imp').
+word('in').
 word('ina').
 word('ind').
 word('inf').
@@ -580,6 +581,7 @@ word('mos').
 word('mou').
 word('mov').
 word('mrg').
+word('mst').
 word('mtc').
 word('mtr').
 word('mul').
@@ -958,6 +960,7 @@ word('unt').
 word('up').
 word('upd').
 word('urg').
+word('use').
 word('usr').
 word('vag').
 word('val').
