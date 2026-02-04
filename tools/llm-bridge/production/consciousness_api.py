@@ -126,6 +126,34 @@ WEB_UI_HTML = """<!DOCTYPE html>
   .streaming-dot.off { background: #444; animation: none; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   .empty-state { color: #444; text-align: center; padding: 40px; font-style: italic; }
+  .eval-event {
+    font-size: 11px; padding: 4px 8px; margin-bottom: 3px; border-radius: 3px;
+    background: #0f0f18; animation: fadeIn 0.3s;
+  }
+  .eval-event.score { border-left: 2px solid #4a4; }
+  .eval-event.oracle { border-left: 2px solid #fa0; }
+  .eval-event.oracle_sub { border-left: 2px solid #f60; }
+  .eval-event.oracle_result { border-left: 2px solid #4af; }
+  .eval-event.compose { border-left: 2px solid #a4f; }
+  .eval-event.introspect { border-left: 2px solid #f4a; }
+  .eval-event.quality_feedback { border-left: 2px solid #f44; }
+  .eval-event.self_mod { border-left: 2px solid #ff4; }
+  .eval-event .ev-type {
+    display: inline-block; min-width: 60px; color: #888; font-weight: bold;
+    text-transform: uppercase; font-size: 10px;
+  }
+  .eval-event .ev-detail { color: #666; }
+  .eval-pane {
+    max-height: 200px; overflow-y: auto; margin-top: 8px;
+    border-top: 1px solid #1a1a2a; padding-top: 8px;
+  }
+  .fork-indicator {
+    display: inline-block; margin: 0 2px; font-size: 10px; vertical-align: middle;
+  }
+  .fork-indicator.oracle { color: #fa0; }
+  .fork-indicator.compose { color: #a4f; }
+  .fork-indicator.introspect { color: #f4a; }
+  .fork-indicator.feedback { color: #f44; }
 </style>
 </head>
 <body>
@@ -176,6 +204,11 @@ WEB_UI_HTML = """<!DOCTYPE html>
       <h3>PROMPT MODS</h3>
       <div class="stat"><span class="label">Active</span><span class="value" id="prompt-mods">0</span></div>
     </div>
+    <div class="section">
+      <h3>EVALUATION FORKS</h3>
+      <div class="stat"><span class="label">Total events</span><span class="value" id="eval-count">0</span></div>
+      <div class="eval-pane" id="eval-events"></div>
+    </div>
   </div>
 </div>
 <div class="controls">
@@ -212,7 +245,7 @@ let recentScores = [];
 
 function getTopic() { return document.getElementById('topic-select').value || undefined; }
 
-function addThought(content, score, domains, type) {
+function addThought(content, score, domains, type, evalEvents) {
   const pane = document.getElementById('thoughts');
   if (pane.querySelector('.empty-state')) pane.innerHTML = '';
 
@@ -234,6 +267,10 @@ function addThought(content, score, domains, type) {
       ${domTxt ? `<span class="domains">${domTxt}</span>` : ''}
     </div>`;
   pane.appendChild(div);
+  if (evalEvents && evalEvents.length > 0) {
+    addForkIndicators(div, evalEvents);
+    evalEvents.forEach(ev => addEvalEvent(ev));
+  }
   pane.scrollTop = pane.scrollHeight;
 
   thoughtCount++;
@@ -299,6 +336,70 @@ function updateDashboard(data) {
 
 function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
+let evalEventCount = 0;
+function addEvalEvent(ev) {
+  const pane = document.getElementById('eval-events');
+  const div = document.createElement('div');
+  div.className = 'eval-event ' + (ev.type || '');
+  let detail = '';
+  if (ev.type === 'score') {
+    const s = ev.scores || {};
+    detail = `nov:${(s.novelty||0).toFixed(2)} div:${(s.diversity||0).toFixed(2)} coh:${(s.coherence||0).toFixed(2)} dep:${(s.depth||0).toFixed(2)} → <b>${(s.overall||0).toFixed(2)}</b>`;
+  } else if (ev.type === 'oracle' || ev.type === 'oracle_sub') {
+    detail = `${ev.oracle_type || '?'} L${ev.depth || 0} ${ev.async ? '(async)' : ''} "${escHtml((ev.thought_preview||'').substring(0,40))}"`;
+  } else if (ev.type === 'oracle_result') {
+    const icon = ev.success ? '✓' : '✗';
+    detail = `${icon} ${ev.oracle_type} L${ev.depth} ${ev.duration_ms||0}ms ${ev.cached?'(cached)':''} "${escHtml((ev.result_preview||'').substring(0,40))}"`;
+  } else if (ev.type === 'compose') {
+    detail = `${ev.phase} [${ev.domain}] step ${ev.step}/${ev.total_steps} "${escHtml((ev.result_preview||'').substring(0,40))}"`;
+  } else if (ev.type === 'introspect') {
+    detail = `q:${(ev.quality_avg||0).toFixed(2)} emo:${(ev.emotional_momentum||0).toFixed(2)} "${escHtml((ev.result_preview||'').substring(0,40))}"`;
+  } else if (ev.type === 'quality_feedback') {
+    detail = `${ev.adjustment_type}: "${escHtml((ev.instruction||'').substring(0,50))}" (score=${(ev.trigger_score||0).toFixed(2)})`;
+  } else {
+    detail = JSON.stringify(ev).substring(0, 80);
+  }
+  div.innerHTML = `<span class="ev-type">${ev.type||'?'}</span> <span class="ev-detail">${detail}</span>`;
+  pane.appendChild(div);
+  pane.scrollTop = pane.scrollHeight;
+  // Keep only last 50
+  while (pane.children.length > 50) pane.removeChild(pane.firstChild);
+  evalEventCount++;
+  document.getElementById('eval-count').textContent = evalEventCount;
+}
+
+function addForkIndicators(thought_div, events) {
+  if (!events || events.length === 0) return;
+  const meta = thought_div.querySelector('.meta');
+  if (!meta) return;
+  events.forEach(ev => {
+    if (ev.type === 'oracle' || ev.type === 'oracle_sub') {
+      const span = document.createElement('span');
+      span.className = 'fork-indicator oracle';
+      span.textContent = `⚡${ev.oracle_type||'?'}${ev.depth>0?'L'+ev.depth:''}`;
+      span.title = `Oracle: ${ev.oracle_type} depth ${ev.depth}`;
+      meta.appendChild(span);
+    } else if (ev.type === 'compose') {
+      const span = document.createElement('span');
+      span.className = 'fork-indicator compose';
+      span.textContent = `🔗${ev.phase}`;
+      span.title = `Compose: ${ev.phase} in ${ev.domain}`;
+      meta.appendChild(span);
+    } else if (ev.type === 'introspect') {
+      const span = document.createElement('span');
+      span.className = 'fork-indicator introspect';
+      span.textContent = '🔍intro';
+      meta.appendChild(span);
+    } else if (ev.type === 'quality_feedback') {
+      const span = document.createElement('span');
+      span.className = 'fork-indicator feedback';
+      span.textContent = '⚠️fix';
+      span.title = ev.instruction || '';
+      meta.appendChild(span);
+    }
+  });
+}
+
 function setButtons(disabled) {
   ['btn-think','btn-compose','btn-introspect','btn-dream'].forEach(id => {
     document.getElementById(id).disabled = disabled;
@@ -324,7 +425,7 @@ async function doThink() {
     if (topic) body.topic = topic;
     const r = await fetch(BASE + '/think', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const data = await r.json();
-    addThought(data.thought, data.score, [], 'thought');
+    addThought(data.thought, data.score, [], 'thought', data.eval_events);
     updateDashboard(data);
   } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
   setButtons(false);
@@ -340,7 +441,8 @@ async function doCompose() {
     const r = await fetch(BASE + '/compose', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const data = await r.json();
     if (data.thoughts) {
-      data.thoughts.forEach(t => addThought(t, {}, [data.domain], 'composition'));
+      const evts = data.eval_events || [];
+      data.thoughts.forEach((t, i) => addThought(t, {}, [data.domain], 'composition', i === 0 ? evts : []));
     }
     updateDashboard(data);
   } catch(e) { addThought('Error: ' + e.message, {}, [], 'thought'); }
@@ -357,7 +459,7 @@ async function doIntrospect() {
     const r = await fetch(BASE + '/introspect', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
     const data = await r.json();
     if (data.introspection) {
-      addThought(data.introspection, {}, ['Meta'], 'introspection');
+      addThought(data.introspection, {}, ['Meta'], 'introspection', data.eval_events);
     } else {
       addThought(data.message || 'No introspection available', {}, [], 'thought');
     }
@@ -391,6 +493,11 @@ function doStream() {
   eventSource.addEventListener('introspection', (e) => {
     const data = JSON.parse(e.data);
     addThought(data.content, {}, ['Meta'], 'introspection');
+  });
+
+  eventSource.addEventListener('eval', (e) => {
+    const data = JSON.parse(e.data);
+    if (data.events) data.events.forEach(ev => addEvalEvent(ev));
   });
 
   eventSource.addEventListener('status', (e) => {
@@ -525,6 +632,9 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             topic = params.get('topic', [None])[0]
             iterations = int(params.get('iterations', [20])[0])
             self._handle_stream(topic=topic, iterations=iterations)
+        elif path == '/events':
+            last_n = int(params.get('last', [50])[0])
+            self._handle_events(last_n)
         elif path == '/health':
             self._send_json({'status': 'ok', 'timestamp': time.time()})
         else:
@@ -718,6 +828,12 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         genealogy = rc.get_thought_genealogy()
         self._send_json(genealogy)
 
+    def _handle_events(self, last_n: int = 50):
+        """Return recent evaluation events."""
+        rc = get_consciousness()
+        events = rc.get_recent_eval_events(last_n)
+        self._send_json({'events': events, 'total': len(rc.eval_events)})
+
     def _handle_stream(self, topic: str = None, iterations: int = 20):
         """SSE stream of live thoughts. Generates thoughts and pushes them as events."""
         self.send_response(200)
@@ -775,6 +891,13 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
 
             # Broadcast to any other subscribers
             broadcast_thought(thought_data)
+
+            # Send any new eval events since last thought
+            new_events = rc.eval_events[-(len(rc.eval_events)):]
+            # Only send events from this iteration
+            iter_events = [e for e in new_events if e.get('iteration') == rc.iteration]
+            if iter_events:
+                send_event('eval', {'events': iter_events})
 
             # Run introspection every 10th thought in stream
             if i > 0 and i % 10 == 0:
@@ -840,6 +963,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         """Generate a single thought."""
         topic = body.get('topic')
         rc = get_consciousness(topic)
+        pre_event_count = len(rc.eval_events)
         rc.iteration += 1
 
         thought = rc.think()
@@ -849,6 +973,9 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         if rc.thought_history and 'score' in rc.thought_history[-1]:
             score = rc.thought_history[-1]['score']
 
+        # Collect eval events generated during this think call
+        new_events = rc.eval_events[pre_event_count:]
+
         self._send_json({
             'thought': thought,
             'iteration': rc.iteration,
@@ -856,6 +983,7 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'narrative': rc.narrative_thread,
             'brain_state_size': len(rc.brain_state),
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+            'eval_events': new_events,
         })
 
     def _handle_compose(self, body: Dict):
@@ -865,9 +993,12 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
         depth = min(body.get('depth', 3), 5)
 
         rc = get_consciousness(topic)
+        pre_event_count = len(rc.eval_events)
         rc.iteration += 1
 
         thoughts = rc.compose_thoughts(theme_domain=domain, depth=depth)
+
+        new_events = rc.eval_events[pre_event_count:]
 
         self._send_json({
             'thoughts': thoughts,
@@ -875,20 +1006,25 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
             'depth': depth,
             'count': len(thoughts),
             'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+            'eval_events': new_events,
         })
 
     def _handle_introspect(self, body: Dict):
         """Generate an introspective thought about thinking patterns."""
         topic = body.get('topic')
         rc = get_consciousness(topic)
+        pre_event_count = len(rc.eval_events)
 
         introspection = rc.introspect()
+        new_events = rc.eval_events[pre_event_count:]
+
         if introspection:
             self._send_json({
                 'introspection': introspection,
                 'emotional_momentum': round(rc.emotional_momentum, 3),
                 'goals_active': len(rc.current_goals),
                 'vocab_coverage': round(len(rc.vocab_used) / len(rc.validator.vocab) * 100, 1),
+                'eval_events': new_events,
             })
         else:
             self._send_json({
