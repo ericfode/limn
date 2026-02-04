@@ -1,6 +1,47 @@
-# Limn Bootstrap Document v2 (Comprehensive Edition)
+# ⚠️ ARCHIVED: DO NOT USE ⚠️
 
-**Purpose:** Teach Limn to a fresh LLM through in-context learning only.
+**This is bootstrap v2 - SUPERSEDED and ARCHIVED**
+
+**Status:** 📦 ARCHIVED (Superseded by v3-natural)
+**Date Archived:** 2026-01-31
+**Reason:** Too large (43KB), replaced by focused v3-natural approach
+
+---
+
+## 🎯 FOR CURRENT BOOTSTRAP: USE THIS INSTEAD
+
+**→ [../../spec/bootstrap-v3-natural.md](../../spec/bootstrap-v3-natural.md) ←**
+
+**Or see:** [../../BOOTSTRAP.md](../../BOOTSTRAP.md) for quick navigation
+
+---
+
+## ⚠️ WARNING: HISTORICAL DOCUMENT BELOW
+
+This document is preserved for historical reference only. It shows the evolution from v1's minimalism to v2's comprehensive approach, which then led to v3-natural's balanced design.
+
+**Why v2 was superseded:**
+- Too large (43,245 bytes vs v3's 18,470)
+- Attempted comprehensive coverage that proved unwieldy
+- v3-natural achieves better comprehension (77-85%) with focused approach
+
+**Do not:**
+- Link to this file from new documentation
+- Use this to teach Limn
+- Cite this as current specification
+
+**Do:**
+- Use for historical research
+- Compare design evolution (v1 → v2 → v3)
+- Reference in discussions of bootstrap design trade-offs
+
+**For all current use:** See bootstrap-v3-natural.md
+
+---
+
+# Limn Bootstrap Document v2 (Comprehensive Edition) - ARCHIVED
+
+**Original Purpose:** Teach Limn to a fresh LLM through in-context learning only.
 **Vocabulary:** ~500 words from vocabulary-v2.md
 **Target:** Full 100k token budget with examples, exercises, and self-referential passages.
 
