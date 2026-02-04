@@ -31,6 +31,7 @@ from limn_validator import LimnValidator
 from metrics_engine import MetricsEngine, OracleMetric
 from metacognition import MetacognitiveAnalyzer
 from concept_clusters import ConceptClusterer
+from thought_library import ThoughtLibrary
 
 # Setup logging to file
 log_file = Path(__file__).parent / "consciousness.log"
@@ -72,6 +73,13 @@ class RecursiveConsciousness:
 
         # Initialize concept clusterer
         self.clusterer = ConceptClusterer(num_clusters=5)
+
+        # Initialize thought library (persistent semantic network)
+        lib_path = str(Path(__file__).parent / "thought_library.pkl")
+        self.thought_library = ThoughtLibrary(
+            owner_id=topic or "consciousness",
+            persistence_path=lib_path
+        )
 
         # Thought history for metacognition
         self.thought_history: List[Dict] = []
@@ -138,6 +146,12 @@ class RecursiveConsciousness:
                 json.dump(memory, f, indent=2)
         except Exception as e:
             logger.warning(f"Memory save error: {e}")
+
+        # Save thought library (semantic network + patterns)
+        try:
+            self.thought_library.save()
+        except Exception as e:
+            logger.debug(f"Thought library save error: {e}")
 
     def _build_vocab_presentation(self) -> str:
         """Build domain-organized vocabulary for the prompt.
@@ -240,6 +254,20 @@ class RecursiveConsciousness:
             overused = [w for w, c in top if c > 3]
             if overused:
                 parts.append(f"Try NEW words instead of: {' '.join(overused)}")
+
+        # Suggest related concepts from thought library's semantic network
+        if self.thought_library.semantic_network and self.thought_history:
+            last_words = re.findall(r'[a-z]{2,4}', self.thought_history[-1].get('content', '').lower())
+            if last_words:
+                # Get semantically related words from the library
+                related = set()
+                for w in last_words[-3:]:
+                    neighbors = self.thought_library.get_related_concepts(w, max_related=3)
+                    for n in neighbors:
+                        if n in self.validator.vocab and n not in self.vocab_used:
+                            related.add(n)
+                if related:
+                    parts.append(f"Related (unused): {' '.join(sorted(related)[:6])}")
 
         return '\n'.join(parts) if parts else ""
 
@@ -661,6 +689,11 @@ class RecursiveConsciousness:
 
         self.thought_history.append(entry)
         self._persist_thought(entry)
+
+        # Add to thought library for semantic network building
+        self.thought_library.add_thought(
+            thought, tags=sorted(thought_domains), source="consciousness"
+        )
 
     def _persist_thought(self, entry: Dict):
         """Append thought to persistent JSONL log."""
