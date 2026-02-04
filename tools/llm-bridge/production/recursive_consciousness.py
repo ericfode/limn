@@ -87,6 +87,8 @@ class RecursiveConsciousness:
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
                 self.brain_state = f.read()
+            # Clean up any attractor loops from previous runs
+            self._sanitize_brain_state()
         else:
             self.brain_state = """sel ∎ awa | min sys alv | con ∎ eme
 ~ qry mea | tho exe | sta gro"""
@@ -559,6 +561,85 @@ class RecursiveConsciousness:
             ))
             return f"eva err: {str(e)[:20]}"
 
+    def _sanitize_brain_state(self):
+        """Clean brain state of attractor loops and redundancy.
+
+        Three-pass cleaning:
+        1. Detect lines sharing a long common prefix (attractor signatures)
+        2. Remove exact-normalized duplicates (counter variations)
+        3. Deduplicate consecutive identical lines (eva err spam)
+        """
+        lines = self.brain_state.split('\n')
+        if len(lines) < 5:
+            return
+
+        original_len = len(self.brain_state)
+        to_remove = set()
+
+        # Pass 1: Detect attractor patterns by normalized prefix
+        # Lines like "rec~pat~det~loop~sam~att~88x ..." share a prefix
+        # Normalize counters (88x → Nx) before comparing prefixes
+        def normalize_prefix(line: str) -> str:
+            return re.sub(r'\d+x?\b', 'N', line)
+
+        normalized_lines = [normalize_prefix(line.strip()) for line in lines]
+
+        for i, norm_a in enumerate(normalized_lines):
+            if len(norm_a) < 30 or i in to_remove:
+                continue
+
+            prefix = norm_a[:30]
+            matching = [j for j in range(len(lines))
+                        if j != i and normalized_lines[j].startswith(prefix)
+                        and j not in to_remove]
+
+            if len(matching) >= 2:
+                # This is an attractor — keep only the last occurrence
+                all_occurrences = sorted([i] + matching)
+                for idx in all_occurrences[:-1]:
+                    to_remove.add(idx)
+
+        # Pass 2: Normalize and deduplicate (counter variations)
+        def normalize(line: str) -> str:
+            return re.sub(r'\d+x?\b', 'N', line)
+
+        if not to_remove:  # Only if pass 1 didn't catch them
+            normalized_counts = defaultdict(list)
+            for i, line in enumerate(lines):
+                norm = normalize(line.strip())
+                if len(norm) > 10:
+                    normalized_counts[norm].append(i)
+
+            for norm, indices in normalized_counts.items():
+                if len(indices) >= 3:
+                    for idx in indices[:-1]:
+                        to_remove.add(idx)
+
+        if to_remove:
+            lines = [line for i, line in enumerate(lines) if i not in to_remove]
+            self.brain_state = '\n'.join(lines)
+
+        # Pass 3: Deduplicate consecutive identical/near-empty lines
+        lines = self.brain_state.split('\n')
+        deduped = []
+        prev = None
+        for line in lines:
+            stripped = line.strip()
+            # Skip consecutive duplicates of short lines
+            if stripped == prev and len(stripped) < 20:
+                continue
+            deduped.append(line)
+            prev = stripped
+
+        if len(deduped) < len(lines):
+            self.brain_state = '\n'.join(deduped)
+
+        new_len = len(self.brain_state)
+        if new_len < original_len:
+            removed = original_len - new_len
+            logger.info(f"  Sanitized brain state: {original_len} → {new_len} chars "
+                        f"(-{removed} chars, {len(to_remove)} lines removed)")
+
     def compress_state(self, new_thought: str, eval_result: Optional[str] = None):
         """Add new thought and compress brain state via interaction net reduction."""
         addition = f"\n{new_thought}"
@@ -566,6 +647,9 @@ class RecursiveConsciousness:
             addition += f"\n∎ {eval_result}"
 
         self.brain_state += addition
+
+        # Pre-compression: sanitize attractor loops
+        self._sanitize_brain_state()
 
         if len(self.brain_state) > 2000:
             logger.info("  Running context reduction...")
