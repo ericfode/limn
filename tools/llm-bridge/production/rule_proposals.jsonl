@@ -1,0 +1,73 @@
+{"timestamp": 1770092615.040396, "pattern": "cod flo", "frequency": 12, "reduction": "cod_flo", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040585, "pattern": "flo log", "frequency": 12, "reduction": "flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040617, "pattern": "cod flo log", "frequency": 12, "reduction": "cod_flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.0406387, "pattern": "git sta", "frequency": 12, "reduction": "git_sta", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.040658, "pattern": "sta exe", "frequency": 12, "reduction": "sta_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092615.0406764, "pattern": "git sta exe", "frequency": 12, "reduction": "git_sta_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.978834, "pattern": "gt prm", "frequency": 10, "reduction": "gt_prm", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9789634, "pattern": "prm exe", "frequency": 10, "reduction": "prm_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9790053, "pattern": "rol ctx", "frequency": 10, "reduction": "rol_ctx", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9790466, "pattern": "ctx rec", "frequency": 10, "reduction": "ctx_rec", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9791055, "pattern": "exe hok", "frequency": 10, "reduction": "exe_hok", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.979143, "pattern": "gt prm exe", "frequency": 10, "reduction": "gt_prm_exe", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.979167, "pattern": "eva err", "frequency": 10, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770092797.9791882, "pattern": "exe rol", "frequency": 9, "reduction": "exe_rol", "confidence": 0.9, "applied": true}
+{"timestamp": 1770092797.9792094, "pattern": "rec gt", "frequency": 9, "reduction": "rec_gt", "confidence": 0.9, "applied": true}
+{"timestamp": 1770092797.9792295, "pattern": "gt mol", "frequency": 9, "reduction": "gt_mol", "confidence": 0.9, "applied": true}
+{"timestamp": 1770161484.9811409, "pattern": "cod flo", "frequency": 10, "reduction": "cod_flo", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9812589, "pattern": "flo log", "frequency": 10, "reduction": "flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9812863, "pattern": "log sys", "frequency": 10, "reduction": "log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.981317, "pattern": "sys gro", "frequency": 10, "reduction": "sys_gro", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9813435, "pattern": "gro und", "frequency": 10, "reduction": "gro_und", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9813747, "pattern": "cod flo log", "frequency": 10, "reduction": "cod_flo_log", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.981397, "pattern": "flo log sys", "frequency": 10, "reduction": "flo_log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814162, "pattern": "log sys gro", "frequency": 10, "reduction": "log_sys_gro", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814353, "pattern": "sys gro und", "frequency": 10, "reduction": "sys_gro_und", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161484.9814541, "pattern": "cod flo log sys", "frequency": 10, "reduction": "cod_flo_log_sys", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161671.0694978, "pattern": "eva err", "frequency": 11, "reduction": "eva_err", "confidence": 1.0, "applied": true}
+{"timestamp": 1770161671.0696476, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161671.069696, "pattern": "usr cmd", "frequency": 6, "reduction": "usr_cmd", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161671.069736, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161671.0697727, "pattern": "gt mol", "frequency": 5, "reduction": "gt_mol", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6427047, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161681.6428607, "pattern": "usr cmd", "frequency": 5, "reduction": "usr_cmd", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6428983, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.6429284, "pattern": "gt mol", "frequency": 5, "reduction": "gt_mol", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161681.642958, "pattern": "obs msg", "frequency": 5, "reduction": "obs_msg", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161707.7861638, "pattern": "obs msg", "frequency": 7, "reduction": "obs_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161707.7862618, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.78629, "pattern": "gt mol", "frequency": 6, "reduction": "gt_mol", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786312, "pattern": "msg emp", "frequency": 6, "reduction": "msg_emp", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863328, "pattern": "emp cyc", "frequency": 6, "reduction": "emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863522, "pattern": "gt prm", "frequency": 6, "reduction": "gt_prm", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786371, "pattern": "obs msg emp", "frequency": 6, "reduction": "obs_msg_emp", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.7863905, "pattern": "msg emp cyc", "frequency": 6, "reduction": "msg_emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.78641, "pattern": "obs msg emp cyc", "frequency": 6, "reduction": "obs_msg_emp_cyc", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161707.786429, "pattern": "obs usr", "frequency": 5, "reduction": "obs_usr", "confidence": 0.5, "applied": false}
+{"timestamp": 1770161719.9732304, "pattern": "msg emp", "frequency": 7, "reduction": "msg_emp", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733233, "pattern": "emp cyc", "frequency": 7, "reduction": "emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733524, "pattern": "gt prm", "frequency": 7, "reduction": "gt_prm", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733744, "pattern": "obs msg emp", "frequency": 7, "reduction": "obs_msg_emp", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9733946, "pattern": "msg emp cyc", "frequency": 7, "reduction": "msg_emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.973414, "pattern": "obs msg emp cyc", "frequency": 7, "reduction": "obs_msg_emp_cyc", "confidence": 0.7, "applied": true}
+{"timestamp": 1770161719.9734323, "pattern": "req usr", "frequency": 6, "reduction": "req_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161719.9735296, "pattern": "gt mol", "frequency": 6, "reduction": "gt_mol", "confidence": 0.6, "applied": false}
+{"timestamp": 1770161719.9736123, "pattern": "dec req", "frequency": 5, "reduction": "dec_req", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165447.5929036, "pattern": "obs usr", "frequency": 9, "reduction": "obs_usr", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930057, "pattern": "usr msg", "frequency": 9, "reduction": "usr_msg", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930498, "pattern": "obs usr msg", "frequency": 9, "reduction": "obs_usr_msg", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5930843, "pattern": "no work", "frequency": 9, "reduction": "no_work", "confidence": 0.9, "applied": true}
+{"timestamp": 1770165447.5931141, "pattern": "eva err", "frequency": 7, "reduction": "eva_err", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165447.5932379, "pattern": "eva no", "frequency": 6, "reduction": "eva_no", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.5934625, "pattern": "eva no work", "frequency": 6, "reduction": "eva_no_work", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.59352, "pattern": "tho idle", "frequency": 6, "reduction": "tho_idle", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165447.5935566, "pattern": "msg dec", "frequency": 5, "reduction": "msg_dec", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165447.5935888, "pattern": "dec halt", "frequency": 5, "reduction": "dec_halt", "confidence": 0.5, "applied": false}
+{"timestamp": 1770165765.3043425, "pattern": "obs usr", "frequency": 7, "reduction": "obs_usr", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3044858, "pattern": "usr msg", "frequency": 7, "reduction": "usr_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3045287, "pattern": "obs usr msg", "frequency": 7, "reduction": "obs_usr_msg", "confidence": 0.7, "applied": true}
+{"timestamp": 1770165765.3045542, "pattern": "eva err", "frequency": 6, "reduction": "eva_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770165765.304576, "pattern": "dec brk", "frequency": 5, "reduction": "dec_brk", "confidence": 0.5, "applied": false}
+{"timestamp": 1770166048.3217576, "pattern": "qry usr", "frequency": 6, "reduction": "qry_usr", "confidence": 0.6, "applied": false}
+{"timestamp": 1770166048.321939, "pattern": "eva err", "frequency": 6, "reduction": "eva_err", "confidence": 0.6, "applied": false}
+{"timestamp": 1770166080.8658323, "pattern": "qry usr", "frequency": 7, "reduction": "qry_usr", "confidence": 0.7, "applied": true}
