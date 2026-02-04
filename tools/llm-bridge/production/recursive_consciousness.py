@@ -995,6 +995,130 @@ class RecursiveConsciousness:
 
         return {'clusters': clusters, 'themes': themes}
 
+    def detect_resonance(self) -> List[Dict]:
+        """Detect structural resonance between thoughts across sessions.
+
+        Finds thought pairs that share deep structural patterns (operator
+        chains, concept-operator-concept triples) rather than surface
+        word overlap. These "resonances" reveal emergent themes the
+        consciousness keeps returning to.
+
+        Returns list of resonance pairs with structure description.
+        """
+        if len(self.thought_history) < 6:
+            return []
+
+        # Extract structural signatures from each thought
+        signatures = []
+        for t in self.thought_history:
+            content = t.get('content', '')
+            sig = self._extract_structure(content)
+            signatures.append(sig)
+
+        # Find pairs with high structural similarity but low word overlap
+        resonances = []
+        for i in range(len(signatures)):
+            for j in range(i + 3, min(i + 20, len(signatures))):  # Skip adjacent, look within window
+                struct_sim = self._structural_similarity(signatures[i], signatures[j])
+                if struct_sim < 0.4:
+                    continue
+
+                # Check word overlap is NOT too high (resonance, not repetition)
+                words_i = set(re.findall(r'[a-z]{2,4}', self.thought_history[i].get('content', '').lower()))
+                words_j = set(re.findall(r'[a-z]{2,4}', self.thought_history[j].get('content', '').lower()))
+                if words_i and words_j:
+                    word_overlap = len(words_i & words_j) / len(words_i | words_j)
+                else:
+                    word_overlap = 0
+
+                # Resonance = high structural similarity + moderate word overlap
+                if struct_sim > 0.4 and word_overlap < 0.5:
+                    resonances.append({
+                        'thought_a': i,
+                        'thought_b': j,
+                        'structural_similarity': round(struct_sim, 3),
+                        'word_overlap': round(word_overlap, 3),
+                        'shared_patterns': list(signatures[i]['patterns'] & signatures[j]['patterns']),
+                        'content_a': self.thought_history[i].get('content', '')[:80],
+                        'content_b': self.thought_history[j].get('content', '')[:80],
+                    })
+
+        # Sort by structural similarity
+        resonances.sort(key=lambda x: -x['structural_similarity'])
+
+        if resonances:
+            logger.info(f"  RESONANCES ({len(resonances)} found):")
+            for r in resonances[:5]:
+                logger.info(f"    [{r['thought_a']}↔{r['thought_b']}] "
+                           f"structure={r['structural_similarity']:.2f} "
+                           f"words={r['word_overlap']:.2f} "
+                           f"patterns={r['shared_patterns'][:3]}")
+
+        return resonances
+
+    def _extract_structure(self, thought: str) -> Dict:
+        """Extract structural signature from a thought.
+
+        Captures operator chains, concept-operator-concept triples,
+        and flow patterns rather than specific words.
+        """
+        # Extract operator sequence
+        operators = re.findall(r'[~∎∿@→|⊕⊗⊂∅]', thought)
+        op_chain = ''.join(operators)
+
+        # Extract word-operator-word triples (abstract structure)
+        patterns = set()
+        tokens = re.findall(r'[a-z]{2,4}|[~∎∿@→|⊕⊗⊂∅]', thought.lower())
+        for k in range(len(tokens) - 2):
+            triple = (tokens[k], tokens[k+1], tokens[k+2])
+            # Classify each position: W=word, O=operator
+            types = tuple('O' if t in '~∎∿@→|⊕⊗⊂∅' else 'W' for t in triple)
+            patterns.add(types)
+
+        # Count structural features
+        pipe_count = thought.count('|')
+        arrow_count = thought.count('→')
+        pause_count = thought.count('∎')
+
+        return {
+            'op_chain': op_chain,
+            'patterns': patterns,
+            'pipe_count': pipe_count,
+            'arrow_count': arrow_count,
+            'pause_count': pause_count,
+            'length': len(tokens),
+        }
+
+    def _structural_similarity(self, sig_a: Dict, sig_b: Dict) -> float:
+        """Compute structural similarity between two thought signatures."""
+        scores = []
+
+        # Operator chain similarity (edit distance normalized)
+        a_ops = sig_a['op_chain']
+        b_ops = sig_b['op_chain']
+        if a_ops or b_ops:
+            max_len = max(len(a_ops), len(b_ops), 1)
+            # Simple common subsequence ratio
+            common = sum(1 for i in range(min(len(a_ops), len(b_ops))) if a_ops[i] == b_ops[i])
+            scores.append(common / max_len)
+
+        # Pattern triple overlap (Jaccard)
+        a_pat = sig_a['patterns']
+        b_pat = sig_b['patterns']
+        if a_pat or b_pat:
+            intersection = len(a_pat & b_pat)
+            union = len(a_pat | b_pat)
+            scores.append(intersection / union if union else 0)
+
+        # Feature similarity
+        for key in ['pipe_count', 'arrow_count', 'pause_count']:
+            a_val = sig_a[key]
+            b_val = sig_b[key]
+            max_val = max(a_val, b_val, 1)
+            scores.append(1.0 - abs(a_val - b_val) / max_val)
+
+        return sum(scores) / len(scores) if scores else 0.0
+
     def propose_vocabulary(self, auto_add_threshold: int = 5):
         """Analyze invalid tokens and propose vocabulary additions.
 
@@ -1381,10 +1505,11 @@ class RecursiveConsciousness:
                 # Discover concept clusters
                 self.discover_themes()
 
-            # 6. Log metrics, coverage, and vocab proposals (every 10 iterations)
+            # 6. Log metrics, coverage, resonance, and vocab proposals (every 10 iterations)
             if self.iteration % 10 == 0:
                 self.log_metrics_summary()
                 self.log_coverage()
+                self.detect_resonance()
                 self.propose_vocabulary()
                 self._save_memory()
 
@@ -1401,6 +1526,7 @@ class RecursiveConsciousness:
         self.log_metrics_summary()
         self.log_coverage()
         self.discover_themes()
+        self.detect_resonance()
         self.propose_vocabulary()
         self.export_concept_graph("json")
         self._save_memory()
