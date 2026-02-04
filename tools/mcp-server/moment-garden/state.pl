@@ -4,10 +4,23 @@
 %% *Garden state. Pure Prolog. Temporal navigation.*
 %%
 %% State persistence for The Moment Garden semantic game.
+%% Ported to SWI-Prolog.
+
+:- module(state, [
+    create_garden/1,
+    garden_exists/1,
+    save_reading/5,
+    get_readings/2,
+    get_reader_reading/3,
+    compare_readings/3,
+    divergence_score/2,
+    write_garden_to_stream/2,
+    garden/4,
+    reading/6,
+    seed_state/3
+]).
 
 :- use_module(library(lists)).
-:- use_module(library(format)).
-:- use_module(library(charsio)).
 
 %% ============================================================
 %% PERSISTENCE LAYER
@@ -33,9 +46,9 @@ save_garden(_GardenId) :- true.
 %% ============================================================
 
 %% Dynamic predicates for garden state
-:- dynamic(garden/4).           % garden(Id, Created, Seeds, Metadata)
-:- dynamic(reading/6).          % reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp)
-:- dynamic(seed_state/3).       % seed_state(GardenId, SeedNum, Ripples)
+:- dynamic garden/4.             % garden(Id, Created, Seeds, Metadata)
+:- dynamic reading/6.            % reading(GardenId, ReaderId, Key, Path, Collapses, Timestamp)
+:- dynamic seed_state/3.         % seed_state(GardenId, SeedNum, Ripples)
 
 %% Create new garden instance
 create_garden(GardenId) :-
@@ -125,8 +138,3 @@ write_garden_to_stream(GardenId, Stream) :-
         format(Stream, 'reading(~w, ~w, ~w, ~w, ~w, ~w).~n',
                [GardenId, ReaderId, Key, Path, Collapses, Timestamp])
     ).
-
-%% Get current timestamp
-get_time(Timestamp) :-
-    % Simplified - in real impl use proper time library
-    Timestamp = 0.
