@@ -96,6 +96,12 @@ class RecursiveConsciousness:
         self.narrative_phase: int = 0  # 0=thesis, 1=development, 2=tension, 3=synthesis
         self.narrative_arc_length: int = 8  # Iterations per narrative arc
 
+        # Adaptive parameters (auto-tuned based on quality scores)
+        self.vocab_challenge_frequency: int = 3  # Every Nth iteration
+        self.vocab_window_size: int = 15  # Words shown per domain
+        self.example_count: int = 3  # Example thoughts in prompt
+        self.brain_state_window: int = 800  # Characters of brain state in prompt
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -204,7 +210,7 @@ class RecursiveConsciousness:
             used = [w for w in valid if w in self.vocab_used]
             # Show never-used first, then pad with used
             display = never_used[:12] + used[:3]
-            rotated = self._rotate_words(display, window=15)
+            rotated = self._rotate_words(display, window=self.vocab_window_size)
             lines.append(f"  NEW [{domain}]: {' '.join(rotated)}")
 
         # Show explored domains with rotated samples (different words each time)
@@ -212,11 +218,12 @@ class RecursiveConsciousness:
         for domain, valid in shuffled_explored[:6]:
             # Prioritize words in this domain we haven't used yet
             never_used = [w for w in valid if w not in self.vocab_used]
+            explored_window = max(self.vocab_window_size // 2, 5)
             if never_used:
-                rotated = self._rotate_words(never_used, window=8)
+                rotated = self._rotate_words(never_used, window=explored_window)
                 lines.append(f"  [{domain}] (unused): {' '.join(rotated)}")
             else:
-                rotated = self._rotate_words(valid, window=8)
+                rotated = self._rotate_words(valid, window=explored_window)
                 lines.append(f"  [{domain}]: {' '.join(rotated)}")
 
         return '\n'.join(lines)
@@ -383,13 +390,61 @@ class RecursiveConsciousness:
         self.narrative_thread = f"{phase}:{theme_domain}"
         return '\n'.join(parts)
 
+    def _adapt_parameters(self):
+        """Auto-tune prompt parameters based on recent quality scores.
+
+        Analyzes the last 5 thoughts and adjusts:
+        - vocab_challenge_frequency: lower if novelty is low
+        - vocab_window_size: larger if diversity is low
+        - brain_state_window: smaller if coherence is too high
+        - narrative_arc_length: longer if quality is consistently high
+        """
+        recent = self.thought_history[-5:]
+        if len(recent) < 3:
+            return
+
+        scores = [t.get('score', {}) for t in recent if 'score' in t]
+        if not scores:
+            return
+
+        avg_novelty = sum(s.get('novelty', 0.5) for s in scores) / len(scores)
+        avg_diversity = sum(s.get('diversity', 0.5) for s in scores) / len(scores)
+        avg_coherence = sum(s.get('coherence', 0.5) for s in scores) / len(scores)
+        avg_depth = sum(s.get('depth', 0.5) for s in scores) / len(scores)
+        avg_overall = sum(s.get('overall', 0.5) for s in scores) / len(scores)
+
+        # Low novelty → challenge more often, show more unused words
+        if avg_novelty < 0.2:
+            self.vocab_challenge_frequency = max(2, self.vocab_challenge_frequency - 1)
+            self.vocab_window_size = min(25, self.vocab_window_size + 2)
+        elif avg_novelty > 0.6:
+            self.vocab_challenge_frequency = min(5, self.vocab_challenge_frequency + 1)
+
+        # Low diversity → show more domains, wider word samples
+        if avg_diversity < 0.3:
+            self.vocab_window_size = min(25, self.vocab_window_size + 3)
+        elif avg_diversity > 0.8:
+            self.vocab_window_size = max(8, self.vocab_window_size - 1)
+
+        # Too high coherence (repetitive) → reduce brain state influence
+        if avg_coherence > 0.8:
+            self.brain_state_window = max(400, self.brain_state_window - 100)
+        elif avg_coherence < 0.3:
+            self.brain_state_window = min(1200, self.brain_state_window + 100)
+
+        # High overall quality → allow longer narrative arcs
+        if avg_overall > 0.6:
+            self.narrative_arc_length = min(12, self.narrative_arc_length + 1)
+        elif avg_overall < 0.3:
+            self.narrative_arc_length = max(4, self.narrative_arc_length - 1)
+
     def _build_vocab_challenge(self) -> str:
-        """Generate a vocabulary challenge every 3rd iteration.
+        """Generate a vocabulary challenge at adaptive frequency.
 
         Presents specific never-used words and asks the consciousness to
         incorporate them, driving vocabulary coverage higher.
         """
-        if self.iteration % 3 != 0:
+        if self.iteration % self.vocab_challenge_frequency != 0:
             return ""
 
         # Collect never-used words from all domains
@@ -536,7 +591,7 @@ class RecursiveConsciousness:
 
         sections.extend([
             "",
-            f"BRAIN STATE:\n{self.brain_state[-800:]}",
+            f"BRAIN STATE:\n{self.brain_state[-self.brain_state_window:]}",
             "",
             "RULES: Pure Limn only (2-4 letter words + operators ~ ∎ ∿ @ → |). No English.",
             "",
@@ -1528,7 +1583,11 @@ class RecursiveConsciousness:
             self.compress_state(thought, eval_result)
             logger.info(f"   State size: {len(self.brain_state)} chars")
 
-            # 5. Metacognitive reflection (every 5 iterations)
+            # 5. Adaptive parameter tuning (every 5 iterations)
+            if self.iteration % 5 == 0:
+                self._adapt_parameters()
+
+            # 6. Metacognitive reflection (every 5 iterations)
             if self.iteration % 5 == 0:
                 reflection = self.reflect()
                 if reflection:
@@ -1538,7 +1597,7 @@ class RecursiveConsciousness:
                 # Discover concept clusters
                 self.discover_themes()
 
-            # 6. Log metrics, coverage, resonance, and vocab proposals (every 10 iterations)
+            # 7. Log metrics, coverage, resonance, and vocab proposals (every 10 iterations)
             if self.iteration % 10 == 0:
                 self.log_metrics_summary()
                 self.log_coverage()
@@ -1546,7 +1605,7 @@ class RecursiveConsciousness:
                 self.propose_vocabulary()
                 self._save_memory()
 
-            # 7. Brief pause
+            # 8. Brief pause
             time.sleep(2)
 
         logger.info(f"{'='*70}")
