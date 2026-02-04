@@ -1,13 +1,13 @@
+#!/usr/bin/env swipl
 %% Moment Garden State Tests
 %% =========================================================
 %% tes gar | sta ver | pur log
 %% *Testing garden. State verification. Pure logic.*
+%%
+%% Usage: swipl test_state.pl
 
-:- use_module(library(lists)).
-
-%% Load local modules
-:- include('state.pl').
-:- include('propagation.pl').
+:- use_module(state).
+:- use_module(propagation).
 
 %% ============================================================
 %% TEST RUNNER
@@ -57,7 +57,7 @@ test_create_garden :-
     ),
 
     % Verify structure
-    garden(TestId, Timestamp, Seeds, _),
+    garden(TestId, _Timestamp, Seeds, _),
     length(Seeds, 9),
     write('  ✓ Garden has 9 seeds'), nl.
 
@@ -181,4 +181,4 @@ test_adjacency :-
 %% RUN TESTS
 %% ============================================================
 
-:- initialization(run_tests).
+:- initialization(run_tests, main).
