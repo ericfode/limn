@@ -198,7 +198,12 @@ class LimnValidator:
         return sorted(self.domain_words.keys())
 
     def validate_response(self, response: str) -> Tuple[bool, str]:
-        """Validate entire response. Returns (is_valid, error_message)."""
+        """Validate entire response. Returns (is_valid, error_message).
+
+        Uses 5+ letter word detection (Limn max is 4) and multi-word
+        English phrase detection. Single short words like 'the', 'and',
+        'but' are valid Limn vocabulary and are NOT rejected.
+        """
         # Remove markdown
         clean = response.strip()
         clean = re.sub(r'^```\w*\n', '', clean)
@@ -209,10 +214,19 @@ class LimnValidator:
         if long_words:
             return False, f"English words detected: {long_words[:3]}"
 
-        # Check for forbidden phrases
-        forbidden = ['the ', 'and ', 'but ', 'with', 'from', 'this', 'that', 'what',
-                     'how', 'why', 'I am', 'you are', 'Hello', 'Please']
-        for phrase in forbidden:
+        # Check for multi-word English phrases (2+ English words in sequence)
+        # Single short words (the, and, but, how, why) ARE valid Limn vocabulary
+        # so we only flag them when they appear in clearly English constructions
+        forbidden_phrases = [
+            'I am', 'you are', 'we are', 'they are', 'it is',
+            'I think', 'I feel', 'I know',
+            'Hello', 'Please', 'Thank you',
+            'the following', 'this is', 'that is',
+            'here is', 'there is', 'what is',
+            'how to', 'why not', 'do not',
+            'in the', 'of the', 'for the',
+        ]
+        for phrase in forbidden_phrases:
             if phrase.lower() in clean.lower():
                 return False, f"English phrase detected: '{phrase}'"
 
