@@ -387,15 +387,207 @@ two : cov say "nu pani^1" in let^(big*fri)
 
 ---
 
+---
+
+## Arthur Dent's Morning - Bulldozer Scene
+
+### Passage 16: Arthur's Awakening
+
+**English:**
+> Arthur Dent woke with a hangover.
+
+**Limn v4:**
+```limn
+art den wak | (hed*pain)^0.8
+```
+
+**Breaking down:**
+- `art den wak` = Arthur Dent woke
+- `(hed*pain)^0.8` = head interfered with pain at 80% = significant hangover
+
+---
+
+### Passage 17: The House Problem
+
+**English:**
+> His house was about to be demolished to make way for a bypass.
+
+**Limn v4:**
+```limn
+hom^1 : dem^0.99 for byp
+```
+
+**Breaking down:**
+- `hom^1` = his house at maximum (importance to Arthur)
+- `dem^0.99` = demolish at 99% certainty (about to happen)
+- `for byp` = for bypass
+
+---
+
+### Passage 18: Lying in Mud
+
+**English:**
+> He was lying in front of a bulldozer in the mud.
+
+**Limn v4:**
+```limn
+he lie @ (bul frn) | in mud*(wet*col)
+```
+
+**Breaking down:**
+- `he lie @ (bul frn)` = he lying at bulldozer-front
+- `mud*(wet*col)` = mud interfered with (wet*cold) = miserable muddy conditions
+
+**Alternative (simpler):**
+```limn
+he lie frn bul | mud^0.9
+```
+= he lying front of bulldozer | very muddy
+
+---
+
+### Passage 19: Mr. Prosser's Frustration
+
+**English:**
+> Mr. Prosser was upset. He was trying to do his job.
+
+**Limn v4:**
+```limn
+pros : (ang*fru)^0.8 | try job
+```
+
+**Breaking down:**
+- `pros` = Prosser (Mr. Prosser)
+- `(ang*fru)^0.8` = anger interfered with frustration at 80%
+- `try job` = trying to do job
+
+---
+
+### Passage 20: The Absurd Standoff
+
+**English:**
+> The situation was absurd. A man lying in front of a bulldozer.
+
+**Limn v4:**
+```limn
+sit : abs^0.95 | man lie @ bul
+```
+
+**Breaking down:**
+- `sit : abs^0.95` = situation given context: extremely absurd
+- `man lie @ bul` = man lying at bulldozer
+
+---
+
+### Passage 21: Thursday Never Works
+
+**English:**
+> "This must be Thursday. I never could get the hang of Thursdays."
+
+**Limn v4:**
+```limn
+thi: thu^1 | i nu (und@thu)
+```
+
+**Breaking down:**
+- `thi: thu^1` = this must be Thursday at certainty
+- `i nu (und@thu)` = I not (understanding-of-Thursday)
+
+---
+
+### Passage 22: The Yellow Bulldozer
+
+**English:**
+> The bulldozer sat there, yellow and patient.
+
+**Limn v4:**
+```limn
+bul sit : yel + (pat^0.9)
+```
+
+**Breaking down:**
+- `bul sit` = bulldozer sitting
+- `yel` = yellow
+- `pat^0.9` = very patient (machine's threatening patience)
+
+---
+
+### Passage 23: Ford Prefect Arrives
+
+**English:**
+> Ford Prefect arrived with beer and concern.
+
+**Limn v4:**
+```limn
+for pre arv | beer + (con@fri)
+```
+
+**Breaking down:**
+- `for pre arv` = Ford Prefect arrives
+- `beer` = beer
+- `con@fri` = concern-component of friendship
+
+---
+
+### Passage 24: The Pub Suggestion
+
+**English:**
+> "Why don't you go to the pub instead?"
+
+**Limn v4:**
+```limn
+why nu : pub^1 ins bul
+```
+
+**Breaking down:**
+- `why nu` = why not
+- `pub^1 ins bul` = pub at max instead of bulldozer
+- Alternative meaning layer: practical vs absurd solutions
+
+---
+
+## Scene Translation Analysis
+
+### Operator Usage in This Scene
+
+**Total operators:** ~15 across 9 passages
+- Gradient (^): 10 uses - intensity of hangover, certainty, absurdity
+- Interference (*): 4 uses - pain+head, anger+frustration, mud+cold+wet
+- Projection (@): 3 uses - position, understanding, concern-in-friendship
+
+**Complexity:**
+- Most expressions use 1-2 operators
+- Captures Adams' mix of mundane and absurd
+
+### Vocabulary Check
+
+Need to verify/add:
+- `den` (Dent - proper name)
+- `hed` (head)
+- `dem` (demolish)
+- `byp` (bypass)
+- `bul` (bulldozer)
+- `frn` (front)
+- `mud` (mud)
+- `col` (cold)
+- `pros` (Prosser - proper name)
+- `ang` (anger)
+- `fru` (frustration)
+- `abs` (absurd)
+- `pat` (patient)
+- `pre` (Prefect - proper name)
+- `ins` (instead)
+
+---
+
 ## Next Steps
 
-1. Continue with Arthur Dent waking up sequence
-2. The bulldozer confrontation
-3. Ford Prefect's reveal
-4. The Vogon fleet arrival
-5. Earth's destruction
+1. ✓ Arthur vs Bulldozer scene translated
+2. Ford Prefect's reveal (alien truth)
+3. The Vogon fleet arrival
+4. Earth's destruction
 
-**Estimated:** 200-300 more lines for full Chapter 1
+**Progress:** ~24 passages completed for Chapter 1 opening
 
 ---
 
