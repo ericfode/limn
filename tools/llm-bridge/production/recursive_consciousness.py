@@ -10,6 +10,8 @@ Features:
 - Performance metrics tracking
 - Topic-directed thinking (domain-focused exploration)
 - Metacognitive self-reflection
+- Concept clustering (emergent theme discovery)
+- Vocabulary coverage tracking
 """
 
 import subprocess
@@ -17,7 +19,8 @@ import json
 import os
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
+from collections import defaultdict
 import time
 import re
 
@@ -26,6 +29,7 @@ from harness import ProductionHarness, OracleRequest, OracleResponse, OracleType
 from limn_validator import LimnValidator
 from metrics_engine import MetricsEngine, OracleMetric
 from metacognition import MetacognitiveAnalyzer
+from concept_clusters import ConceptClusterer
 
 # Setup logging to file
 log_file = Path(__file__).parent / "consciousness.log"
@@ -64,9 +68,15 @@ class RecursiveConsciousness:
         # Initialize metacognitive analyzer
         self.metacognition = MetacognitiveAnalyzer()
 
+        # Initialize concept clusterer
+        self.clusterer = ConceptClusterer(num_clusters=5)
+
         # Thought history for metacognition
         self.thought_history: List[Dict] = []
         self.concept_frequency: Dict[str, int] = {}
+        self.concept_cooccurrence: Dict[str, Set[str]] = defaultdict(set)  # semantic network
+        self.vocab_used: Set[str] = set()  # track which vocab words have been used
+        self.domains_explored: Set[str] = set()  # track explored domains
 
         # Load bootstrap vocabulary
         with open(self.bootstrap_path, 'r') as f:
@@ -220,17 +230,33 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         return "tho fai | lim vio"
 
     def _track_concepts(self, thought: str):
-        """Track concept usage for metacognition."""
+        """Track concept usage, co-occurrence, and vocabulary coverage."""
         words = re.findall(r'[a-z]{2,4}', thought.lower())
+        unique_words = set(words)
+
         for w in words:
             self.concept_frequency[w] = self.concept_frequency.get(w, 0) + 1
+
+        # Track vocabulary coverage
+        for w in unique_words:
+            if w in self.validator.vocab:
+                self.vocab_used.add(w)
+
+        # Build co-occurrence network (words in same thought are connected)
+        for w in unique_words:
+            self.concept_cooccurrence[w].update(unique_words - {w})
+
+        # Track domain exploration
+        for domain, domain_words in self.validator.domain_words.items():
+            if unique_words & set(domain_words):
+                self.domains_explored.add(domain)
 
         self.thought_history.append({
             'iteration': self.iteration,
             'content': thought,
             'timestamp': time.time(),
             'word_count': len(words),
-            'unique_words': len(set(words)),
+            'unique_words': len(unique_words),
         })
 
     def parse_oracle_request(self, thought: str) -> Optional[OracleRequest]:
@@ -448,6 +474,51 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
 
         return None
 
+    def discover_themes(self) -> Optional[Dict]:
+        """Run concept clustering to discover emergent themes.
+
+        Returns cluster info if enough data exists.
+        """
+        if len(self.concept_frequency) < 10:
+            return None
+
+        # Build concepts dict for clusterer
+        concepts = {w: {'usage_count': c} for w, c in self.concept_frequency.items()}
+
+        # Build semantic network from co-occurrence
+        semantic_network = {w: neighbors for w, neighbors in self.concept_cooccurrence.items()}
+
+        clusters = self.clusterer.cluster_concepts(concepts, semantic_network)
+        if not clusters:
+            return None
+
+        themes = self.clusterer.get_cluster_themes(clusters, concepts)
+
+        logger.info(f"  CONCEPT CLUSTERS ({len(clusters)} themes):")
+        for cid, words in clusters.items():
+            theme = themes.get(cid, f"CLUSTER_{cid}")
+            logger.info(f"    {theme}: {', '.join(words[:8])}{'...' if len(words) > 8 else ''}")
+
+        return {'clusters': clusters, 'themes': themes}
+
+    def log_coverage(self):
+        """Log vocabulary coverage statistics."""
+        total_vocab = len(self.validator.vocab)
+        used = len(self.vocab_used)
+        coverage_pct = (used / total_vocab * 100) if total_vocab > 0 else 0
+
+        total_domains = len(self.validator.domain_words)
+        explored = len(self.domains_explored)
+        unexplored = set(self.validator.domain_words.keys()) - self.domains_explored
+
+        logger.info(f"  VOCABULARY COVERAGE:")
+        logger.info(f"    Words used: {used}/{total_vocab} ({coverage_pct:.1f}%)")
+        logger.info(f"    Domains explored: {explored}/{total_domains}")
+        if unexplored and len(unexplored) <= 10:
+            logger.info(f"    Unexplored: {', '.join(sorted(unexplored))}")
+        elif unexplored:
+            logger.info(f"    Unexplored: {len(unexplored)} domains remaining")
+
     def log_metrics_summary(self):
         """Log performance metrics summary."""
         dashboard = self.metrics.get_dashboard()
@@ -510,12 +581,15 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
                 reflection = self.reflect()
                 if reflection:
                     logger.info(f"   Reflection: {reflection}")
-                    # Feed reflection back into brain state
                     self.brain_state += f"\n# meta: {reflection}"
 
-            # 6. Log metrics (every 10 iterations)
+                # Discover concept clusters
+                self.discover_themes()
+
+            # 6. Log metrics and coverage (every 10 iterations)
             if self.iteration % 10 == 0:
                 self.log_metrics_summary()
+                self.log_coverage()
 
             # 7. Brief pause
             time.sleep(2)
@@ -526,8 +600,10 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         logger.info(f"Unique concepts explored: {len(self.concept_frequency)}")
         logger.info(f"{'='*70}")
 
-        # Final metrics
+        # Final summaries
         self.log_metrics_summary()
+        self.log_coverage()
+        self.discover_themes()
 
 
 if __name__ == "__main__":
