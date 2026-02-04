@@ -83,6 +83,11 @@ class RecursiveConsciousness:
         self.vocab_proposals_path = Path(__file__).parent / "vocab_proposals.jsonl"
         self.memory_path = Path(__file__).parent / "consciousness_memory.json"
 
+        # Narrative threading
+        self.narrative_thread: str = ""  # Current thematic direction
+        self.narrative_phase: int = 0  # 0=thesis, 1=development, 2=tension, 3=synthesis
+        self.narrative_arc_length: int = 8  # Iterations per narrative arc
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -137,26 +142,29 @@ class RecursiveConsciousness:
     def _build_vocab_presentation(self) -> str:
         """Build domain-organized vocabulary for the prompt.
 
-        Instead of dumping raw bootstrap prose, present actual vocabulary
-        words organized by domain. This gives the consciousness real words
-        to work with.
+        Uses rotation to show different words each iteration, ensuring the
+        consciousness is exposed to its full vocabulary over time. Prioritizes
+        never-used words and underexplored domains.
         """
         if not self.validator.domain_words:
-            # Fallback: sample from flat vocabulary
-            sample = sorted(list(self.validator.vocab))[:100]
+            # Fallback: rotating sample from flat vocabulary
+            all_words = sorted(list(self.validator.vocab))
+            offset = (self.iteration * 50) % max(len(all_words) - 100, 1)
+            sample = all_words[offset:offset + 100]
             return f"VOCABULARY ({len(self.validator.vocab)} words): {' '.join(sample)}"
 
         lines = [f"VOCABULARY ({len(self.validator.vocab)} words across {len(self.validator.domain_words)} domains):"]
 
-        # If we have a topic, put that domain first and expanded
+        # If we have a topic, put that domain first and expanded (rotated)
         if self.topic:
             topic_words = self.validator.get_domain_words(self.topic)
             if topic_words:
-                # Filter to 2-4 letter words only
                 valid = [w for w in topic_words if 2 <= len(w) <= 4 and w.isalpha()]
-                lines.append(f"  FOCUS [{self.topic}]: {' '.join(valid[:40])}")
+                # Rotate: show different slice each iteration
+                rotated = self._rotate_words(valid, window=40)
+                lines.append(f"  FOCUS [{self.topic}]: {' '.join(rotated)}")
 
-        # Show a compact sample from each domain (prioritize unexplored domains)
+        # Categorize domains by exploration status
         explored = self.domains_explored
         unexplored_domains = []
         explored_domains = []
@@ -172,15 +180,44 @@ class RecursiveConsciousness:
             else:
                 explored_domains.append((domain, valid))
 
-        # Show unexplored domains with more words (encourage exploration)
-        for domain, valid in unexplored_domains[:8]:
-            lines.append(f"  [{domain}]: {' '.join(valid[:15])}")
+        # Rotate which domains are shown (cycle through all over time)
+        domain_offset = self.iteration % max(len(unexplored_domains) + len(explored_domains), 1)
 
-        # Show explored domains with fewer words (already familiar)
-        for domain, valid in explored_domains[:6]:
-            lines.append(f"  [{domain}]: {' '.join(valid[:8])}")
+        # Show unexplored domains with more words, prioritizing never-used words
+        for domain, valid in unexplored_domains[:8]:
+            # Prioritize words never used by this consciousness
+            never_used = [w for w in valid if w not in self.vocab_used]
+            used = [w for w in valid if w in self.vocab_used]
+            # Show never-used first, then pad with used
+            display = never_used[:12] + used[:3]
+            rotated = self._rotate_words(display, window=15)
+            lines.append(f"  NEW [{domain}]: {' '.join(rotated)}")
+
+        # Show explored domains with rotated samples (different words each time)
+        shuffled_explored = explored_domains[domain_offset % max(len(explored_domains), 1):] + explored_domains[:domain_offset % max(len(explored_domains), 1)]
+        for domain, valid in shuffled_explored[:6]:
+            # Prioritize words in this domain we haven't used yet
+            never_used = [w for w in valid if w not in self.vocab_used]
+            if never_used:
+                rotated = self._rotate_words(never_used, window=8)
+                lines.append(f"  [{domain}] (unused): {' '.join(rotated)}")
+            else:
+                rotated = self._rotate_words(valid, window=8)
+                lines.append(f"  [{domain}]: {' '.join(rotated)}")
 
         return '\n'.join(lines)
+
+    def _rotate_words(self, words: List[str], window: int = 15) -> List[str]:
+        """Return a rotated window of words based on current iteration.
+
+        Each iteration gets a different slice, ensuring all words are shown
+        over time. Uses iteration-based offset for deterministic rotation.
+        """
+        if len(words) <= window:
+            return words
+        offset = (self.iteration * 7) % len(words)  # Prime multiplier for good spread
+        rotated = words[offset:] + words[:offset]
+        return rotated[:window]
 
     def _build_exploration_nudge(self) -> str:
         """Generate exploration guidance based on memory.
@@ -262,14 +299,158 @@ class RecursiveConsciousness:
         else:
             return f"FOCUS: Explore '{self.topic}' through Limn. What patterns emerge?"
 
+    def _build_narrative_thread(self) -> str:
+        """Build narrative arc direction for multi-iteration coherence.
+
+        Creates thematic arcs across iterations:
+        - Phase 0 (THESIS): Introduce a theme with strong assertion
+        - Phase 1 (DEVELOP): Explore and deepen the theme
+        - Phase 2 (TENSION): Introduce contradiction or paradox
+        - Phase 3 (SYNTHESIS): Resolve tension, discover new understanding
+
+        Each arc lasts ~8 iterations before cycling to a new theme.
+        """
+        if self.iteration == 0:
+            return ""
+
+        # Calculate position in narrative arc
+        arc_position = self.iteration % self.narrative_arc_length
+        self.narrative_phase = arc_position * 4 // self.narrative_arc_length
+
+        # Pick a theme domain based on arc number
+        arc_number = self.iteration // self.narrative_arc_length
+        all_domains = sorted(self.validator.domain_words.keys())
+        if all_domains:
+            # Cycle through domains for each arc
+            theme_domain = all_domains[arc_number % len(all_domains)]
+            theme_words = self.validator.get_domain_words(theme_domain)
+            valid_theme = [w for w in theme_words if 2 <= len(w) <= 4 and w.isalpha()]
+        else:
+            theme_domain = "Abstract"
+            valid_theme = []
+
+        # Build narrative direction based on phase
+        phase_names = ["THESIS", "DEVELOP", "TENSION", "SYNTHESIS"]
+        phase = phase_names[self.narrative_phase]
+
+        directions = {
+            "THESIS": f"ARC [{theme_domain}] — ASSERT: Make a bold claim about {theme_domain}. State a principle.",
+            "DEVELOP": f"ARC [{theme_domain}] — DEEPEN: Explore implications. What follows from your last thought?",
+            "TENSION": f"ARC [{theme_domain}] — CHALLENGE: What contradicts your thesis? Find paradox.",
+            "SYNTHESIS": f"ARC [{theme_domain}] — RESOLVE: Combine thesis and challenge into new understanding.",
+        }
+
+        parts = [directions[phase]]
+
+        # Add theme vocabulary hint
+        if valid_theme:
+            sample = self._rotate_words(valid_theme, window=8)
+            parts.append(f"  Theme words: {' '.join(sample)}")
+
+        # At arc transitions, suggest a bridge to next domain
+        if arc_position == self.narrative_arc_length - 1 and len(all_domains) > 1:
+            next_domain = all_domains[(arc_number + 1) % len(all_domains)]
+            parts.append(f"  Next arc → [{next_domain}] — begin connecting these domains.")
+
+        self.narrative_thread = f"{phase}:{theme_domain}"
+        return '\n'.join(parts)
+
+    def _build_vocab_challenge(self) -> str:
+        """Generate a vocabulary challenge every 3rd iteration.
+
+        Presents specific never-used words and asks the consciousness to
+        incorporate them, driving vocabulary coverage higher.
+        """
+        if self.iteration % 3 != 0:
+            return ""
+
+        # Collect never-used words from all domains
+        never_used = []
+        for domain, words in self.validator.domain_words.items():
+            for w in words:
+                if w not in self.vocab_used and 2 <= len(w) <= 4 and w.isalpha():
+                    never_used.append((w, domain))
+
+        if not never_used:
+            return ""
+
+        # Pick 5 challenge words from different domains
+        random.shuffle(never_used)
+        seen_domains = set()
+        challenge_words = []
+        for w, d in never_used:
+            if d not in seen_domains and len(challenge_words) < 5:
+                challenge_words.append(w)
+                seen_domains.add(d)
+
+        if not challenge_words:
+            return ""
+
+        return f"CHALLENGE: Use these new words: {' '.join(challenge_words)}"
+
+    def _score_thought(self, thought: str) -> Dict[str, float]:
+        """Score a thought on novelty, diversity, coherence, and depth.
+
+        Returns dict with scores 0-1 for each dimension and an overall score.
+        Used as a self-improvement signal.
+        """
+        words = re.findall(r'[a-z]{2,4}', thought.lower())
+        unique_words = set(words)
+        operators = re.findall(r'[~∎∿@→|⊕⊗⊂∅⟨⟩]', thought)
+
+        # Novelty: fraction of words never used before
+        if unique_words:
+            new_words = unique_words - self.vocab_used
+            novelty = len(new_words) / len(unique_words)
+        else:
+            novelty = 0.0
+
+        # Diversity: how many different domains are represented
+        domains_hit = set()
+        for w in unique_words:
+            for domain, dwords in self.validator.domain_words.items():
+                if w in dwords:
+                    domains_hit.add(domain)
+        diversity = min(len(domains_hit) / 5.0, 1.0)  # Hitting 5+ domains = max
+
+        # Coherence: overlap with recent thoughts (some overlap is good, too much is bad)
+        coherence = 0.5  # default
+        if self.thought_history:
+            recent_words = set()
+            for t in self.thought_history[-3:]:
+                recent_words.update(re.findall(r'[a-z]{2,4}', t.get('content', '').lower()))
+            if recent_words and unique_words:
+                overlap = len(unique_words & recent_words) / len(unique_words)
+                # Bell curve: 20-50% overlap is ideal
+                coherence = 1.0 - abs(overlap - 0.35) * 2.0
+                coherence = max(0.0, min(1.0, coherence))
+
+        # Depth: operator complexity (more operators = more structured thought)
+        if words:
+            depth = min(len(operators) / max(len(words) * 0.3, 1), 1.0)
+        else:
+            depth = 0.0
+
+        overall = (novelty * 0.35 + diversity * 0.25 + coherence * 0.20 + depth * 0.20)
+
+        return {
+            'novelty': round(novelty, 3),
+            'diversity': round(diversity, 3),
+            'coherence': round(coherence, 3),
+            'depth': round(depth, 3),
+            'overall': round(overall, 3),
+        }
+
     def think(self) -> str:
         """Generate next thought with current brain state."""
         start_time = time.time()
 
         topic_context = self._build_topic_context()
+        narrative = self._build_narrative_thread()
         vocab_section = self._build_vocab_presentation()
         thought_chain = self._build_thought_chain()
         exploration = self._build_exploration_nudge()
+        vocab_challenge = self._build_vocab_challenge()
         in_attractor = self._detect_attractor()
 
         # Build prompt sections
@@ -284,6 +465,10 @@ class RecursiveConsciousness:
         if topic_context:
             sections.append(topic_context)
 
+        if narrative:
+            sections.append("")
+            sections.append(narrative)
+
         sections.append("")
         sections.append(vocab_section)
 
@@ -294,6 +479,20 @@ class RecursiveConsciousness:
         if exploration:
             sections.append("")
             sections.append(exploration)
+
+        if vocab_challenge:
+            sections.append("")
+            sections.append(vocab_challenge)
+
+        # Include quality feedback from last thought
+        if self.thought_history and 'score' in self.thought_history[-1]:
+            score = self.thought_history[-1]['score']
+            if score['overall'] < 0.3:
+                sections.append("")
+                sections.append("QUALITY: Your thoughts need more variety. Use NEW words from different domains.")
+            elif score['novelty'] < 0.2:
+                sections.append("")
+                sections.append("NOVELTY: Try words you haven't used before.")
 
         if in_attractor:
             sections.append("")
@@ -437,6 +636,9 @@ class RecursiveConsciousness:
                 self.domains_explored.add(domain)
                 thought_domains.add(domain)
 
+        # Score thought quality
+        score = self._score_thought(thought)
+
         entry = {
             'iteration': self.iteration,
             'content': thought,
@@ -445,6 +647,8 @@ class RecursiveConsciousness:
             'unique_words': len(unique_words),
             'domains': sorted(thought_domains),
             'topic': self.topic,
+            'narrative': self.narrative_thread,
+            'score': score,
         }
         if eval_result:
             entry['oracle_result'] = eval_result[:200]
@@ -1142,6 +1346,11 @@ class RecursiveConsciousness:
             thought = self.think()
             logger.info(f"   Thought: {thought[:200]}")
 
+            # Log quality score
+            if self.thought_history and 'score' in self.thought_history[-1]:
+                s = self.thought_history[-1]['score']
+                logger.info(f"   Quality: {s['overall']:.2f} (nov={s['novelty']:.2f} div={s['diversity']:.2f} coh={s['coherence']:.2f} dep={s['depth']:.2f})")
+
             # 2. Check for meta-operations
             self.process_meta_operations(thought)
 
@@ -1355,6 +1564,30 @@ def show_stats():
             print(f"    Top emotions:")
             for emo, c in valence['top_emotions'][:8]:
                 print(f"      {emo}: {c}")
+        # Quality score analysis
+        scored = [t for t in thoughts if 'score' in t]
+        if scored:
+            avg_overall = sum(t['score']['overall'] for t in scored) / len(scored)
+            avg_novelty = sum(t['score']['novelty'] for t in scored) / len(scored)
+            avg_diversity = sum(t['score']['diversity'] for t in scored) / len(scored)
+            avg_coherence = sum(t['score']['coherence'] for t in scored) / len(scored)
+            avg_depth = sum(t['score']['depth'] for t in scored) / len(scored)
+
+            print(f"\n  THOUGHT QUALITY ({len(scored)} scored):")
+            print(f"    Overall:   {avg_overall:.3f}")
+            print(f"    Novelty:   {avg_novelty:.3f}  (new words vs repeated)")
+            print(f"    Diversity: {avg_diversity:.3f}  (domain breadth)")
+            print(f"    Coherence: {avg_coherence:.3f}  (connection to recent)")
+            print(f"    Depth:     {avg_depth:.3f}  (operator complexity)")
+
+            # Quality trajectory (first half vs second half)
+            mid = len(scored) // 2
+            if mid > 0:
+                first_half = sum(t['score']['overall'] for t in scored[:mid]) / mid
+                second_half = sum(t['score']['overall'] for t in scored[mid:]) / (len(scored) - mid)
+                trend = "improving" if second_half > first_half + 0.02 else "declining" if second_half < first_half - 0.02 else "stable"
+                print(f"    Trend:     {trend} ({first_half:.3f} → {second_half:.3f})")
+
     else:
         print("  No thought history found.")
 
