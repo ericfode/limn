@@ -113,6 +113,11 @@ class RecursiveConsciousness:
         # Cross-session evolution
         self.run_history: List[Dict] = []  # Per-run summaries from previous sessions
 
+        # Thought genealogy
+        self.thought_counter: int = 0  # Monotonic thought ID
+        self.thought_genealogy: Dict[int, Dict] = {}  # id -> {parent, children, type, ...}
+        self._current_parent_id: Optional[int] = None  # Set during composition/introspection
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -791,9 +796,11 @@ class RecursiveConsciousness:
 
             thoughts.append(seed)
             self._track_concepts(seed)
+            seed_id = self.thought_counter  # ID assigned by _track_concepts
 
-            # Step 2: Develop the seed
+            # Step 2: Develop the seed (child of seed)
             if depth >= 2:
+                self._current_parent_id = seed_id
                 develop_prompt = (
                     f"Given this Limn thought: '{seed}'\n"
                     f"Generate the NEXT thought that develops this idea deeper. "
@@ -814,8 +821,9 @@ class RecursiveConsciousness:
                     thoughts.append(develop)
                     self._track_concepts(develop)
 
-            # Step 3: Synthesize
+            # Step 3: Synthesize (child of the develop thought, or seed if no develop)
             if depth >= 3 and len(thoughts) >= 2:
+                self._current_parent_id = self.thought_counter  # Parent = last thought
                 synth_prompt = (
                     f"Given these Limn thoughts:\n"
                     f"  1: '{thoughts[0]}'\n"
@@ -837,10 +845,14 @@ class RecursiveConsciousness:
                     thoughts.append(synth)
                     self._track_concepts(synth)
 
+            # Reset parent tracking
+            self._current_parent_id = None
+
             logger.info(f"  Composed {len(thoughts)} thoughts in [{domain}] arc")
             return thoughts
 
         except Exception as e:
+            self._current_parent_id = None  # Clean up on error
             logger.warning(f"  Composition failed: {e}")
             return []
 
@@ -1138,7 +1150,13 @@ class RecursiveConsciousness:
         # Score thought quality
         score = self._score_thought(thought)
 
+        # Assign thought ID and record genealogy
+        self.thought_counter += 1
+        thought_id = self.thought_counter
+        parent_id = self._current_parent_id
+
         entry = {
+            'id': thought_id,
             'iteration': self.iteration,
             'content': thought,
             'timestamp': time.time(),
@@ -1149,6 +1167,10 @@ class RecursiveConsciousness:
             'narrative': self.narrative_thread,
             'score': score,
         }
+
+        if parent_id is not None:
+            entry['parent_id'] = parent_id
+
         if eval_result:
             entry['oracle_result'] = eval_result[:200]
         if invalid_words:
@@ -1157,6 +1179,20 @@ class RecursiveConsciousness:
             for w in invalid_words:
                 if len(w) >= 2 and len(w) <= 4 and w.isalpha():
                     self.vocab_proposals[w] = self.vocab_proposals.get(w, 0) + 1
+
+        # Record in genealogy tree
+        genealogy_entry = {
+            'parent': parent_id,
+            'children': [],
+            'content_preview': thought[:80],
+            'domains': sorted(thought_domains),
+            'score': score.get('overall', 0) if score else 0,
+        }
+        self.thought_genealogy[thought_id] = genealogy_entry
+
+        # Update parent's children list
+        if parent_id is not None and parent_id in self.thought_genealogy:
+            self.thought_genealogy[parent_id]['children'].append(thought_id)
 
         self.thought_history.append(entry)
         self._persist_thought(entry)
@@ -1628,10 +1664,14 @@ class RecursiveConsciousness:
                 if not is_valid:
                     introspection = self.validator.extract_limn_only(introspection) or ""
                 if introspection:
+                    # Mark as child of last thought
+                    self._current_parent_id = self.thought_counter
                     self._track_concepts(introspection)
+                    self._current_parent_id = None
                     logger.info(f"  INTROSPECTION: {introspection[:150]}")
                     return introspection
         except Exception as e:
+            self._current_parent_id = None
             logger.debug(f"Introspection failed: {e}")
 
         return None
@@ -1992,6 +2032,60 @@ class RecursiveConsciousness:
             if word in t.get('content', '').lower():
                 return t['content'][:100]
         return ""
+
+    def get_thought_genealogy(self) -> Dict:
+        """Return the thought genealogy tree as a structured dict.
+
+        Returns a tree structure showing how thoughts evolved:
+        - Root thoughts (no parent)
+        - Composition chains (seed → develop → synthesize)
+        - Introspection branches
+
+        Returns:
+            Dict with 'roots', 'nodes', 'edges', and 'stats'
+        """
+        roots = [tid for tid, g in self.thought_genealogy.items() if g['parent'] is None]
+        edges = []
+        for tid, g in self.thought_genealogy.items():
+            if g['parent'] is not None:
+                edges.append({'from': g['parent'], 'to': tid})
+
+        # Compute tree depth
+        def depth(tid):
+            d = 0
+            current = tid
+            while current in self.thought_genealogy and self.thought_genealogy[current]['parent'] is not None:
+                current = self.thought_genealogy[current]['parent']
+                d += 1
+                if d > 100:
+                    break
+            return d
+
+        max_depth = max((depth(tid) for tid in self.thought_genealogy), default=0)
+        branching = sum(1 for g in self.thought_genealogy.values() if len(g['children']) > 1)
+
+        return {
+            'roots': roots,
+            'nodes': {
+                str(tid): {
+                    'parent': g['parent'],
+                    'children': g['children'],
+                    'preview': g['content_preview'],
+                    'domains': g['domains'],
+                    'score': g['score'],
+                    'depth': depth(tid),
+                }
+                for tid, g in self.thought_genealogy.items()
+            },
+            'edges': edges,
+            'stats': {
+                'total_thoughts': len(self.thought_genealogy),
+                'root_thoughts': len(roots),
+                'max_depth': max_depth,
+                'branching_points': branching,
+                'chains': sum(1 for g in self.thought_genealogy.values() if g['parent'] is not None),
+            },
+        }
 
     def export_concept_graph(self, format: str = "json") -> Optional[str]:
         """Export concept co-occurrence network as a graph.
