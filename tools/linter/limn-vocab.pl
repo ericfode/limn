@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1033 words, 23 operators
+%% 1038 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -80,6 +80,7 @@ word('avo').
 word('awa').
 word('awt').
 word('axs').
+word('bab').
 word('bac').
 word('bad').
 word('bag').
@@ -409,6 +410,7 @@ word('gro').
 word('grt').
 word('gua').
 word('gue').
+word('gui').
 word('gus').
 word('gvn').
 word('hab').
@@ -630,6 +632,7 @@ word('obj').
 word('obs').
 word('oce').
 word('ocp').
+word('odd').
 word('off').
 word('oft').
 word('oil').
@@ -817,6 +820,7 @@ word('sgl').
 word('sha').
 word('she').
 word('shi').
+word('shk').
 word('sho').
 word('shp').
 word('shr').
@@ -887,6 +891,7 @@ word('suf').
 word('sum').
 word('sun').
 word('sup').
+word('sur').
 word('sus').
 word('swa').
 word('swe').
