@@ -397,6 +397,78 @@ class RecursiveConsciousness:
 
         return '\n'.join(lines)
 
+    def _select_topic_by_curiosity(self) -> str:
+        """Select the most interesting domain to explore based on a curiosity metric.
+
+        Curiosity is computed per domain as a weighted combination of:
+        - Novelty potential (0.4): fraction of unused words in this domain
+        - Semantic distance (0.3): how different this domain is from recent work
+        - Emotional resonance (0.2): alignment with current emotional momentum
+        - Recency penalty (0.1): penalize recently-explored domains
+
+        Returns:
+            The domain name with highest curiosity score.
+        """
+        all_domains = sorted(self.validator.domain_words.keys())
+        if not all_domains:
+            return "Abstract"
+
+        # Track when each domain was last visited
+        domain_last_seen: Dict[str, int] = {}
+        for t in self.thought_history:
+            for d in t.get('domains', []):
+                domain_last_seen[d] = t.get('iteration', 0)
+
+        # Compute curiosity score per domain
+        scores: Dict[str, float] = {}
+
+        for domain in all_domains:
+            words = self.validator.get_domain_words(domain)
+            valid = [w for w in words if 2 <= len(w) <= 4 and w.isalpha()]
+            if not valid:
+                continue
+
+            # Novelty potential: fraction of words never used
+            unused = sum(1 for w in valid if w not in self.vocab_used)
+            novelty = unused / len(valid)
+
+            # Semantic distance from recent work
+            recent_domains = set()
+            for t in self.thought_history[-5:]:
+                recent_domains.update(t.get('domains', []))
+            distance = 1.0 if domain not in recent_domains else 0.2
+
+            # Emotional resonance
+            if self.emotional_momentum > 0.2:
+                # Positive mood favors abstract/philosophical
+                resonance = 0.8 if domain in ('Abstract', 'Mind & Cognition', 'Arts', 'Science') else 0.3
+            elif self.emotional_momentum < -0.2:
+                # Reflective mood favors grounding domains
+                resonance = 0.8 if domain in ('Nature', 'Virtue & Ethics', 'Living Things') else 0.3
+            else:
+                resonance = 0.5
+
+            # Recency penalty
+            last_seen = domain_last_seen.get(domain, 0)
+            iterations_ago = max(self.iteration - last_seen, 1)
+            recency = min(iterations_ago / 10, 1.0)  # Fully decayed after 10 iterations
+
+            curiosity = (
+                0.4 * novelty +
+                0.3 * distance +
+                0.2 * resonance +
+                0.1 * recency
+            )
+            scores[domain] = curiosity
+
+        if not scores:
+            return "Abstract"
+
+        # Return highest curiosity domain
+        best = max(scores, key=scores.get)
+        logger.info(f"  Curiosity selection: [{best}] (score={scores[best]:.3f})")
+        return best
+
     def _detect_attractor(self) -> bool:
         """Detect if consciousness is stuck in an attractor loop.
 
@@ -455,16 +527,23 @@ class RecursiveConsciousness:
         arc_position = self.iteration % self.narrative_arc_length
         self.narrative_phase = arc_position * 4 // self.narrative_arc_length
 
-        # Pick a theme domain based on arc number
+        # Pick a theme domain: curiosity-based for new arcs, continue for mid-arc
         arc_number = self.iteration // self.narrative_arc_length
         all_domains = sorted(self.validator.domain_words.keys())
-        if all_domains:
-            # Cycle through domains for each arc
+
+        if arc_position == 0 and self.iteration > 0:
+            # Start of new arc — select domain by curiosity
+            theme_domain = self._select_topic_by_curiosity()
+        elif all_domains:
+            # Mid-arc — keep the current theme (use arc number for determinism)
             theme_domain = all_domains[arc_number % len(all_domains)]
+        else:
+            theme_domain = "Abstract"
+
+        if all_domains:
             theme_words = self.validator.get_domain_words(theme_domain)
             valid_theme = [w for w in theme_words if 2 <= len(w) <= 4 and w.isalpha()]
         else:
-            theme_domain = "Abstract"
             valid_theme = []
 
         # Build narrative direction based on phase
