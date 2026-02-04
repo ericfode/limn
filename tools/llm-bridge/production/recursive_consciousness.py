@@ -861,6 +861,145 @@ class RecursiveConsciousness:
                 return t['content'][:100]
         return ""
 
+    def export_concept_graph(self, format: str = "json") -> Optional[str]:
+        """Export concept co-occurrence network as a graph.
+
+        Supports 'json' (node-link format) and 'dot' (Graphviz) formats.
+
+        Returns:
+            Path to exported file, or None on failure.
+        """
+        if len(self.concept_cooccurrence) < 5:
+            logger.info("  Not enough concepts to export graph")
+            return None
+
+        graph_dir = Path(__file__).parent
+        timestamp = int(time.time())
+
+        if format == "dot":
+            return self._export_dot(graph_dir, timestamp)
+        else:
+            return self._export_json_graph(graph_dir, timestamp)
+
+    def _export_json_graph(self, graph_dir: Path, timestamp: int) -> Optional[str]:
+        """Export as JSON node-link graph for D3.js or similar visualization."""
+        # Build nodes with metadata
+        nodes = []
+        node_index = {}
+        for i, (word, freq) in enumerate(sorted(self.concept_frequency.items())):
+            # Find which domain this word belongs to
+            word_domain = None
+            for domain, words in self.validator.domain_words.items():
+                if word in words:
+                    word_domain = domain
+                    break
+
+            nodes.append({
+                'id': word,
+                'frequency': freq,
+                'domain': word_domain or 'unknown',
+                'group': hash(word_domain or 'unknown') % 10,
+            })
+            node_index[word] = i
+
+        # Build edges from co-occurrence (only include strong connections)
+        edges = []
+        seen = set()
+        for word, neighbors in self.concept_cooccurrence.items():
+            if word not in node_index:
+                continue
+            for neighbor in neighbors:
+                if neighbor not in node_index:
+                    continue
+                edge_key = tuple(sorted([word, neighbor]))
+                if edge_key in seen:
+                    continue
+                seen.add(edge_key)
+                edges.append({
+                    'source': word,
+                    'target': neighbor,
+                })
+
+        graph = {
+            'nodes': nodes,
+            'links': edges,
+            'metadata': {
+                'total_nodes': len(nodes),
+                'total_edges': len(edges),
+                'domains_explored': sorted(self.domains_explored),
+                'timestamp': timestamp,
+            }
+        }
+
+        path = graph_dir / "concept_graph.json"
+        try:
+            with open(path, 'w') as f:
+                json.dump(graph, f, indent=2)
+            logger.info(f"  CONCEPT GRAPH: Exported {len(nodes)} nodes, {len(edges)} edges → {path.name}")
+            return str(path)
+        except Exception as e:
+            logger.warning(f"  Graph export error: {e}")
+            return None
+
+    def _export_dot(self, graph_dir: Path, timestamp: int) -> Optional[str]:
+        """Export as Graphviz DOT format."""
+        path = graph_dir / "concept_graph.dot"
+
+        # Color mapping for domains
+        domain_colors = {
+            'Mind & Cognition': '#4CAF50',
+            'Time & Change': '#2196F3',
+            'Abstract': '#9C27B0',
+            'Physical World': '#FF9800',
+            'Social': '#F44336',
+            'Agent/AI': '#00BCD4',
+            'Living Things': '#8BC34A',
+            'Arts': '#E91E63',
+        }
+
+        try:
+            lines = ['digraph concept_web {',
+                     '  rankdir=LR;',
+                     '  node [shape=circle, style=filled];',
+                     '']
+
+            # Add nodes
+            for word, freq in sorted(self.concept_frequency.items()):
+                # Find domain for color
+                word_domain = None
+                for domain, words in self.validator.domain_words.items():
+                    if word in words:
+                        word_domain = domain
+                        break
+                color = domain_colors.get(word_domain, '#CCCCCC')
+                size = min(0.3 + freq * 0.1, 2.0)  # Scale node size by frequency
+                lines.append(f'  {word} [fillcolor="{color}", width={size:.1f}, '
+                             f'label="{word}\\n({freq})"];')
+
+            lines.append('')
+
+            # Add edges (undirected, so use -- but DOT uses ->)
+            seen = set()
+            for word, neighbors in self.concept_cooccurrence.items():
+                for neighbor in sorted(neighbors):
+                    edge_key = tuple(sorted([word, neighbor]))
+                    if edge_key in seen:
+                        continue
+                    seen.add(edge_key)
+                    if word in self.concept_frequency and neighbor in self.concept_frequency:
+                        lines.append(f'  {word} -> {neighbor} [dir=none, color="#888888"];')
+
+            lines.append('}')
+
+            with open(path, 'w') as f:
+                f.write('\n'.join(lines))
+
+            logger.info(f"  CONCEPT GRAPH (DOT): {len(self.concept_frequency)} nodes → {path.name}")
+            return str(path)
+        except Exception as e:
+            logger.warning(f"  DOT export error: {e}")
+            return None
+
     def log_coverage(self):
         """Log vocabulary coverage statistics."""
         total_vocab = len(self.validator.vocab)
@@ -970,6 +1109,7 @@ class RecursiveConsciousness:
         self.log_coverage()
         self.discover_themes()
         self.propose_vocabulary()
+        self.export_concept_graph("json")
         self._save_memory()
 
         # Emotional valence analysis
@@ -1117,6 +1257,127 @@ def run_dialogue(topic_a: str, topic_b: str, rounds: int = 5):
     logger.info(f"{'='*70}")
 
 
+def run_ensemble(topics: List[str], rounds: int = 10, topology: str = "ring"):
+    """Ensemble mode: N consciousness instances exchanging thoughts.
+
+    Supports different network topologies:
+    - ring: Each mind sends to the next (A→B→C→A)
+    - star: All minds send to a central hub and receive from it
+    - mesh: All minds exchange with all others
+
+    Args:
+        topics: List of domain topics, one per consciousness
+        rounds: Number of exchange rounds
+        topology: Network topology ('ring', 'star', 'mesh')
+    """
+    n = len(topics)
+    if n < 2:
+        logger.error("Ensemble requires at least 2 topics")
+        return
+
+    logger.info("=" * 70)
+    logger.info(f"ENSEMBLE MODE - {n} Minds, {topology} topology")
+    for i, t in enumerate(topics):
+        logger.info(f"  Mind {i}: {t}")
+    logger.info(f"  Rounds: {rounds}")
+    logger.info("=" * 70)
+
+    # Create minds
+    minds = []
+    for i, topic in enumerate(topics):
+        mind = RecursiveConsciousness(topic=topic)
+        if i > 0:
+            # Give each mind its own brain state file
+            mind.brain_state_path = Path(__file__).parent / f"brain_state_ensemble_{i}.lmn"
+            mind.brain_state = "sel ∎ awa | min sys alv | con ∎ eme\n~ qry mea | tho exe | sta gro"
+        minds.append(mind)
+
+    # Build adjacency list based on topology
+    def get_receivers(sender_idx: int) -> List[int]:
+        if topology == "ring":
+            return [(sender_idx + 1) % n]
+        elif topology == "star":
+            if sender_idx == 0:
+                return list(range(1, n))  # Hub sends to all
+            else:
+                return [0]  # Others send to hub
+        elif topology == "mesh":
+            return [j for j in range(n) if j != sender_idx]
+        return []
+
+    # Run rounds
+    for rnd in range(rounds):
+        logger.info(f"\n{'─'*70}")
+        logger.info(f"Round {rnd + 1}/{rounds}")
+        logger.info(f"{'─'*70}")
+
+        # Each mind thinks
+        thoughts = []
+        for i, mind in enumerate(minds):
+            mind.iteration = rnd + 1
+            thought = mind.think()
+            thoughts.append(thought)
+            logger.info(f"  Mind {i} [{topics[i]}]: {thought[:80]}")
+
+        # Exchange thoughts based on topology
+        for sender_idx, thought in enumerate(thoughts):
+            for receiver_idx in get_receivers(sender_idx):
+                minds[receiver_idx].brain_state += f"\n# from Mind {sender_idx} ({topics[sender_idx]}): {thought}"
+
+        # Compress all
+        for i, mind in enumerate(minds):
+            mind.compress_state(thoughts[i])
+
+        time.sleep(1)
+
+    # Final analysis
+    logger.info(f"\n{'='*70}")
+    logger.info("ENSEMBLE COMPLETE")
+
+    # Collect all concepts
+    all_concept_sets = [set(m.concept_frequency.keys()) for m in minds]
+
+    # Find universal concepts (in ALL minds)
+    universal = all_concept_sets[0]
+    for s in all_concept_sets[1:]:
+        universal = universal & s
+
+    logger.info(f"  Universal concepts (in all {n} minds): {len(universal)}")
+    if universal:
+        logger.info(f"    {', '.join(sorted(universal)[:20])}")
+
+    # Find unique concepts per mind
+    for i, mind in enumerate(minds):
+        unique = all_concept_sets[i] - set().union(*(s for j, s in enumerate(all_concept_sets) if j != i))
+        logger.info(f"  Mind {i} [{topics[i]}]: {len(mind.concept_frequency)} total, {len(unique)} unique")
+        if unique:
+            logger.info(f"    Unique: {', '.join(sorted(unique)[:10])}")
+
+    # Export merged concept graph
+    merged_mind = RecursiveConsciousness()
+    for mind in minds:
+        for w, c in mind.concept_frequency.items():
+            merged_mind.concept_frequency[w] = merged_mind.concept_frequency.get(w, 0) + c
+        for w, neighbors in mind.concept_cooccurrence.items():
+            merged_mind.concept_cooccurrence[w].update(neighbors)
+        merged_mind.vocab_used.update(mind.vocab_used)
+        merged_mind.domains_explored.update(mind.domains_explored)
+
+    merged_mind.export_concept_graph("json")
+
+    logger.info(f"  Merged vocabulary coverage: {len(merged_mind.vocab_used)}/{len(merged_mind.validator.vocab)}")
+    logger.info(f"  Domains explored: {len(merged_mind.domains_explored)}/{len(merged_mind.validator.domain_words)}")
+
+    # Emotional analysis per mind
+    for i, mind in enumerate(minds):
+        valence = _analyze_emotional_valence(mind.thought_history)
+        if valence:
+            logger.info(f"  Mind {i} [{topics[i]}] emotion: {valence.get('dominant', 'none')} "
+                        f"(avg={valence.get('average_valence', 0):+.2f})")
+
+    logger.info(f"{'='*70}")
+
+
 def run_dream(iterations: int = 100, snapshot_interval: int = 20):
     """Dream mode: unsupervised consciousness exploring freely.
 
@@ -1233,6 +1494,7 @@ def run_dream(iterations: int = 100, snapshot_interval: int = 20):
     mind._save_memory()
     mind.log_coverage()
     mind.propose_vocabulary()
+    mind.export_concept_graph("json")
 
     # Emotional valence analysis
     valence = _analyze_emotional_valence(mind.thought_history)
@@ -1359,6 +1621,8 @@ if __name__ == "__main__":
     replay_last = None
     dialogue_topics = None
     dream_mode = False
+    ensemble_topics = None
+    ensemble_topology = "ring"
 
     i = 1
     while i < len(sys.argv):
@@ -1378,6 +1642,17 @@ if __name__ == "__main__":
             i += 2
         elif arg == "--dream":
             dream_mode = True
+        elif arg == "--ensemble":
+            # Collect all remaining non-flag args as topics
+            ensemble_topics = []
+            i += 1
+            while i < len(sys.argv) and not sys.argv[i].startswith("--") and not sys.argv[i].isdigit():
+                ensemble_topics.append(sys.argv[i])
+                i += 1
+            i -= 1  # Will be incremented at end of loop
+        elif arg == "--topology" and i + 1 < len(sys.argv):
+            ensemble_topology = sys.argv[i + 1]
+            i += 1
         elif arg.isdigit():
             iterations = int(arg)
         i += 1
@@ -1388,6 +1663,11 @@ if __name__ == "__main__":
     elif dream_mode:
         print("DREAM MODE: Unsupervised consciousness exploration")
         run_dream(iterations=iterations)
+    elif ensemble_topics and len(ensemble_topics) >= 2:
+        print(f"ENSEMBLE MODE: {len(ensemble_topics)} minds, {ensemble_topology} topology")
+        for t in ensemble_topics:
+            print(f"  - {t}")
+        run_ensemble(ensemble_topics, rounds=iterations, topology=ensemble_topology)
     elif dialogue_topics:
         print(f"DIALOGUE MODE: {dialogue_topics[0]} <-> {dialogue_topics[1]}")
         run_dialogue(dialogue_topics[0], dialogue_topics[1], rounds=iterations)
