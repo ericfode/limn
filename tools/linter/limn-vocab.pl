@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1027 words, 23 operators
+%% 1033 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -60,6 +60,7 @@ word('ari').
 word('arm').
 word('aro').
 word('art').
+word('arv').
 word('as').
 word('ask').
 word('asm').
@@ -166,6 +167,7 @@ word('cin').
 word('cir').
 word('cla').
 word('clb').
+word('cld').
 word('cle').
 word('cli').
 word('clm').
@@ -363,7 +365,9 @@ word('frb').
 word('fre').
 word('fri').
 word('frm').
+word('frn').
 word('fro').
+word('frs').
 word('frt').
 word('fru').
 word('frut').
@@ -517,6 +521,7 @@ word('lex').
 word('lft').
 word('lgs').
 word('lib').
+word('lie').
 word('lif').
 word('lig').
 word('lik').
@@ -584,6 +589,7 @@ word('mrg').
 word('mst').
 word('mtc').
 word('mtr').
+word('mud').
 word('mul').
 word('mus').
 word('mut').
