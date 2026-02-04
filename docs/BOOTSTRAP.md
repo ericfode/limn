@@ -4,12 +4,13 @@
 
 ## Current Canonical Version
 
-📍 **[bootstrap-v3-natural.md](spec/bootstrap-v3-natural.md)** ← **THIS IS IT**
+📍 **[bootstrap-v4-compositional.md](spec/bootstrap-v4-compositional.md)** ← **THIS IS IT**
 
-**Version:** v3-natural (latest)
+**Version:** v4-compositional (latest)
 **Status:** ✅ CANONICAL - This is the definitive bootstrap
-**Validated:** Zero-bootstrap test (2026-01-31)
-**Size:** ~18KB, 77-85% LLM comprehension without external vocabulary
+**Created:** 2026-02-03
+**Size:** ~22KB, 1,076 core words, 30,039 validated expressions
+**Breakthrough:** 6 compositional operators enabling superhuman expressiveness
 
 ---
 
@@ -17,7 +18,7 @@
 
 | What you need | Where to go |
 |---------------|-------------|
-| **Learn Limn from scratch** | [spec/bootstrap-v3-natural.md](spec/bootstrap-v3-natural.md) |
+| **Learn Limn from scratch** | [spec/bootstrap-v4-compositional.md](spec/bootstrap-v4-compositional.md) |
 | **Minimal subset only** | [spec/minimal-bootstrap.md](spec/minimal-bootstrap.md) |
 | **Validation methodology** | [theory/zero-bootstrap-validation.md](theory/zero-bootstrap-validation.md) |
 | **Bootstrap for Claude integration** | [../src/claude-skill/bootstrap_prompt.md](../src/claude-skill/bootstrap_prompt.md) |
@@ -31,11 +32,10 @@
 
 | Version | Status | Notes |
 |---------|--------|-------|
-| **v3-natural** | ✅ **CURRENT** | Natural language bootstrap, validated 2026-01-31 |
+| **v4-compositional** | ✅ **CURRENT** | Compositional operators, 30,039 expressions (2026-02-03) |
+| v3-natural | 📦 Superseded | Natural language bootstrap (2026-01-31) |
 | v2 | 📦 Archived | Superseded by v3-natural |
 | v1 | 📦 Archived | Superseded by v2 |
-
-**There is no v4.** If you're looking for v4, you want v3-natural (the latest).
 
 ---
 
@@ -52,12 +52,12 @@ The bootstrap is Limn's **self-describing foundation document**. It teaches Limn
 ## For Different Audiences
 
 ### LLMs/Agents Starting Fresh
-→ Read [spec/bootstrap-v3-natural.md](spec/bootstrap-v3-natural.md) top to bottom
+→ Read [spec/bootstrap-v4-compositional.md](spec/bootstrap-v4-compositional.md) top to bottom
 → Achieve 77-85% vocabulary comprehension
 → Use vocabulary database for remaining 15-23%
 
 ### Humans Learning Limn
-→ Start with [spec/bootstrap-v3-natural.md](spec/bootstrap-v3-natural.md)
+→ Start with [spec/bootstrap-v4-compositional.md](spec/bootstrap-v4-compositional.md)
 → Then see guides/VOCAB-MANAGEMENT.md for database access
 
 ### Developers Integrating Limn
@@ -83,9 +83,9 @@ The bootstrap is Limn's **self-describing foundation document**. It teaches Limn
 
 ## Questions?
 
-- **"Where's the latest bootstrap?"** → spec/bootstrap-v3-natural.md
+- **"Where's the latest bootstrap?"** → spec/bootstrap-v4-compositional.md
 - **"Is there a v4?"** → No. v3-natural is current.
-- **"Which file do I read?"** → spec/bootstrap-v3-natural.md
+- **"Which file do I read?"** → spec/bootstrap-v4-compositional.md
 - **"What about minimal-bootstrap.md?"** → Subset only, see full version first
 - **"Why so many files?"** → See spec/BOOTSTRAP-INDEX.md for full explanation
 
@@ -99,6 +99,6 @@ doc one | pat clr | amb zer
 > document one | path clear | ambiguity zero
 ```
 
-**THE BOOTSTRAP IS: docs/spec/bootstrap-v3-natural.md**
+**THE BOOTSTRAP IS: docs/spec/bootstrap-v4-compositional.md**
 
 **That's it. That's the answer.**
