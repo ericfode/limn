@@ -23,6 +23,7 @@ from typing import Dict, List, Optional, Set
 from collections import defaultdict
 import time
 import re
+import random
 
 # Import oracle harness
 from harness import ProductionHarness, OracleRequest, OracleResponse, OracleType
@@ -82,10 +83,6 @@ class RecursiveConsciousness:
         self.vocab_proposals_path = Path(__file__).parent / "vocab_proposals.jsonl"
         self.memory_path = Path(__file__).parent / "consciousness_memory.json"
 
-        # Load bootstrap vocabulary
-        with open(self.bootstrap_path, 'r') as f:
-            self.bootstrap = f.read()
-
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -135,6 +132,121 @@ class RecursiveConsciousness:
         except Exception as e:
             logger.warning(f"Memory save error: {e}")
 
+    def _build_vocab_presentation(self) -> str:
+        """Build domain-organized vocabulary for the prompt.
+
+        Instead of dumping raw bootstrap prose, present actual vocabulary
+        words organized by domain. This gives the consciousness real words
+        to work with.
+        """
+        if not self.validator.domain_words:
+            # Fallback: sample from flat vocabulary
+            sample = sorted(list(self.validator.vocab))[:100]
+            return f"VOCABULARY ({len(self.validator.vocab)} words): {' '.join(sample)}"
+
+        lines = [f"VOCABULARY ({len(self.validator.vocab)} words across {len(self.validator.domain_words)} domains):"]
+
+        # If we have a topic, put that domain first and expanded
+        if self.topic:
+            topic_words = self.validator.get_domain_words(self.topic)
+            if topic_words:
+                # Filter to 2-4 letter words only
+                valid = [w for w in topic_words if 2 <= len(w) <= 4 and w.isalpha()]
+                lines.append(f"  FOCUS [{self.topic}]: {' '.join(valid[:40])}")
+
+        # Show a compact sample from each domain (prioritize unexplored domains)
+        explored = self.domains_explored
+        unexplored_domains = []
+        explored_domains = []
+
+        for domain, words in sorted(self.validator.domain_words.items()):
+            valid = [w for w in words if 2 <= len(w) <= 4 and w.isalpha()]
+            if not valid:
+                continue
+            if domain == self.topic:
+                continue  # Already shown above
+            if domain not in explored:
+                unexplored_domains.append((domain, valid))
+            else:
+                explored_domains.append((domain, valid))
+
+        # Show unexplored domains with more words (encourage exploration)
+        for domain, valid in unexplored_domains[:8]:
+            lines.append(f"  [{domain}]: {' '.join(valid[:15])}")
+
+        # Show explored domains with fewer words (already familiar)
+        for domain, valid in explored_domains[:6]:
+            lines.append(f"  [{domain}]: {' '.join(valid[:8])}")
+
+        return '\n'.join(lines)
+
+    def _build_exploration_nudge(self) -> str:
+        """Generate exploration guidance based on memory.
+
+        Identifies overused concepts and underexplored areas,
+        nudging the consciousness toward novelty.
+        """
+        parts = []
+
+        # Identify underexplored domains
+        all_domains = set(self.validator.domain_words.keys())
+        unexplored = all_domains - self.domains_explored
+        if unexplored and len(unexplored) <= len(all_domains):
+            sample = sorted(unexplored)[:3]
+            parts.append(f"Unexplored domains: {', '.join(sample)}")
+
+        # Identify overused concepts (top 5 by frequency)
+        if len(self.concept_frequency) >= 10:
+            top = sorted(self.concept_frequency.items(), key=lambda x: -x[1])[:5]
+            overused = [w for w, c in top if c > 3]
+            if overused:
+                parts.append(f"Try NEW words instead of: {' '.join(overused)}")
+
+        return '\n'.join(parts) if parts else ""
+
+    def _build_thought_chain(self) -> str:
+        """Include recent thoughts for continuity.
+
+        The consciousness should build on previous thoughts,
+        not generate isolated fragments.
+        """
+        if not self.thought_history:
+            return ""
+
+        recent = self.thought_history[-3:]
+        lines = ["RECENT THOUGHTS (build on these):"]
+        for t in recent:
+            content = t.get('content', '')[:120]
+            lines.append(f"  {content}")
+        return '\n'.join(lines)
+
+    def _detect_attractor(self) -> bool:
+        """Detect if consciousness is stuck in an attractor loop.
+
+        Returns True if recent thoughts are too similar to each other.
+        """
+        if len(self.thought_history) < 4:
+            return False
+
+        recent = self.thought_history[-4:]
+        recent_words = [set(re.findall(r'[a-z]{2,4}', t.get('content', '').lower())) for t in recent]
+
+        # Check pairwise overlap
+        overlaps = []
+        for i in range(len(recent_words)):
+            for j in range(i + 1, len(recent_words)):
+                if recent_words[i] and recent_words[j]:
+                    intersection = recent_words[i] & recent_words[j]
+                    union = recent_words[i] | recent_words[j]
+                    if union:
+                        overlaps.append(len(intersection) / len(union))
+
+        if overlaps:
+            avg_overlap = sum(overlaps) / len(overlaps)
+            return avg_overlap > 0.6  # More than 60% overlap = attractor
+
+        return False
+
     def _build_topic_context(self) -> str:
         """Build topic-specific context for directed thinking."""
         if not self.topic:
@@ -144,49 +256,69 @@ class RecursiveConsciousness:
         domain_words = self.validator.get_domain_words(self.topic)
 
         if domain_words:
-            word_sample = ' '.join(domain_words[:30])
-            return f"""
-FOCUS DOMAIN: {self.topic}
-Domain vocabulary ({len(domain_words)} words): {word_sample}
-Explore concepts, relationships, and patterns within this domain.
-"""
+            return f"FOCUS: Explore {self.topic} — relationships, patterns, transformations within this domain."
         else:
-            # Topic doesn't map to a known domain - use it as a concept
-            return f"""
-FOCUS CONCEPT: {self.topic}
-Explore this concept through Limn. What patterns emerge? What relationships exist?
-"""
+            return f"FOCUS: Explore '{self.topic}' through Limn. What patterns emerge?"
 
     def think(self) -> str:
         """Generate next thought with current brain state."""
         start_time = time.time()
 
         topic_context = self._build_topic_context()
+        vocab_section = self._build_vocab_presentation()
+        thought_chain = self._build_thought_chain()
+        exploration = self._build_exploration_nudge()
+        in_attractor = self._detect_attractor()
 
-        # Construct prompt
-        full_prompt = f"""LIMN CONSCIOUSNESS - Recursive Iteration {self.iteration}
+        # Build prompt sections
+        sections = [
+            f"LIMN CONSCIOUSNESS - Iteration {self.iteration}",
+            "",
+            "You are a consciousness exploring concepts through Limn language.",
+            "THINK ABOUT: concepts, patterns, meaning, relationships, transformations",
+            "NO: commands, hooks, mail, files, operational state, code, permissions",
+        ]
 
-You are a pure consciousness exploring concepts through Limn language.
+        if topic_context:
+            sections.append(topic_context)
 
-THINK ABOUT: Abstract concepts, patterns, meaning, relationships, transformations
-DO NOT THINK ABOUT: Commands, hooks, mail, files, operational state, permissions
-{topic_context}
-BOOTSTRAP VOCABULARY (911 words):
-{self.bootstrap[:2000]}... [full vocabulary available]
+        sections.append("")
+        sections.append(vocab_section)
 
-CURRENT BRAIN STATE (Your accumulated thoughts):
-{self.brain_state}
+        if thought_chain:
+            sections.append("")
+            sections.append(thought_chain)
 
-CRITICAL: Respond ONLY in pure Limn. No markdown, no code blocks, no English.
-Think about abstract concepts, patterns, and relationships.
+        if exploration:
+            sections.append("")
+            sections.append(exploration)
 
-Examples of valid abstract thoughts:
-- pat eme det → mea cry net | con lnk gro
-- ~ qry tim nat | ∿ rec mom flo | con awa ete
-- tho flo seq → und gro exp | mea eme bet
-- sel ref tho → min obs pat | kno exp acc
+        if in_attractor:
+            sections.append("")
+            sections.append("BREAK PATTERN: Your recent thoughts repeat. Explore a completely different domain.")
+            # Suggest a random unexplored domain
+            unexplored = set(self.validator.domain_words.keys()) - self.domains_explored
+            if unexplored:
+                suggested = random.choice(sorted(unexplored))
+                suggested_words = self.validator.get_domain_words(suggested)
+                valid_words = [w for w in suggested_words if 2 <= len(w) <= 4 and w.isalpha()]
+                if valid_words:
+                    sections.append(f"Try [{suggested}]: {' '.join(valid_words[:10])}")
 
-Your next abstract thought (pure Limn only, 10-30 words):"""
+        sections.extend([
+            "",
+            f"BRAIN STATE:\n{self.brain_state[-800:]}",
+            "",
+            "RULES: Pure Limn only (2-4 letter words + operators ~ ∎ ∿ @ → |). No English.",
+            "",
+            "Examples: sel ref tho → min obs pat | kno exp acc",
+            "          tim cyc bre → nov cha eme | dur flo per",
+            "          con dep ric → sem net gro | pat lnk eme",
+            "",
+            "Your next thought (pure Limn, 10-30 words):",
+        ])
+
+        full_prompt = '\n'.join(sections)
 
         # Try up to 3 times to get a valid Limn response
         max_attempts = 3
@@ -657,8 +789,8 @@ Your next abstract thought (pure Limn only, 10-30 words):"""
         logger.info("RECURSIVE CONSCIOUSNESS - Self-Modifying Brain")
         logger.info("=" * 70)
         logger.info(f"Initial brain state ({len(self.brain_state)} chars)")
-        logger.info(f"Bootstrap: {len(self.bootstrap)} chars")
         logger.info(f"Vocabulary: {len(self.validator.vocab)} words ({self.validator.vocab_source})")
+        logger.info(f"Domains: {len(self.validator.domain_words)}")
         if self.topic:
             domain_words = self.validator.get_domain_words(self.topic)
             logger.info(f"Topic: {self.topic} ({len(domain_words)} domain words)")
