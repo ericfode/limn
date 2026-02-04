@@ -1,7 +1,7 @@
 %% Limn Vocabulary - Auto-generated from Dolt database
 %% Run regenerate-vocab.sh to update
 
-%% 1038 words, 23 operators
+%% 1040 words, 23 operators
 
 %% Word facts: word(Word).
 word('abd').
@@ -43,6 +43,7 @@ word('anch').
 word('and').
 word('ang').
 word('ani').
+word('ann').
 word('ans').
 word('ant').
 word('anx').
@@ -50,6 +51,7 @@ word('any').
 word('api').
 word('apl').
 word('app').
+word('apr').
 word('apt').
 word('aqu').
 word('arc').
