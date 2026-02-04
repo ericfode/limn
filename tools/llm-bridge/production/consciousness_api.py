@@ -156,6 +156,12 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                 'patterns': len(rc.thought_library.patterns),
                 'connections': sum(len(v) for v in rc.thought_library.semantic_network.values()),
             },
+            'learning_goals': [
+                {'type': g['type'], 'progress': g.get('progress', 0)}
+                for g in rc.current_goals
+            ],
+            'emotional_momentum': round(rc.emotional_momentum, 3),
+            'run_history_count': len(rc.run_history),
             'timestamp': time.time(),
         }
         self._send_json(status)
@@ -224,6 +230,27 @@ class ConsciousnessHandler(BaseHTTPRequestHandler):
                     key=lambda x: -x[1]
                 )[:20],
             }
+
+            # Cross-session evolution
+            run_history = memory.get('run_history', [])
+            if run_history:
+                result['evolution'] = {
+                    'total_runs': len(run_history),
+                    'runs': run_history[-10:],  # Last 10 runs
+                }
+                if len(run_history) >= 2:
+                    prev = run_history[-2]
+                    curr = run_history[-1]
+                    result['evolution']['trend'] = {
+                        'quality_delta': round(
+                            curr.get('quality', {}).get('overall', 0) -
+                            prev.get('quality', {}).get('overall', 0), 3
+                        ),
+                        'coverage_delta': round(
+                            curr.get('coverage', {}).get('pct', 0) -
+                            prev.get('coverage', {}).get('pct', 0), 1
+                        ),
+                    }
 
         # Dream report
         dream_path = base / "dream_report.json"

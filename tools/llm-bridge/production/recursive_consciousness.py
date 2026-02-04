@@ -102,6 +102,17 @@ class RecursiveConsciousness:
         self.example_count: int = 3  # Example thoughts in prompt
         self.brain_state_window: int = 800  # Characters of brain state in prompt
 
+        # Self-directed learning goals
+        self.current_goals: List[Dict] = []  # Active exploration goals
+        self.goal_history: List[Dict] = []  # Completed/expired goals
+
+        # Emotional state tracking (for domain steering)
+        self.emotional_momentum: float = 0.0  # Running average valence (-1 to +1)
+        self.emotion_window: List[float] = []  # Recent valence values
+
+        # Cross-session evolution
+        self.run_history: List[Dict] = []  # Per-run summaries from previous sessions
+
         # Initialize or load brain state
         if self.brain_state_path.exists():
             with open(self.brain_state_path, 'r') as f:
@@ -128,12 +139,15 @@ class RecursiveConsciousness:
             self.vocab_used = set(memory.get('vocab_used', []))
             self.domains_explored = set(memory.get('domains_explored', []))
             self.vocab_proposals = memory.get('vocab_proposals', {})
+            self.run_history = memory.get('run_history', [])
+            self.goal_history = memory.get('goal_history', [])
             total_thoughts = memory.get('total_thoughts', 0)
 
             logger.info(f"Loaded memory: {len(self.concept_frequency)} concepts, "
                         f"{len(self.vocab_used)} words used, "
                         f"{len(self.domains_explored)} domains, "
-                        f"{total_thoughts} total thoughts")
+                        f"{total_thoughts} total thoughts, "
+                        f"{len(self.run_history)} previous runs")
         except Exception as e:
             logger.warning(f"Memory load error: {e}")
 
@@ -145,6 +159,8 @@ class RecursiveConsciousness:
                 'vocab_used': sorted(self.vocab_used),
                 'domains_explored': sorted(self.domains_explored),
                 'vocab_proposals': self.vocab_proposals,
+                'run_history': self.run_history,
+                'goal_history': self.goal_history,
                 'total_thoughts': len(self.thought_history),
                 'last_save': time.time(),
             }
@@ -438,6 +454,286 @@ class RecursiveConsciousness:
         elif avg_overall < 0.3:
             self.narrative_arc_length = max(4, self.narrative_arc_length - 1)
 
+    def _set_learning_goals(self):
+        """Set self-directed learning goals for the current narrative arc.
+
+        Goals are concrete exploration targets the consciousness chooses:
+        - Use N words from a specific underexplored domain
+        - Achieve a minimum quality score
+        - Explore a specific concept cluster connection
+        - Reach a vocabulary coverage milestone
+
+        Goals are evaluated at arc transitions and feed into the next arc's direction.
+        """
+        # Expire any current goals
+        for g in self.current_goals:
+            g['status'] = 'expired'
+            g['final_progress'] = g.get('progress', 0)
+            self.goal_history.append(g)
+        self.current_goals = []
+
+        # Goal 1: Domain exploration - pick an underexplored domain
+        all_domains = sorted(self.validator.domain_words.keys())
+        # Score domains by how many of their words have been used
+        domain_coverage = {}
+        for domain in all_domains:
+            words = self.validator.get_domain_words(domain)
+            valid = [w for w in words if 2 <= len(w) <= 4 and w.isalpha()]
+            if valid:
+                used = len([w for w in valid if w in self.vocab_used])
+                domain_coverage[domain] = used / len(valid)
+            else:
+                domain_coverage[domain] = 1.0
+
+        # Pick the least-covered domain (that isn't the current topic)
+        sorted_domains = sorted(domain_coverage.items(), key=lambda x: x[1])
+        target_domain = None
+        for domain, cov in sorted_domains:
+            if domain != self.topic and cov < 0.8:
+                target_domain = domain
+                break
+
+        if target_domain:
+            target_words = self.validator.get_domain_words(target_domain)
+            unused = [w for w in target_words
+                      if 2 <= len(w) <= 4 and w.isalpha() and w not in self.vocab_used]
+            goal_count = min(5, len(unused))
+            self.current_goals.append({
+                'type': 'domain_explore',
+                'domain': target_domain,
+                'target_count': goal_count,
+                'target_words': unused[:goal_count * 2],  # Candidates
+                'progress': 0,
+                'created_at': self.iteration,
+            })
+
+        # Goal 2: Quality target - beat recent average
+        recent_scores = [t.get('score', {}).get('overall', 0)
+                         for t in self.thought_history[-10:] if 'score' in t]
+        if recent_scores:
+            avg = sum(recent_scores) / len(recent_scores)
+            target = min(0.9, avg + 0.1)
+            self.current_goals.append({
+                'type': 'quality_target',
+                'target_score': round(target, 2),
+                'progress': 0,
+                'hits': 0,
+                'attempts': 0,
+                'created_at': self.iteration,
+            })
+
+        # Goal 3: Coverage milestone - next 5% coverage
+        total = len(self.validator.vocab)
+        current_pct = len(self.vocab_used) / total * 100 if total else 0
+        next_milestone = ((current_pct // 5) + 1) * 5
+        if next_milestone <= 100:
+            words_needed = int(next_milestone / 100 * total) - len(self.vocab_used)
+            self.current_goals.append({
+                'type': 'coverage_milestone',
+                'target_pct': next_milestone,
+                'words_needed': max(0, words_needed),
+                'progress': 0,
+                'created_at': self.iteration,
+            })
+
+        if self.current_goals:
+            goals_desc = ', '.join(g['type'] for g in self.current_goals)
+            logger.info(f"  Learning goals set: {goals_desc}")
+
+    def _update_goal_progress(self, thought: str):
+        """Update progress toward current learning goals based on new thought."""
+        words = set(re.findall(r'[a-z]{2,4}', thought.lower()))
+
+        for goal in self.current_goals:
+            if goal['type'] == 'domain_explore':
+                # Check if thought used words from the target domain
+                domain_words = set(self.validator.get_domain_words(goal['domain']))
+                new_domain_words = words & domain_words & self.validator.vocab
+                unused_domain = new_domain_words - (self.vocab_used - new_domain_words)
+                if unused_domain:
+                    goal['progress'] = goal.get('progress', 0) + len(unused_domain)
+
+            elif goal['type'] == 'quality_target':
+                goal['attempts'] = goal.get('attempts', 0) + 1
+                if self.thought_history and 'score' in self.thought_history[-1]:
+                    score = self.thought_history[-1]['score'].get('overall', 0)
+                    if score >= goal['target_score']:
+                        goal['hits'] = goal.get('hits', 0) + 1
+                    goal['progress'] = goal.get('hits', 0) / max(goal['attempts'], 1)
+
+            elif goal['type'] == 'coverage_milestone':
+                total = len(self.validator.vocab)
+                current_pct = len(self.vocab_used) / total * 100 if total else 0
+                if current_pct >= goal['target_pct']:
+                    goal['progress'] = 1.0
+                else:
+                    remaining = goal['words_needed'] - (len(self.vocab_used) - (total * goal.get('_start_pct', current_pct) / 100))
+                    goal['progress'] = max(0, 1.0 - remaining / max(goal['words_needed'], 1))
+
+    def _build_goal_context(self) -> str:
+        """Build prompt section showing current learning goals and progress."""
+        if not self.current_goals:
+            return ""
+
+        parts = ["LEARNING GOALS (self-set):"]
+        for goal in self.current_goals:
+            if goal['type'] == 'domain_explore':
+                domain = goal['domain']
+                prog = goal.get('progress', 0)
+                target = goal['target_count']
+                words = goal.get('target_words', [])[:8]
+                bar = "█" * min(prog, target) + "░" * max(target - prog, 0)
+                parts.append(f"  Explore [{domain}] {bar} {prog}/{target} — try: {' '.join(words)}")
+            elif goal['type'] == 'quality_target':
+                target = goal['target_score']
+                hits = goal.get('hits', 0)
+                attempts = goal.get('attempts', 0)
+                pct = f"{hits}/{attempts}" if attempts else "0/0"
+                parts.append(f"  Quality ≥ {target} — {pct} thoughts above target")
+            elif goal['type'] == 'coverage_milestone':
+                target = goal['target_pct']
+                total = len(self.validator.vocab)
+                current_pct = len(self.vocab_used) / total * 100 if total else 0
+                parts.append(f"  Coverage → {target}% (now {current_pct:.1f}%)")
+
+        return '\n'.join(parts)
+
+    def _update_emotional_momentum(self, thought: str):
+        """Track emotional valence of each thought for domain steering.
+
+        Maintains a running emotional momentum that influences domain selection:
+        - Sustained positive emotion → explore challenging/philosophical domains
+        - Negative emotion → steer toward grounding/nature/virtue domains
+        - Neutral → continue current trajectory
+        """
+        positive_words = {'joy', 'lov', 'hop', 'exc', 'cre', 'cou', 'grt',
+                          'bri', 'bea', 'gro', 'fre', 'har', 'pea'}
+        negative_words = {'fea', 'ang', 'anx', 'dou', 'suf', 'glt', 'sha',
+                          'dar', 'err', 'los', 'brk'}
+
+        words = set(re.findall(r'[a-z]{2,4}', thought.lower()))
+        pos = len(words & positive_words)
+        neg = len(words & negative_words)
+
+        if pos + neg > 0:
+            valence = (pos - neg) / (pos + neg)
+        else:
+            valence = 0.0
+
+        self.emotion_window.append(valence)
+        if len(self.emotion_window) > 10:
+            self.emotion_window = self.emotion_window[-10:]
+
+        # Exponential moving average for momentum
+        alpha = 0.3
+        self.emotional_momentum = alpha * valence + (1 - alpha) * self.emotional_momentum
+
+    def _emotion_steer_domains(self) -> Optional[str]:
+        """Suggest domain exploration based on emotional momentum.
+
+        Returns a domain suggestion string or None.
+        """
+        if len(self.emotion_window) < 3:
+            return None
+
+        # Map emotional states to domain affinities
+        if self.emotional_momentum > 0.3:
+            # Positive momentum → explore abstract/philosophical domains
+            preferred = ['Abstract', 'Mind & Cognition', 'Arts', 'Science']
+        elif self.emotional_momentum < -0.3:
+            # Negative momentum → seek grounding/balance
+            preferred = ['Nature', 'Virtue & Ethics', 'Spiritual & Religious', 'Living Things']
+        else:
+            return None
+
+        # Pick an underexplored preferred domain
+        for domain in preferred:
+            words = self.validator.get_domain_words(domain)
+            valid = [w for w in words if 2 <= len(w) <= 4 and w.isalpha()]
+            unused = [w for w in valid if w not in self.vocab_used]
+            if unused:
+                sample = self._rotate_words(unused, window=6)
+                mood = "positive" if self.emotional_momentum > 0 else "reflective"
+                return f"EMOTIONAL DIRECTION ({mood}): Explore [{domain}] — {' '.join(sample)}"
+
+        return None
+
+    def _record_run_summary(self):
+        """Record a summary of the current run for cross-session evolution tracking."""
+        if not self.thought_history:
+            return
+
+        scores = [t.get('score', {}) for t in self.thought_history if 'score' in t]
+        avg_overall = sum(s.get('overall', 0) for s in scores) / max(len(scores), 1) if scores else 0
+        avg_novelty = sum(s.get('novelty', 0) for s in scores) / max(len(scores), 1) if scores else 0
+        avg_diversity = sum(s.get('diversity', 0) for s in scores) / max(len(scores), 1) if scores else 0
+        avg_depth = sum(s.get('depth', 0) for s in scores) / max(len(scores), 1) if scores else 0
+
+        total_vocab = len(self.validator.vocab)
+        coverage_pct = len(self.vocab_used) / total_vocab * 100 if total_vocab else 0
+
+        # Goals completed this run
+        completed_goals = sum(1 for g in self.goal_history
+                              if g.get('final_progress', 0) >= 0.8
+                              and g.get('created_at', 0) > 0)
+
+        valence = _analyze_emotional_valence(self.thought_history)
+
+        summary = {
+            'timestamp': time.time(),
+            'iterations': self.iteration,
+            'topic': self.topic,
+            'thoughts': len(self.thought_history),
+            'quality': {
+                'overall': round(avg_overall, 3),
+                'novelty': round(avg_novelty, 3),
+                'diversity': round(avg_diversity, 3),
+                'depth': round(avg_depth, 3),
+            },
+            'coverage': {
+                'vocab_used': len(self.vocab_used),
+                'total_vocab': total_vocab,
+                'pct': round(coverage_pct, 1),
+                'domains_explored': len(self.domains_explored),
+            },
+            'concepts': len(self.concept_frequency),
+            'goals_completed': completed_goals,
+            'goals_total': len([g for g in self.goal_history
+                                if g.get('created_at', 0) > 0]),
+            'emotional_trajectory': valence.get('trajectory', 'unknown') if valence else 'unknown',
+            'avg_valence': valence.get('average_valence', 0) if valence else 0,
+        }
+
+        self.run_history.append(summary)
+        logger.info(f"  Run summary recorded: quality={avg_overall:.3f}, "
+                    f"coverage={coverage_pct:.1f}%, {len(self.thought_history)} thoughts")
+
+    def _show_evolution(self):
+        """Display cross-session evolution trajectory."""
+        if len(self.run_history) < 2:
+            return
+
+        logger.info("  EVOLUTION ACROSS RUNS:")
+        for i, run in enumerate(self.run_history[-5:], 1):
+            q = run.get('quality', {})
+            c = run.get('coverage', {})
+            logger.info(f"    Run {i}: quality={q.get('overall', 0):.3f} "
+                        f"coverage={c.get('pct', 0):.1f}% "
+                        f"concepts={run.get('concepts', 0)} "
+                        f"thoughts={run.get('thoughts', 0)}")
+
+        # Compare latest to previous
+        prev = self.run_history[-2]
+        curr = self.run_history[-1]
+        dq = curr.get('quality', {}).get('overall', 0) - prev.get('quality', {}).get('overall', 0)
+        dc = curr.get('coverage', {}).get('pct', 0) - prev.get('coverage', {}).get('pct', 0)
+        dn = curr.get('quality', {}).get('novelty', 0) - prev.get('quality', {}).get('novelty', 0)
+
+        direction = "↑" if dq > 0 else "↓" if dq < 0 else "→"
+        logger.info(f"    Trajectory: quality {direction}{abs(dq):.3f} "
+                    f"coverage {'+' if dc > 0 else ''}{dc:.1f}% "
+                    f"novelty {'+' if dn > 0 else ''}{dn:.3f}")
+
     def _build_vocab_challenge(self) -> str:
         """Generate a vocabulary challenge at adaptive frequency.
 
@@ -534,6 +830,8 @@ class RecursiveConsciousness:
         thought_chain = self._build_thought_chain()
         exploration = self._build_exploration_nudge()
         vocab_challenge = self._build_vocab_challenge()
+        goal_context = self._build_goal_context()
+        emotion_steer = self._emotion_steer_domains()
         in_attractor = self._detect_attractor()
 
         # Build prompt sections
@@ -566,6 +864,14 @@ class RecursiveConsciousness:
         if vocab_challenge:
             sections.append("")
             sections.append(vocab_challenge)
+
+        if goal_context:
+            sections.append("")
+            sections.append(goal_context)
+
+        if emotion_steer:
+            sections.append("")
+            sections.append(emotion_steer)
 
         # Include quality feedback from last thought
         if self.thought_history and 'score' in self.thought_history[-1]:
@@ -744,6 +1050,12 @@ class RecursiveConsciousness:
 
         self.thought_history.append(entry)
         self._persist_thought(entry)
+
+        # Update learning goal progress
+        self._update_goal_progress(thought)
+
+        # Update emotional momentum
+        self._update_emotional_momentum(thought)
 
         # Add to thought library for semantic network building
         self.thought_library.add_thought(
@@ -1617,6 +1929,11 @@ class RecursiveConsciousness:
             domain_words = self.validator.get_domain_words(self.topic)
             logger.info(f"Topic: {self.topic} ({len(domain_words)} domain words)")
         logger.info(f"Starting recursive loop ({iterations} iterations)...")
+        if self.run_history:
+            logger.info(f"Previous runs: {len(self.run_history)}")
+
+        # Set initial learning goals
+        self._set_learning_goals()
 
         for i in range(iterations):
             self.iteration = i + 1
@@ -1659,6 +1976,10 @@ class RecursiveConsciousness:
             if self.iteration % 5 == 0:
                 self._adapt_parameters()
 
+            # 5b. Reset learning goals at narrative arc transitions
+            if self.iteration % self.narrative_arc_length == 0:
+                self._set_learning_goals()
+
             # 6. Metacognitive reflection (every 5 iterations)
             if self.iteration % 5 == 0:
                 reflection = self.reflect()
@@ -1693,6 +2014,11 @@ class RecursiveConsciousness:
         self.detect_resonance()
         self.propose_vocabulary()
         self.export_concept_graph("json")
+
+        # Record run summary for cross-session evolution
+        self._record_run_summary()
+        self._show_evolution()
+
         self._save_memory()
 
         # Emotional valence analysis
@@ -1704,6 +2030,15 @@ class RecursiveConsciousness:
             logger.info(f"    Dominant: {valence['dominant']}")
             top_emo = ', '.join(f"{e}({c})" for e, c in valence['top_emotions'][:5])
             logger.info(f"    Top: {top_emo}")
+
+        # Log learning goals status
+        if self.current_goals:
+            logger.info("  LEARNING GOALS (final):")
+            for g in self.current_goals:
+                logger.info(f"    {g['type']}: progress={g.get('progress', 0)}")
+        if self.goal_history:
+            completed = sum(1 for g in self.goal_history if g.get('final_progress', 0) >= 0.8)
+            logger.info(f"  Goals completed: {completed}/{len(self.goal_history)}")
 
 
 def replay_thoughts(log_path: Path, topic_filter: str = None, last_n: int = None):
@@ -2062,7 +2397,44 @@ def show_stats():
                 print(f"    Phase {snap['phase']}: {snap['concepts']} concepts, "
                       f"{snap['vocab_used']} words, {snap['domains_explored']} domains")
 
-    # 5. Vocabulary proposals
+    # 5. Cross-session evolution
+    if memory_path.exists():
+        with open(memory_path, 'r') as f:
+            memory_data = json.load(f)
+
+        run_history = memory_data.get('run_history', [])
+        if run_history:
+            print(f"\n{'─'*70}")
+            print(f"CROSS-SESSION EVOLUTION ({len(run_history)} runs)")
+            print(f"{'─'*70}")
+
+            for i, run in enumerate(run_history[-10:], 1):
+                q = run.get('quality', {})
+                c = run.get('coverage', {})
+                ts = run.get('timestamp', 0)
+                dt = time.strftime('%Y-%m-%d %H:%M', time.localtime(ts)) if ts else '?'
+                print(f"  Run {i:2d} [{dt}]: "
+                      f"quality={q.get('overall', 0):.3f} "
+                      f"novelty={q.get('novelty', 0):.3f} "
+                      f"coverage={c.get('pct', 0):.1f}% "
+                      f"concepts={run.get('concepts', 0)} "
+                      f"thoughts={run.get('thoughts', 0)}")
+
+            if len(run_history) >= 2:
+                first = run_history[0]
+                last = run_history[-1]
+                dq = last.get('quality', {}).get('overall', 0) - first.get('quality', {}).get('overall', 0)
+                dc = last.get('coverage', {}).get('pct', 0) - first.get('coverage', {}).get('pct', 0)
+                print(f"\n  OVERALL TRAJECTORY:")
+                print(f"    Quality: {'+' if dq >= 0 else ''}{dq:.3f} across {len(run_history)} runs")
+                print(f"    Coverage: {'+' if dc >= 0 else ''}{dc:.1f}% across {len(run_history)} runs")
+
+        goal_history = memory_data.get('goal_history', [])
+        if goal_history:
+            completed = sum(1 for g in goal_history if g.get('final_progress', 0) >= 0.8)
+            print(f"\n  LEARNING GOALS: {completed}/{len(goal_history)} completed ({completed/len(goal_history)*100:.0f}%)")
+
+    # 6. Vocabulary proposals
     proposals_path = base / "vocab_proposals.jsonl"
     if proposals_path.exists():
         proposals = []
