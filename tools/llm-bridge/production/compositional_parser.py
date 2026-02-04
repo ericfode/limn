@@ -1,26 +1,67 @@
 #!/usr/bin/env python3
 """Compositional Limn Parser - Parse and evaluate compositional expressions.
 
+Uses Lark (EBNF grammar parser) for robust parsing with proper precedence.
+
 Operators (precedence high to low):
-  ^   gradient    A^0.7     intensity scaling (0.0-1.0)
-  @   projection  A@B       extract B-component of A
-  *   interference A*B      emergent meaning from simultaneous A and B
-  \\   subtraction A\\B      A with B-component removed
-  :   conditional A:B       A given context B
-  ±   superposition A±B     quantum both/and (pre-collapse)
+  ^   gradient      A^0.7     intensity scaling (0.0-1.0)
+  @   projection    A@B       extract B-component of A
+  *   interference  A*B       emergent meaning from simultaneous A and B
+  \\   subtraction   A\\B      A with B-component removed
+  :   conditional   A:B       A given context B
+  ±   superposition A±B       quantum both/and (pre-collapse)
 
 Supports:
   - Parenthesized nesting: (A@B)*C^0.7
   - Multi-level: ((A@B)*C)^0.5
   - Mixed operators: A@B*C:D
+  - 'without' keyword as subtraction alias
 
 Author: Rex (Engineer)
 Date: 2026-02-03
 """
 
-import re
 from dataclasses import dataclass
-from typing import List, Optional, Union
+from typing import List, Union
+
+from lark import Lark, Transformer, v_args
+
+
+# ── EBNF Grammar ──
+
+LIMN_GRAMMAR = r"""
+    ?start: superposition
+
+    ?superposition: conditional
+        | superposition "±" conditional  -> superposition
+
+    ?conditional: subtraction
+        | conditional ":" subtraction    -> conditional
+
+    ?subtraction: interference
+        | subtraction "\\" interference  -> subtraction
+        | subtraction "without" interference -> subtraction
+
+    ?interference: projection
+        | interference "*" projection    -> interference
+
+    ?projection: gradient
+        | projection "@" gradient        -> projection
+
+    ?gradient: atom
+        | gradient "^" FLOAT             -> gradient
+
+    ?atom: WORD                          -> word
+        | "(" superposition ")"
+
+    WORD: /[a-z]{2,4}/
+    FLOAT: /\d+\.\d+/
+
+    %import common.WS
+    %ignore WS
+"""
+
+parser = Lark(LIMN_GRAMMAR, parser='lalr', maybe_placeholders=False)
 
 
 # ── AST Nodes ──
@@ -97,152 +138,38 @@ class Superposition:
 Expr = Union[Word, Gradient, Projection, Interference, Subtraction, Conditional, Superposition]
 
 
-# ── Tokenizer ──
+# ── Lark AST Transformer ──
 
-TOKEN_PATTERNS = [
-    ('FLOAT', r'\d+\.\d+'),
-    ('WITHOUT', r'without'),
-    ('WORD', r'[a-z]{2,4}'),
-    ('CARET', r'\^'),
-    ('AT', r'@'),
-    ('STAR', r'\*'),
-    ('BACKSLASH', r'\\'),
-    ('COLON', r':'),
-    ('PLUSMINUS', r'±'),
-    ('LPAREN', r'\('),
-    ('RPAREN', r'\)'),
-    ('SPACE', r'\s+'),
-]
+@v_args(inline=True)
+class LimnTransformer(Transformer):
+    """Transform Lark parse tree into typed AST nodes."""
 
-TOKEN_RE = re.compile('|'.join(f'(?P<{name}>{pat})' for name, pat in TOKEN_PATTERNS))
+    def word(self, token):
+        return Word(str(token))
 
+    def gradient(self, operand, intensity):
+        return Gradient(operand, float(intensity))
 
-@dataclass
-class Token:
-    type: str
-    value: str
+    def projection(self, left, right):
+        return Projection(left, right)
 
+    def interference(self, left, right):
+        return Interference(left, right)
 
-def tokenize(text: str) -> List[Token]:
-    """Tokenize a compositional expression."""
-    tokens = []
-    for m in TOKEN_RE.finditer(text):
-        kind = m.lastgroup
-        value = m.group()
-        if kind == 'SPACE':
-            continue
-        if kind == 'WITHOUT':
-            kind = 'BACKSLASH'
-            value = '\\'
-        tokens.append(Token(kind, value))
-    return tokens
+    def subtraction(self, left, right):
+        return Subtraction(left, right)
+
+    def conditional(self, left, right):
+        return Conditional(left, right)
+
+    def superposition(self, left, right):
+        return Superposition(left, right)
 
 
-# ── Recursive Descent Parser ──
-# Precedence (low to high): ± < : < \ < * < @ < ^
+_transformer = LimnTransformer()
 
-class Parser:
-    """Recursive descent parser for compositional Limn expressions."""
 
-    def __init__(self, tokens: List[Token]):
-        self.tokens = tokens
-        self.pos = 0
-
-    def peek(self) -> Optional[Token]:
-        if self.pos < len(self.tokens):
-            return self.tokens[self.pos]
-        return None
-
-    def advance(self) -> Token:
-        tok = self.tokens[self.pos]
-        self.pos += 1
-        return tok
-
-    def expect(self, type: str) -> Token:
-        tok = self.peek()
-        if tok is None or tok.type != type:
-            raise ParseError(f"Expected {type}, got {tok}")
-        return self.advance()
-
-    def parse(self) -> Expr:
-        expr = self.parse_superposition()
-        if self.pos < len(self.tokens):
-            raise ParseError(f"Unexpected token: {self.tokens[self.pos]}")
-        return expr
-
-    def parse_superposition(self) -> Expr:
-        """Lowest precedence: ±"""
-        left = self.parse_conditional()
-        while self.peek() and self.peek().type == 'PLUSMINUS':
-            self.advance()
-            right = self.parse_conditional()
-            left = Superposition(left, right)
-        return left
-
-    def parse_conditional(self) -> Expr:
-        """: operator"""
-        left = self.parse_subtraction()
-        while self.peek() and self.peek().type == 'COLON':
-            self.advance()
-            right = self.parse_subtraction()
-            left = Conditional(left, right)
-        return left
-
-    def parse_subtraction(self) -> Expr:
-        """\\ operator"""
-        left = self.parse_interference()
-        while self.peek() and self.peek().type == 'BACKSLASH':
-            self.advance()
-            right = self.parse_interference()
-            left = Subtraction(left, right)
-        return left
-
-    def parse_interference(self) -> Expr:
-        """* operator"""
-        left = self.parse_projection()
-        while self.peek() and self.peek().type == 'STAR':
-            self.advance()
-            right = self.parse_projection()
-            left = Interference(left, right)
-        return left
-
-    def parse_projection(self) -> Expr:
-        """@ operator"""
-        left = self.parse_gradient()
-        while self.peek() and self.peek().type == 'AT':
-            self.advance()
-            right = self.parse_gradient()
-            left = Projection(left, right)
-        return left
-
-    def parse_gradient(self) -> Expr:
-        """^ operator (highest binary precedence)"""
-        left = self.parse_primary()
-        while self.peek() and self.peek().type == 'CARET':
-            self.advance()
-            intensity_tok = self.expect('FLOAT')
-            intensity = float(intensity_tok.value)
-            left = Gradient(left, intensity)
-        return left
-
-    def parse_primary(self) -> Expr:
-        """Word or parenthesized expression."""
-        tok = self.peek()
-        if tok is None:
-            raise ParseError("Unexpected end of expression")
-
-        if tok.type == 'LPAREN':
-            self.advance()
-            expr = self.parse_superposition()
-            self.expect('RPAREN')
-            return expr
-
-        if tok.type == 'WORD':
-            self.advance()
-            return Word(tok.value)
-
-        raise ParseError(f"Unexpected token: {tok}")
-
+# ── Public API ──
 
 class ParseError(Exception):
     """Error during expression parsing."""
@@ -257,14 +184,16 @@ def parse(text: str) -> Expr:
         parse("hot^0.7")        → Gradient(Word("hot"), 0.7)
         parse("(lov@fer)*joy")  → Interference(Projection(...), Word("joy"))
     """
-    tokens = tokenize(text)
-    if not tokens:
-        raise ParseError("Empty expression")
-    return Parser(tokens).parse()
+    try:
+        tree = parser.parse(text)
+        return _transformer.transform(tree)
+    except Exception as e:
+        raise ParseError(str(e)) from e
 
 
 def is_compositional(text: str) -> bool:
     """Check if text contains compositional operators."""
+    import re
     return bool(re.search(r'[@*^\\±:]', text)) or 'without' in text
 
 
@@ -275,7 +204,6 @@ def extract_base_words(expr: Expr) -> List[str]:
     elif isinstance(expr, Gradient):
         return extract_base_words(expr.operand)
     else:
-        # All binary operators have left/right
         return extract_base_words(expr.left) + extract_base_words(expr.right)
 
 
@@ -311,14 +239,24 @@ if __name__ == "__main__":
         "lov:war",
         "((lov@fer)*joy)^0.5",
         "sel@awa*con^0.8",
+        "(sel@awa)*con:tim",
+        "lov±fer\\sor",
     ]
 
+    print("Compositional Limn Parser (Lark LALR)")
+    print("=" * 60)
     for t in tests:
         try:
             expr = parse(t)
             words = extract_base_words(expr)
             desc = describe_expr(expr)
             print(f"  {t:30s} → {desc}")
-            print(f"  {'':30s}   base words: {words}")
+            print(f"  {'':30s}   words: {words}")
         except ParseError as e:
             print(f"  {t:30s} → ERROR: {e}")
+    print()
+
+    # Show parse tree for a complex expression
+    print("Parse tree for '((lov@fer)*joy)^0.5':")
+    tree = parser.parse("((lov@fer)*joy)^0.5")
+    print(tree.pretty())
