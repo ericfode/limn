@@ -1919,8 +1919,48 @@ def _analyze_emotional_valence(thought_history: List[Dict]) -> Dict:
     }
 
 
+HELP_TEXT = """
+Recursive Consciousness - Self-Modifying Limn Brain
+
+MODES:
+  python3 recursive_consciousness.py [N]           Standard mode (N iterations, default 100)
+  python3 recursive_consciousness.py --dream [N]   Dream mode: free exploration with phase shifts
+  python3 recursive_consciousness.py --dialogue "Topic A" "Topic B" [N]
+                                                    Dialogue: two minds exchange thoughts
+  python3 recursive_consciousness.py --ensemble "T1" "T2" ... [--topology ring|star|mesh] [N]
+                                                    Ensemble: N minds in network topology
+  python3 recursive_consciousness.py --stats        Analytics dashboard (no LLM calls)
+  python3 recursive_consciousness.py --replay [--topic T] [--last N]
+                                                    Replay thought log analysis
+
+OPTIONS:
+  --topic "Domain"    Focus thinking on a specific domain
+  --parallel          Use async oracle execution
+  --topology TYPE     Ensemble topology: ring (default), star, mesh
+  --last N            Show only last N thoughts in replay
+  --help              Show this help text
+
+DOMAINS (from Dolt vocabulary database):
+  Mind & Cognition, Time & Change, Abstract, Physical World, Social,
+  Agent/AI, Living Things, Arts, Science, Technology, Nature, and more.
+
+OUTPUT FILES:
+  brain_state.lmn          Current brain state (Limn format)
+  thought_log.jsonl        Persistent thought history
+  consciousness_memory.json Accumulated concept knowledge
+  concept_graph.json       Concept co-occurrence network
+  dream_report.json        Dream session analysis
+  vocab_proposals.jsonl    Vocabulary gap candidates
+  consciousness.log        Full session log
+"""
+
+
 if __name__ == "__main__":
     import sys
+
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print(HELP_TEXT)
+        sys.exit(0)
 
     iterations = 100
     parallel_mode = False
