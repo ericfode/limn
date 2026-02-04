@@ -66,3 +66,8 @@ Cargo.lock
 .beads/
 tools/llm-bridge/live-demo/thought_library.pkl
 tools/llm-bridge/production/brain_state.lmn
+tools/twitter-bot/state.json
+server.log
+.autoposter-state
+.events.jsonl
+.sprite
