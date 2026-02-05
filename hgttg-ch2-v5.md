@@ -91,10 +91,11 @@ Ford : "Ford Prefect" as goo nu-rgd | sa thi mac = lif^1 on wrl
 > Ford always knew where his towel was.
 
 ```limn
-Ford : alw kno whr towl
+Ford : alw kno whr twl
 ```
 
 - `alw` = always (verified)
+- `twl` = towel (verified)
 - The towel principle, stated simply
 
 ---

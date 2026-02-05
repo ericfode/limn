@@ -62,9 +62,10 @@ Arthur : sad^0.95 | al kno → vod^1
 > Ford handed Arthur a towel. "You should always know where your towel is."
 
 ```limn
-Ford giv Arthur towl | alw kno whr towl
+Ford giv Arthur twl | alw kno whr twl
 ```
 
+- `twl` = towel (verified in DB)
 - The towel principle. One of the most database-correct sentences in the whole translation.
 
 ---
