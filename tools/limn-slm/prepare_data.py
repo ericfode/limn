@@ -328,6 +328,66 @@ def generate_vocab_examples(words):
                 ]
             })
 
+        # Limn-format prompts (v2: all-Limn interface)
+        examples.append({
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"mea: {word}"},
+                {"role": "assistant", "content": f"{word} = {meaning}"}
+            ]
+        })
+
+    return examples
+
+
+def load_compositional_expressions():
+    """Load validated compositional expressions from dolt database."""
+    expressions = []
+    result = subprocess.run(
+        ["dolt", "sql", "-q",
+         "SELECT expression, operator, left_operand, right_operand, meaning, notes "
+         "FROM compositional_expressions ORDER BY expression",
+         "-r", "csv"],
+        capture_output=True, text=True, cwd=str(VOCAB_DIR)
+    )
+    if result.returncode == 0 and result.stdout.strip():
+        reader = csv.DictReader(result.stdout.strip().split("\n"))
+        for row in reader:
+            expressions.append(row)
+    return expressions
+
+
+def generate_expression_examples(expressions):
+    """Generate training examples from compositional expressions in Dolt.
+
+    Uses Limn-format prompts: mea: X instead of 'What does X mean?'
+    """
+    examples = []
+    for expr in expressions:
+        expression = expr["expression"]
+        meaning = expr["meaning"]
+        operator = expr["operator"]
+        notes = expr.get("notes", "")
+
+        # Limn-format prompt: mea: <expression>
+        examples.append({
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"mea: {expression}"},
+                {"role": "assistant", "content": f"{expression} = {meaning}"}
+            ]
+        })
+
+        # Reverse: given meaning, produce expression
+        if meaning:
+            examples.append({
+                "messages": [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": f"exp lim: {meaning}"},
+                    {"role": "assistant", "content": expression}
+                ]
+            })
+
     return examples
 
 
@@ -336,16 +396,16 @@ def generate_operator_examples():
     # These come from the bootstrap spec
     operator_data = [
         # Projection @
-        ("lov@fer", "fear-component of love", "anxiety of loss", "@", "projection"),
+        ("lov@fea", "fear-component of love", "anxiety of loss", "@", "projection"),
         ("joy@sad", "sadness within joy", "bittersweet", "@", "projection"),
-        ("cur@fer", "courage's relationship to fear", "facing fear", "@", "projection"),
-        ("ang@fer", "fear beneath anger", "defensive reaction", "@", "projection"),
-        ("hop@dbt", "doubt-component of hope", "uncertainty in hoping", "@", "projection"),
-        ("trs@los", "loss-component of trust", "vulnerability of trusting", "@", "projection"),
+        ("cur@fea", "courage's relationship to fear", "facing fear", "@", "projection"),
+        ("ang@fea", "fear beneath anger", "defensive reaction", "@", "projection"),
+        ("hop@dub", "doubt-component of hope", "uncertainty in hoping", "@", "projection"),
+        ("fth@los", "loss-component of faith", "vulnerability of trusting", "@", "projection"),
         # Interference *
         ("sol*liq", "emergent blend of solid and liquid", "gel/glass", "*", "interference"),
         ("joy*sad", "both joy and sadness interfering", "bittersweet", "*", "interference"),
-        ("lov*fer", "love and fear together", "passion/obsession", "*", "interference"),
+        ("lov*fea", "love and fear together", "passion/obsession", "*", "interference"),
         ("hot*col", "temperature interference", "lukewarm/thermal shock", "*", "interference"),
         ("new*old", "liminal between new and old", "transitional", "*", "interference"),
         ("win*los", "winning and losing interfering", "pyrrhic victory", "*", "interference"),
@@ -361,7 +421,7 @@ def generate_operator_examples():
         ("sad^0.4", "moderately sad", "melancholy", "^", "gradient"),
         ("tru^0.9", "very high trust", "nearly absolute trust", "^", "gradient"),
         # Subtraction \
-        ("lov\\fer", "love without fear component", "secure love", "\\", "subtraction"),
+        ("lov\\fea", "love without fear component", "secure love", "\\", "subtraction"),
         ("joy\\sad", "joy without any sadness", "pure joy", "\\", "subtraction"),
         ("dar\\lig", "darkness without light", "void", "\\", "subtraction"),
         # Superposition ±
@@ -371,8 +431,8 @@ def generate_operator_examples():
         ("kno±unk", "knowing and not-knowing", "paradox", "±", "superposition"),
         ("pre±abs", "both present and absent", "liminal", "±", "superposition"),
         # Conditional :
-        ("lov:trs", "love given trust exists", "trusting love", ":", "conditional"),
-        ("fer:dan", "fear when danger is present", "appropriate fear", ":", "conditional"),
+        ("lov:fth", "love given faith exists", "trusting love", ":", "conditional"),
+        ("fea:dan", "fear when danger is present", "appropriate fear", ":", "conditional"),
         ("joy:tim", "joy experienced over time", "nostalgia", ":", "conditional"),
         ("kno:exp", "knowledge through experience", "wisdom", ":", "conditional"),
         ("hop:los", "hope in context of loss", "resilient hope", ":", "conditional"),
@@ -412,12 +472,12 @@ def generate_operator_examples():
 
     # Operator explanation examples
     for op, name, desc, ex in [
-        ("@", "projection", "Extract B-component of A. Non-commutative: A@B ≠ B@A", "lov@fer = fear in love"),
+        ("@", "projection", "Extract B-component of A. Non-commutative: A@B ≠ B@A", "lov@fea = fear in love"),
         ("*", "interference", "Emergent meaning from A and B. Commutative: A*B = B*A", "sol*liq = gel"),
         ("^", "gradient", "Intensity from 0.0 to 1.0. Continuous scale.", "big^0.7 = fairly big"),
-        ("\\", "subtraction", "A with B-component removed. Reveals essence.", "lov\\fer = love without fear"),
+        ("\\", "subtraction", "A with B-component removed. Reveals essence.", "lov\\fea = love without fear"),
         ("±", "superposition", "Quantum both/and. Both states unresolved.", "yes±no = undecided"),
-        (":", "conditional", "A in context of B. Contextualizes meaning.", "lov:trs = love given trust"),
+        (":", "conditional", "A in context of B. Contextualizes meaning.", "lov:fth = love given faith"),
     ]:
         examples.append({
             "messages": [
@@ -469,9 +529,9 @@ def generate_grammar_examples():
 
     grammar_qa = [
         ("What is the word format in Limn?",
-         "Core Limn words use CVC (Consonant-Vowel-Consonant) format — exactly 3 letters. Examples: lov (love), fer (fear), sol (solid), liq (liquid). The core vocabulary has 1,076 CVC words."),
+         "Core Limn words use CVC (Consonant-Vowel-Consonant) format — exactly 3 letters. Examples: lov (love), fea (fear), sol (stubborn), liq (flexible). The core vocabulary has 2,005 CVC words."),
         ("How does word order work in Limn?",
-         "Limn is order-free within constraint groups. lov fer = fer lov. Position carries no semantic weight. Use | to separate constraint groups and → for temporal/causal sequence."),
+         "Limn is order-free within constraint groups. lov fea = fea lov. Position carries no semantic weight. Use | to separate constraint groups and → for temporal/causal sequence."),
         ("What does | mean in Limn?",
          "The pipe | separates constraint groups. Each group is a set of words that constrain meaning together. Example: nox dee | sta bri = night deep | stars bright — two separate but related observations."),
         ("What does → mean in Limn?",
@@ -481,7 +541,7 @@ def generate_grammar_examples():
         ("What is the operator precedence?",
          "Precedence from highest to lowest: ^ (gradient) > @ (projection) > * (interference) > \\ (subtraction) > : (conditional) > ± (superposition)."),
         ("How does Limn achieve expressiveness with only 1,076 words?",
-         "Through compositional operators. 6 operators (@, *, ^, \\, ±, :) enable 30,000+ expressions from the core vocabulary — a 27.9x expressiveness multiplier. Composition handles concepts beyond the core 1,000."),
+         "Through compositional operators. 6 operators (@, *, ^, \\, ±, :) enable 30,000+ expressions from the core vocabulary. Composition handles concepts beyond the base words."),
         ("What makes Limn different from English abbreviations?",
          "Limn words are NOT English abbreviations. They are semantic atoms from Latin, Greek, and phonaesthetic roots. 'lis' means listen (not list), 'des' means desire (not describe), 'res' means rest (not result). Always validate with vocab.sh."),
     ]
@@ -600,6 +660,10 @@ def main():
             print(f"    {f.name}: {len(pairs)} pairs")
     print(f"  {len(all_pairs)} total pairs")
 
+    print("Loading compositional expressions...")
+    expressions = load_compositional_expressions()
+    print(f"  {len(expressions)} expressions loaded")
+
     print("\nGenerating training examples...")
 
     all_examples = []
@@ -611,6 +675,10 @@ def main():
     op_ex = generate_operator_examples()
     print(f"  Operators: {len(op_ex)} examples")
     all_examples.extend(op_ex)
+
+    expr_ex = generate_expression_examples(expressions)
+    print(f"  Expressions (Dolt): {len(expr_ex)} examples")
+    all_examples.extend(expr_ex)
 
     trans_ex = generate_translation_examples(all_pairs)
     print(f"  Translations: {len(trans_ex)} examples")
