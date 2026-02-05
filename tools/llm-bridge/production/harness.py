@@ -49,6 +49,13 @@ try:
 except ImportError:
     PLUGIN_SUPPORT = False
 
+# SLM Backend for local Limn model (Mad Monk)
+try:
+    from slm_backend import exec_semantic_slm, get_slm_backend
+    SLM_SUPPORT = True
+except ImportError:
+    SLM_SUPPORT = False
+
 
 class OracleType(Enum):
     """All supported oracle types."""
@@ -738,9 +745,26 @@ class ProductionHarness:
     # =========================================================================
 
     def _exec_semantic(self, params: Dict) -> str:
-        """Semantic oracle - Limn-native consciousness (~ operator)."""
+        """Semantic oracle - Limn-native consciousness (~ operator).
+
+        Uses local SLM (Mad Monk) if available, falls back to Claude CLI.
+        Set USE_SLM=1 env var to prefer local SLM.
+        """
         prompt = params["prompt"]
         context = params.get("context", "general")
+
+        # Try local SLM first if available and enabled
+        use_slm = os.environ.get("USE_SLM", "0") == "1"
+        if use_slm and SLM_SUPPORT:
+            try:
+                slm = get_slm_backend()
+                if slm.is_available():
+                    response = exec_semantic_slm(params)
+                    if not response.startswith("[ERROR"):
+                        return response
+                    # Fall through to Claude if SLM errors
+            except Exception as e:
+                pass  # Fall through to Claude
 
         # Load real bootstrap vocabulary (v3 natural extensions)
         bootstrap_path = Path(__file__).parent.parent.parent.parent / "docs" / "spec" / "bootstrap-v3-natural.md"
