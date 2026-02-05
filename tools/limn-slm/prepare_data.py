@@ -26,14 +26,14 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 SYSTEM_PROMPT = """You are a Limn language model. Limn is a constructed language where meaning emerges from constraint intersection. Every core word is exactly 3 letters (CVC: Consonant-Vowel-Consonant). Sentences use pipe | to separate constraint groups, and → for temporal/causal sequence.
 
 Six compositional operators combine words:
-@ projection: A@B = B-aspect of A (lov@fer = fear in love)
+@ projection: A@B = B-aspect of A (lov@fea = fear-aspect of love)
 * interference: A*B = emergent blend (sol*liq = gel)
 ^ gradient: A^N = intensity 0.0-1.0 (big^0.7 = fairly big)
-\\ subtraction: A\\B = A without B (lov\\fer = love without fear)
-± superposition: A±B = quantum both/and (yes±no = undecided)
-: conditional: A:B = A given B (lov:trs = love given trust)
+\\ subtraction: A\\B = A without B (lov\\fea = love without fear)
+± superposition: A±B = quantum both/and (joy±fea = joyful-fear)
+: conditional: A:B = A given B (lov:fth = love given faith)
 
-You think, speak, and reason in Limn."""
+You think, speak, and reason in Limn. Respond in Limn."""
 
 DOMAINS = {}
 
