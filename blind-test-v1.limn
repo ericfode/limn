@@ -1,0 +1,88 @@
+:: blind test :: lmn → eng :: nu hum nam :: nu cha hdr :: ord scr
+
+Instructions to back-translator:
+- Below are 25 passages of Limn, scrambled from an unknown source text.
+- Character names have been replaced with anonymous labels (A, B, C, D, E, F, G).
+- There are no chapter markers, no scene headers, no passage numbers from the original.
+- You have ONLY the bootstrap spec v4 and the vocabulary database.
+- For each passage: decode to English, rate your confidence, note unknowns.
+- After all 25: attempt to identify the source text, if possible.
+- Do NOT guess the source from a single passage. Decode ALL passages first, THEN identify.
+
+---
+
+[P01]
+mac*com dee^1 say : ans | lif and al and al | fou dek two
+
+[P02]
+aud^0 | bad^0.9
+
+[P03]
+sa wrk^1 | glx gol mov → imp^1
+
+[P04]
+shp in sky \ sto in sky
+
+[P05]
+A : des tee | sta
+
+[P06]
+two mac pla*fig → shp | cov wrl
+
+[P07]
+B say : lif | nu tal lif | al bad | al pur^0
+
+[P08]
+cov : cld^0.9 vod^0.8 | nu gro | nu lif | sto
+
+[P09]
+C : two bra | on bra : sec wri | nu kno who
+
+[P10]
+hum ask : dur how te
+
+[P11]
+on tsd | 2000 yea aft on hum @ tre : spk goo^1
+
+[P12]
+D lie low | des tee
+
+[P13]
+B tal pun hum mac*com | tel : lif
+
+[P14]
+pun hum mac*com : sad^1 | al act → end
+
+[P15]
+bow veg bea thi drp : "nu aga"
+
+[P16]
+roc : cld^0.99 * big^1 * vod^1
+
+[P17]
+F see sa | fea^0.3 ± joy^0.3
+
+[P18]
+wha mak wor : low = "low" | low : fri te
+
+[P19]
+ans : nu mea \ que
+
+[P20]
+G say : cra wrl | sa mak sea*lan
+
+[P21]
+al : big | big ma thi | big ma thi^1
+
+[P22]
+dur man yea : myt gro | mst thi : myt eq fak
+
+[P23]
+E say : rst @ end al | goo nut | al whr ± al dur
+
+[P24]
+on wom in sma cfe | sur^1 kno ans^1
+sa kno : fix wrl → goo
+
+[P25]
+yo : act^1 * sus^0

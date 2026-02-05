@@ -1,0 +1,106 @@
+:: HGttG ch4 :: on vog shp :: tra → lmn v5
+
+:: wke
+
+[4.1]
+Arthur wke | dar^0.8 sma gap | bad^0.9
+
+[4.2]
+Arthur ask : whr te
+
+[4.3]
+Ford say : on vog shp | thu*com wrk
+
+[4.4]
+Arthur ask : wrl te
+Ford say : dem^1
+
+[4.5]
+Arthur : sad^0.95 | al kno → vod^1
+
+[4.6]
+Ford giv Arthur towl | alw kno whr towl
+
+:: gui
+
+[4.7]
+Ford sho Arthur gui glx | act
+
+[4.8]
+gui : wrl | "bad^0.1"
+
+[4.9]
+Arthur say : al te | "bad^0.1" te
+
+[4.10]
+Ford say : sha^0.3 | lon → sho
+
+:: bab
+
+[4.11]
+Ford say we : bab in ear
+
+[4.12]
+Arthur : sur^0.8 | te
+
+[4.13]
+Ford say we : act | bab : al aud → und^1
+
+[4.14]
+Arthur : des^0.2 | bab → ear
+
+[4.15]
+sur^1 : und^1 | vog ann aud
+
+:: vog poe
+
+[4.16]
+vog Jeltz : des poe | bad ide
+
+[4.17]
+vog poe : bad^0.97 | 3 bad in al
+
+[4.18]
+vog poe : aud
+
+[4.19]
+Arthur bra → liq : vog poe
+Ford : sad*ang aud
+
+[4.20]
+vog ask : poe goo te
+
+[4.21]
+Ford try^0.99 : say goo^0.3
+
+[4.22]
+Arthur say : ex met cur^0.4
+
+[4.23]
+ans : bad^1
+
+:: out
+
+[4.24]
+vog say we : out
+
+[4.25]
+doo opn | roc : big^1 * cld^0.99 * vod^1
+
+[4.26]
+Arthur thi : yo end^1
+
+[4.27]
+Ford thi : shp tak : sus^0.001
+
+[4.28]
+Arthur and Ford → out doo → roc
+
+[4.29]
+lif dur 30 mom | sus mi
+
+[4.30]
+@ 29 mom : act^1*sus^0
+
+[4.31]
+shp tak sa | "Heart of Gold" | mac : sus^0 → act^1
