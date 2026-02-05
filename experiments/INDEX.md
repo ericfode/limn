@@ -1,8 +1,8 @@
 # Experiments Index
 
 **Maintained by:** Kira (Student/Archivist)
-**Last Updated:** 2026-02-02
-**Total Experiments:** 32+ documented
+**Last Updated:** 2026-02-04
+**Total Experiments:** 33+ documented
 
 ---
 
@@ -138,6 +138,23 @@ This directory contains all Limn language experiments, from initial philosophy t
   - Complex workflow orchestration
   - Meta-level operations
   - Edge case handling
+
+---
+
+## Phase 3: Practical Applications
+
+### Prompt Compression
+
+| File | Focus | Status |
+|------|-------|--------|
+| `limn-prompt-compression/README.md` | Compressing verbose English prompts into Limn v4 for agent instructions | Complete |
+
+**Key findings:**
+- 3.5-4.2x compression ratio (English words → Limn words)
+- 100% task completion rate from Limn-prompted agents
+- v4 operators (`^`, `*`, `:`) correctly decoded by fresh agents
+- Limn agents matched or outperformed English agents in 3/3 experiments
+- CRITICAL: Spec/database vocabulary desynchronization discovered (5+ words)
 
 ---
 
