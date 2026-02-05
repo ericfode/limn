@@ -261,10 +261,10 @@ Arthur : anx | plnt = vod^1 now
 > What Arthur really wanted was a cup of tea.
 
 ```limn
-Arthur des : cup [TEA]
+Arthur des : cup tee
 ```
 
-- **Gap:** No word for "tea" found. Using placeholder.
+- `tee` = tea (verified — added by linguist)
 - `des` = desire (verified!)
 
 ### [5.24] The Nutrimatic
@@ -272,11 +272,11 @@ Arthur des : cup [TEA]
 > The ship's Nutrimatic Drinks Dispenser produced a liquid that was almost, but not quite, entirely unlike tea.
 
 ```limn
-shp mac drk : [TEA]^0.02 ± nu [TEA]
+shp mac drk : tee^0.02 ± nu tee
 ```
 
-- `[TEA]^0.02` = tea at 2% = almost entirely unlike tea
-- `± nu [TEA]` = superposed with not-tea = quantum barely-tea state
+- `tee^0.02` = tea at 2% = almost entirely unlike tea
+- `± nu tee` = superposed with not-tea = quantum barely-tea state
 - The most Adams-appropriate use of superposition in the translation
 
 ### [5.25] Arthur's Review
@@ -315,11 +315,11 @@ gui say : nu pani^1
 ---
 
 ## Vocabulary Used: 48 verified words
-## Gaps: [TEA], [COLD] (from Ch 4)
+## Gaps: None (all resolved)
 ## Key compositions:
 - Robot = `mac*hum` (machine-human interference)
 - Improbability Drive = `mac : sus^0 → act^1`
-- "Almost entirely unlike tea" = `[TEA]^0.02 ± nu [TEA]`
+- "Almost entirely unlike tea" = `tee^0.02 ± nu tee`
 - Relative = `fri@bir` (friend-component of birth)
 - Profoundly depressed = `joy^0^0.99` (zero-joy at max intensity)
 

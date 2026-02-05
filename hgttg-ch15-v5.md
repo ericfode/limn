@@ -54,7 +54,7 @@ Marvin : mac*hum | bra big as plnt | fee^1 | sad^0.99
 > Arthur Dent. Englishman. His planet was demolished on a Thursday. He still wants tea.
 
 ```limn
-Arthur : hum plnt dem^1 | [THURSDAY] | des [TEA] sta
+Arthur : hum plnt dem^1 | tsd | des tee sta
 ```
 
 ---
@@ -148,7 +148,7 @@ nu pani^1
 ---
 
 ## Vocabulary Used: 38 verified words
-## Gaps: [TEA], [COLD], [THURSDAY]
+## Gaps: None (all resolved)
 ## Full translation: HGttG Book One complete in 15 chapters
 
 ## Running Totals (all chapters):
@@ -156,8 +156,8 @@ nu pani^1
 - **Ch 6-10:** Magrathea arc — 86 passages
 - **Ch 11-15:** Resolution — 63 passages
 - **Total passages:** 317
-- **Unique verified words:** ~120
-- **Remaining gaps:** [TEA] [COLD] [THURSDAY] [POPULAR] [CHEAP] [CAFE]
+- **Unique verified words:** ~126
+- **Remaining gaps:** None
 - **Key compositions:** 45+
 
 ---

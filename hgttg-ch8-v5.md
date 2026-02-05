@@ -200,7 +200,7 @@ plnt bel | shp drp → cov
 ---
 
 ## Vocabulary Used: 40 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Whale = `wha` (verified — not a composition!)
 - Petunias = `veg bea` (plant beauty = flower)

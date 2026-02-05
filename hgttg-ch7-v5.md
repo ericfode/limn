@@ -12,12 +12,12 @@
 > A planet appeared on the screen. Cold. Grey. Dead-looking.
 
 ```limn
-plnt apr @ mac*com | [COLD]^0.9 dar^0.5 | lif^0
+plnt apr @ mac*com | cld^0.9 dar^0.5 | lif^0
 ```
 
+- `cld` = cold (verified — existed in DB)
 - `dar^0.5` = dark at 50% = grey
 - `lif^0` = life at zero = dead-looking
-- **Gap:** [COLD] still unresolved
 
 ### [7.2] Ford Concedes
 
@@ -40,7 +40,7 @@ Zaphod : joy^0.8 | two hea joy^0.8
 > Arthur had no idea what was happening. He wanted tea.
 
 ```limn
-Arthur : kno^0 | des [TEA]
+Arthur : kno^0 | des tee
 ```
 
 ---
@@ -164,7 +164,7 @@ mac sus^0→act^1 : act | al → odd^1
 ---
 
 ## Vocabulary Used: 38 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Recorded message = `pas wri aud` (past written hearing)
 - Nuclear missile = `mac pla*fig` (machine plasma-fight)

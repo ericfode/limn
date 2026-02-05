@@ -195,7 +195,7 @@ Marvin say : fir goo tal | end bad
 ---
 
 ## Vocabulary Used: 40 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Life support = `lif pro` (life protecting)
 - Suicide = `end sel` (end self)

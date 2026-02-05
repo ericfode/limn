@@ -158,13 +158,13 @@ Ford : nu joy
 > Arthur was lying on the floor wishing he had some tea.
 
 ```limn
-Arthur lie low | des [TEA]
+Arthur lie low | des tee
 ```
 
 ---
 
 ## Vocabulary Used: 38 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Police = `pun hum` (punishing humans)
 - Armed = `mac fig` (fighting machines = weapons)

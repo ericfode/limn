@@ -88,10 +88,10 @@ mac*thu : nu fix
 > "One Thursday, nearly two thousand years after one man had been nailed to a tree for saying how great it would be to be nice to people for a change..."
 
 ```limn
-on [THURSDAY] | 2000 yea aft on hum @ tre : spk goo^1
+on tsd | 2000 yea aft on hum @ tre : spk goo^1
 ```
 
-- **Gap:** `thu` = thumb, not Thursday. Using `[THURSDAY]` placeholder
+- `tsd` = Thursday (verified — added by linguist)
 - `yea` = year (verified — added by linguist)
 - `on hum @ tre` = one human at tree
 - `spk goo^1` = speaking maximum good = "be nice"
@@ -101,7 +101,7 @@ on [THURSDAY] | 2000 yea aft on hum @ tre : spk goo^1
 > "...a girl sitting on her own in a small cafe in Rickmansworth suddenly realized what it was that had been going wrong all this time, and she finally knew how the world could be made a good place."
 
 ```limn
-on wom in sma [CAFE] Rickmansworth | sur^1 kno ans^1
+on wom in sma cfe Rickmansworth | sur^1 kno ans^1
 sa kno : fix plnt → goo
 ```
 
@@ -192,10 +192,10 @@ boo : odd^0.99*goo^0.99
 > "More popular than the Celestial Home Care Omnibus, better selling than Fifty-three More Things to Do in Zero Gravity..."
 
 ```limn
-ma [POPULAR] : al boo
+ma ppf : al boo
 ```
 
-- **Gap:** No "popular" word. Using `[POPULAR]` placeholder
+- `ppf` = popular (verified — added by linguist)
 - `ma` = greater than (operator)
 - Compressing the comparison list — Adams' specific titles don't translate
 
@@ -204,11 +204,11 @@ ma [POPULAR] : al boo
 > "First, it is slightly cheaper; and second, it has the words DON'T PANIC inscribed in large friendly letters on its cover."
 
 ```limn
-on : [CHEAP]^0.9
+on : bgn^0.9
 2 : cov say "nu pani^1" @ big*fri
 ```
 
-- **Gap:** No "cheap" word. `[CHEAP]` placeholder
+- `bgn` = cheap/bargain (verified — added by linguist)
 - `cov say` = cover says (verified: cov=cover/surface)
 - `"nu pani^1"` = don't panic at maximum
 - `big*fri` = big interfered with friendly = large friendly (describing the text)
@@ -279,10 +279,10 @@ on hum lie fro bul
 > "This must be Thursday. I never could get the hang of Thursdays."
 
 ```limn
-yo : [THURSDAY] | und^0 [THURSDAY] al
+yo : tsd | und^0 tsd al
 ```
 
-- **Gap:** `thu` = thumb, not Thursday. Using placeholder.
+- `tsd` = Thursday (verified — added by linguist)
 - `und^0` = understanding at zero = never could understand
 
 ### [22] Yellow Bulldozer
@@ -624,10 +624,10 @@ vog say we : Arthur and Ford → out | roc gap
 > Space stretched before them. Cold. Vast. Empty.
 
 ```limn
-roc : [COLD]^0.99 * big^1 * vod^1
+roc : cld^0.99 * big^1 * vod^1
 ```
 
-- **Gap:** `col` = distant/aloof, not cold temperature. Using `[COLD]` placeholder.
+- `cld` = cold (verified — existed in DB, previously missed)
 - `big^1` = maximum vast
 - `vod^1` = maximum void
 
@@ -648,12 +648,12 @@ yo : act^1 * sus^0
 ## Vocabulary Status
 
 ### Verified words used: 87
-### Gaps marked with [PLACEHOLDER]: 4
-- `[THURSDAY]` — thu=thumb collision
-- `[POPULAR]` — no word
-- `[CHEAP]` — no word
-- `[COLD]` — col=aloof collision
-### Resolved gaps: `[YEAR]` → `yea` (linguist addition)
+### All gaps resolved
+- `tsd` = Thursday (linguist addition)
+- `ppf` = popular (linguist addition)
+- `bgn` = cheap/bargain (linguist addition)
+- `cld` = cold (existed in DB, previously missed)
+- `yea` = year (linguist addition)
 
 ### Composition successes (no new words needed):
 - pub = `drk hom` (drink home)

@@ -6,7 +6,7 @@
 "Heart of Gold" lan cov Magrathea
 
 [9.2]
-cov : [COLD]^0.9 vod^0.8 | nu gro | nu lif | sto
+cov : cld^0.9 vod^0.8 | nu gro | nu lif | sto
 
 [9.3]
 nyt drp @ Magrathea | sun apr
@@ -21,7 +21,7 @@ Marvin req : sta | pro shp
 Marvin say : sit | wai | sad^0.99
 
 [9.7]
-out : [COLD]^0.99 dar^0.9 | anc pek acr al
+out : cld^0.99 dar^0.9 | anc pek acr al
 
 :: Slartibartfast
 

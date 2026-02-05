@@ -254,7 +254,7 @@ Slartibartfast say : sea val sno : goo | pri^0.8
 ---
 
 ## Vocabulary Used: 46 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Deep Thought = `mac*com dee^1` (deep-max computing machine)
 - 42 = `fou dek two` (four ten two — Limn number words)

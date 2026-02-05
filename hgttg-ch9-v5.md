@@ -23,7 +23,7 @@
 > The surface was cold and barren. Nothing grew. Nothing lived. Dust and rock.
 
 ```limn
-cov : [COLD]^0.9 vod^0.8 | nu gro | nu lif | sto
+cov : cld^0.9 vod^0.8 | nu gro | nu lif | sto
 ```
 
 - `vod^0.8` = void at 80% = barren
@@ -72,7 +72,7 @@ Marvin say : sit | wai | sad^0.99
 > Outside, it was bitterly cold and dark. The ancient mountains stretched in every direction.
 
 ```limn
-out : [COLD]^0.99 dar^0.9 | anc pek acr al
+out : cld^0.99 dar^0.9 | anc pek acr al
 ```
 
 - `pek` = mountain/peak (verified)
@@ -224,7 +224,7 @@ Slartibartfast lea → dee^0.9 | des sho
 ---
 
 ## Vocabulary Used: 44 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Underground = `bel cov` (below surface)
 - Coastline = `sea*lan` (sea-land interference)

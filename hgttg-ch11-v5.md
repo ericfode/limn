@@ -134,7 +134,7 @@ Ford say : mov awa now we
 ---
 
 ## Vocabulary Used: 35 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Mouse = `sma org` (small organism)
 - Pan-dimensional = `dee^1` (deep at maximum)

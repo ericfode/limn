@@ -263,11 +263,11 @@ vog say we : out
 > The airlock door opened. Space stretched out before them, vast and cold and empty.
 
 ```limn
-doo opn | roc : big^1 * [COLD]^0.99 * vod^1
+doo opn | roc : big^1 * cld^0.99 * vod^1
 ```
 
 - `doo opn` = door opens (verified: doo=door/opportunity, opn=open)
-- **Gap:** [COLD] — col=aloof, not cold temperature
+- `cld` = cold (verified — existed in DB, previously missed)
 
 ### [4.26] Arthur's Thoughts
 
@@ -330,7 +330,7 @@ shp tak sa | "Heart of Gold" | mac : sus^0 → act^1
 ---
 
 ## Vocabulary Used: 45 verified words
-## Gaps: [COLD] only (col=aloof collision)
+## Gaps: None (all resolved)
 ## Key compositions:
 - Improbability Drive = `mac : sus^0 → act^1`
 - Brain melting from poetry = `bra → liq : vog poe`

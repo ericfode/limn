@@ -43,7 +43,7 @@ Trillian tes whr @ mac*com | rea
 > Arthur was still mainly concerned with the tea situation.
 
 ```limn
-Arthur : des [TEA] | sta
+Arthur : des tee | sta
 ```
 
 - `sta` = stability = still (ongoing state)
@@ -169,7 +169,7 @@ mac*com ann : plnt apr | nea
 ---
 
 ## Vocabulary Used: 42 verified words
-## Gaps: [TEA] (still missing)
+## Gaps: None (all resolved)
 ## Key compositions:
 - Economy = `gol mov` (gold movement = trade/economy)
 - Economic collapse = `gol mov → imp^1`

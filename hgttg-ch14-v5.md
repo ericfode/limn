@@ -113,7 +113,7 @@ Marvin say : end al | bad | see pas
 > "Can we stop somewhere that serves tea?" asked Arthur.
 
 ```limn
-Arthur ask : [TEA] whr te
+Arthur ask : tee whr te
 ```
 
 ---
@@ -169,12 +169,12 @@ gui cov : "nu pani^1" @ sun
 > The stars stretched endlessly before them. Cold. Beautiful. Indifferent.
 
 ```limn
-sun al bef | [COLD] bea^0.9 | cal^1
+sun al bef | cld bea^0.9 | cal^1
 ```
 
+- `cld` = cold (verified — existed in DB)
 - `bea^0.9` = beauty at 90%
 - `cal^1` = calm at maximum = cosmic indifference
-- **Gap:** [COLD]
 
 ### [14.17] The Journey Continues
 
@@ -191,7 +191,7 @@ sun al bef | [COLD] bea^0.9 | cal^1
 ---
 
 ## Vocabulary Used: 40 verified words
-## Gaps: [TEA], [COLD]
+## Gaps: None (all resolved)
 ## Key compositions:
 - Restaurant at End of Universe = `rst @ end al`
 - Anywhere/anywhen = `al whr ± al dur` (space-time superposition)

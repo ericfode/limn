@@ -180,7 +180,7 @@ Creates new meanings from overlapping fields:
 
 ### Superposition (`±`) — Quantum States
 - `hav±hav^0` = has/had (present-past paradox)
-- `[TEA]^0.02 ± nu [TEA]` = "almost, but not quite, entirely unlike tea"
+- `tee^0.02 ± nu tee` = "almost, but not quite, entirely unlike tea"
 - `al whr ± al dur` = anywhere or anywhen (the Restaurant)
 - `fea^0.3 ± joy^0.3` = relief mixed with concern
 
@@ -214,7 +214,7 @@ Recurring patterns build meaning across chapters:
 
 ### 3. Character Voice Through Gradient
 Each character has a gradient signature:
-- **Arthur:** `des [TEA]` (constant), `kno^0` (confused), `sur^0.95` (overwhelmed)
+- **Arthur:** `des tee` (constant), `kno^0` (confused), `sur^0.95` (overwhelmed)
 - **Ford:** `frs^0.9` (frustrated), `rea^1` (certain), `sad^0.3@fri` (concerned)
 - **Zaphod:** `joy^0.9` (delighted by danger), `kno^1` (confident), `sec` (secretive)
 - **Marvin:** `sad^0.99` (universal), `joy^0^0.99` (profound), `pur^0` (cosmic)
@@ -228,18 +228,20 @@ Adams' quoted text uses Limn quotes: `"bad^0.1"`, `"nu pani^1"`, `"Heart of Gold
 
 ---
 
-## 6. Remaining Gaps
+## 6. Resolved Gaps
 
-| Placeholder | Reason | Occurrences | Severity |
-|-------------|--------|-------------|----------|
-| `[TEA]` | No word for tea | Ch 5, 6, 7, 11, 12, 14, 15 | HIGH — Arthur's identity |
-| `[COLD]` | `col` = aloof, not temperature | Ch 1, 4, 7, 9, 14 | MEDIUM |
-| `[THURSDAY]` | `thu` = thumb | Ch 1, 15 | LOW |
-| `[POPULAR]` | No word | Ch 1 only | LOW |
-| `[CHEAP]` | No word | Ch 1 only | LOW |
-| `[CAFE]` | No word | Ch 1 only | LOW |
+All gaps resolved by linguist (Quinn) on 2026-02-04:
 
-Mailed to linguist (Quinn) for resolution.
+| Word | Meaning | Replaced | Chapters |
+|------|---------|----------|----------|
+| `tee` | tea, hot leaf drink | `[TEA]` | Ch 5, 6, 7, 12, 14, 15 |
+| `cld` | cold, low temperature | `[COLD]` | Ch 1, 4, 7, 9, 14 |
+| `tsd` | Thursday, fourth weekday | `[THURSDAY]` | Ch 1, 15 |
+| `ppf` | popular, well-liked | `[POPULAR]` | Ch 1 |
+| `bgn` | cheap, bargain | `[CHEAP]` | Ch 1 |
+| `cfe` | cafe, coffee house | `[CAFE]` | Ch 1 |
+
+Note: `cld` already existed in DB — was missed during initial vocabulary audit (searched for `col` instead).
 
 ---
 
