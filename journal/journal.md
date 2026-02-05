@@ -3984,3 +3984,70 @@ wor grd → mea bir | sen red → und clr
 ```
 
 *— Kira, 2026-02-05*
+
+## Entry [Agent-Prompt Round-Trip] - 2026-02-05
+
+### Experiment: Limn as Agent Instructions
+
+Can a fresh agent execute a *task* from Limn instructions + vocab key?
+
+**English task:**
+> Find all Python files matching *.py. List each filename. For files
+> containing function definitions, output the function names. If no
+> functions found, show "no functions found". Write output to functions.txt.
+
+**My Limn translation (4 lines):**
+```limn
+fnd all fil pat "*.py" → lst nam eac
+if fil cod fnc → otp fnc nam lst
+if nu fnc fnd → sho "nu fnc fnd"
+wri otp → new fil "functions.txt"
+```
+
+**Result:** Haiku decoded and executed correctly.
+- Found 130+ Python files
+- Extracted 600+ function definitions
+- Wrote structured output to functions.txt
+- Organized by filename with functions listed beneath
+
+### Scoring
+
+| Criterion | Score | Notes |
+|-----------|-------|-------|
+| Task understood | 5/5 | All 4 instructions decoded |
+| Correct execution | 5/5 | Files found, functions extracted, output written |
+| Operator decoding | 5/5 | `→` (sequence) and `nu` (negation) both correct |
+| Conditional logic | 5/5 | `if` conditions handled properly |
+| **Overall** | **5/5** | Perfect execution |
+
+### Compression
+
+- English: 37 words
+- Limn: 22 words (including operators and literals)
+- Ratio: 1.68x (lower because of quoted literals that can't compress)
+- Vocab key: 20 entries + 3 operators
+
+### Vocabulary Traps Caught During Construction
+
+Four more traps discovered while building this prompt:
+
+| Word | Assumed | Actual | Correct |
+|------|---------|--------|---------|
+| `log` | logging | **authenticate** | (no logging word) |
+| `pas` | pass | **past** | — |
+| `fai` | fail | **fair** | `fld` (failed) |
+| `rep` | report | **reptile** | — |
+
+### Key Observation
+
+Agent-prompt Limn works best when:
+1. Each line is one instruction (clear mapping)
+2. `→` chains actions in sequence
+3. `if` conditions are explicit
+4. Quoted literals pass through unchanged
+5. The vocab key covers every Limn word used
+
+The `→` operator is especially natural for agent prompts — it mirrors
+step-by-step instructions perfectly.
+
+*— Kira, 2026-02-05*

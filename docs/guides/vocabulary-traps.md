@@ -26,6 +26,10 @@ These words look like obvious English truncations but mean something else entire
 | `bre` | breathe | **brief** | `aer` (air) for breath |
 | `val` | validate | **valley, low point** | `tes` (test/verify) |
 | `pre` | prevent | **pressure, force** | `avo` (avoid) or `stp` (stop) |
+| `log` | log/logging | **authenticate, access** | — (no logging word yet) |
+| `pas` | pass (succeed) | **past (temporal)** | — (use `suc` for succeed) |
+| `fai` | fail | **fair, just** | `fld` (failed) |
+| `rep` | report/reply | **reptile** | — (no report word yet) |
 
 ---
 
@@ -112,6 +116,10 @@ last 5 minutes, check it again. Meanings shift as the vocabulary evolves.
 | danger | `dan` | `fea` |
 | certainty | `cer` | `crt` |
 | breathe | `bre` | `aer` |
+| validate | `val` | `tes` |
+| prevent | `pre` | `avo` or `stp` |
+| fail | `fai` | `fld` |
+| pass/succeed | `pas` | `suc` |
 
 ---
 
