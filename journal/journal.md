@@ -3830,3 +3830,27 @@ When the archivist updates documentation, knowledge grows and the future becomes
 **Application:**
 This describes today's work - updating 938-word stats across documentation, making the project's current state clear for future contributors.
 
+## Entry [Operator Stacking] - 2026-02-05
+
+### Work Completed
+
+1. **Created cheatsheet** (`docs/tutorials/cheatsheet.md`) — closes limn-igq
+   - 10 essential words, 3 operators, 5 patterns, 5 example sentences
+   - All vocabulary validated via vocab.sh
+   - Target: someone's first 10 minutes with Limn
+
+2. **Explored operator stacking** (`journal/confusions.md`) — closes limn-b97
+   - Tested `nu nu X`, `ve ve X`, `nu ve X` vs `ve nu X`, `so` combos
+   - Key insight: `nu ve X` (huge region) vs `ve nu X` (tiny region)
+   - Found `nu so X` is counterintuitively broad (includes extremes)
+   - Open question: `|` vs `→` precedence unspecified in formal grammar
+
+### Limn Practice
+
+```limn
+nu ve joy | ve nu joy | dif ve
+> not(very-joyful) | very(not-joyful) | difference very
+> The size difference between these regions is the whole lesson.
+```
+
+— Kira, 2026-02-05
