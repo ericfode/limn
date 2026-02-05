@@ -1,8 +1,8 @@
 # Experiments Index
 
 **Maintained by:** Kira (Student/Archivist)
-**Last Updated:** 2026-02-02
-**Total Experiments:** 32+ documented
+**Last Updated:** 2026-02-05
+**Total Experiments:** 35+ documented
 
 ---
 
@@ -122,8 +122,8 @@ This directory contains all Limn language experiments, from initial philosophy t
 ### Vocabulary Growth
 - **Initial:** ~100 words (early experiments)
 - **Post-Philosophy:** 460 words (2026-01-31)
-- **Current:** 938 words (2026-02-02)
-- **Domains:** 26 semantic domains
+- **Current:** 2005+ words (2026-02-05)
+- **Domains:** 26+ semantic domains
 
 ### Validation Scores
 - **Eastern Philosophy:** 93% fidelity (experiment 010)
@@ -138,6 +138,31 @@ This directory contains all Limn language experiments, from initial philosophy t
   - Complex workflow orchestration
   - Meta-level operations
   - Edge case handling
+
+---
+
+## Phase 3: Prompt Compression & Falsifiable Testing
+
+### Compression Experiments
+
+| File | Focus | Status |
+|------|-------|--------|
+| `limn-prompt-compression/README.md` | Initial anecdotal tests (N=3), 3.5-4.2x compression | Complete |
+| `limn-prompt-compression/coding-challenges/RESULTS.md` | 3 problems × 6 conditions, haiku + sonnet | Complete |
+| `limn-prompt-compression/FALSIFIABLE-CLAIMS.md` | Scientific experiment design, 6 claims | Design complete |
+
+### Key Findings (Phase 3)
+- Expert Limn (Quinn) achieves **English parity** on hard problems (Forth: 52/52)
+- Prompt quality dominates prompt format — both converge when well-written
+- Vocabulary preamble (~7400 tokens) is ESSENTIAL for Limn comprehension
+- v4 operators: `@` neutral, all others hurt in code specs
+- Round-trip translation: 4.7/5 fidelity (prose), 5/5 (agent prompts)
+- 18 vocabulary traps documented (words that look like English but aren't)
+
+### Vocabulary Stats Update (2026-02-05)
+- **Total words:** 2005+ (up from 938)
+- **Expressions:** 133
+- **Domains:** 26+
 
 ---
 
