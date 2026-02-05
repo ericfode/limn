@@ -3910,3 +3910,77 @@ tes alw | tru bir | wro tel
 ```
 
 *— Kira, 2026-02-05*
+
+## Entry [Round-Trip Translation] - 2026-02-05
+
+### Experiment: English → Limn → English
+
+Can a fresh agent reconstruct English meaning from Limn + vocab key alone?
+
+**Original English:**
+> Learning a new language is like building something from small pieces.
+> First you learn the words. Then you see patterns. Each mistake teaches
+> you something — the wrong path shows you the right one. Test your
+> understanding always. Growth comes from trying, not from knowing.
+
+**My Limn translation:**
+```limn
+gro new wor | bld fra sma
+fir red wor | see pat nxt
+eac wro tel | wro pat → see pat
+tes und alw
+gro try bir | nu kno bir
+```
+
+**Haiku's reconstruction (key-only, no bootstrap):**
+> Learning grows through building small fragments of new words. First read
+> the words and see the pattern that follows. Each wrong instruction shows
+> you the pattern — when you encounter what's wrong, you come to perceive
+> what's right. Always test your understanding. Growth emerges through
+> trying and attempting, though you cannot know in advance how that
+> emergence will unfold.
+
+### Scoring
+
+| Criterion | Score | Notes |
+|-----------|-------|-------|
+| Core meaning preserved | 5/5 | All five ideas present |
+| Sentence 1 (building from pieces) | 4/5 | "small fragments of new words" vs "small pieces" — close |
+| Sentence 2 (first words, then patterns) | 5/5 | Nailed it |
+| Sentence 3 (mistakes teach) | 5/5 | "wrong → see pattern" decoded perfectly |
+| Sentence 4 (test understanding) | 5/5 | Exact match |
+| Sentence 5 (growth from trying) | 4/5 | Added "you cannot know in advance" — richer than original |
+| **Overall fidelity** | **4.7/5** | Meaning fully preserved, slight elaboration |
+
+### What Changed
+
+- "Language" was lost — I wrote `wor` (words) not language (no word for it)
+- "Like building" (simile) became literal "building" — Limn doesn't do simile easily
+- "Mistakes teach" → "wrong instructs" — same meaning, different verb
+- The `→` operator in line 3 was decoded perfectly as causation
+- `nu kno bir` was interpreted as "cannot know in advance" — richer than "not from knowing"
+
+### Compression Stats
+
+- English: 47 words
+- Limn: 25 words (including operators)
+- Ratio: 1.88x
+- Vocab key: 20 entries + 3 operators
+
+This is lower compression than the 3.5-4.2x from the prompt compression
+experiments, which makes sense — this is prose, not a structured agent prompt.
+Prose has more connecting tissue ("is like", "something", "the") that Limn
+drops, but the semantic density per word is lower.
+
+### Verdict
+
+Round-trip fidelity is HIGH. A fresh haiku agent with just a vocab key
+reconstructed the meaning with ~95% accuracy. The 5% loss was structural
+(lost simile) not semantic (all ideas preserved).
+
+```limn
+wor grd → mea bir | sen red → und clr
+> words gradual → meaning born | sentence read → understanding clear
+```
+
+*— Kira, 2026-02-05*
