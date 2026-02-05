@@ -77,7 +77,8 @@ def main():
     print(f"=== Limn SLM Training ===")
     print(f"Base model: {args.model}")
     print(f"Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'}")
-    print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f}GB" if torch.cuda.is_available() else "")
+    if torch.cuda.is_available():
+        print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f}GB")
 
     # Load tokenizer
     print("\nLoading tokenizer...")
