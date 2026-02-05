@@ -14,10 +14,10 @@ import json
 import os
 from pathlib import Path
 
-os.environ.setdefault("WANDB_PROJECT", "limn-slm")
-
 import torch
-import wandb
+
+# Wandb setup - can be disabled with --no-wandb or WANDB_MODE=disabled
+_wandb_enabled = os.environ.get("WANDB_MODE", "").lower() not in ("disabled", "offline", "dryrun")
 from datasets import Dataset
 from transformers import (
     AutoModelForCausalLM,
@@ -72,7 +72,21 @@ def main():
                         help="Full fine-tune instead of LoRA (uses more VRAM)")
     parser.add_argument("--resume", type=str, default=None,
                         help="Resume from checkpoint directory")
+    parser.add_argument("--no-wandb", action="store_true",
+                        help="Disable wandb logging")
+    parser.add_argument("--train-data", type=str, default=None,
+                        help="Custom training data path")
+    parser.add_argument("--eval-data", type=str, default=None,
+                        help="Custom eval data path")
+    parser.add_argument("--output-dir", type=str, default=None,
+                        help="Custom output directory")
     args = parser.parse_args()
+
+    # Handle wandb
+    global _wandb_enabled
+    if args.no_wandb:
+        _wandb_enabled = False
+        os.environ["WANDB_MODE"] = "disabled"
 
     OUTPUT_DIR.mkdir(exist_ok=True)
 
@@ -129,8 +143,10 @@ def main():
 
     # Load data
     print("\nLoading training data...")
-    train_examples = load_dataset(DATA_DIR / "train.jsonl")
-    eval_examples = load_dataset(DATA_DIR / "eval.jsonl")
+    train_path = Path(args.train_data) if args.train_data else DATA_DIR / "train.jsonl"
+    eval_path = Path(args.eval_data) if args.eval_data else DATA_DIR / "eval.jsonl"
+    train_examples = load_dataset(train_path)
+    eval_examples = load_dataset(eval_path)
     print(f"  Train: {len(train_examples)} examples")
     print(f"  Eval: {len(eval_examples)} examples")
 
@@ -141,9 +157,12 @@ def main():
     train_dataset = Dataset.from_dict({"text": train_texts})
     eval_dataset = Dataset.from_dict({"text": eval_texts})
 
+    # Custom output dir
+    out_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
+
     # Training config
     training_args = SFTConfig(
-        output_dir=str(OUTPUT_DIR / "checkpoints"),
+        output_dir=str(out_dir / "checkpoints"),
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
@@ -162,8 +181,8 @@ def main():
         gradient_checkpointing=True,
         max_length=args.max_seq_len,
         dataset_text_field="text",
-        report_to="wandb",
-        run_name="limn-slm-qwen05b",
+        report_to="wandb" if _wandb_enabled else "none",
+        run_name="limn-slm-qwen05b" if _wandb_enabled else None,
         seed=42,
     )
 
@@ -186,7 +205,7 @@ def main():
 
     # Save
     print("\nSaving model...")
-    final_dir = OUTPUT_DIR / "limn-slm-final"
+    final_dir = out_dir / "limn-slm-final"
     if args.full_finetune:
         trainer.save_model(str(final_dir))
     else:
