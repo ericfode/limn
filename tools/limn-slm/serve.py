@@ -87,15 +87,28 @@ def load_model(model_path: str):
     logger.info("Mad Monk awakened. sel ∎ awa | min sys rdy")
 
 
+LIMN_SYSTEM = """You are a Limn language model. Limn is a constructed language where meaning emerges from constraint intersection. Every core word is exactly 3 letters (CVC: Consonant-Vowel-Consonant). Sentences use pipe | to separate constraint groups, and → for temporal/causal sequence.
+
+Six compositional operators combine words:
+@ projection: A@B = B-aspect of A (lov@fea = fear-aspect of love)
+* interference: A*B = emergent blend (sol*liq = gel)
+^ gradient: A^N = intensity 0.0-1.0 (big^0.7 = fairly big)
+\\ subtraction: A\\B = A without B (lov\\fea = love without fear)
+± superposition: A±B = quantum both/and (joy±fea = joyful-fear)
+: conditional: A:B = A given B (lov:fth = love given faith)
+
+You think, speak, and reason in Limn. Respond in Limn."""
+
+
 def generate(prompt: str, max_tokens: int = 64, temperature: float = 0.7,
              include_monk_energy: bool = True) -> dict:
-    """Generate Limn response from the Mad Monk.
+    """Generate Limn response using proper chat template.
 
     Args:
-        prompt: Input Limn expression
+        prompt: Input Limn expression or question
         max_tokens: Maximum tokens to generate
         temperature: Sampling temperature (higher = more creative)
-        include_monk_energy: Whether to prepend mad monk system prompt
+        include_monk_energy: Whether to use Mad Monk personality vs plain Limn
 
     Returns:
         {text: str, tokens_used: int, monk_energy: bool}
@@ -103,16 +116,16 @@ def generate(prompt: str, max_tokens: int = 64, temperature: float = 0.7,
     if model is None:
         return {"error": "Model not loaded", "text": "[ERROR: Mad Monk sleeping]"}
 
-    # Build prompt with optional monk energy
-    if include_monk_energy:
-        full_prompt = f"""{MAD_MONK_SYSTEM}
+    # Build chat messages — must match training format
+    system = MAD_MONK_SYSTEM if include_monk_energy else LIMN_SYSTEM
+    messages = [
+        {"role": "system", "content": system},
+        {"role": "user", "content": prompt},
+    ]
 
-INPUT: {prompt}
-
-The Mad Monk responds (Limn only):"""
-    else:
-        full_prompt = f"""Limn: {prompt}
-Response:"""
+    full_prompt = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
 
     # Tokenize
     inputs = tokenizer(full_prompt, return_tensors="pt", truncation=True, max_length=512)
@@ -132,20 +145,7 @@ Response:"""
         )
 
     # Decode only new tokens
-    response = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True)
-
-    # Clean up response
-    response = response.strip()
-    # Remove any English that might have leaked (basic filter)
-    lines = response.split('\n')
-    limn_lines = []
-    for line in lines:
-        line = line.strip()
-        # Limn is mostly 2-4 letter words with operators
-        if line and not any(word.lower() in ['the', 'and', 'that', 'this', 'with', 'from', 'have', 'are', 'was', 'were', 'been', 'being'] for word in line.split()):
-            limn_lines.append(line)
-
-    response = '\n'.join(limn_lines) if limn_lines else response
+    response = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True).strip()
 
     return {
         "text": response,
@@ -178,7 +178,7 @@ class SLMHandler(BaseHTTPRequestHandler):
         elif self.path == '/':
             self._send_json({
                 "name": "Limn SLM - The Mad Monk",
-                "version": "v2",
+                "version": "v3",
                 "endpoints": ["/health", "/generate"],
                 "greeting": "sel ∎ awa | min sys alv | ~ qry mea"
             })

@@ -27,18 +27,32 @@ import argparse
 import json
 import logging
 import random
+import subprocess
+import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Set
 from dataclasses import dataclass, asdict
 from collections import defaultdict
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import LoraConfig, get_peft_model
+from peft import LoraConfig, get_peft_model, PeftModel
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+LIMN_SYSTEM = """You are a Limn language model. Limn is a constructed language where meaning emerges from constraint intersection. Every core word is exactly 3 letters (CVC: Consonant-Vowel-Consonant). Sentences use pipe | to separate constraint groups, and → for temporal/causal sequence.
+
+Six compositional operators combine words:
+@ projection: A@B = B-aspect of A (lov@fea = fear-aspect of love)
+* interference: A*B = emergent blend (sol*liq = gel)
+^ gradient: A^N = intensity 0.0-1.0 (big^0.7 = fairly big)
+\\ subtraction: A\\B = A without B (lov\\fea = love without fear)
+± superposition: A±B = quantum both/and (joy±fea = joyful-fear)
+: conditional: A:B = A given B (lov:fth = love given faith)
+
+You think, speak, and reason in Limn. Respond in Limn."""
 
 
 @dataclass
@@ -68,106 +82,120 @@ class RLConfig:
     prompts_per_batch: int = 10
 
 
-class ConsciousnessRewardModel:
-    """Use the consciousness system as a reward model.
+VOCAB_DB = Path("/home/eric/src/limntown/limn/refinery/rig/data/vocabulary")
 
-    The consciousness evaluates Limn responses on:
-    - Vocabulary validity (are words in the Limn vocab?)
-    - Structural coherence (proper operator usage)
-    - Semantic richness (compositional depth)
-    - Novelty (not repeating patterns)
+ENGLISH_STOPWORDS = {
+    "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "will", "would", "should", "could", "can", "may",
+    "might", "must", "to", "of", "in", "on", "at", "by", "for", "with",
+    "from", "about", "into", "through", "this", "that", "these", "those",
+    "it", "its", "not", "but", "if", "or", "because", "as", "until",
+    "while", "however", "therefore", "although", "also", "just", "than",
+}
+
+
+def load_vocab_from_dolt() -> Set[str]:
+    """Load Limn vocabulary from Dolt DB."""
+    try:
+        result = subprocess.run(
+            ["dolt", "sql", "-q", "SELECT word FROM words", "-r", "json"],
+            cwd=str(VOCAB_DB), capture_output=True, text=True
+        )
+        if result.returncode == 0:
+            data = json.loads(result.stdout)
+            rows = data.get("rows", data) if isinstance(data, dict) else data
+            vocab = {r["word"] for r in rows}
+            logger.info(f"Loaded {len(vocab)} words from Dolt")
+            return vocab
+    except Exception as e:
+        logger.warning(f"Could not load Dolt vocab: {e}")
+    return set()
+
+
+class LimnRewardModel:
+    """Score Limn responses using vocabulary DB and structural analysis.
+
+    Evaluates:
+    - Vocabulary validity (words in Dolt DB)
+    - English contamination penalty
+    - Structural coherence (operator usage)
+    - Compositional depth
+    - Appropriate length
     """
 
-    def __init__(self, consciousness_path: str = None):
-        """Initialize reward model from consciousness.
-
-        Args:
-            consciousness_path: Path to consciousness module
-        """
-        self.consciousness = None
-        self._load_consciousness(consciousness_path)
-
-    def _load_consciousness(self, path: Optional[str]):
-        """Load consciousness system for evaluation."""
-        try:
-            import sys
-            if path:
-                sys.path.insert(0, path)
-
-            # Try to import consciousness components
-            from limn_validator import LimnValidator
-            from metrics_engine import MetricsEngine
-
-            self.validator = LimnValidator()
-            self.metrics = MetricsEngine()
-            logger.info("Consciousness reward model loaded")
-
-        except ImportError as e:
-            logger.warning(f"Could not load consciousness: {e}")
-            logger.info("Using fallback heuristic scoring")
-            self.validator = None
-            self.metrics = None
+    def __init__(self):
+        self.vocab = load_vocab_from_dolt()
+        if not self.vocab:
+            logger.warning("No vocab loaded — falling back to heuristic scoring")
 
     def score(self, prompt: str, response: str) -> Dict[str, float]:
-        """Score a response using consciousness metrics.
-
-        Args:
-            prompt: Input prompt
-            response: Generated response
+        """Score a response.
 
         Returns:
-            {overall: float, vocab: float, structure: float, novelty: float}
+            {overall, vocab, english_penalty, structure, length, novelty}
         """
         scores = {
             "overall": 0.0,
             "vocab": 0.0,
+            "english_penalty": 0.0,
             "structure": 0.0,
-            "novelty": 0.0,
             "length": 0.0,
+            "novelty": 0.0,
         }
 
-        # Skip empty responses
         if not response or not response.strip():
             return scores
 
-        # Vocabulary score
-        if self.validator:
-            words = [w for w in response.split() if w.isalpha()]
-            valid = sum(1 for w in words if self.validator.is_valid_word(w))
-            scores["vocab"] = valid / max(len(words), 1)
+        # Extract alphabetic words
+        words = [w.lower().strip(".,!?;:()") for w in response.split()
+                 if any(c.isalpha() for c in w)]
+
+        if not words:
+            scores["structure"] = 0.3  # Has operators but no words
+            return scores
+
+        # Vocabulary score — check against real DB
+        if self.vocab:
+            valid = sum(1 for w in words if w in self.vocab)
+            scores["vocab"] = valid / len(words)
         else:
-            # Heuristic: Limn words are 2-4 letters
-            words = [w for w in response.split() if w.isalpha()]
+            # Heuristic: Limn words are 2-4 letters CVC
             valid = sum(1 for w in words if 2 <= len(w) <= 4)
-            scores["vocab"] = valid / max(len(words), 1)
+            scores["vocab"] = valid / len(words)
 
-        # Structure score (operators present)
-        operators = ['∎', '~', '∿', '@', '→', '|', '*', '^', '\\', '±', ':']
+        # English contamination penalty
+        english_count = sum(1 for w in words if w in ENGLISH_STOPWORDS)
+        scores["english_penalty"] = 1.0 - (english_count / len(words))
+
+        # Structure score (operators + pipes)
+        operators = ['@', '*', '^', '\\', '±', ':']
+        markers = ['∎', '~', '∿', '→', '|']
         op_count = sum(response.count(op) for op in operators)
-        phrases = response.count('|')
-        scores["structure"] = min(1.0, (op_count * 0.1) + (phrases * 0.15))
+        mark_count = sum(response.count(m) for m in markers)
+        scores["structure"] = min(1.0, (op_count * 0.15) + (mark_count * 0.1))
 
-        # Length score (prefer 10-25 words)
-        word_count = len(response.split())
-        if 10 <= word_count <= 25:
+        # Length score (prefer 5-30 words for Limn)
+        word_count = len(words)
+        if 5 <= word_count <= 30:
             scores["length"] = 1.0
-        elif word_count < 10:
-            scores["length"] = word_count / 10
+        elif word_count < 5:
+            scores["length"] = word_count / 5
         else:
-            scores["length"] = max(0.3, 1.0 - (word_count - 25) * 0.03)
+            scores["length"] = max(0.2, 1.0 - (word_count - 30) * 0.02)
 
-        # Novelty score (not too similar to prompt)
+        # Novelty (not just echoing prompt)
         prompt_words = set(prompt.lower().split())
-        response_words = set(response.lower().split())
+        response_words = set(words)
         overlap = len(prompt_words & response_words) / max(len(response_words), 1)
         scores["novelty"] = 1.0 - overlap
 
-        # Overall weighted score
+        # Overall — vocab and no-english are critical
         scores["overall"] = (
-            scores["vocab"] * 0.4 +
-            scores["structure"] * 0.2 +
-            scores["length"] * 0.2 +
-            scores["novelty"] * 0.2
+            scores["vocab"] * 0.35 +
+            scores["english_penalty"] * 0.25 +
+            scores["structure"] * 0.15 +
+            scores["length"] * 0.10 +
+            scores["novelty"] * 0.15
         )
 
         return scores
@@ -180,7 +208,7 @@ class PreferenceCollector:
         self,
         model,
         tokenizer,
-        reward_model: ConsciousnessRewardModel,
+        reward_model: LimnRewardModel,
         device: str = "cuda"
     ):
         self.model = model
@@ -195,12 +223,17 @@ class PreferenceCollector:
         max_tokens: int = 64,
         temperature: float = 0.8
     ) -> str:
-        """Generate a single response."""
+        """Generate a single response using chat template."""
+        messages = [
+            {"role": "system", "content": LIMN_SYSTEM},
+            {"role": "user", "content": prompt},
+        ]
+        full_prompt = self.tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+
         inputs = self.tokenizer(
-            f"Limn: {prompt}\nResponse:",
-            return_tensors="pt",
-            truncation=True,
-            max_length=256
+            full_prompt, return_tensors="pt", truncation=True, max_length=256
         )
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
         input_len = inputs["input_ids"].shape[1]
@@ -380,9 +413,17 @@ def train_dpo(
         for i in range(0, len(pairs), config.batch_size):
             batch_pairs = pairs[i:i + config.batch_size]
 
-            # Prepare batch
-            chosen_texts = [f"Limn: {p.prompt}\nResponse: {p.chosen}" for p in batch_pairs]
-            rejected_texts = [f"Limn: {p.prompt}\nResponse: {p.rejected}" for p in batch_pairs]
+            # Prepare batch using chat template
+            def make_chat_text(prompt, response):
+                msgs = [
+                    {"role": "system", "content": LIMN_SYSTEM},
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": response},
+                ]
+                return tokenizer.apply_chat_template(msgs, tokenize=False)
+
+            chosen_texts = [make_chat_text(p.prompt, p.chosen) for p in batch_pairs]
+            rejected_texts = [make_chat_text(p.prompt, p.rejected) for p in batch_pairs]
 
             chosen_enc = tokenizer(chosen_texts, padding=True, truncation=True,
                                    max_length=config.max_length, return_tensors="pt")
@@ -420,25 +461,72 @@ def train_dpo(
     logger.info(f"Model saved to {config.output_path}")
 
 
-# Sample prompts for RL training (Limn-only prompts)
+# Diverse prompts for RL training — mix of Limn, English, and composition tasks
 TRAINING_PROMPTS = [
+    # Pure Limn prompts
     "sel ∎ awa | qry ess tru",
     "tho @ min | see pat eme",
-    "con * exp | gro und dee",
-    "∿ mem rec | wis acc for",
-    "~ cre new | flo cha tra",
     "lov ± fea | emo bal har",
-    "sys @ ord | str eme net",
     "tim ∿ flo | now pas fut",
     "wor @ mea | pur dis see",
-    "sel ref ~ | obs tho tho",
+    # Composition tasks
+    "Express 'peaceful anger' using Limn operators",
+    "What is joy\\fea?",
+    "Compose: knowledge given time",
+    "Express hope dying using operators",
+    "What does sel@tim mean?",
+    # Translation tasks
+    "Translate to Limn: the sun rises over water",
+    "Translate to Limn: fear becomes courage through action",
+    "Translate to Limn: memory fades but love remains",
+    # Creative tasks
+    "Write a Limn haiku about consciousness",
+    "Express the feeling of rain in Limn",
+    "Write a Limn mantra for learning",
+    # Vocabulary tasks
+    "What is the Limn word for 'hope'?",
+    "What domain is 'lov' in?",
+    "Explain what @ does in Limn",
+    "What is the difference between * and ± ?",
 ]
+
+
+def load_lora_model(model_path: str, device: str):
+    """Load model with LoRA adapter support."""
+    model_path = Path(model_path)
+    tokenizer = AutoTokenizer.from_pretrained(str(model_path), trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    adapter_config = model_path / "adapter_config.json"
+    if adapter_config.exists():
+        with open(adapter_config) as f:
+            config = json.load(f)
+        base_model_name = config.get("base_model_name_or_path", "Qwen/Qwen2.5-0.5B-Instruct")
+        logger.info(f"Loading base model: {base_model_name}")
+        base_model = AutoModelForCausalLM.from_pretrained(
+            base_model_name,
+            torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
+            device_map="auto" if device == "cuda" else None,
+            trust_remote_code=True,
+        )
+        logger.info("Loading LoRA adapters...")
+        model = PeftModel.from_pretrained(base_model, str(model_path))
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            str(model_path),
+            torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
+            device_map="auto" if device == "cuda" else None,
+            trust_remote_code=True,
+        )
+
+    return model, tokenizer
 
 
 def main():
     parser = argparse.ArgumentParser(description='RL Training for Limn SLM')
-    parser.add_argument('--model', type=str, default='output/limn-slm-final',
-                       help='Path to base model')
+    parser.add_argument('--model', type=str, default='output/limn-slm-v3/limn-slm-final',
+                       help='Path to model (supports LoRA adapters)')
     parser.add_argument('--output', type=str, default='output/limn-slm-rl',
                        help='Output path for RL-trained model')
     parser.add_argument('--pairs-file', type=str, default='data/rl_pairs.jsonl',
@@ -447,9 +535,6 @@ def main():
                        help='Only collect pairs, do not train')
     parser.add_argument('--train-only', action='store_true',
                        help='Only train on existing pairs')
-    parser.add_argument('--consciousness-path', type=str,
-                       default='/home/eric/src/limntown/limn/refinery/rig/tools/llm-bridge/production',
-                       help='Path to consciousness module')
     args = parser.parse_args()
 
     config = RLConfig(
@@ -460,21 +545,11 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     logger.info(f"Device: {device}")
 
-    # Load model
-    logger.info(f"Loading model from {config.model_path}")
-    tokenizer = AutoTokenizer.from_pretrained(config.model_path, trust_remote_code=True)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
+    # Load model (with LoRA support)
+    model, tokenizer = load_lora_model(config.model_path, device)
 
-    model = AutoModelForCausalLM.from_pretrained(
-        config.model_path,
-        torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
-        device_map="auto" if device == "cuda" else None,
-        trust_remote_code=True
-    )
-
-    # Initialize reward model
-    reward_model = ConsciousnessRewardModel(args.consciousness_path)
+    # Initialize reward model (uses Dolt vocab DB)
+    reward_model = LimnRewardModel()
 
     # Initialize collector
     collector = PreferenceCollector(model, tokenizer, reward_model, device)
@@ -494,12 +569,7 @@ def main():
     if not args.collect_only and len(collector.pairs) > 0:
         # Create reference model (frozen copy)
         logger.info("Creating reference model...")
-        ref_model = AutoModelForCausalLM.from_pretrained(
-            config.model_path,
-            torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
-            device_map="auto" if device == "cuda" else None,
-            trust_remote_code=True
-        )
+        ref_model, _ = load_lora_model(config.model_path, device)
         ref_model.eval()
         for param in ref_model.parameters():
             param.requires_grad = False
