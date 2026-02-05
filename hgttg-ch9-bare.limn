@@ -1,0 +1,67 @@
+:: HGttG ch9 :: Magrathea lan :: tra → lmn v5
+
+:: cov
+
+[9.1]
+"Heart of Gold" lan cov Magrathea
+
+[9.2]
+cov : [COLD]^0.9 vod^0.8 | nu gro | nu lif | sto
+
+[9.3]
+nyt drp @ Magrathea | sun apr
+
+[9.4]
+Zaphod say : rig | out we | see
+
+[9.5]
+Marvin req : sta | pro shp
+
+[9.6]
+Marvin say : sit | wai | sad^0.99
+
+[9.7]
+out : [COLD]^0.99 dar^0.9 | anc pek acr al
+
+:: Slartibartfast
+
+[9.8]
+eld hum apr | anc^0.9 | lon coa
+
+[9.9]
+Slartibartfast say : sha^0.3
+
+[9.10]
+Slartibartfast see sa | fea^0.3 ± joy^0.3
+
+[9.11]
+Slartibartfast say : arv we | bel cov | now
+
+[9.12]
+Arthur ask : why te | whi bel te
+
+[9.13]
+Slartibartfast say : odd^0.99*goo^0.99 | ma mak : al
+
+:: bel cov
+
+[9.14]
+al mov aft sa | gap sto → dar^1 bel
+
+[9.15]
+cav opn bel | big^1 | big ma thi^1
+
+[9.16]
+bel : hom mak plnt | anc mac | slp
+
+[9.17]
+Slartibartfast say : cra plnt | sa mak sea*lan
+
+[9.18]
+Slartibartfast say : rew | Norway | sea val sno
+
+[9.19]
+Arthur : und^0 | cus mak plnt | sea val : rew | sur^0.95
+
+[9.20]
+Slartibartfast lea → dee^0.9 | des sho
