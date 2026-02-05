@@ -88,11 +88,11 @@ mac*thu : nu fix
 > "One Thursday, nearly two thousand years after one man had been nailed to a tree for saying how great it would be to be nice to people for a change..."
 
 ```limn
-on [THURSDAY] | 2000 [YEAR] aft on hum @ tre : spk goo^1
+on [THURSDAY] | 2000 yea aft on hum @ tre : spk goo^1
 ```
 
 - **Gap:** `thu` = thumb, not Thursday. Using `[THURSDAY]` placeholder
-- **Gap:** No "year" word. Using `[YEAR]` placeholder
+- `yea` = year (verified — added by linguist)
 - `on hum @ tre` = one human at tree
 - `spk goo^1` = speaking maximum good = "be nice"
 
@@ -101,11 +101,11 @@ on [THURSDAY] | 2000 [YEAR] aft on hum @ tre : spk goo^1
 > "...a girl sitting on her own in a small cafe in Rickmansworth suddenly realized what it was that had been going wrong all this time, and she finally knew how the world could be made a good place."
 
 ```limn
-on hum in sma [CAFE] Rickmansworth | sur^1 kno ans^1
+on wom in sma [CAFE] Rickmansworth | sur^1 kno ans^1
 sa kno : fix plnt → goo
 ```
 
-- `on hum` = one human (gender-neutral, Limn has no gendered words)
+- `on wom` = one woman (verified — `wom` added by linguist)
 - `sur^1` = maximum surprise = suddenly realized
 - `kno ans^1` = knew answer at maximum
 - `sa kno` = same-one knew (sa=anaphoric)
@@ -137,7 +137,7 @@ ide los^1 al
 - `bef sa tel` = before same-one tells (sa=anaphoric back to girl)
 - `bad^1*odd^1 cha` = maximum-bad interfered with maximum-odd change = terrible stupid catastrophe
 - `ide los^1 al` = idea lost at maximum, totally
-- **Gap:** No "catastrophe" word. Using `bad^1*odd^1 cha` (bad-odd change)
+- **Note:** `dsa` (disaster) now available, but composition `bad^1*odd^1 cha` preserves Adams' three adjectives
 
 ### [10] Not Her Story
 
@@ -648,12 +648,12 @@ yo : act^1 * sus^0
 ## Vocabulary Status
 
 ### Verified words used: 87
-### Gaps marked with [PLACEHOLDER]: 5
+### Gaps marked with [PLACEHOLDER]: 4
 - `[THURSDAY]` — thu=thumb collision
-- `[YEAR]` — no time-unit word
 - `[POPULAR]` — no word
 - `[CHEAP]` — no word
 - `[COLD]` — col=aloof collision
+### Resolved gaps: `[YEAR]` → `yea` (linguist addition)
 
 ### Composition successes (no new words needed):
 - pub = `drk hom` (drink home)

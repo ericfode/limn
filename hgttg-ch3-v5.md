@@ -95,11 +95,11 @@ sad^0.3 : plnt dem^1
 > "The plans have been available at your local planning office in Alpha Centauri for fifty of your Earth years."
 
 ```limn
-roa : see @ dst 50 [YEAR] | nu plnt kno
+roa : see @ dst 50 yea | nu plnt kno
 ```
 
+- `yea` = year (verified — added by linguist)
 - Plans visible at distance for 50 years — planet didn't know
-- **Gap:** [YEAR]
 
 ### [3.10] No Sympathy
 
@@ -207,7 +207,7 @@ lif^1 | plnt : lif^0
 ---
 
 ## Vocabulary Used: 38 verified words
-## Gaps: [YEAR] only
+## Gaps: none (all resolved)
 ## Key pattern: Bureaucratic Vogon voice = low-gradient sadness + imperative operator
 
 ---

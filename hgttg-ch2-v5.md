@@ -20,12 +20,12 @@ Ford Prefect nu Guildford | sma plnt nea Betelgeuse
 > He had been stranded on Earth for fifteen years, far longer than he'd intended.
 
 ```limn
-Ford : on plnt dur 15 [YEAR] | lon^0.9 ma des
+Ford : on plnt dur 15 yea | lon^0.9 ma des
 ```
 
 - `dur 15` = duration 15
+- `yea` = year (verified — added by linguist)
 - `lon^0.9 ma des` = long-lasting much-more-than desired
-- **Gap:** [YEAR] placeholder
 
 ### [2.3] Guide Researcher
 
@@ -381,7 +381,7 @@ sky → dar^1
 ---
 
 ## Vocabulary Used: 52 verified words
-## Gaps: [YEAR] only
+## Gaps: none (all resolved)
 ## Compositions: drk hom (pub), mac*boo (ebook), thu*com (e-thumb), drk-hom-hum (barman)
 
 ---

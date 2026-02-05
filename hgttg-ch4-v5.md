@@ -330,7 +330,7 @@ shp tak sa | "Heart of Gold" | mac : sus^0 → act^1
 ---
 
 ## Vocabulary Used: 45 verified words
-## Gaps: [YEAR], [COLD]
+## Gaps: [COLD] only (col=aloof collision)
 ## Key compositions:
 - Improbability Drive = `mac : sus^0 → act^1`
 - Brain melting from poetry = `bra → liq : vog poe`

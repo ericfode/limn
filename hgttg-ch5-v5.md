@@ -103,8 +103,10 @@ Ford : sur^0.95 | Zaphod = fri@bir
 > A woman appeared behind Zaphod. She was calm and intelligent.
 
 ```limn
-Trillian apr | cal^0.8 and kno^0.9
+wom apr | cal^0.8 and kno^0.9
 ```
+
+- `wom` = woman (verified — added by linguist)
 
 ### [5.10] Arthur Recognizes Trillian
 
@@ -313,7 +315,7 @@ gui say : nu pani^1
 ---
 
 ## Vocabulary Used: 48 verified words
-## Gaps: [TEA], [COLD] (from Ch 4), [YEAR]
+## Gaps: [TEA], [COLD] (from Ch 4)
 ## Key compositions:
 - Robot = `mac*hum` (machine-human interference)
 - Improbability Drive = `mac : sus^0 → act^1`
