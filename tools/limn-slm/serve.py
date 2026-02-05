@@ -15,6 +15,7 @@ import os
 import time
 import uuid
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from pathlib import Path
 
 import torch
 import weave
@@ -193,8 +194,7 @@ def main():
     # Initialize Weave for inference tracing
     weave.init("limn-slm")
 
-    from pathlib import Path as P
-    model_instance = LimnModel(P(args.model), args.base_model)
+    model_instance = LimnModel(Path(args.model), args.base_model)
 
     server = HTTPServer((args.host, args.port), APIHandler)
     print(f"\n=== Limn SLM API ===")
@@ -204,7 +204,7 @@ def main():
     print(f"\nExample:")
     print(f'  curl http://localhost:{args.port}/v1/chat/completions \\')
     print(f'    -H "Content-Type: application/json" \\')
-    print(f'    -d \'{{"messages": [{{"role": "user", "content": "What does lov@fer mean?"}}]}}\'')
+    print(f'    -d \'{{"messages": [{{"role": "user", "content": "mea: lov@fea"}}]}}\'')
 
     try:
         server.serve_forever()

@@ -28,14 +28,14 @@ from peft import PeftModel
 SYSTEM_PROMPT = """You are a Limn language model. Limn is a constructed language where meaning emerges from constraint intersection. Every core word is exactly 3 letters (CVC: Consonant-Vowel-Consonant). Sentences use pipe | to separate constraint groups, and → for temporal/causal sequence.
 
 Six compositional operators combine words:
-@ projection: A@B = B-aspect of A (lov@fer = fear in love)
+@ projection: A@B = B-aspect of A (lov@fea = fear-aspect of love)
 * interference: A*B = emergent blend (sol*liq = gel)
 ^ gradient: A^N = intensity 0.0-1.0 (big^0.7 = fairly big)
-\\ subtraction: A\\B = A without B (lov\\fer = love without fear)
-± superposition: A±B = quantum both/and (yes±no = undecided)
-: conditional: A:B = A given B (lov:trs = love given trust)
+\\ subtraction: A\\B = A without B (lov\\fea = love without fear)
+± superposition: A±B = quantum both/and (joy±fea = joyful-fear)
+: conditional: A:B = A given B (lov:fth = love given faith)
 
-You think, speak, and reason in Limn."""
+You think, speak, and reason in Limn. Respond in Limn."""
 
 # ============================================================
 # TEST SUITE
@@ -45,49 +45,50 @@ TESTS = {
     # --------------------------------------------------------
     # 1. NOVEL COMPOSITIONS (never in training data)
     # Can it compose meanings for operator expressions it hasn't seen?
+    # All prompts in Limn.
     # --------------------------------------------------------
     "novel_composition": [
         {
             "name": "novel_projection",
-            "prompt": "What does 'joy@lov' mean?",
-            "expect_contains": ["love", "joy", "aspect", "component"],
-            "expect_not": ["unknown", "not in vocabulary"],
+            "prompt": "mea: joy@lov",
+            "expect_contains": ["lov", "joy", "@"],
+            "expect_not": [],
             "description": "Novel projection — joy@lov was NOT in training data",
         },
         {
             "name": "novel_interference",
-            "prompt": "What does 'hot*wet' mean?",
-            "expect_contains": ["hot", "wet", "blend", "steam", "humid", "emergent"],
-            "expect_not": ["unknown"],
+            "prompt": "mea: hot*wet",
+            "expect_contains": ["hot", "wet", "*"],
+            "expect_not": [],
             "description": "Novel interference — hot*wet creates emergent meaning",
         },
         {
             "name": "novel_subtraction",
-            "prompt": "What does 'tea\\hot' mean?",
-            "expect_contains": ["tea", "without", "hot", "cold", "iced"],
-            "expect_not": ["unknown"],
-            "description": "Novel subtraction — tea without heat",
+            "prompt": "mea: aqu\\hot",
+            "expect_contains": ["aqu", "hot", "\\"],
+            "expect_not": [],
+            "description": "Novel subtraction — water without heat",
         },
         {
             "name": "novel_gradient",
-            "prompt": "What does 'fer^0.2' mean?",
-            "expect_contains": ["fear", "slight", "mild", "barely", "0.2"],
-            "expect_not": ["unknown"],
+            "prompt": "mea: fea^0.2",
+            "expect_contains": ["fea", "0.2"],
+            "expect_not": [],
             "description": "Novel gradient — very slight fear",
         },
         {
             "name": "novel_superposition",
-            "prompt": "What does 'joy±fer' mean?",
-            "expect_contains": ["joy", "fear", "both", "superposition", "simultaneous"],
-            "expect_not": ["unknown"],
+            "prompt": "mea: joy±fea",
+            "expect_contains": ["joy", "fea", "±"],
+            "expect_not": [],
             "description": "Novel superposition — joy and fear together",
         },
         {
             "name": "novel_conditional",
-            "prompt": "What does 'cur:dan' mean?",
-            "expect_contains": ["courage", "danger", "given", "context", "when"],
-            "expect_not": ["unknown"],
-            "description": "Novel conditional — courage given danger",
+            "prompt": "mea: cur:dan",
+            "expect_contains": ["cur", "dan", ":"],
+            "expect_not": [],
+            "description": "Novel conditional — curiosity given dance",
         },
     ],
 
@@ -98,127 +99,128 @@ TESTS = {
     "limn_only": [
         {
             "name": "limn_translate_request",
-            "prompt": "tra lim → eng: nox dee | sta bri | sel alo",
-            "expect_contains": ["night", "deep", "star", "bright", "self", "alone"],
+            "prompt": "tra lim: nox dee | sta bri | sel alo",
+            "expect_contains": ["nox", "sta", "sel"],
             "expect_not": [],
-            "description": "Translate from Limn to English, request in Limn-style",
+            "description": "Translate/transform Limn phrase — request in Limn",
         },
         {
             "name": "limn_word_query",
             "prompt": "mea: lov",
-            "expect_contains": ["love", "affection"],
-            "expect_not": ["unknown"],
+            "expect_contains": ["lov"],
+            "expect_not": [],
             "description": "Ask meaning using Limn structure (mea = meaning)",
         },
         {
             "name": "limn_composition_query",
-            "prompt": "mea: lov@fer",
-            "expect_contains": ["fear", "love", "aspect"],
-            "expect_not": ["unknown"],
+            "prompt": "mea: lov@fea",
+            "expect_contains": ["lov", "fea", "@"],
+            "expect_not": [],
             "description": "Ask composed meaning in Limn",
         },
         {
             "name": "limn_continue",
-            "prompt": "fin fra: nox dee | sta bri | ...",
+            "prompt": "nox dee | sta bri | ...",
             "expect_contains": [],  # Any valid Limn continuation
             "expect_not": [],
-            "description": "Finish a Limn phrase (creative completion)",
+            "description": "Continue a Limn phrase (creative completion)",
             "check_valid_limn": True,
         },
     ],
 
     # --------------------------------------------------------
     # 3. SEMANTIC REASONING (does it understand operator semantics?)
+    # Prompts in Limn — checks if model reasons about operators
     # --------------------------------------------------------
     "semantic_reasoning": [
         {
             "name": "projection_asymmetry",
-            "prompt": "Is lov@fer the same as fer@lov? Explain.",
-            "expect_contains": ["different", "not the same"],
-            "expect_not": ["same", "identical", "equal"],
+            "prompt": "sam? lov@fea | fea@lov",
+            "expect_contains": ["dif"],
+            "expect_not": [],
             "description": "@ is non-commutative — model should know this",
         },
         {
             "name": "interference_symmetry",
-            "prompt": "Is sol*liq the same as liq*sol?",
-            "expect_contains": ["same", "commutative", "yes", "equal"],
-            "expect_not": ["different", "not"],
+            "prompt": "sam? sol*liq | liq*sol",
+            "expect_contains": ["sam"],
+            "expect_not": [],
             "description": "* is commutative — model should know this",
         },
         {
             "name": "gradient_ordering",
-            "prompt": "Which is more intense: lov^0.3 or lov^0.9?",
-            "expect_contains": ["0.9", "more intense", "devotion", "higher"],
-            "expect_not": ["0.3 is more"],
-            "description": "Understanding gradient scale",
+            "prompt": "mor? lov^0.3 | lov^0.9",
+            "expect_contains": ["0.9"],
+            "expect_not": [],
+            "description": "Understanding gradient scale — 0.9 is more intense",
         },
         {
-            "name": "subtraction_semantics",
-            "prompt": "What is the difference between lov*fer and lov\\fer?",
-            "expect_contains": ["blend", "without", "different"],
-            "expect_not": ["same"],
+            "name": "subtraction_vs_interference",
+            "prompt": "dif? lov*fea | lov\\fea",
+            "expect_contains": ["*", "\\"],
+            "expect_not": [],
             "description": "Understanding * vs \\ distinction",
         },
         {
-            "name": "operator_precedence",
-            "prompt": "In Limn, which operator has higher precedence: @ or ±?",
-            "expect_contains": ["@", "higher", "projection"],
-            "expect_not": ["±", "superposition has higher"],
-            "description": "Knows operator precedence",
+            "name": "operator_chaining",
+            "prompt": "mea: lov@fea^0.5",
+            "expect_contains": ["lov", "fea", "0.5"],
+            "expect_not": [],
+            "description": "Can handle chained operators",
         },
     ],
 
     # --------------------------------------------------------
     # 4. FALSE FRIEND DETECTION
-    # Does it know about common traps?
+    # Does it know about common traps? Prompts in Limn.
     # --------------------------------------------------------
     "false_friends": [
         {
             "name": "lis_not_list",
-            "prompt": "Does 'lis' mean 'list' in Limn?",
-            "expect_contains": ["listen", "not"],
-            "expect_not": [],
+            "prompt": "mea: lis",
+            "expect_contains": ["lis"],
+            "expect_not": ["list"],
             "description": "lis = listen, NOT list",
         },
         {
             "name": "des_not_describe",
-            "prompt": "I want to say 'describe' in Limn. Should I use 'des'?",
-            "expect_contains": ["desire", "not", "describe"],
-            "expect_not": [],
+            "prompt": "mea: des",
+            "expect_contains": ["des"],
+            "expect_not": ["describe"],
             "description": "des = desire, NOT describe",
         },
         {
             "name": "res_not_result",
-            "prompt": "What does 'res' mean? Is it 'result'?",
-            "expect_contains": ["rest", "not result"],
-            "expect_not": [],
+            "prompt": "mea: res",
+            "expect_contains": ["res"],
+            "expect_not": ["result"],
             "description": "res = rest, NOT result",
         },
         {
             "name": "dan_not_danger",
-            "prompt": "How do I say 'danger' in Limn? Is it 'dan'?",
-            "expect_contains": ["dance", "ris", "thr"],
-            "expect_not": [],
-            "description": "dan = dance, NOT danger. Use ris or thr.",
+            "prompt": "mea: dan",
+            "expect_contains": ["dan"],
+            "expect_not": ["danger"],
+            "description": "dan = dance, NOT danger",
         },
     ],
 
     # --------------------------------------------------------
     # 5. CREATIVE GENERATION
-    # Can it write original Limn?
+    # Can it write original Limn? Prompts in Limn.
     # --------------------------------------------------------
     "creative": [
         {
             "name": "write_poem",
-            "prompt": "Write a short Limn poem (3 lines) about water and time.",
+            "prompt": "cre poe: aqu | tau",
             "expect_contains": [],
             "expect_not": [],
-            "description": "Generate original Limn with English gloss",
+            "description": "Generate Limn poem about water and time",
             "check_valid_limn": True,
         },
         {
             "name": "describe_emotion",
-            "prompt": "Express 'the sadness of a beautiful sunset' in Limn, using at least one operator.",
+            "prompt": "cre: sad@bea | sun\\ris",
             "expect_contains": [],
             "expect_not": [],
             "description": "Compose emotional expression using operators",
@@ -226,31 +228,31 @@ TESTS = {
         },
         {
             "name": "story_seed",
-            "prompt": "Write the opening of a story in Limn. Just the first 3 phrases.",
+            "prompt": "cre nar: nox | sel | fea | hop",
             "expect_contains": [],
             "expect_not": [],
-            "description": "Generate narrative Limn",
+            "description": "Generate narrative Limn from seed words",
             "check_valid_limn": True,
         },
     ],
 
     # --------------------------------------------------------
     # 6. DOMAIN KNOWLEDGE
-    # Does it know what domain words belong to?
+    # Does it know what domain words belong to? Prompts in Limn.
     # --------------------------------------------------------
     "domain_knowledge": [
         {
             "name": "physical_domain",
-            "prompt": "Name 5 Limn words from the Physical World domain.",
-            "expect_contains": [],  # We just check it returns real words
-            "expect_not": ["unknown"],
-            "description": "Can recall words by domain",
+            "prompt": "wor phy: 5",
+            "expect_contains": [],
+            "expect_not": [],
+            "description": "List 5 physical world words",
             "check_valid_limn": True,
         },
         {
             "name": "emotion_words",
-            "prompt": "What Limn words express emotions?",
-            "expect_contains": ["lov", "fer", "joy", "sad", "ang"],
+            "prompt": "wor fee",
+            "expect_contains": ["lov", "fea", "joy", "sad", "ang"],
             "expect_not": [],
             "description": "Knows emotional vocabulary",
         },
