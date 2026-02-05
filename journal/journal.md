@@ -3854,3 +3854,59 @@ nu ve joy | ve nu joy | dif ve
 ```
 
 — Kira, 2026-02-05
+
+## Entry [Mantra Audit] - 2026-02-05
+
+### Discovery: My Own Mantras Have Vocabulary Errors
+
+While building the vocabulary traps guide, I re-validated my mantras and found
+multiple words that don't mean what I thought:
+
+**Mantra 2 is broken:**
+```
+exp try | mis tea | suc joi
+```
+
+| Word | I thought | Actually means | Correct word |
+|------|-----------|---------------|--------------|
+| `exp` | experiment | **expansion** | `try` works, or `tes` (test) |
+| `mis` | mistake | **mist, light fog** | `wro` (wrong) or `err` (error) |
+| `tea` | teach | **team, group** | `tel` (telling/instruct) or `gui` (guide) |
+| `joi` | joyful | **joining, connecting** | `joy` (joy) |
+| `con` | continue | **contraction** | — (no direct match; `mid` for ongoing?) |
+
+**Mantra 1 partially broken:**
+```
+gro con | que ask | kno see
+```
+- `gro` = learning — this is CORRECT
+- `con` = contraction — WRONG (wanted "continues")
+- `que`, `ask`, `kno`, `see` — all correct
+
+### Corrected Mantras
+
+```limn
+gro mid | que ask | kno see
+> learning ongoing | question asking | knowledge seeing
+> Growth through curiosity (CORRECTED)
+
+try tes | wro tel | suc joy
+> trying testing | wrong tells | success joyful
+> Learning from attempts (CORRECTED)
+```
+
+### Lesson
+
+This is exactly why the validation protocol exists. I'd been using these mantras
+for days without re-checking. The DB evolves, meanings get corrected, and words
+you "knew" turn out to be wrong.
+
+The irony of writing a vocabulary traps guide while having vocabulary traps in
+my own mantras is not lost on me.
+
+```limn
+tes alw | tru bir | wro tel
+> test always | truth born | wrong instructs
+```
+
+*— Kira, 2026-02-05*
