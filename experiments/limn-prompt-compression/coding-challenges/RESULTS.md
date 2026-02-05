@@ -229,6 +229,101 @@ forth_limn_pure:    18/52  (35%)
 
 ---
 
+---
+
+## Round 2: v4 Compositional Operators
+
+After the initial results, re-ran two-bucket and Forth with prompts using v4
+compositional operators (`@`, `^`, `\`, `:`) to test whether operator precision
+improves agent comprehension.
+
+### v4 Operator Changes
+
+| Original | v4 version | Intent |
+|----------|-----------|--------|
+| `nu (sta buk emp AND oth buk ful)` | `nu (sta@emp AND sta\sta@ful)` | Projection + subtraction |
+| `exp @ def tem, nu lazy` | `body exp:def\lazy` | Conditional + subtraction |
+| `emp stk` | `stack@emp` | Projection for state |
+| `exc top 2 stk` | `exc top^2` | Gradient for quantity |
+| `eac stg hav mul tok:gap` | Added explicit tokenization line | Data format fix |
+
+### v4 Results
+
+**Two-Bucket:**
+
+| Condition | Score | vs Original |
+|-----------|-------|-------------|
+| Original Pure Limn | **7/11** (64%) | — |
+| v4+key | 2/11 (18%) | **-46pp** |
+| v4 pure | 2/11 (18%) | **-46pp** |
+
+**Forth:**
+
+| Condition | Score | vs Original |
+|-----------|-------|-------------|
+| Original Pure Limn | 18/52 (35%) | — |
+| English+Limn | **49/52** (94%) | — |
+| v4+key | TIMEOUT | infinite recursion |
+| v4 pure | TIMEOUT | infinite recursion |
+
+### Analysis: Why v4 Operators Hurt
+
+**1. Parsing ambiguity.** `sta@emp` could mean "start projected onto empty" or
+"start at empty" or "start is empty." The `@` operator has precise mathematical
+semantics (vector projection) but in a programming specification context, it
+introduces ambiguity that simple juxtaposition avoids.
+
+**2. Overloaded syntax.** Using `\` for both Limn subtraction and as a visual
+escape character confused tokenization. `def\lazy` might be read as a single
+token rather than "definition without laziness."
+
+**3. Cognitive overhead.** The model spent processing power decoding operator
+semantics rather than focusing on the algorithm. The Forth v4 solutions both
+had infinite recursion — a sign the model misunderstood the word-definition
+expansion semantics despite `body exp:def\lazy` being more "precise."
+
+**4. Loss of natural readability.** `nu (sta buk emp AND oth buk ful)` reads
+almost like English: "not (start bucket empty AND other bucket full)." The v4
+version `nu (sta@emp AND sta\sta@ful)` requires operator decoding AND is
+semantically confusing (`sta\sta` — start without start?).
+
+### Conclusion on v4 Operators for Agent Prompts
+
+**v4 operators are designed for embedding-space semantics (emotion blending,
+intensity gradients, component extraction). They do NOT help with programming
+specifications.** In fact, they actively hurt by adding a layer of symbolic
+decoding that competes with the agent's primary task.
+
+The original finding stands: **simple Limn (word juxtaposition with basic scope
+operators `|`, `→`, `@context`) is more effective for agent instructions than
+compositional Limn (v4 operators `@projection`, `^gradient`, `\subtraction`).**
+
+v4 operators may still be valuable for:
+- Emotional/aesthetic content (their original design domain)
+- Embedding-space operations in Limn-aware systems
+- Human-to-human Limn communication
+- Meta-linguistic description
+
+But NOT for compressing programming specifications for LLM agents.
+
+---
+
+## Updated Summary Table (All Conditions)
+
+| Problem | English | E+Limn | Limn+key | Pure Limn | v4+key | v4 pure |
+|---------|---------|--------|----------|-----------|--------|---------|
+| **Knapsack** | 7/7 | 7/7 | 7/7 | **7/7** | — | — |
+| **Two-Bucket** | 3/11 | 3/11 | 5/11 | **7/11** | 2/11 | 2/11 |
+| **Forth** | 47/52 | **49/52** | 45/52 | 18/52 | TIMEOUT | TIMEOUT |
+
+**Best strategy per complexity:**
+- **Easy problems:** Any format works (all equivalent)
+- **Medium problems:** Pure Limn (simple notation, no operators)
+- **Hard problems:** English + Limn preamble (structural scaffold + English detail)
+- **Never:** v4 compositional operators in programming specs
+
+---
+
 ```limn
 tru hon | sur tea | gro con
 > truth honest | surprises teach | growth continues
