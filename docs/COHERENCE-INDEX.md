@@ -1,6 +1,6 @@
 # Limn Documentation Coherence Index
 
-**Last Updated:** 2026-01-30 (Session 7)
+**Last Updated:** 2026-02-05
 **Purpose:** Canonical reference for current Limn specification
 
 ---
@@ -11,11 +11,11 @@
 
 | Document | Location | Status |
 |----------|----------|--------|
-| **Vocabulary (v3-natural)** | `docs/spec/vocabulary-v3-natural.md` | CURRENT (~340 core + domains) |
-| **Vocabulary (v2)** | `docs/spec/vocabulary-v2.md` | REFERENCE (~593 words) |
+| **Vocabulary (DB)** | `data/vocabulary/` (DoltHub-synced) | CURRENT (2005+ words, 26+ domains) |
+| **Vocabulary (v3-natural)** | `docs/spec/vocabulary-v3-natural.md` | REFERENCE (~340 core + domains) |
 | **Formal Grammar** | `docs/spec/grammar-formal.md` | CURRENT (EBNF) |
-| **Bootstrap Guide** | `docs/spec/bootstrap-v3-natural.md` | CURRENT |
-| **Bootstrap Guide (v2)** | `docs/spec/bootstrap-v2.md` | REFERENCE |
+| **Bootstrap Guide (v4)** | `docs/spec/bootstrap-v4-compositional.md` | CURRENT (6 compositional operators) |
+| **Bootstrap Guide (v3)** | `docs/spec/bootstrap-v3-natural.md` | REFERENCE (superseded by v4) |
 
 ### Theory Documents
 
@@ -41,9 +41,13 @@
 
 | Document | Location | Audience |
 |----------|----------|----------|
-| First Day Tutorial | `docs/tutorials/first-day.md` | Beginners |
+| First Day Tutorial | `docs/tutorials/first-day.md` | Beginners (30 min) |
+| **Beginners Cheatsheet** | `docs/tutorials/cheatsheet.md` | Quick reference (10 min) (NEW) |
+| **Vocabulary Traps** | `docs/guides/vocabulary-traps.md` | Common word pitfalls (NEW) |
+| Vocabulary Management | `docs/guides/VOCAB-MANAGEMENT.md` | vocab.sh usage |
 | Vocabulary Versions | `docs/guides/vocabulary-versions.md` | v1↔v2 migration |
 | Limn Poetics | `docs/guides/limn-poetics.md` | Poetry/creative writing |
+| Interference Operators | `docs/guides/interference-operator-guide.md` | v4 operators |
 | Getting Started | `docs/getting-started.md` | Quick start |
 
 ### Limn-PL (Programming)
@@ -111,7 +115,7 @@ Documents moved to `docs/archive/` are historical and should NOT be used for cur
 
 ## Coherence Rules
 
-1. **Vocabulary:** Use v3-natural words (natural extensions principle)
+1. **Vocabulary:** Use DoltHub-synced DB (2005+ words); validate via `vocab.sh check`
 2. **Collision Fixes:** Apply v3.1 collision fixes (bre=brief, aud=hearing, bli=believe, veg=plant, avi=bird, prt=partial)
 3. **Operators:** Use corrected tone operators (fml, snc, not frm, sin)
 4. **Grammar:** Formal grammar is definitive for parsing
@@ -122,6 +126,7 @@ Documents moved to `docs/archive/` are historical and should NOT be used for cur
 
 ## Update Log
 
+- **2026-02-05 (Archivist):** Updated vocabulary source to DoltHub DB (2005+ words). Added bootstrap v4 as CURRENT (v3 → REFERENCE). Added new docs: cheatsheet.md, vocabulary-traps.md, VOCAB-MANAGEMENT.md, interference-operator-guide.md. Added experiments INDEX Phase 3 (compression, falsifiable claims). Vocabulary stats: 2005+ words, 133 expressions, 26+ domains.
 - **Session 7c (2026-01-31):** Major theory formalization session. Completed v3-natural vocabulary coherence sweep (repetition-ruling.md, natural-language-gaps.md, semantic-resonance.md, untranslatable-content-analysis.md, unicode-density-exploration.md). Updated vocabulary-versions.md with v3-natural column. Added "Intentional Polysemy" section to vocabulary-v3-natural.md. Created crew infrastructure: crew/linguist/CLAUDE.md (startup checklist), crew/social-bot/limn_bootstrap.md, crew/author/limn_bootstrap.md. Created three major theory documents: limn-pragmatics.md (Gricean maxims, implicature, speech acts, key as pragmatic device), quantifier-semantics.md (proportion operators, scope, generalized quantifiers, distributivity), three-valued-logic.md (liminality as third truth value, truth tables, boundary semantics).
 - **Session 7b (2026-01-30):** Continuation - v3-natural vocabulary coherence sweep. Updated linguist analysis files: worked-examples.md, minimal-pairs.md, semantic-entanglement.md, key-semantics.md, liminal-mathematics.md, operator-grammar-rulings.md, question-marker-semantics.md, semantic-resonance.md, scope-vs-intersection-ruling.md, formal-analysis.md, unicode-density-exploration.md, borrowings.md. Updated student reference (CLAUDE.md quick reference to v3). Updated experiments/test-cases.md test specifications to v3 vocabulary. Fixed `bri`→`lux`, `her the`→`yo an`, and other v1→v3 vocabulary throughout analysis corpus. Note: experiments/results/ files retain v1 vocabulary as historical test records.
 - **Session 7 (2026-01-30):** Major linguist analysis session. Fixed 6 critical word collisions (bre=brief, aud=hearing, bli=believe, veg=plant, avi=bird, prt=partial). Added metalinguistic vocabulary (emp, cla, amb, det, prt, lim). Added Domain 11 Agent/AI vocabulary (age, mod, wei, ctx, inf, tok, prm, emb, lat, att). Created typological-analysis.md, word-collision-analysis.md, semantic-questions-analysis.md, poetic-structures-analysis.md, cyclic-pattern-analysis.md. Created engineering, medicine, and transactions domain modules. Updated limn-poetics.md, seven-poems.md, first-day.md, liminal-semantics.md, semantic-programming-unification.md, grammar-formal.md, launch-teasers.md, WEEK-1-CALENDAR.md with v3 vocabulary. Created social-ready-phrases.md for marketing (including Tier 5 Moltbook phrases). Created experiments/cyclic-patterns-test.limn. Added operator scope rules and sequence operator (`→`) to bootstrap-v3-natural.md and grammar-formal.md. Responded to Moltbook field feedback including DexterAI's causality critique (crew/linguist/state-transition-analysis.md).
