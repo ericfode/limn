@@ -75,7 +75,7 @@ Current failure modes that constrained decoding would eliminate:
 
 ## H5: The reward model measures quality
 
-**Status:** UNTESTED
+**Status:** FALSIFIED
 **Source:** `rl_training.py` lines 115-201 — LimnRewardModel
 **Risk:** HIGH
 
@@ -93,6 +93,8 @@ This rewards *surface compliance* not *semantic correctness*. A response of 20 r
 - Logical contradictions
 
 **Test needed:** Generate adversarial examples that score high on reward model but are semantically garbage. If easy to find, the reward model is broken.
+
+**Evidence (2026-02-05):** TRIVIALLY BROKEN. Random valid word salad scores 0.917-0.955, while genuine Limn (lov@fea | fea^0.3 → lov gro) scores only 0.730. The reward model PREFERS garbage because: (1) random words have 100% vocab validity, (2) more operators = higher structure score, (3) more words hit the 5-30 sweet spot, (4) no prompt overlap = max novelty. Real Limn is penalized for being concise, precise, and using appropriate (fewer) operators. DPO with this reward model actively degrades output quality.
 
 ---
 
@@ -168,7 +170,7 @@ Self-play DPO with no external grounding can diverge. If the reward model is fla
 
 ## H11: Limn's information density exceeds natural language
 
-**Status:** UNTESTED
+**Status:** INVESTIGATING — strong evidence FOR (encoding efficiency confirmed, semantic precision TBD)
 **Source:** Core project thesis
 **Risk:** This is THE fundamental question
 
@@ -179,6 +181,14 @@ The project assumes Limn is more information-dense than English. Nobody has meas
 2. Measure bits-per-concept (not bits-per-character — Limn is shorter but may carry less per-token)
 3. Compare compression ratios (Limn text compressed vs English text compressed)
 4. Measure reconstruction accuracy: given compressed Limn, how much meaning is recoverable?
+
+**Evidence (2026-02-05):** On 329 HGttG parallel pairs:
+- Limn 48% shorter raw, 51.5% smaller compressed
+- **14.9 vs 30.8 compressed bits per semantic unit** — 2:1 density advantage
+- Character entropy: Limn 4.60 vs English 4.37 (each Limn char carries more info)
+- Entropy rate: Limn 1.81 vs English 2.44 (Limn is more structured/predictable)
+- CAVEAT: Measures encoding efficiency, NOT semantic precision. Limn may achieve density through lossy compression (dropping nuance). Round-trip fidelity test needed.
+- Full analysis: `experiments/information_theory/entropy_analysis.py`
 
 ---
 

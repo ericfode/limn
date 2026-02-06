@@ -1,0 +1,77 @@
+{
+  "pairs_count": 329,
+  "basic_stats": {
+    "english_chars": 22284,
+    "limn_chars": 11540,
+    "english_words": 3800,
+    "limn_words": 2824,
+    "english_unique": 1336,
+    "limn_unique": 426
+  },
+  "entropy": {
+    "char_h1": {
+      "english": 4.367732878422091,
+      "limn": 4.6024126287631635
+    },
+    "word_h1": {
+      "english": 8.92494910352335,
+      "limn": 6.967998331027303
+    },
+    "char_h2": {
+      "english": 7.788608418896534,
+      "limn": 7.72302138655008
+    },
+    "cond_h2": {
+      "english": 3.4208755404744435,
+      "limn": 3.1206087577869166
+    },
+    "entropy_rate": {
+      "english": 2.443783599458807,
+      "limn": 1.8061117268730413
+    }
+  },
+  "compression": {
+    "english": {
+      "raw_bytes": 22290,
+      "gzip_bytes": 8700,
+      "zlib_bytes": 8688,
+      "gzip_ratio": 0.39030955585464333,
+      "zlib_ratio": 0.38977119784656794
+    },
+    "limn": {
+      "raw_bytes": 11642,
+      "gzip_bytes": 4219,
+      "zlib_bytes": 4207,
+      "gzip_ratio": 0.36239477752963406,
+      "zlib_ratio": 0.36136402679951896
+    }
+  },
+  "density": {
+    "chars_per_semantic_unit": {
+      "english": 9.92127872110115,
+      "limn": 5.352646081011542
+    },
+    "bytes_per_semantic_unit": {
+      "english": 9.922720541691906,
+      "limn": 5.406095777478356
+    },
+    "compressed_bits_per_semantic_unit": {
+      "english": 30.823737821080602,
+      "limn": 14.947741364038972
+    }
+  },
+  "redundancy": {
+    "type_token_ratio": {
+      "english": 0.35157894736842105,
+      "limn": 0.1508498583569405
+    },
+    "compression_entropy": {
+      "english": 3.12331717824448,
+      "limn": 2.924783362218371
+    },
+    "char_redundancy": {
+      "english": 0.17929502230252647,
+      "limn": 0.18863407602583637
+    }
+  }
+}
