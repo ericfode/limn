@@ -1,0 +1,210 @@
+{
+  "model": "/home/eric/src/limntown/limn/crew/engineer/tools/limn-slm/output/limn-slm-v4/limn-slm-v4-full",
+  "timestamp": "2026-02-05T20:22:18",
+  "device": "cuda",
+  "v4_categories": {
+    "vocab_recall": {
+      "name": "Vocabulary Recall",
+      "score": 13,
+      "total": 20,
+      "pct": 0.65
+    },
+    "operator_semantics": {
+      "name": "Operator Semantics",
+      "score": 7,
+      "total": 8,
+      "pct": 0.875
+    },
+    "false_friends": {
+      "name": "False Friends",
+      "score": 4,
+      "total": 6,
+      "pct": 0.6666666666666666
+    },
+    "algebraic_invariance": {
+      "name": "Algebraic Invariance",
+      "score": 25,
+      "total": 25,
+      "pct": 1.0
+    }
+  },
+  "tier_results": {
+    "tier1": {
+      "name": "Tier 1: Interpolation",
+      "avg_score": 0.6904,
+      "pass_rate": 0.7667,
+      "passing": 23,
+      "total": 30,
+      "per_operator": {
+        "*": {
+          "name": "interference",
+          "avg_score": 0.5611,
+          "pass_rate": 0.6667,
+          "correct": 2,
+          "total": 3
+        },
+        ":": {
+          "name": "conditional",
+          "avg_score": 0.9592,
+          "pass_rate": 1.0,
+          "correct": 4,
+          "total": 4
+        },
+        "@": {
+          "name": "projection",
+          "avg_score": 0.8012,
+          "pass_rate": 1.0,
+          "correct": 6,
+          "total": 6
+        },
+        "\\": {
+          "name": "subtraction",
+          "avg_score": 0.5324,
+          "pass_rate": 0.5455,
+          "correct": 6,
+          "total": 11
+        },
+        "^": {
+          "name": "gradient",
+          "avg_score": 0.6486,
+          "pass_rate": 0.75,
+          "correct": 6,
+          "total": 8
+        },
+        "\u00b1": {
+          "name": "superposition",
+          "avg_score": 0.728,
+          "pass_rate": 1.0,
+          "correct": 2,
+          "total": 2
+        }
+      }
+    },
+    "tier2": {
+      "name": "Tier 2: Compositional",
+      "avg_score": 0.6753,
+      "pass_rate": 0.9667,
+      "passing": 29,
+      "total": 30,
+      "per_operator": {
+        "*": {
+          "name": "interference",
+          "avg_score": 0.6548,
+          "pass_rate": 1.0,
+          "correct": 6,
+          "total": 6
+        },
+        ":": {
+          "name": "conditional",
+          "avg_score": 0.6628,
+          "pass_rate": 0.8889,
+          "correct": 8,
+          "total": 9
+        },
+        "@": {
+          "name": "projection",
+          "avg_score": 0.694,
+          "pass_rate": 1.0,
+          "correct": 8,
+          "total": 8
+        },
+        "\\": {
+          "name": "subtraction",
+          "avg_score": 0.767,
+          "pass_rate": 1.0,
+          "correct": 4,
+          "total": 4
+        },
+        "\u00b1": {
+          "name": "superposition",
+          "avg_score": 0.5814,
+          "pass_rate": 1.0,
+          "correct": 3,
+          "total": 3
+        }
+      }
+    },
+    "tier3": {
+      "name": "Tier 3: Productive",
+      "avg_score": 0.6732,
+      "pass_rate": 1.0,
+      "passing": 30,
+      "total": 30,
+      "per_operator": {
+        "*": {
+          "name": "interference",
+          "avg_score": 0.613,
+          "pass_rate": 1.0,
+          "correct": 6,
+          "total": 6
+        },
+        ":": {
+          "name": "conditional",
+          "avg_score": 0.7238,
+          "pass_rate": 1.0,
+          "correct": 7,
+          "total": 7
+        },
+        "@": {
+          "name": "projection",
+          "avg_score": 0.6649,
+          "pass_rate": 1.0,
+          "correct": 8,
+          "total": 8
+        },
+        "\\": {
+          "name": "subtraction",
+          "avg_score": 0.694,
+          "pass_rate": 1.0,
+          "correct": 4,
+          "total": 4
+        },
+        "\u00b1": {
+          "name": "superposition",
+          "avg_score": 0.671,
+          "pass_rate": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      }
+    }
+  },
+  "per_operator": {
+    "@": {
+      "name": "projection",
+      "score": 17,
+      "total": 20,
+      "pct": 0.85
+    },
+    "*": {
+      "name": "interference",
+      "score": 17,
+      "total": 20,
+      "pct": 0.85
+    },
+    "^": {
+      "name": "gradient",
+      "score": 16,
+      "total": 20,
+      "pct": 0.8
+    },
+    "\\": {
+      "name": "subtraction",
+      "score": 18,
+      "total": 18,
+      "pct": 1.0
+    },
+    "\u00b1": {
+      "name": "superposition",
+      "score": 10,
+      "total": 10,
+      "pct": 1.0
+    },
+    ":": {
+      "name": "conditional",
+      "score": 15,
+      "total": 16,
+      "pct": 0.9375
+    }
+  }
+}

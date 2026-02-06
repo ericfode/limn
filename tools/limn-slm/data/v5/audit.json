@@ -1,0 +1,180 @@
+{
+  "splits": {
+    "train": {
+      "name": "train",
+      "count": 18329,
+      "categories": {
+        "finetuning_completion": 5561,
+        "word_definition": 2314,
+        "operator_drilling": 2112,
+        "finetuning_interpretation": 1643,
+        "finetuning_composition": 1452,
+        "finetuning_context-prediction": 1352,
+        "translation": 1229,
+        "finetuning_grounded_query": 1059,
+        "commutativity_probe": 260,
+        "negative_vocab": 239,
+        "finetuning_reasoning_chain": 186,
+        "composition": 151,
+        "other": 136,
+        "finetuning_grounding": 136,
+        "finetuning_temporal": 115,
+        "finetuning_vocabulary_relation": 97,
+        "finetuning_query-response": 72,
+        "finetuning_thought_meaning": 64,
+        "finetuning_instruction_following": 63,
+        "error_correction": 58,
+        "creative": 12,
+        "finetuning_implication": 12,
+        "finetuning_oracle_query": 6
+      },
+      "sources": {
+        "finetuning": 11818,
+        "v4": 5346,
+        "v5_generated": 1165
+      },
+      "operators": {
+        "\\": 1138,
+        "@": 934,
+        "*": 838,
+        ":": 671,
+        "\u00b1": 632,
+        "^": 604
+      },
+      "unique_words": 434
+    },
+    "val": {
+      "name": "val",
+      "count": 2284,
+      "categories": {
+        "finetuning_completion": 695,
+        "word_definition": 289,
+        "operator_drilling": 264,
+        "finetuning_interpretation": 205,
+        "finetuning_composition": 181,
+        "finetuning_context-prediction": 169,
+        "translation": 153,
+        "finetuning_grounded_query": 132,
+        "commutativity_probe": 32,
+        "negative_vocab": 29,
+        "finetuning_reasoning_chain": 23,
+        "composition": 18,
+        "finetuning_grounding": 17,
+        "other": 17,
+        "finetuning_temporal": 14,
+        "finetuning_vocabulary_relation": 12,
+        "finetuning_query-response": 9,
+        "finetuning_thought_meaning": 8,
+        "error_correction": 7,
+        "finetuning_instruction_following": 7,
+        "finetuning_implication": 1,
+        "creative": 1,
+        "finetuning_oracle_query": 1
+      },
+      "sources": {
+        "finetuning": 1474,
+        "v4": 653,
+        "v5_generated": 157
+      },
+      "operators": {
+        "\\": 171,
+        "*": 109,
+        "@": 104,
+        "\u00b1": 90,
+        ":": 80,
+        "^": 73
+      },
+      "unique_words": 303
+    },
+    "test": {
+      "name": "test",
+      "count": 2307,
+      "categories": {
+        "finetuning_completion": 696,
+        "word_definition": 290,
+        "operator_drilling": 264,
+        "finetuning_interpretation": 206,
+        "finetuning_composition": 183,
+        "finetuning_context-prediction": 169,
+        "translation": 155,
+        "finetuning_grounded_query": 133,
+        "commutativity_probe": 34,
+        "negative_vocab": 31,
+        "finetuning_reasoning_chain": 24,
+        "composition": 20,
+        "finetuning_grounding": 17,
+        "other": 17,
+        "finetuning_temporal": 15,
+        "finetuning_vocabulary_relation": 13,
+        "finetuning_instruction_following": 9,
+        "finetuning_query-response": 9,
+        "finetuning_thought_meaning": 9,
+        "error_correction": 8,
+        "creative": 2,
+        "finetuning_implication": 2,
+        "finetuning_oracle_query": 1
+      },
+      "sources": {
+        "finetuning": 1486,
+        "v4": 671,
+        "v5_generated": 150
+      },
+      "operators": {
+        "\\": 144,
+        "@": 105,
+        "*": 99,
+        "^": 88,
+        ":": 87,
+        "\u00b1": 71
+      },
+      "unique_words": 295
+    },
+    "tier2_eval": {
+      "name": "tier2_eval",
+      "count": 200,
+      "categories": {
+        "tier2_eval": 200
+      },
+      "sources": {
+        "v5_generated": 200
+      },
+      "operators": {
+        ":": 49,
+        "\\": 41,
+        "*": 40,
+        "@": 36,
+        "\u00b1": 34
+      },
+      "unique_words": 108
+    },
+    "tier3_eval": {
+      "name": "tier3_eval",
+      "count": 100,
+      "categories": {
+        "tier3_eval": 100
+      },
+      "sources": {
+        "v5_generated": 100
+      },
+      "operators": {
+        ":": 27,
+        "\u00b1": 26,
+        "@": 19,
+        "\\": 15,
+        "*": 13
+      },
+      "unique_words": 36
+    }
+  },
+  "vocabulary": {
+    "total_words": 2005,
+    "held_out_words": 401,
+    "held_out_fraction": 0.2
+  },
+  "leakage_check": {
+    "train_val_overlap": 0,
+    "train_test_overlap": 0,
+    "val_test_overlap": 0,
+    "clean": true
+  }
+}
