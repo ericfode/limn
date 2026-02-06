@@ -95,7 +95,7 @@ handle_tool_call(garden_create, json(Args), Result) :-
         garden_exists(GardenId) ->
             Result = json([
                 content=[json([type=text, text='Garden already exists'])],
-                isError= @true
+                isError= @(true)
             ])
         ;
             create_garden(GardenId),
@@ -152,7 +152,7 @@ handle_tool_call(garden_compare, json(Args), Result) :-
     compare_readings(Reading1, Reading2, Divergences),
     divergence_score(Divergences, Score),
 
-    format(atom(ScoreMsg), 'Readings diverge by ~1f%', [Score]),
+    format(atom(ScoreMsg), 'Readings diverge by ~3f%', [Score]),
     Result = json([
         content=[json([type=text, text=ScoreMsg])],
         data=json([divergence_score=Score, divergences=Divergences])
@@ -179,8 +179,8 @@ handle_tool_call(garden_calculate_ripples, json(Args), Result) :-
 
 %% Parse temporal key from string/atom
 parse_temporal_key(KeyAtom, Key) :-
-    (atom(KeyAtom) -> atom_string(KeyAtom, KeyStr) ; KeyStr = KeyAtom),
-    downcase_atom(KeyStr, KeyLower),
+    (atom(KeyAtom) -> KeyAtom0 = KeyAtom ; atom_string(KeyAtom0, KeyAtom)),
+    downcase_atom(KeyAtom0, KeyLower),
     (
         KeyLower = was -> Key = was ;
         KeyLower = now -> Key = now ;

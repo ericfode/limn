@@ -71,3 +71,4 @@ server.log
 .autoposter-state
 .events.jsonl
 .sprite
+wandb/

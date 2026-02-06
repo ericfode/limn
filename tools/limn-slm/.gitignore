@@ -1,0 +1,6 @@
+venv/
+output/
+data/
+wandb/
+__pycache__/
+*.pyc
