@@ -1,0 +1,36 @@
+{
+  "pairs_count": 329,
+  "total_semantic_units": 2258,
+  "corpus_compression": {
+    "english": {
+      "raw_bytes": 22290,
+      "gzip": 8700,
+      "bz2": 7799,
+      "lzma": 8388
+    },
+    "limn": {
+      "raw_bytes": 11642,
+      "gzip": 4219,
+      "bz2": 3670,
+      "lzma": 4140
+    }
+  },
+  "per_sentence": {
+    "mean_gzip_english": 79.20060790273556,
+    "mean_gzip_limn": 52.319148936170215,
+    "mean_ratio": 0.6781122603709946,
+    "limn_wins": 326,
+    "total": 329
+  },
+  "significance": {
+    "t_statistic": 36.62193626451031,
+    "p_value": 1.2803600998527064e-293,
+    "cohens_d": 2.019032703307927,
+    "effect_size": "LARGE"
+  },
+  "density": {
+    "english_best_bpsu": 27.63153232949513,
+    "limn_best_bpsu": 13.00265721877768,
+    "advantage": 0.5294268495961021
+  }
+}

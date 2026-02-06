@@ -278,12 +278,12 @@ If Limn's operators form a well-defined algebra, we can use algebraic reasoning 
 
 ### Sprint 3: Information Theory
 - [x] Entropy analysis on HGttG parallel corpus (H11: 2:1 density advantage)
-- [ ] Compression benchmark
+- [x] Compression benchmark (H11 SUPPORTED: 53% fewer bits/semantic unit, p=1.28e-293, Cohen's d=2.02, 326/329 wins)
 - [ ] Representation geometry analysis
 - [ ] Write up findings — this is publishable
 
 ### Sprint 4: Reward Model + DPO
-- [ ] Implement embedding-based semantic reward
+- [x] Implement embedding-based semantic reward (4-dim: semantic/structural/vocabulary/english, discrimination=0.156)
 - [ ] Implement round-trip consistency reward
 - [ ] Replace v4 reward model
 - [ ] Run DPO with external grounding, track convergence

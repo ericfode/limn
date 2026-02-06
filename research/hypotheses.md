@@ -204,12 +204,21 @@ The project assumes Limn is more information-dense than English. Nobody has meas
 4. Measure reconstruction accuracy: given compressed Limn, how much meaning is recoverable?
 
 **Evidence (2026-02-05):** On 329 HGttG parallel pairs:
-- Limn 48% shorter raw, 51.5% smaller compressed
+- Limn 48% shorter raw, 51.5% smaller compressed (gzip)
 - **14.9 vs 30.8 compressed bits per semantic unit** — 2:1 density advantage
 - Character entropy: Limn 4.60 vs English 4.37 (each Limn char carries more info)
 - Entropy rate: Limn 1.81 vs English 2.44 (Limn is more structured/predictable)
-- CAVEAT: Measures encoding efficiency, NOT semantic precision. Limn may achieve density through lossy compression (dropping nuance). Round-trip fidelity test needed.
 - Full analysis: `experiments/information_theory/entropy_analysis.py`
+
+**Compression benchmark (2026-02-05):** Three compressors, per-sentence analysis:
+- bz2 (best): Limn 13.0 vs English 27.6 bits/semantic unit → **53% advantage**
+- Compression advantage (53%) EXCEEDS raw character advantage (48%) → Limn is genuinely denser, not just shorter
+- Statistical significance: t=36.6, p=1.28e-293, Cohen's d=2.02 (LARGE)
+- Limn wins 326/329 sentences (99.1%)
+- Only 3 losses: very short phrases with proper nouns (gzip header overhead)
+- Full analysis: `experiments/information_theory/compression_benchmark.py`
+
+- CAVEAT: Measures encoding efficiency, NOT semantic precision. Limn may achieve density through lossy compression (dropping nuance). Round-trip fidelity test needed.
 
 ---
 
