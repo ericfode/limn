@@ -1,0 +1,336 @@
+# The Apology
+# An LMN narrative proof-of-concept
+# Author: Yuki | 2026-02-05
+#
+# Demonstrates: temporal navigation, superposition collapse,
+# propagation, oracle integration, graduated operator introduction.
+#
+# Operator introduction order:
+#   Act I   — base Limn only (setup)
+#   Act II  — ^ gradient (emotional states)
+#   Act III — @ projection (what aspect matters)
+#   Act IV  — ± superposition (intent before collapse)
+#   Act V   — * interference (apology meets listener)
+#   Act VI  — \ subtraction + : conditional (what's missing, what depends)
+#
+# All Limn vocabulary validated against database.
+
+# ═══════════════════════════════════════════════════════
+# ACT I: WHA WAS — what happened (base Limn only)
+# ═══════════════════════════════════════════════════════
+
+∿ was [the_argument] = {
+    # The facts. No operators. Just words.
+
+    sel say wor | oth lis
+    > self said words | other listened
+
+    oth say wor | sel not lis
+    > other said words | self not listened
+
+    arg gro | arg gro | arg gro
+    > arguing grows | arguing grows | arguing grows
+
+    fth brk
+    > faith breaks
+
+    sel awa | oth awa | hsh
+    > self away | other away | hush
+}
+
+∿ was [the_pattern] = {
+    # What came before the argument.
+
+    vow giv | vow brk | vow giv | vow brk
+    > vow given | vow broken | vow given | vow broken
+
+    oth wai | sel not arv
+    > other waits | self not arrives
+
+    sel pro sel | not pro oth
+    > self protects self | not protects other
+}
+
+# ═══════════════════════════════════════════════════════
+# ACT II: HOW IT FEE — emotional state (^ gradient)
+# ═══════════════════════════════════════════════════════
+
+∿ now [sel_feels] = {
+    # Shame exists in degrees. Not binary.
+
+    sha^0.8 | rue^0.6 | fea^0.4
+    > shame at eighty | regret at sixty | fear at forty
+
+    # Shame is loudest. Regret is real but uncertain.
+    # Fear whispers: what if too late?
+
+    ang^0.2 | ang awa | ang sma now
+    > anger at twenty | anger away | anger small now
+
+    # The anger that fueled the argument has faded.
+    # What replaces it is worse.
+}
+
+∿ now [oth_feels] = ~ assess [
+    # Oracle: evaluate emotional state from history
+    ∿ was [the_argument],
+    ∿ was [the_pattern],
+    tau pas: "dly dly dly"
+    > time passed: three days
+]
+# The other's feelings are not fully known.
+# The oracle estimates from pattern and silence.
+
+# ═══════════════════════════════════════════════════════
+# ACT III: WHY RUE — what aspect matters (@ projection)
+# ═══════════════════════════════════════════════════════
+
+∿ now [what_matters] = {
+    # Projection: which aspect of the hurt is central?
+
+    arg@fth = "fth brk | not arg"
+    > argument-at-faith = "faith broke | not the argument"
+
+    # It's not the words that hurt.
+    # It's what the words proved about trust.
+
+    arg@lov = "lov the | sti | but hur"
+    > argument-at-love = "love there | still | but hurting"
+
+    arg@sha = "I kno goo | I not do goo"
+    > argument-at-shame = "I knew the good | I not did the good"
+
+    # The apology must reach the right layer.
+    # Say sorry for the words? Or for what the words revealed?
+
+    roo = arg@fth
+    > root = argument projected through faith
+
+    # The root is always the faith.
+}
+
+# ═══════════════════════════════════════════════════════
+# ACT IV: WHA I MEA — intent in superposition (±)
+# ═══════════════════════════════════════════════════════
+
+∿ now [intent] = {
+    # The self hasn't decided yet.
+    # All three coexist until the moment of speaking.
+
+    rue±dut±fea
+    > regret AND duty AND fear — uncollapsed
+
+    # rue = I am genuinely sorry
+    # dut = I should apologize (obligation)
+    # fea = I'm afraid of losing them
+
+    # Which one will speak?
+    # The self doesn't know yet.
+    # That's the truth of apology:
+    # we don't know our own motives until the words come.
+}
+
+# Collapse intent based on emotional state and what matters
+chosen_intent = ∿ now [intent] @ [
+    ∿ now [sel_feels],
+    ∿ now [what_matters]
+]
+
+# If sha^0.8 dominates → rue wins (shame drives genuine remorse)
+# If fea^0.4 dominates → fea wins (apology from panic)
+# If ang^0.2 still lingers → dut wins (grudging obligation)
+#
+# For this path: sha^0.8 is loudest.
+# chosen_intent → rue
+#
+# But ± means the others don't vanish.
+# They become: rue | dut^0.2 | fea^0.3
+# Regret leads. Duty and fear still hum beneath.
+
+# ═══════════════════════════════════════════════════════
+# ACT V: THE MEE — apology meets listener (* interference)
+# ═══════════════════════════════════════════════════════
+
+∿ now [the_apology] = ~ generate [
+    # Oracle: turn intent into words
+    intent: chosen_intent,
+    context: ∿ was [the_argument],
+    root: ∿ now [what_matters],
+
+    # The Limn skeleton:
+    rue | I hur you | I kno
+    > regret | I hurt you | I know
+
+    fth brk | my han | my cho
+    > faith broke | my hands | my choice
+
+    I not ask fgt | I ask: lis
+    > I not ask forget | I ask: listen
+]
+
+∿ now [the_meeting] = {
+    # The apology enters the room.
+    # The other's state interferes with it.
+
+    ∿ now [oth_feels] = ang^0.6 | hur^0.9 | hop^0.2
+    > anger at sixty | hurt at ninety | hope at twenty
+
+    # Interference: apology * listener
+
+    (rue*ang) = ten | wor hrd | not fth yet
+    > regret times anger = tension | words hard | not faith yet
+
+    (rue*hur) = ope hur | wor tou | too nea
+    > regret times hurt = open hurt | words touch | too near
+
+    (rue*hop) = sed | sma | but lif
+    > regret times hope = seed | small | but alive
+
+    # The interference pattern:
+    # Mostly tension and open wounds.
+    # But a seed of something.
+}
+
+# ═══════════════════════════════════════════════════════
+# ACT VI: WHA MIS — what's missing, what depends (\ and :)
+# ═══════════════════════════════════════════════════════
+
+∿ now [what_missing] = {
+    # Subtraction: what's absent from this apology?
+
+    rue\act = "wor | onl | wor"
+    > regret minus action = "words | only | words"
+
+    # An apology without changed behavior
+    # is regret with the action removed.
+    # What remains? Only words.
+
+    fth\brk = "fth bef brk"
+    > faith minus breaking = "faith before the break"
+
+    # You can't un-break faith.
+    # Faith minus its breaking is a memory of wholeness.
+    # Not the same thing.
+}
+
+∿ wil [how_received] = {
+    # Conditional: the same apology means different things
+    # depending on what follows.
+
+    rue:act = hea | grd | rea
+    > regret given action = healing | gradual | real
+
+    rue:wor = emp | grd | fal
+    > regret given only words = empty | gradual | failure
+
+    rue:tau = may | gro | may | not
+    > regret given time = maybe | growth | maybe | not
+
+    # The apology's meaning isn't fixed.
+    # It collapses based on what comes after.
+
+    oth | wai | see
+    > other | waits | seeing
+
+    # The other has not collapsed yet.
+    # They hold the apology in ±
+    # and watch what the self does next.
+}
+
+# ═══════════════════════════════════════════════════════
+# RESOLUTION: THE GAR GRO — or doesn't
+# ═══════════════════════════════════════════════════════
+
+∿ wil [paths] = {
+    # Three futures in superposition.
+    # None is written. All are possible.
+
+    # Path A: Action follows words
+    ∿ wil [act_follows] = {
+        rue → cha → cha → cha
+        > regret → change → change → change
+
+        fth^0.1 → fth^0.3 → fth^0.5
+        > faith at ten → thirty → fifty
+
+        # Faith grows in fractions.
+        # It never returns to one.
+        # But fth^0.5 is enough.
+    }
+
+    # Path B: Words alone
+    ∿ wil [wor_alone] = {
+        rue → hsh → hsh → hsh
+        > regret → hush → hush → hush
+
+        fth^0.1 → fth^0.0
+        > faith at ten → faith at zero
+
+        # Without action, the seed dies.
+    }
+
+    # Path C: The space between
+    ∿ wil [between] = {
+        rue → cha^0.3 → cha^0.3 → cha^0.3
+        > regret → change at thirty → thirty → thirty
+
+        fth^0.1 → fth^0.2 → fth^0.2
+        > faith at ten → twenty → twenty
+
+        # Most apologies live here.
+        # Not failure. Not healing.
+        # The space where people stay.
+        # lov^0.6:fth^0.2
+        # love at sixty given faith at twenty.
+        # Enough. Barely. For now.
+    }
+}
+
+# The story doesn't choose a path.
+# The reader does — through their temporal key.
+#
+# Key of pas: "How do you remember it?"
+#   → They remember the words. Not the action.
+#   → Path B.
+#
+# Key of now: "What do you notice?"
+#   → They notice the effort. The partial change.
+#   → Path C.
+#
+# Key of fut: "What do you hope?"
+#   → They hope for transformation.
+#   → Path A.
+#
+# ∿ wil [paths] @ reader_key → one garden grows.
+
+# ═══════════════════════════════════════════════════════
+# CODA
+# ═══════════════════════════════════════════════════════
+
+rue | the | har | wor
+> regret | the | hardest | word
+
+not rue | har | wor
+rue | the | sim | wor
+
+act aft rue | the | har | act
+> action after regret | the | hardest | action
+
+# ---
+
+sel | tau | mea | tau | sel
+> self meets time | time meets meaning | meaning meets time | time meets self
+
+# ═══════════════════════════════════════════════════════
+# OPERATOR MAP
+# ═══════════════════════════════════════════════════════
+#
+# Act I   : base        — setup, facts, pattern
+# Act II  : ^           — emotional intensity (sha^0.8, fea^0.4)
+# Act III : @           — projection (arg@fth, arg@lov, arg@sha)
+# Act IV  : ±           — superposition (rue±dut±fea)
+# Act V   : *           — interference (rue*ang, rue*hur, rue*hop)
+# Act VI  : \ and :     — subtraction (rue\act) and conditional (rue:act vs rue:wor)
+#
+# Total: all 6 operators introduced one per act.
+# Complexity builds. Reader never sees more than they're ready for.
