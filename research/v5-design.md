@@ -272,7 +272,7 @@ If Limn's operators form a well-defined algebra, we can use algebraic reasoning 
 
 ### Sprint 2: Custom Tokenizer + Constrained Decoding
 - [x] Build Limn-specific tokenizer (~2,189 tokens — 2005 Dolt vocab + 15 HGttG extras + operators/structural/gradients, 92.1% HGttG coverage)
-- [ ] Implement grammar-constrained logit masking for Qwen
+- [x] Implement grammar-constrained logit masking (FSM with 10 states, validates all operator rules, paren balancing)
 - [ ] Compare constrained vs unconstrained on v5 eval
 - [ ] Begin training custom small transformer (if masking shows promise)
 

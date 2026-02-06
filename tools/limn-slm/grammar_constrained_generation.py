@@ -143,14 +143,16 @@ class LimnGrammarFSM:
         # Add uppercase as word-like (for proper nouns)
         self.word_like_ids = self.word_ids | self.uppercase_ids | {self.unk_id}
 
-        print(f"  FSM token sets:")
-        print(f"    Words: {len(self.word_ids)}")
-        print(f"    Binary operators: {len(self.binary_op_ids)}")
-        print(f"    Caret (^): {self.caret_id}")
-        print(f"    Pipe (|): {self.pipe_id}")
-        print(f"    Arrow (→): {self.arrow_id}")
-        print(f"    Float values: {len(self.float_ids)}")
-        print(f"    Uppercase: {len(self.uppercase_ids)}")
+        # Debug summary (only when run directly)
+        if os.environ.get("LIMN_FSM_DEBUG"):
+            print(f"  FSM token sets:")
+            print(f"    Words: {len(self.word_ids)}")
+            print(f"    Binary operators: {len(self.binary_op_ids)}")
+            print(f"    Caret (^): {self.caret_id}")
+            print(f"    Pipe (|): {self.pipe_id}")
+            print(f"    Arrow (→): {self.arrow_id}")
+            print(f"    Float values: {len(self.float_ids)}")
+            print(f"    Uppercase: {len(self.uppercase_ids)}")
 
     def _is_float_token(self, token):
         """Check if token is a valid gradient float value."""
