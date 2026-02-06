@@ -1,0 +1,52 @@
+{
+  "clustering": {
+    "within_domain_sim": 0.2719189134566196,
+    "between_domain_sim": 0.26678617094531654,
+    "discrimination": 0.005132742511303079,
+    "silhouette": -0.015788521617650986,
+    "domain_cohesion": {
+      "Abstract Concepts": 0.2638843768351787,
+      "Colors & Visual Properties": 0.28544237242456066,
+      "Communication & Language": 0.25824490395685035,
+      "Discourse & Connectives": 0.24904022763172787,
+      "Economics & Exchange": 0.28358554787933826,
+      "Living Things": 0.29035601944900025,
+      "Mind & Cognition": 0.248362791757181,
+      "Physical World": 0.27433593385637955,
+      "Social & Relational": 0.2770445531902787,
+      "Space & Position": 0.2996287538714352,
+      "Textures & Tactile Properties": 0.2686141471450145,
+      "Time & Change": 0.26606403797714395
+    }
+  },
+  "operator_geometry": {
+    "@": {
+      "additive_prediction": 0.7416185140609741,
+      "difference_consistency": 0.9374831699662738,
+      "a_similarity": 0.5886702537536621,
+      "b_similarity": 0.5896851420402527
+    },
+    "*": {
+      "additive_prediction": 0.8539040088653564,
+      "difference_consistency": 0.9351947771178352,
+      "a_similarity": 0.6606209874153137,
+      "b_similarity": 0.6966606378555298
+    },
+    "\\": {
+      "additive_prediction": 0.7982950210571289,
+      "difference_consistency": 0.7333430084917281,
+      "a_similarity": 0.731205940246582,
+      "b_similarity": 0.5376957654953003
+    },
+    ":": {
+      "additive_prediction": 0.8259283304214478,
+      "difference_consistency": 0.9055213895108964,
+      "a_similarity": 0.6655600070953369,
+      "b_similarity": 0.6471989750862122
+    }
+  },
+  "compositionality": {
+    "passed": 4,
+    "total": 4
+  }
+}
