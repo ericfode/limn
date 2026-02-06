@@ -280,7 +280,7 @@ If Limn's operators form a well-defined algebra, we can use algebraic reasoning 
 - [x] Entropy analysis on HGttG parallel corpus (H11: 2:1 density advantage)
 - [x] Compression benchmark (H11 SUPPORTED: 53% fewer bits/semantic unit, p=1.28e-293, Cohen's d=2.02, 326/329 wins)
 - [x] Representation geometry analysis (no domain clustering due to BPE, but strong operator geometry: additive=0.74-0.85, compositionality=4/4)
-- [ ] Write up findings — this is publishable
+- [x] Write up findings (research/information-density-report.md — synthesizes all 3 experiments)
 
 ### Sprint 4: Reward Model + DPO
 - [x] Implement embedding-based semantic reward (4-dim: semantic/structural/vocabulary/english, discrimination=0.156)
