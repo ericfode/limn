@@ -271,13 +271,13 @@ If Limn's operators form a well-defined algebra, we can use algebraic reasoning 
 - [x] Per-operator accuracy benchmark (integrated into eval_v5.py)
 
 ### Sprint 2: Custom Tokenizer + Constrained Decoding
-- [ ] Build Limn-specific tokenizer (~1,100 tokens)
+- [x] Build Limn-specific tokenizer (~2,189 tokens — 2005 Dolt vocab + 15 HGttG extras + operators/structural/gradients, 92.1% HGttG coverage)
 - [ ] Implement grammar-constrained logit masking for Qwen
 - [ ] Compare constrained vs unconstrained on v5 eval
 - [ ] Begin training custom small transformer (if masking shows promise)
 
 ### Sprint 3: Information Theory
-- [ ] Entropy analysis on HGttG parallel corpus
+- [x] Entropy analysis on HGttG parallel corpus (H11: 2:1 density advantage)
 - [ ] Compression benchmark
 - [ ] Representation geometry analysis
 - [ ] Write up findings — this is publishable
