@@ -103,10 +103,11 @@ get_reader_reading(GardenId, ReaderId, Reading) :-
 %% ============================================================
 
 %% Calculate divergence between two readings
-%% Returns list of (SeedNum, Collapse1, Collapse2, Divergence)
+%% Readings are reading(Key, Path, Collapses, Timestamp) (4-arg form)
+%% Returns list of divergence(SeedNum, Collapse1, Collapse2, Score)
 compare_readings(Reading1, Reading2, Divergences) :-
-    Reading1 = reading(_, _, _, Collapses1, _),
-    Reading2 = reading(_, _, _, Collapses2, _),
+    Reading1 = reading(_, _, Collapses1, _),
+    Reading2 = reading(_, _, Collapses2, _),
     findall(
         divergence(Seed, C1, C2, Score),
         (

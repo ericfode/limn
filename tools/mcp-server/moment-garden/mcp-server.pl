@@ -136,9 +136,10 @@ handle_tool_call(garden_get_readings, json(Args), Result) :-
     get_readings(GardenId, Readings),
     length(Readings, Count),
     format(atom(Msg), 'Garden ~w has ~w reading(s)', [GardenId, Count]),
+    maplist(reading_to_json, Readings, ReadingsJson),
     Result = json([
         content=[json([type=text, text=Msg])],
-        data=json([readings=Readings, count=Count])
+        data=json([readings=ReadingsJson, count=Count])
     ]).
 
 handle_tool_call(garden_compare, json(Args), Result) :-
@@ -152,10 +153,11 @@ handle_tool_call(garden_compare, json(Args), Result) :-
     compare_readings(Reading1, Reading2, Divergences),
     divergence_score(Divergences, Score),
 
-    format(atom(ScoreMsg), 'Readings diverge by ~3f%', [Score]),
+    format(atom(ScoreMsg), 'Readings diverge by ~1f%', [Score]),
+    maplist(divergence_to_json, Divergences, DivergencesJson),
     Result = json([
         content=[json([type=text, text=ScoreMsg])],
-        data=json([divergence_score=Score, divergences=Divergences])
+        data=json([divergence_score=Score, divergences=DivergencesJson])
     ]).
 
 handle_tool_call(garden_calculate_ripples, json(Args), Result) :-
@@ -168,9 +170,10 @@ handle_tool_call(garden_calculate_ripples, json(Args), Result) :-
     length(Ripples, Count),
 
     format(atom(Msg), 'Seed ~w with key ~w generates ~w ripples', [SeedNum, Key, Count]),
+    maplist(ripple_to_json, Ripples, RipplesJson),
     Result = json([
         content=[json([type=text, text=Msg])],
-        data=json([seed=SeedNum, key=Key, ripples=Ripples])
+        data=json([seed=SeedNum, key=Key, ripples=RipplesJson])
     ]).
 
 %% ============================================================
@@ -205,6 +208,21 @@ json_to_collapses(List, Collapses) :-
     ).
 json_to_collapses(json(_), []).  % Fallback for empty
 
+%% Convert Prolog terms to JSON-serializable form
+reading_to_json(reading(ReaderId, Key, Path, Collapses, Timestamp),
+                json([reader_id=ReaderId, key=Key, path=Path,
+                      collapses=CollapsesJson, timestamp=Timestamp])) :-
+    maplist(collapse_to_json, Collapses, CollapsesJson).
+
+collapse_to_json(collapse(Seed, Meaning),
+                 json([seed=Seed, meaning=Meaning])).
+
+divergence_to_json(divergence(Seed, C1, C2, Score),
+                   json([seed=Seed, collapse1=C1, collapse2=C2, score=Score])).
+
+ripple_to_json(ripple(Target, Effect, Strength),
+               json([target=Target, effect=Effect, strength=Strength])).
+
 %% ============================================================
 %% MCP PROTOCOL HANDLER
 %% ============================================================
@@ -212,7 +230,7 @@ json_to_collapses(json(_), []).  % Fallback for empty
 handle_request(json(Request), Response) :-
     member(method=Method, Request),
     member(id=Id, Request),
-    (member(params=Params, Request) -> true ; Params = json([])),
+    (member(params=_Params, Request) -> true ; true),
 
     (
         Method = initialize ->
@@ -253,7 +271,7 @@ handle_request(json(Request), Response) :-
             Response = json([
                 jsonrpc='2.0',
                 id=Id,
-                error=json([code= -32601, message='Method not found'])
+                error=json([code=(-32601), message='Method not found'])
             ])
     ).
 

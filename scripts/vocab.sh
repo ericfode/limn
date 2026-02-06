@@ -23,6 +23,11 @@ lookup_word_full() {
     dolt sql -q "SELECT w.word, w.meaning, d.name as domain FROM words w LEFT JOIN domains d ON w.domain_id = d.id WHERE w.word = '$word'"
 }
 
+lookup_word_domain() {
+    local word="$1"
+    dolt sql -q "SELECT d.name FROM words w LEFT JOIN domains d ON w.domain_id = d.id WHERE w.word = '$word'" -r csv | tail -n +2
+}
+
 # ============================================================
 # OPERATOR SEMANTICS
 # ============================================================
@@ -168,7 +173,7 @@ case "$1" in
 
     domain)
         # List words in a domain
-        dolt sql -q "SELECT w.word, w.meaning FROM words w JOIN domains d ON w.domain_id = d.id WHERE d.id = $2 OR d.name LIKE '%$2%' ORDER BY w.word"
+        dolt sql -q "SELECT w.word, w.meaning, d.name as domain FROM words w JOIN domains d ON w.domain_id = d.id WHERE d.id = $2 OR d.name LIKE '%$2%' ORDER BY w.word"
         ;;
 
     check)
@@ -183,31 +188,33 @@ case "$1" in
         fi
         ;;
 
-    batch-check)
-        # Check multiple words at once
+    batch-check|batch)
+        # Check multiple words at once — table with word, status, meaning, domain
         shift
         if [ $# -eq 0 ]; then
-            echo "Usage: vocab.sh batch-check word1 word2 word3 ..."
+            echo "Usage: vocab.sh batch word1 word2 word3 ..."
             exit 1
         fi
+        printf "  %-8s %-5s %-30s %s\n" "WORD" "OK?" "MEANING" "DOMAIN"
+        printf "  %-8s %-5s %-30s %s\n" "────────" "─────" "──────────────────────────────" "──────────"
         errors=0
         for word in "$@"; do
             result=$(lookup_word "$word")
             if [ -n "$result" ]; then
                 meaning=$(echo "$result" | cut -d',' -f2-)
-                echo "  ✓ $word = $meaning"
+                domain=$(lookup_word_domain "$word")
+                printf "  %-8s %-5s %-30s %s\n" "$word" "yes" "$meaning" "$domain"
             else
-                echo "  ✗ $word — NOT IN VOCABULARY"
+                printf "  %-8s %-5s %-30s %s\n" "$word" "NO" "—" "—"
                 errors=$((errors + 1))
             fi
         done
+        echo ""
         if [ $errors -gt 0 ]; then
-            echo ""
             echo "$errors unknown word(s). Run: vocab.sh search <word> to find alternatives."
             exit 1
         else
-            echo ""
-            echo "All words valid."
+            echo "All $# word(s) valid."
             exit 0
         fi
         ;;
@@ -268,7 +275,7 @@ case "$1" in
         ;;
 
     gotchas)
-        # Common false friends
+        # Common false friends and traps
         echo "=== Limn False Friends ==="
         echo "Words that LOOK like English abbreviations but mean something different."
         echo "Always validate with: vocab.sh check <word>"
@@ -286,6 +293,20 @@ case "$1" in
         echo "  \"language\"     lan            lan            land/arrive"
         echo "  \"danger\"       dan            dan            dance (use ris/thr)"
         echo "  \"certainty\"    cer            cer            ceremony (use sur)"
+        echo ""
+        echo "=== Words That Do NOT Exist ==="
+        echo "Common guesses that are NOT in the vocabulary at all."
+        echo ""
+        echo "  Guess    Expected meaning    Reality"
+        echo "  ─────    ────────────────    ───────"
+        echo "  fer      fear                DOES NOT EXIST (use fea)"
+        echo "  dbt      doubt               DOES NOT EXIST (use dou)"
+        echo "  trs      trust               DOES NOT EXIST (use tru)"
+        echo ""
+        echo "=== SQL Gotcha ==="
+        echo "  The backslash operator (\\) needs CHAR(92) in SQL WHERE clauses."
+        echo "  Wrong:  WHERE op = '\\\\'"
+        echo "  Right:  WHERE op = CHAR(92)"
         echo ""
         echo "Rule: Limn words are NOT English abbreviations. They are semantic"
         echo "atoms from Latin, Greek, and phonaesthetic roots. Always check."
@@ -352,7 +373,7 @@ case "$1" in
         echo "  validate \"phrase\"     Parse and validate Limn (words + operators)"
         echo "  reduce \"lov@fea\"     Reduce a single composed expression"
         echo "  check <word>          Check if a word exists (meaning + domain)"
-        echo "  batch-check w1 w2 ... Check multiple words at once"
+        echo "  batch w1 w2 ...       Check multiple words at once (table format)"
         echo "  search <term>         Search words by pattern (includes domain)"
         echo "  gotchas               Show common false-friend traps"
         echo "  operators             Show all operators (v4 + DB)"

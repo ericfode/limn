@@ -12,5 +12,5 @@ MCP_DIR="$SCRIPT_DIR/moment-garden"
 # Ensure state directory exists
 mkdir -p .beads/moment-garden
 
-# Launch Scryer Prolog MCP server
-exec scryer-prolog "$MCP_DIR/mcp-server.pl"
+# Launch SWI-Prolog MCP server
+exec swipl "$MCP_DIR/mcp-server.pl"

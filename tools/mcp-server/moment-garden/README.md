@@ -119,7 +119,7 @@ Server reads JSON-RPC from stdin, writes to stdout.
 
 ### Run Tests
 ```bash
-scryer-prolog test_state.pl
+swipl test_state.pl
 ```
 
 ## Storage
