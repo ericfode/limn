@@ -1,0 +1,27 @@
+{
+  "test": "H8 v2 \u2014 Embedder generalization with controls",
+  "verdict": "COLLAPSED",
+  "discrimination": 0.0,
+  "results": {
+    "positive_vocab": {
+      "ft": 0.9999999403953552,
+      "base": 0.3347401298582554
+    },
+    "negative_vocab": {
+      "ft": 0.9999999403953552,
+      "base": 0.24662966951727866
+    },
+    "semantic": {
+      "ft": 0.9024954319000245,
+      "base": 0.13078085525582234
+    },
+    "random": {
+      "ft": 1.0,
+      "base": 0.21462680101394654
+    },
+    "hgttg": {
+      "ft": 0.9792036950588227,
+      "base": 0.16252497083817918
+    }
+  }
+}

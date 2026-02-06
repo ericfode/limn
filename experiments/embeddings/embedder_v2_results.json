@@ -1,0 +1,37 @@
+{
+  "model": "limn-embedder-v2",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "training_data": "329 HGttG parallel pairs",
+  "loss": "MultipleNegativesRankingLoss",
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 2e-05,
+  "train_size": 263,
+  "val_size": 66,
+  "seed": 42,
+  "timestamp": "2026-02-05T21:28:43.952686",
+  "validation": {
+    "status": "PASS",
+    "discrimination": 0.321851037753125,
+    "details": {
+      "Positive (matched)": {
+        "v2_mean": 0.33472623117268085,
+        "v2_std": 0.14634488760159353,
+        "base_mean": 0.2865815412704692,
+        "n": 66
+      },
+      "Negative (shifted)": {
+        "v2_mean": 0.012875193419555822,
+        "v2_std": 0.10140602259684645,
+        "base_mean": 0.07268466251535398,
+        "n": 66
+      },
+      "Random gibberish": {
+        "v2_mean": 0.130719093978405,
+        "v2_std": 0.028162955919708983,
+        "base_mean": 0.13797798603773118,
+        "n": 5
+      }
+    }
+  }
+}

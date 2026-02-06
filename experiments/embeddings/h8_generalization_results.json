@@ -1,0 +1,41 @@
+{
+  "test": "H8 \u2014 Limn Embedder Generalization",
+  "hypothesis": "The embedder (trained on 41 Greek philosophy pairs) generalizes beyond training distribution",
+  "verdict": "CONFIRMED",
+  "in_domain_mean": 0.9969969391822815,
+  "out_of_domain_mean": 0.9830551197131474,
+  "generalization_gap": 0.013941819469134087,
+  "avg_ood_delta": 0.7422168760250012,
+  "categories": {
+    "1. IN-DOMAIN CONTROL (Greek philosophy)": {
+      "n_pairs": 5,
+      "finetuned_mean": 0.9969969391822815,
+      "finetuned_std": 0.0030691905679898594,
+      "base_mean": 0.17385953068733215,
+      "base_std": 0.06371317427765506,
+      "delta": 0.8231374084949493,
+      "finetuned_above_0.5": 5,
+      "base_above_0.5": 0
+    },
+    "2. STANDARD LIMN VOCABULARY (CVC words)": {
+      "n_pairs": 20,
+      "finetuned_mean": 0.9741785228252411,
+      "finetuned_std": 0.03518874187927915,
+      "base_mean": 0.3145507700741291,
+      "base_std": 0.17057063392077904,
+      "delta": 0.659627752751112,
+      "finetuned_above_0.5": 20,
+      "base_above_0.5": 2
+    },
+    "3. COMPOSITIONAL EXPRESSIONS (operators)": {
+      "n_pairs": 15,
+      "finetuned_mean": 0.9919317166010538,
+      "finetuned_std": 0.00920364135015878,
+      "base_mean": 0.16712571730216344,
+      "base_std": 0.15786464733360728,
+      "delta": 0.8248059992988904,
+      "finetuned_above_0.5": 15,
+      "base_above_0.5": 1
+    }
+  }
+}

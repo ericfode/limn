@@ -131,16 +131,37 @@ The +- operator appears in only 4 of 329 HGttG pairs (1.2%). In Mei's finetuning
 
 ## H8: The Limn embedder generalizes beyond 41 training pairs
 
-**Status:** INVESTIGATING
+**Status:** FALSIFIED — embedding space catastrophically collapsed
 **Source:** `experiments/embeddings/limn-embedder/` — 41 pairs, 0.845 phrase similarity
-**Risk:** MEDIUM
+**Risk:** HIGH (v5 Phase 4 depends on a working embedder)
 
-41 training pairs produced 0.845 phrase similarity on 5 test phrases. This is suspicious. With 384 dimensions and 41 examples, the model has far more capacity than data. Possible explanations:
-- (a) Limn's compositional structure is so regular that 41 examples suffice
-- (b) The test phrases are close to training distribution (overfitting)
-- (c) The base model (MiniLM) already has useful representations for abbreviated text
+41 training pairs produced 0.845 phrase similarity on 5 test phrases. This is suspicious. With 384 dimensions and 41 examples, the model has far more capacity than data.
 
-**Test needed:** Evaluate on truly novel Limn phrases from domains not in training data. If similarity drops below 0.5, the embedder is overfit.
+**Evidence (2026-02-05):** CATASTROPHICALLY BROKEN. The fine-tuning destroyed the embedding space entirely:
+- Correct pairs (`lov → love`): 1.000
+- WRONG pairs (`lov → darkness`): 1.000
+- Random gibberish (`xvz → knowledge`): 1.000
+- Discrimination (correct - wrong): **0.000**
+
+The model scores 1.000 on EVERYTHING. The reported 0.845 was an artifact — it wasn't measuring semantic alignment, it was measuring embedding collapse. The CosineSimilarityLoss with only positive examples (all labels=1.0) and 20 epochs on 41 pairs taught the model to project all inputs to the same point.
+
+The BASE model (all-MiniLM-L6-v2, unfine-tuned) actually discriminates better:
+- Correct pairs: 0.335 mean
+- Wrong pairs: 0.247 mean
+- Random: 0.215 mean
+
+**Root cause:** No negative examples in training. All 41 pairs had label=1.0. The model learned "make everything similar" rather than "align Limn with corresponding English."
+
+**Fix needed:** Retrain with contrastive learning (positive AND negative pairs), or use InfoNCE/triplet loss. Need at least 200+ pairs with hard negatives. The v5 Phase 4 semantic reward model CANNOT use this embedder.
+
+**v2 Fix (2026-02-05):** Retrained with MultipleNegativesRankingLoss on 329 HGttG pairs. Results:
+- Positive: 0.335, Negative: 0.013, Random: 0.131, Discrimination: 0.322
+- No collapse — proper discrimination between matched and mismatched pairs
+- Absolute similarity moderate (0.335) due to BPE tokenizer fragmenting Limn words
+- Saved to `experiments/embeddings/limn-embedder-v2/`
+- **Conclusion:** v2 embedder is usable for ranking but needs custom Limn tokenizer (Phase 2.1) for higher absolute similarity
+
+**Full analysis:** `experiments/embeddings/test_h8_v2.py`, `h8_v2_results.json`, `train_embedder_v2.py`
 
 ---
 
