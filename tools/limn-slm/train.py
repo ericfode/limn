@@ -23,6 +23,7 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
+    EarlyStoppingCallback,
     TrainingArguments,
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
@@ -80,6 +81,8 @@ def main():
                         help="Custom eval data path")
     parser.add_argument("--output-dir", type=str, default=None,
                         help="Custom output directory")
+    parser.add_argument("--early-stopping", type=int, default=3,
+                        help="Early stopping patience (0=disabled, default: 3)")
     args = parser.parse_args()
 
     # Handle wandb
@@ -160,6 +163,12 @@ def main():
     # Custom output dir
     out_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
 
+    # Adjust LR for full fine-tune (lower than LoRA to avoid catastrophic forgetting)
+    lr = args.lr
+    if args.full_finetune and args.lr == 2e-4:
+        lr = 5e-5  # More conservative for full fine-tune
+        print(f"  Auto-adjusted LR to {lr} for full fine-tune")
+
     # Training config
     training_args = SFTConfig(
         output_dir=str(out_dir / "checkpoints"),
@@ -167,7 +176,7 @@ def main():
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
         gradient_accumulation_steps=args.gradient_accumulation,
-        learning_rate=args.lr,
+        learning_rate=lr,
         weight_decay=0.01,
         warmup_steps=50,
         lr_scheduler_type="cosine",
@@ -177,14 +186,25 @@ def main():
         save_strategy="steps",
         save_steps=100,
         save_total_limit=3,
+        load_best_model_at_end=args.early_stopping > 0,
+        metric_for_best_model="eval_loss",
+        greater_is_better=False,
         bf16=True,
         gradient_checkpointing=True,
         max_length=args.max_seq_len,
         dataset_text_field="text",
         report_to="wandb" if _wandb_enabled else "none",
-        run_name="limn-slm-qwen05b" if _wandb_enabled else None,
+        run_name="limn-slm-v4" if _wandb_enabled else None,
         seed=42,
     )
+
+    # Callbacks
+    callbacks = []
+    if args.early_stopping > 0:
+        callbacks.append(EarlyStoppingCallback(
+            early_stopping_patience=args.early_stopping
+        ))
+        print(f"  Early stopping enabled (patience={args.early_stopping})")
 
     # Trainer
     trainer = SFTTrainer(
@@ -193,6 +213,7 @@ def main():
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
         processing_class=tokenizer,
+        callbacks=callbacks,
     )
 
     # Train
@@ -205,7 +226,8 @@ def main():
 
     # Save
     print("\nSaving model...")
-    final_dir = out_dir / "limn-slm-final"
+    version = "v4-full" if args.full_finetune else "v4-lora"
+    final_dir = out_dir / f"limn-slm-{version}"
     if args.full_finetune:
         trainer.save_model(str(final_dir))
     else:
