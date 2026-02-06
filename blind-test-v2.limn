@@ -1,0 +1,88 @@
+:: blind test B :: lmn → eng :: nu hum nam :: nu cha hdr :: ord scr
+
+Instructions to back-translator:
+- Below are 25 passages of Limn, scrambled from an unknown source text.
+- Character names have been replaced with anonymous labels (H, I, J, K, L, M, N).
+- There are no chapter markers, no scene headers, no passage numbers from the original.
+- You have ONLY the bootstrap spec v4 and the vocabulary database.
+- For each passage: decode to English, rate your confidence, note unknowns.
+- After all 25: attempt to identify the source text, if possible.
+- Do NOT guess the source from a single passage. Decode ALL passages first, THEN identify.
+- This is test B, independent from any prior test.
+
+---
+
+[P01]
+sma fis say : mak lif | tru dis fth | mak fal in lgc
+
+[P02]
+H ali | prf hum dek fiv yea | sec kno^0
+
+[P03]
+twl : mst use obj | trv tak
+
+[P04]
+mak fnl say : "sad for dis^0.3"
+
+[P05]
+hum on plnt : hrm^0.9
+
+[P06]
+K : bra big^1 | ask ope dor
+
+[P07]
+mac sho you@uni | you : sma^0.01
+
+[P08]
+I lie in mud | fro mac^1 | sav hom fro dem
+
+[P09]
+plnt bld plnt | old gol^1 got cre plnt
+
+[P10]
+sea ani jmp | say grt | hum thi : prf^0.3
+
+[P11]
+gui boo cov say : "nu fea^1" | in let big*fri
+
+[P12]
+eat | see uni end | dur las^1
+
+[P13]
+ele thu | sgn for shp in vod | trv
+
+[P14]
+J hav two hed tri arm | lea rob sel shp
+
+[P15]
+sma lif in ear | tra al wrd → kno^1
+
+[P16]
+hum div tri | on tri : use^0 | put far on shp
+
+[P17]
+fle aro plnt | say : plnt in pth byp | plnt end
+
+[P18]
+hum in rbe | flo in vod | (hom\hom)^1
+
+[P19]
+H say : dur = fak | eat dur : fak fak
+
+[P20]
+big ani apr in sky | new lif | ask sel "who?"
+
+[P21]
+vod : big^1 | big^1 big^1 | you nu fth big^0.99
+
+[P22]
+L say : you thi kno ans | nu kno que
+
+[P23]
+liq fro mac : tee^0.02 ± (nu tee)
+
+[P24]
+fly : art mis ter : fal
+
+[P25]
+M say : dis use^0 | dis use^0 | you nu und dis use^0
