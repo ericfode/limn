@@ -1,0 +1,60 @@
+{
+  "config": {
+    "train_steps": 20000,
+    "batch_size": 512,
+    "seed": 42,
+    "device": "CUDA"
+  },
+  "conditions": [
+    {
+      "condition": "A_baseline",
+      "description": "Standard Lewis game \u2014 1 receiver, random distractors",
+      "n_receivers": 1,
+      "topsim": 0.35689506734635634,
+      "disentanglement": 0.4126050142682972,
+      "accuracy": 1.0,
+      "per_receiver_accuracy": [
+        1.0
+      ]
+    },
+    {
+      "condition": "B_disjoint_2",
+      "description": "2 receivers with disjoint interests \u2014 attrs [0,1] and [2,3]",
+      "n_receivers": 2,
+      "topsim": 0.3434654655585131,
+      "disentanglement": 0.4129788232572832,
+      "accuracy": 0.99609375,
+      "per_receiver_accuracy": [
+        0.998046875,
+        0.994140625
+      ]
+    },
+    {
+      "condition": "C_individual_4",
+      "description": "4 receivers \u2014 each cares about 1 attribute",
+      "n_receivers": 4,
+      "topsim": 0.38537473638039876,
+      "disentanglement": 0.5211149836985133,
+      "accuracy": 0.9951171875,
+      "per_receiver_accuracy": [
+        0.994140625,
+        0.99609375,
+        0.994140625,
+        0.99609375
+      ]
+    },
+    {
+      "condition": "D_same_2",
+      "description": "2 receivers with SAME interests (control) \u2014 both [0,1,2,3]",
+      "n_receivers": 2,
+      "topsim": 0.4453921677592024,
+      "disentanglement": 0.573464250571045,
+      "accuracy": 0.998046875,
+      "per_receiver_accuracy": [
+        0.99609375,
+        1.0
+      ]
+    }
+  ],
+  "verdict": "HETEROGENEITY_HELPS: D_same_2 improved topsim by +0.0885"
+}

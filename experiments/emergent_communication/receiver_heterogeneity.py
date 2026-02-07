@@ -315,83 +315,53 @@ def train_condition(condition_name, config):
         for r in config["receivers"]
     )
 
-    # Can only JIT if all receivers use same batch structure (standard distractors)
-    # Specialized distractors have different batch contents per receiver
-    if is_standard:
-        @TinyJit
-        def train_step(tgt_oh, cand_oh, noise_packed, temp_t):
-            msg_soft, _ = sender(tgt_oh, temp_t, noise_packed=noise_packed)
-            total_loss = Tensor(0.0)
-            total_acc = Tensor(0.0)
-            for recv in receivers:
-                scores = recv(msg_soft, cand_oh)
-                total_loss = total_loss + scores.sparse_categorical_crossentropy(labels)
-                total_acc = total_acc + (scores.argmax(axis=-1) == 0).mean()
-            avg_loss = total_loss / n_receivers
-            avg_acc = total_acc / n_receivers
-            avg_loss.backward()
-            opt.step()
-            opt.zero_grad()
-            return avg_loss.realize(), avg_acc.realize()
+    # JIT for all conditions: pack per-receiver candidates into single tensor
+    def sample_all_candidates(tgt_oh_np):
+        """Sample candidate batches for all receivers, return stacked array."""
+        cands = []
+        for recv_cfg in config["receivers"]:
+            rel_attrs = recv_cfg["relevant_attrs"]
+            if sorted(rel_attrs) == list(range(N_ATTRIBUTES)):
+                _, cand_oh_np = sample_standard_batch(BATCH_SIZE, N_DISTRACTORS)
+            else:
+                _, cand_oh_np = sample_specialized_batch(
+                    BATCH_SIZE, N_DISTRACTORS, rel_attrs)
+            # Always ensure target is at position 0
+            cand_oh_np[:, 0] = tgt_oh_np
+            cands.append(cand_oh_np)
+        return np.stack(cands)  # (n_recv, batch, n_cand, obj_dim)
 
-        Tensor.training = True
-        for step in range(TRAIN_STEPS):
-            temperature = get_temperature(step)
-            tgt_oh_np, cand_oh_np = sample_standard_batch(BATCH_SIZE, N_DISTRACTORS)
-            noise = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
-            temp_t = Tensor([temperature])
-            loss, acc = train_step(Tensor(tgt_oh_np), Tensor(cand_oh_np), noise, temp_t)
+    @TinyJit
+    def train_step(tgt_oh, all_cands, noise_packed, temp_t):
+        msg_soft, _ = sender(tgt_oh, temp_t, noise_packed=noise_packed)
+        losses, accs = [], []
+        for i, recv in enumerate(receivers):
+            scores = recv(msg_soft, all_cands[i])
+            losses.append(scores.sparse_categorical_crossentropy(labels))
+            accs.append((scores.argmax(axis=-1) == 0).mean())
+        avg_loss = Tensor.stack(*losses).mean()
+        avg_acc = Tensor.stack(*accs).mean()
+        avg_loss.backward()
+        opt.step()
+        opt.zero_grad()
+        return avg_loss.realize(), avg_acc.realize()
 
-            if step % EVAL_EVERY == 0 or step == TRAIN_STEPS - 1:
-                Tensor.training = False
-                topsim = compute_topographic_similarity(sender)
-                print(f"  Step {step:>6d} | Loss {loss.numpy():.4f} | "
-                      f"Acc {acc.numpy():.4f} | TopSim {topsim:.4f}")
-                Tensor.training = True
-    else:
-        # Non-JIT path for specialized receivers (different batches per receiver)
-        Tensor.training = True
-        for step in range(TRAIN_STEPS):
-            temperature = get_temperature(step)
-            # All receivers see the SAME sender message for the SAME target
-            tgt_oh_np, _ = sample_standard_batch(BATCH_SIZE, N_DISTRACTORS)
-            tgt_oh = Tensor(tgt_oh_np)
-            noise = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
-            temp_t = Tensor([temperature])
-            msg_soft, _ = sender(tgt_oh, temp_t, noise_packed=noise)
+    Tensor.training = True
+    for step in range(TRAIN_STEPS):
+        temperature = get_temperature(step)
+        tgt_oh_np, _ = sample_standard_batch(BATCH_SIZE, N_DISTRACTORS)
+        all_cands_np = sample_all_candidates(tgt_oh_np)
+        noise = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
+        temp_t = Tensor([temperature])
+        loss, acc = train_step(
+            Tensor(tgt_oh_np), Tensor(all_cands_np), noise, temp_t)
 
-            losses = []
-            accs = []
-            for recv_cfg, recv in zip(config["receivers"], receivers):
-                rel_attrs = recv_cfg["relevant_attrs"]
-                if sorted(rel_attrs) == list(range(N_ATTRIBUTES)):
-                    # Standard receiver — random distractors
-                    _, cand_oh_np = sample_standard_batch(BATCH_SIZE, N_DISTRACTORS)
-                else:
-                    # Specialized receiver — distractors only differ in relevant attrs
-                    _, cand_oh_np = sample_specialized_batch(
-                        BATCH_SIZE, N_DISTRACTORS, rel_attrs)
-                    # Target is candidate 0 — replace it with the actual target
-                    cand_oh_np[:, 0] = tgt_oh_np
-
-                scores = recv(msg_soft, Tensor(cand_oh_np))
-                losses.append(scores.sparse_categorical_crossentropy(labels))
-                accs.append((scores.argmax(axis=-1) == 0).mean())
-
-            avg_loss = Tensor.stack(*losses).mean()
-            avg_acc = Tensor.stack(*accs).mean()
-            avg_loss.backward()
-            opt.step()
-            opt.zero_grad()
-
-            if step % EVAL_EVERY == 0 or step == TRAIN_STEPS - 1:
-                Tensor.training = False
-                topsim = compute_topographic_similarity(sender)
-                per_recv_acc = [float(a.numpy()) for a in accs]
-                print(f"  Step {step:>6d} | Loss {avg_loss.numpy():.4f} | "
-                      f"Acc {avg_acc.numpy():.4f} | TopSim {topsim:.4f} | "
-                      f"Per-recv: {per_recv_acc}")
-                Tensor.training = True
+        if step % EVAL_EVERY == 0 or step == TRAIN_STEPS - 1:
+            Tensor.training = False
+            topsim = compute_topographic_similarity(sender)
+            print(f"  Step {step:>6d} | Loss {loss.numpy():.4f} | "
+                  f"Acc {acc.numpy():.4f} | TopSim {topsim:.4f}")
+            Tensor.training = True
 
     # Final evaluation
     Tensor.training = False
@@ -408,7 +378,8 @@ def train_condition(condition_name, config):
         else:
             _, cand_oh_np = sample_specialized_batch(
                 BATCH_SIZE, N_DISTRACTORS, recv_cfg["relevant_attrs"])
-            cand_oh_np[:, 0] = tgt_oh_np
+        # Always ensure target is at position 0
+        cand_oh_np[:, 0] = tgt_oh_np
         scores = recv(msg_soft, Tensor(cand_oh_np))
         per_recv_acc.append(float((scores.argmax(axis=-1) == 0).mean().numpy()))
 

@@ -428,6 +428,64 @@ H16 showed Limn is fragile under noise (-14 to -27pp vs English). The question: 
 
 ---
 
+## H21: Iterated learning induces compositionality through cultural transmission bottleneck
+
+**Status:** CONFIRMED (MODERATE)
+**Source:** Ren et al. 2020 — iterated learning in neural agents
+**Risk:** LOW (already tested)
+
+The bottleneck hypothesis: if each agent generation only sees 25% of the previous generation's protocol, the easiest mapping to learn from limited examples is compositional (fewer parameters needed).
+
+**Test:** 10 generations of iterated learning. Each generation: (1) imitation phase — new sender learns teacher's protocol for 25% of objects, (2) communication phase — standard Lewis game with fresh receiver. Track topsim per generation.
+
+**Result:**
+- topsim: 0.366 → 0.544 (+0.177 over 10 generations)
+- Two-phase climb: rapid (gen 0-4, +0.109), plateau (gen 4-6), second climb (gen 7-9, +0.068)
+- Gen 9 peak: 0.550 (near "strong" threshold)
+- Accuracy >0.99 throughout
+- **Only pressure tested that breaks the 0.42 topsim ceiling** (H20 sampling pitfall)
+
+**Verdict:** MODERATE_IMPROVEMENT. Strongest single pressure tested, but plateaus ~0.54. Full compositionality likely requires combining with other pressures (receiver heterogeneity, channel noise).
+
+**Performance note:** JIT'd imitation phase gives 60x speedup (33 min → 30s per gen). Total experiment: ~8 min.
+
+**Experiment:** `experiments/emergent_communication/iterated_learning.py`
+
+---
+
+## H22: Receiver heterogeneity forces compositionality via diverse listener needs
+
+**Status:** PARTIALLY FALSIFIED
+**Source:** Lee 2024 — "One-to-Many Communication and Compositionality" (EMNLP)
+
+When different receivers need different attributes, holistic codes fail because they can't serve all listeners. The sender should develop compositional codes to satisfy all receivers.
+
+**Test:** 4 conditions, 20k steps each:
+- A (baseline): 1 receiver, random distractors
+- B (disjoint): 2 receivers, attrs [0,1] vs [2,3]
+- C (individual): 4 receivers, each cares about 1 attribute
+- D (control): 2 receivers, same interests (all attrs)
+
+**Results:**
+| Condition | TopSim | Disentanglement | Acc |
+|-----------|--------|-----------------|-----|
+| A baseline (1) | 0.357 | 0.413 | 1.000 |
+| B disjoint (2) | 0.344 | 0.413 | 0.996 |
+| C individual (4) | 0.385 | 0.521 | 0.995 |
+| D same (2) | 0.445 | 0.574 | 0.998 |
+
+**Key findings:**
+1. B (disjoint interests) HURT compositionality (-0.013 vs baseline)
+2. C (individual) gave weak improvement (+0.028) but notably increased disentanglement (+26%)
+3. D (same interests, CONTROL) won by largest margin (+0.089)
+4. D's gain is an **ensemble gradient effect** (2x training signal), not heterogeneity
+
+**Why heterogeneity doesn't help here:** With random distractors (H20 sampling pitfall), most samples only require 1 attribute to distinguish. Specialized receivers don't change this fundamental issue. The ensemble effect (D) helps by reducing gradient noise, not by forcing compositional encoding.
+
+**Experiment:** `experiments/emergent_communication/receiver_heterogeneity.py`
+
+---
+
 ## Summary Priority Matrix
 
 | ID | Risk | Effort to Test | Impact if Wrong |
@@ -447,6 +505,8 @@ H16 showed Limn is fragile under noise (-14 to -27pp vs English). The question: 
 | H18 | CONFIRMED | — | CVC wastes 49.3% of encoding capacity |
 | H19 | CONFIRMED | — | Density survives channel coding (+11% to +51%) |
 | H20 | CONFIRMED | — | Sampling too easy (98.8% need 1 symbol, explains topsim ceiling) |
+| H21 | CONFIRMED | — | Iterated learning breaks ceiling (0.37→0.54), strongest single pressure |
+| H22 | PART. FALSIFIED | — | Heterogeneity doesn't help; ensemble effect does |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |
