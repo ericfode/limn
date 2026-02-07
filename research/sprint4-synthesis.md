@@ -67,15 +67,17 @@ Noise resilience:      fragile (14-27pp gap)    robust (channel coded)
 - Shannon's source-channel separation theorem says this is the optimal architecture
 - Best for: mixed environments where Limn is authored by humans, transmitted between machines
 
-## Open Questions
+## Open Questions (Updated 2026-02-07)
 
-1. **Would iterated learning produce higher compositionality?** The Lewis game variants tested individual pressures but not transmission bottleneck (the strongest known pressure). This is the next experiment.
+1. **~~Would iterated learning produce higher compositionality?~~** → IN PROGRESS. Running now. Topsim 0.37→0.47 over 4 generations with 25% transmission bottleneck. Strongest positive result so far.
 
-2. **What's the error-correction overhead for Limn?** Channel coding adds redundancy. How much of the 53% density advantage survives after adding enough error correction to match English's noise resilience?
+2. **~~What's the error-correction overhead for Limn?~~** → ANSWERED (H19). Density survives. Break-even code rate 0.47. At 1% corruption, RS(11,9) gives 42.5% advantage. Even at 20% corruption, Shannon limit gives 11.4% advantage.
 
 3. **Does compositionality matter for machines at all?** If holistic codes work fine for machine communication (99%+ accuracy, perfect generalization), why force compositionality? The answer may be: extensibility, debuggability, and compositional generalization to novel concepts. But these need empirical validation.
 
 4. **What's the optimal alphabet size for machine Limn?** The 26-letter constraint is inherited from English. A larger alphabet (e.g., 256 byte values) would allow shorter words while maintaining prefix-free decodability.
+
+5. **NEW: Were all Sprint 3-4 Lewis game results confounded by the Zhang pitfall?** (H20) 98.8% of training samples need only 1 symbol to discriminate target from 3 random distractors. The ~0.42 topsim ceiling may be an artifact of trivially easy discrimination, not a true compositionality limit. All Lewis game experiments may need reinterpretation. The receiver heterogeneity experiment is designed to fix this.
 
 ## Hypotheses Status After Sprint 4
 
