@@ -1,0 +1,217 @@
+{"limn_a": "lov@fea", "limn_b": "lov*fea", "meaning_a": "fear-component of love (anxiety of loss)", "meaning_b": "love-fear interference (passion/obsession)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy@sad", "limn_b": "joy*sad", "meaning_a": "sadness within joy (bittersweet undertone)", "meaning_b": "joy-sadness interference (bittersweet state)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno@dbt", "limn_b": "kno*dbt", "meaning_a": "doubt-component of knowledge (intellectual humility)", "meaning_b": "knowledge-doubt interference (uncertain knowing)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop@fea", "limn_b": "hop*fea", "meaning_a": "fear-component of hope (anxious hoping)", "meaning_b": "hope-fear interference (desperate hope)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@joy", "limn_b": "lov*joy", "meaning_a": "joy-component of love (delight in beloved)", "meaning_b": "love-joy interference (ecstatic affection)", "category": "operator-swap", "similar": false}
+{"limn_a": "ang@fea", "limn_b": "ang*fea", "meaning_a": "fear beneath anger (defensive reaction)", "meaning_b": "anger-fear interference (rage-panic)", "category": "operator-swap", "similar": false}
+{"limn_a": "tru@fal", "limn_b": "tru*fal", "meaning_a": "falsehood-component of truth (doubt in truth)", "meaning_b": "truth-falsehood interference (paradox)", "category": "operator-swap", "similar": false}
+{"limn_a": "wis@exp", "limn_b": "wis*exp", "meaning_a": "experience-component of wisdom (empirical insight)", "meaning_b": "wisdom-experience interference (enlightened practice)", "category": "operator-swap", "similar": false}
+{"limn_a": "fea@ang", "limn_b": "fea*ang", "meaning_a": "anger-component of fear (aggressive fear)", "meaning_b": "fear-anger interference (terrified rage)", "category": "operator-swap", "similar": false}
+{"limn_a": "str@wea", "limn_b": "str*wea", "meaning_a": "weakness-component of strength (vulnerability in power)", "meaning_b": "strength-weakness interference (fragile power)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@sad", "limn_b": "lov*sad", "meaning_a": "sadness within love (grief of caring)", "meaning_b": "love-sadness interference (melancholy devotion)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop@des", "limn_b": "hop*des", "meaning_a": "desire-component of hope (longing in hope)", "meaning_b": "hope-desire interference (yearning)", "category": "operator-swap", "similar": false}
+{"limn_a": "cal@ang", "limn_b": "cal*ang", "meaning_a": "anger-component of calm (suppressed anger)", "meaning_b": "calm-anger interference (tense composure)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy@fea", "limn_b": "joy*fea", "meaning_a": "fear-component of joy (anxiety of losing joy)", "meaning_b": "joy-fear interference (thrilling excitement)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno@wis", "limn_b": "kno*wis", "meaning_a": "wisdom-component of knowledge (deep knowing)", "meaning_b": "knowledge-wisdom interference (enlightened understanding)", "category": "operator-swap", "similar": false}
+{"limn_a": "lif@dea", "limn_b": "lif*dea", "meaning_a": "death-component of life (mortality awareness)", "meaning_b": "life-death interference (liminal existence)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@hat", "limn_b": "lov*hat", "meaning_a": "hate-component of love (resentment in love)", "meaning_b": "love-hate interference (ambivalent passion)", "category": "operator-swap", "similar": false}
+{"limn_a": "sol@liq", "limn_b": "sol*liq", "meaning_a": "liquid-component of solid (plasticity)", "meaning_b": "solid-liquid interference (gel)", "category": "operator-swap", "similar": false}
+{"limn_a": "hot@col", "limn_b": "hot*col", "meaning_a": "cold-component of heat (cooling tendency)", "meaning_b": "hot-cold interference (thermal shock/lukewarm)", "category": "operator-swap", "similar": false}
+{"limn_a": "lux@nox", "limn_b": "lux*nox", "meaning_a": "darkness-component of light (shadow)", "meaning_b": "light-darkness interference (twilight)", "category": "operator-swap", "similar": false}
+{"limn_a": "gro@dec", "limn_b": "gro*dec", "meaning_a": "decay-component of growth (entropy in growth)", "meaning_b": "growth-decay interference (transformation cycle)", "category": "operator-swap", "similar": false}
+{"limn_a": "fre@hot", "limn_b": "fre*hot", "meaning_a": "heat-component of freezing (latent warmth)", "meaning_b": "freezing-heat interference (flash freezing)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@cou", "limn_b": "lov*cou", "meaning_a": "courage-component of love (bravery in loving)", "meaning_b": "love-courage interference (fierce devotion)", "category": "operator-swap", "similar": false}
+{"limn_a": "pri@sha", "limn_b": "pri*sha", "meaning_a": "shame-component of pride (hidden shame in pride)", "meaning_b": "pride-shame interference (conflicted self-regard)", "category": "operator-swap", "similar": false}
+{"limn_a": "cur@fea", "limn_b": "cur*fea", "meaning_a": "fear-component of curiosity (dread of unknown)", "meaning_b": "curiosity-fear interference (morbid fascination)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov\\fea", "limn_b": "lov@fea", "meaning_a": "love without fear (secure love)", "meaning_b": "fear-component of love (anxiety of loss)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy\\sad", "limn_b": "joy@sad", "meaning_a": "joy without sadness (pure joy)", "meaning_b": "sadness within joy (bittersweet undertone)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno\\dbt", "limn_b": "kno@dbt", "meaning_a": "knowledge without doubt (certainty)", "meaning_b": "doubt-component of knowledge (intellectual humility)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop\\fea", "limn_b": "hop*fea", "meaning_a": "hope without fear (confidence)", "meaning_b": "hope-fear interference (desperate hope)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov\\hat", "limn_b": "lov*hat", "meaning_a": "love without hate (unconditional love)", "meaning_b": "love-hate interference (ambivalent passion)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov±fea", "limn_b": "lov*fea", "meaning_a": "love and fear in superposition (unresolved)", "meaning_b": "love-fear interference (passion/obsession)", "category": "operator-swap", "similar": false}
+{"limn_a": "tru±fal", "limn_b": "tru*fal", "meaning_a": "true and false in superposition (paradox)", "meaning_b": "truth-falsehood interference (half-truth)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy±sad", "limn_b": "joy*sad", "meaning_a": "joy and sadness in superposition (emotionally torn)", "meaning_b": "joy-sadness interference (bittersweet state)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop±des", "limn_b": "hop@des", "meaning_a": "hope and desire in superposition (uncertain longing)", "meaning_b": "desire-component of hope (longing in hope)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov:fea", "limn_b": "lov@fea", "meaning_a": "love given fear context (cautious love)", "meaning_b": "fear-component of love (anxiety of loss)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno:exp", "limn_b": "kno@exp", "meaning_a": "knowledge given experience (empirical knowledge)", "meaning_b": "experience-component of knowledge (experiential knowing)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy:tem", "limn_b": "joy@tem", "meaning_a": "joy given time (nostalgia)", "meaning_b": "time-component of joy (temporal happiness)", "category": "operator-swap", "similar": false}
+{"limn_a": "fea:dan", "limn_b": "fea@dan", "meaning_a": "fear given danger (rational fear)", "meaning_b": "danger-component of fear (risk perception)", "category": "operator-swap", "similar": false}
+{"limn_a": "wis:tem", "limn_b": "wis@tem", "meaning_a": "wisdom given time (aged wisdom)", "meaning_b": "time-component of wisdom (temporal insight)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov^0.9", "limn_b": "lov^0.3", "meaning_a": "intense love (devotion)", "meaning_b": "slight love (affection)", "category": "operator-swap", "similar": false}
+{"limn_a": "fea^0.9", "limn_b": "fea^0.2", "meaning_a": "intense fear (terror)", "meaning_b": "slight fear (unease)", "category": "operator-swap", "similar": false}
+{"limn_a": "hot^0.8", "limn_b": "hot^0.2", "meaning_a": "very hot (scalding)", "meaning_b": "slightly hot (warm)", "category": "operator-swap", "similar": false}
+{"limn_a": "big^0.9", "limn_b": "big^0.1", "meaning_a": "very big (enormous)", "meaning_b": "barely big (small-ish)", "category": "operator-swap", "similar": false}
+{"limn_a": "sad^0.9", "limn_b": "sad^0.2", "meaning_a": "intense sadness (grief)", "meaning_b": "slight sadness (wistfulness)", "category": "operator-swap", "similar": false}
+{"limn_a": "ang^0.9", "limn_b": "ang^0.2", "meaning_a": "intense anger (fury)", "meaning_b": "slight anger (irritation)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop^0.9", "limn_b": "hop^0.1", "meaning_a": "intense hope (fervent hope)", "meaning_b": "barely any hope (faint glimmer)", "category": "operator-swap", "similar": false}
+{"limn_a": "cal^0.9", "limn_b": "cal^0.2", "meaning_a": "deep calm (serenity)", "meaning_b": "slight calm (composed)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov^0.7*fea^0.3", "limn_b": "lov^0.3*fea^0.7", "meaning_a": "mostly love with some fear (anxious affection)", "meaning_b": "mostly fear with some love (fearful attachment)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy^0.8*sad^0.2", "limn_b": "joy^0.2*sad^0.8", "meaning_a": "mostly joy with slight sadness (wistful happiness)", "meaning_b": "mostly sadness with slight joy (melancholy)", "category": "operator-swap", "similar": false}
+{"limn_a": "str^0.9*wea^0.1", "limn_b": "str^0.1*wea^0.9", "meaning_a": "strong with slight weakness (resilient)", "meaning_b": "weak with slight strength (feeble but trying)", "category": "operator-swap", "similar": false}
+{"limn_a": "hot^0.6*col^0.4", "limn_b": "hot^0.2*col^0.8", "meaning_a": "warm-ish (tepid tending warm)", "meaning_b": "cool (tepid tending cold)", "category": "operator-swap", "similar": false}
+{"limn_a": "lux^0.8*nox^0.2", "limn_b": "lux^0.2*nox^0.8", "meaning_a": "bright with slight darkness (dusk)", "meaning_b": "dark with slight light (dawn/pre-dawn)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "fea@lov", "meaning_a": "fear-component of love (anxiety of loss)", "meaning_b": "love-component of fear (attachment driving fear)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno@wis", "limn_b": "wis@kno", "meaning_a": "wisdom-component of knowledge (deep knowing)", "meaning_b": "knowledge-component of wisdom (factual grounding of wisdom)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy@fea", "limn_b": "fea@joy", "meaning_a": "fear-component of joy (losing joy)", "meaning_b": "joy-component of fear (thrill in fear)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop@los", "limn_b": "los@hop", "meaning_a": "loss-component of hope (vulnerability of hoping)", "meaning_b": "hope-component of loss (silver lining)", "category": "operator-swap", "similar": false}
+{"limn_a": "ang@sad", "limn_b": "sad@ang", "meaning_a": "sadness beneath anger (grieving rage)", "meaning_b": "anger beneath sadness (frustrated grief)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@pri", "limn_b": "pri@lov", "meaning_a": "pride-component of love (proud of beloved)", "meaning_b": "love-component of pride (narcissistic pride)", "category": "operator-swap", "similar": false}
+{"limn_a": "lif@fea", "limn_b": "fea@lif", "meaning_a": "fear-component of life (existential anxiety)", "meaning_b": "life-component of fear (survival instinct)", "category": "operator-swap", "similar": false}
+{"limn_a": "gro@dec", "limn_b": "dec@gro", "meaning_a": "decay within growth (entropy of growing)", "meaning_b": "growth within decay (renewal from ruins)", "category": "operator-swap", "similar": false}
+{"limn_a": "sol@gas", "limn_b": "gas@sol", "meaning_a": "gaseous-component of solid (sublimation tendency)", "meaning_b": "solid-component of gas (condensation seed)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "lov\\fea", "meaning_a": "fear-component of love (anxiety of loss)", "meaning_b": "love without fear (secure love)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop@fea", "limn_b": "hop\\fea", "meaning_a": "fear within hope (anxious hoping)", "meaning_b": "hope without fear (confidence)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno@dbt", "limn_b": "kno\\dbt", "meaning_a": "doubt-component of knowledge (intellectual humility)", "meaning_b": "knowledge without doubt (certainty)", "category": "operator-swap", "similar": false}
+{"limn_a": "str@fea", "limn_b": "str\\fea", "meaning_a": "fear-component of strength (fear of failure)", "meaning_b": "strength without fear (fearless power)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy@anx", "limn_b": "joy\\anx", "meaning_a": "anxiety within joy (worried happiness)", "meaning_b": "joy without anxiety (carefree joy)", "category": "operator-swap", "similar": false}
+{"limn_a": "cal@ang", "limn_b": "cal\\ang", "meaning_a": "anger within calm (suppressed anger)", "meaning_b": "calm without anger (true peace)", "category": "operator-swap", "similar": false}
+{"limn_a": "lif@dea", "limn_b": "lif\\dea", "meaning_a": "death within life (mortality)", "meaning_b": "life without death (immortality)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov:tru", "limn_b": "lov\\tru", "meaning_a": "love given truth context (honest love)", "meaning_b": "love without truth (deceptive love)", "category": "operator-swap", "similar": false}
+{"limn_a": "sol*liq", "limn_b": "sol*gas", "meaning_a": "solid-liquid interference (gel, glass)", "meaning_b": "solid-gas interference (aerogel, foam)", "category": "near-structure", "similar": false}
+{"limn_a": "sol*liq", "limn_b": "liq*gas", "meaning_a": "solid-liquid interference (gel, glass)", "meaning_b": "liquid-gas interference (mist, spray)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "lov@joy", "meaning_a": "fear-component of love (anxiety of loss)", "meaning_b": "joy-component of love (delight in beloved)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "lov@sad", "meaning_a": "fear-component of love (anxiety of loss)", "meaning_b": "sadness within love (grief of caring)", "category": "near-structure", "similar": false}
+{"limn_a": "kno@wis", "limn_b": "kno@dbt", "meaning_a": "wisdom-component of knowledge (deep knowing)", "meaning_b": "doubt-component of knowledge (intellectual humility)", "category": "near-structure", "similar": false}
+{"limn_a": "lov*fea", "limn_b": "lov*joy", "meaning_a": "love-fear interference (passion/obsession)", "meaning_b": "love-joy interference (ecstatic affection)", "category": "near-structure", "similar": false}
+{"limn_a": "lov*fea", "limn_b": "hat*fea", "meaning_a": "love-fear interference (passion/obsession)", "meaning_b": "hate-fear interference (paranoid hatred)", "category": "near-structure", "similar": false}
+{"limn_a": "ang@fea", "limn_b": "ang@sad", "meaning_a": "fear beneath anger (defensive reaction)", "meaning_b": "sadness beneath anger (grieving rage)", "category": "near-structure", "similar": false}
+{"limn_a": "ang@fea", "limn_b": "ang@joy", "meaning_a": "fear beneath anger (defensive reaction)", "meaning_b": "joy-component of anger (righteous satisfaction)", "category": "near-structure", "similar": false}
+{"limn_a": "joy*sad", "limn_b": "joy*fea", "meaning_a": "joy-sadness interference (bittersweet)", "meaning_b": "joy-fear interference (thrill)", "category": "near-structure", "similar": false}
+{"limn_a": "hop@fea", "limn_b": "hop@joy", "meaning_a": "fear-component of hope (anxious hoping)", "meaning_b": "joy-component of hope (hopeful excitement)", "category": "near-structure", "similar": false}
+{"limn_a": "hop*fea", "limn_b": "hop*joy", "meaning_a": "hope-fear interference (desperate hope)", "meaning_b": "hope-joy interference (optimistic anticipation)", "category": "near-structure", "similar": false}
+{"limn_a": "lov^0.9", "limn_b": "hat^0.9", "meaning_a": "intense love (devotion)", "meaning_b": "intense hate (loathing)", "category": "near-structure", "similar": false}
+{"limn_a": "fea^0.9", "limn_b": "hop^0.9", "meaning_a": "intense fear (terror)", "meaning_b": "intense hope (fervent hope)", "category": "near-structure", "similar": false}
+{"limn_a": "joy^0.9", "limn_b": "sad^0.9", "meaning_a": "intense joy (elation)", "meaning_b": "intense sadness (grief)", "category": "near-structure", "similar": false}
+{"limn_a": "ang^0.9", "limn_b": "cal^0.9", "meaning_a": "intense anger (fury)", "meaning_b": "deep calm (serenity)", "category": "near-structure", "similar": false}
+{"limn_a": "lov\\fea", "limn_b": "lov\\sad", "meaning_a": "love without fear (secure love)", "meaning_b": "love without sadness (carefree love)", "category": "near-structure", "similar": false}
+{"limn_a": "lov\\fea", "limn_b": "lov\\hat", "meaning_a": "love without fear (secure love)", "meaning_b": "love without hate (unconditional love)", "category": "near-structure", "similar": false}
+{"limn_a": "joy\\fea", "limn_b": "joy\\sad", "meaning_a": "joy without fear (carefree delight)", "meaning_b": "joy without sadness (pure happiness)", "category": "near-structure", "similar": false}
+{"limn_a": "kno\\dbt", "limn_b": "kno\\fea", "meaning_a": "knowledge without doubt (certainty)", "meaning_b": "knowledge without fear (unafraid knowing)", "category": "near-structure", "similar": false}
+{"limn_a": "lov:fea", "limn_b": "lov:joy", "meaning_a": "love given fear (cautious love)", "meaning_b": "love given joy (celebratory love)", "category": "near-structure", "similar": false}
+{"limn_a": "lov:fea", "limn_b": "lov:tru", "meaning_a": "love given fear (cautious love)", "meaning_b": "love given truth (honest love)", "category": "near-structure", "similar": false}
+{"limn_a": "wis:exp", "limn_b": "wis:tem", "meaning_a": "wisdom through experience (empirical wisdom)", "meaning_b": "wisdom through time (aged wisdom)", "category": "near-structure", "similar": false}
+{"limn_a": "fea:dan", "limn_b": "fea:los", "meaning_a": "fear given danger (rational fear)", "meaning_b": "fear given loss (grief anxiety)", "category": "near-structure", "similar": false}
+{"limn_a": "hop±fea", "limn_b": "joy±sad", "meaning_a": "hope and fear in superposition (uncertain)", "meaning_b": "joy and sadness in superposition (torn emotion)", "category": "near-structure", "similar": false}
+{"limn_a": "lov±hat", "limn_b": "tru±fal", "meaning_a": "love and hate in superposition (ambivalence)", "meaning_b": "true and false in superposition (paradox)", "category": "near-structure", "similar": false}
+{"limn_a": "hot^0.3*col^0.7", "limn_b": "hot^0.7*col^0.3", "meaning_a": "mostly cold with some warmth (cool)", "meaning_b": "mostly warm with some cold (tepid)", "category": "near-structure", "similar": false}
+{"limn_a": "lov^0.7*fea^0.3", "limn_b": "lov^0.7*joy^0.3", "meaning_a": "mostly love with some fear (anxious affection)", "meaning_b": "mostly love with some joy (happy affection)", "category": "near-structure", "similar": false}
+{"limn_a": "((lov@fea)*hop)^0.9", "limn_b": "((lov@fea)*sad)^0.9", "meaning_a": "intense hopeful-fearful love", "meaning_b": "intense sad-fearful love", "category": "near-structure", "similar": false}
+{"limn_a": "(kno*dbt)@wis", "limn_b": "(kno*dbt)@fea", "meaning_a": "wisdom's view of uncertain knowledge (contemplation)", "meaning_b": "fear's view of uncertain knowledge (epistemic anxiety)", "category": "near-structure", "similar": false}
+{"limn_a": "sol aqu", "limn_b": "sol ter", "meaning_a": "solid water (ice)", "meaning_b": "solid earth (rock)", "category": "near-structure", "similar": false}
+{"limn_a": "liq aqu", "limn_b": "liq pyr", "meaning_a": "liquid water (water)", "meaning_b": "liquid fire (lava)", "category": "near-structure", "similar": false}
+{"limn_a": "gas aqu", "limn_b": "gas pyr", "meaning_a": "gaseous water (steam)", "meaning_b": "gaseous fire (smoke)", "category": "near-structure", "similar": false}
+{"limn_a": "sol aqu tra liq", "limn_b": "sol ter tra liq", "meaning_a": "solid water transforms to liquid (ice melting)", "meaning_b": "solid earth transforms to liquid (rock melting into lava)", "category": "near-structure", "similar": false}
+{"limn_a": "big tre", "limn_b": "big sto", "meaning_a": "big tree (large tree)", "meaning_b": "big stone (boulder)", "category": "near-structure", "similar": false}
+{"limn_a": "sma aqu flo", "limn_b": "big aqu flo", "meaning_a": "small water flowing (brook, stream)", "meaning_b": "big water flowing (river, flood)", "category": "near-structure", "similar": false}
+{"limn_a": "hot pyr", "limn_b": "hot aqu", "meaning_a": "hot fire (burning)", "meaning_b": "hot water (boiling water)", "category": "near-structure", "similar": false}
+{"limn_a": "col aer", "limn_b": "hot aer", "meaning_a": "cold air (winter wind)", "meaning_b": "hot air (summer heat)", "category": "near-structure", "similar": false}
+{"limn_a": "sol", "limn_b": "slo", "meaning_a": "stubborn, rigid, reliable", "meaning_b": "slope, incline", "category": "near-homophone", "similar": false}
+{"limn_a": "sol", "limn_b": "sof", "meaning_a": "stubborn, rigid, reliable", "meaning_b": "soft, yielding", "category": "near-homophone", "similar": false}
+{"limn_a": "cal", "limn_b": "col", "meaning_a": "calm, tranquil", "meaning_b": "distant, aloof, calm", "category": "near-homophone", "similar": false}
+{"limn_a": "fea", "limn_b": "fre", "meaning_a": "fear, dread", "meaning_b": "freezing, icy", "category": "near-homophone", "similar": false}
+{"limn_a": "fea", "limn_b": "fin", "meaning_a": "fear, dread", "meaning_b": "finger, touch", "category": "near-homophone", "similar": false}
+{"limn_a": "lov", "limn_b": "low", "meaning_a": "love, deep affection", "meaning_b": "low, ground level", "category": "near-homophone", "similar": false}
+{"limn_a": "lov", "limn_b": "los", "meaning_a": "love, deep affection", "meaning_b": "loss, defeat", "category": "near-homophone", "similar": false}
+{"limn_a": "hop", "limn_b": "hot", "meaning_a": "hope, optimism", "meaning_b": "passion, anger, urgency", "category": "near-homophone", "similar": false}
+{"limn_a": "hop", "limn_b": "hom", "meaning_a": "hope, optimism", "meaning_b": "home, house, dwelling", "category": "near-homophone", "similar": false}
+{"limn_a": "sad", "limn_b": "sta", "meaning_a": "sadness, sorrow", "meaning_b": "stability, steadiness", "category": "near-homophone", "similar": false}
+{"limn_a": "sad", "limn_b": "sha", "meaning_a": "sadness, sorrow", "meaning_b": "shame, disgrace", "category": "near-homophone", "similar": false}
+{"limn_a": "ang", "limn_b": "ans", "meaning_a": "anger, rage", "meaning_b": "answer, reply", "category": "near-homophone", "similar": false}
+{"limn_a": "ang", "limn_b": "and", "meaning_a": "anger, rage", "meaning_b": "conjunction, and", "category": "near-homophone", "similar": false}
+{"limn_a": "joy", "limn_b": "joi", "meaning_a": "joy, happiness", "meaning_b": "joining, connecting", "category": "near-homophone", "similar": false}
+{"limn_a": "cur", "limn_b": "cru", "meaning_a": "curious, inquire", "meaning_b": "cruel, harsh", "category": "near-homophone", "similar": false}
+{"limn_a": "cur", "limn_b": "cut", "meaning_a": "curious, inquire", "meaning_b": "decision, separation, ending", "category": "near-homophone", "similar": false}
+{"limn_a": "tru", "limn_b": "tra", "meaning_a": "true, correct", "meaning_b": "transformation, change", "category": "near-homophone", "similar": false}
+{"limn_a": "tru", "limn_b": "tre", "meaning_a": "true, correct", "meaning_b": "tree, woody plant", "category": "near-homophone", "similar": false}
+{"limn_a": "gro", "limn_b": "goo", "meaning_a": "learning, relationship deepening", "meaning_b": "good, positive", "category": "near-homophone", "similar": false}
+{"limn_a": "gro", "limn_b": "gla", "meaning_a": "learning, relationship deepening", "meaning_b": "glass, transparency", "category": "near-homophone", "similar": false}
+{"limn_a": "mov", "limn_b": "mor", "meaning_a": "motion, movement", "meaning_b": "more, greater quantity", "category": "near-homophone", "similar": false}
+{"limn_a": "mov", "limn_b": "mou", "meaning_a": "motion, movement", "meaning_b": "mouth, oral opening", "category": "near-homophone", "similar": false}
+{"limn_a": "res", "limn_b": "rea", "meaning_a": "rest, stillness", "meaning_b": "real, actual", "category": "near-homophone", "similar": false}
+{"limn_a": "res", "limn_b": "ris", "meaning_a": "rest, stillness", "meaning_b": "rising, ascending", "category": "near-homophone", "similar": false}
+{"limn_a": "str", "limn_b": "sta", "meaning_a": "strong, powerful", "meaning_b": "stability, steadiness", "category": "near-homophone", "similar": false}
+{"limn_a": "str", "limn_b": "sto", "meaning_a": "strong, powerful", "meaning_b": "stone, mineral", "category": "near-homophone", "similar": false}
+{"limn_a": "wis", "limn_b": "win", "meaning_a": "wisdom, insight", "meaning_b": "wind, breeze", "category": "near-homophone", "similar": false}
+{"limn_a": "wis", "limn_b": "wri", "meaning_a": "wisdom, insight", "meaning_b": "write, inscribe, record", "category": "near-homophone", "similar": false}
+{"limn_a": "kno", "limn_b": "kin", "meaning_a": "knowing, understanding", "meaning_b": "kind, gentle", "category": "near-homophone", "similar": false}
+{"limn_a": "kno", "limn_b": "nox", "meaning_a": "knowing, understanding", "meaning_b": "darkness, night", "category": "near-homophone", "similar": false}
+{"limn_a": "dea", "limn_b": "des", "meaning_a": "death, ending of life", "meaning_b": "desire, want strongly", "category": "near-homophone", "similar": false}
+{"limn_a": "dea", "limn_b": "dec", "meaning_a": "death, ending of life", "meaning_b": "decay, decomposition", "category": "near-homophone", "similar": false}
+{"limn_a": "lif", "limn_b": "lig", "meaning_a": "alive, living", "meaning_b": "lightning, flash", "category": "near-homophone", "similar": false}
+{"limn_a": "lif", "limn_b": "liq", "meaning_a": "alive, living", "meaning_b": "flexible, adaptable, flowing", "category": "near-homophone", "similar": false}
+{"limn_a": "flo", "limn_b": "for", "meaning_a": "flowing, streaming", "meaning_b": "forward, ahead", "category": "near-homophone", "similar": false}
+{"limn_a": "flo", "limn_b": "fix", "meaning_a": "flowing, streaming", "meaning_b": "fix, repair, mend", "category": "near-homophone", "similar": false}
+{"limn_a": "bir", "limn_b": "bri", "meaning_a": "birth, beginning of life", "meaning_b": "hope, clarity, intelligence", "category": "near-homophone", "similar": false}
+{"limn_a": "bir", "limn_b": "brk", "meaning_a": "birth, beginning of life", "meaning_b": "break, shatter, snap", "category": "near-homophone", "similar": false}
+{"limn_a": "hat", "limn_b": "hav", "meaning_a": "hate, intense dislike", "meaning_b": "have, possess, contain", "category": "near-homophone", "similar": false}
+{"limn_a": "hat", "limn_b": "han", "meaning_a": "hate, intense dislike", "meaning_b": "hand, grasp", "category": "near-homophone", "similar": false}
+{"limn_a": "new", "limn_b": "net", "meaning_a": "new, fresh, novel", "meaning_b": "network, connected", "category": "near-homophone", "similar": false}
+{"limn_a": "new", "limn_b": "now", "meaning_a": "new, fresh, novel", "meaning_b": "present moment", "category": "near-homophone", "similar": false}
+{"limn_a": "old", "limn_b": "ope", "meaning_a": "old, ancient", "meaning_b": "open, unclose", "category": "near-homophone", "similar": false}
+{"limn_a": "old", "limn_b": "oce", "meaning_a": "old, ancient", "meaning_b": "ocean, sea", "category": "near-homophone", "similar": false}
+{"limn_a": "see", "limn_b": "sea", "meaning_a": "seeing, visual perception", "meaning_b": "sea, ocean, saltwater body", "category": "near-homophone", "similar": false}
+{"limn_a": "see", "limn_b": "sen", "meaning_a": "seeing, visual perception", "meaning_b": "sentence, phrase", "category": "near-homophone", "similar": false}
+{"limn_a": "ear", "limn_b": "eat", "meaning_a": "ear, hearing organ", "meaning_b": "eat, consume", "category": "near-homophone", "similar": false}
+{"limn_a": "aqu", "limn_b": "aer", "meaning_a": "water-related", "meaning_b": "air-related", "category": "near-homophone", "similar": false}
+{"limn_a": "aqu", "limn_b": "ang", "meaning_a": "water-related", "meaning_b": "anger, rage", "category": "near-homophone", "similar": false}
+{"limn_a": "pyr", "limn_b": "pri", "meaning_a": "fire-related", "meaning_b": "pride, self-respect", "category": "near-homophone", "similar": false}
+{"limn_a": "ter", "limn_b": "tem", "meaning_a": "earth-related", "meaning_b": "storm, tempest", "category": "near-homophone", "similar": false}
+{"limn_a": "ter", "limn_b": "tre", "meaning_a": "earth-related", "meaning_b": "tree, woody plant", "category": "near-homophone", "similar": false}
+{"limn_a": "beg", "limn_b": "bel", "meaning_a": "beginning, start", "meaning_b": "below, beneath", "category": "near-homophone", "similar": false}
+{"limn_a": "end", "limn_b": "ene", "meaning_a": "ending, conclusion", "meaning_b": "enemy, adversary", "category": "near-homophone", "similar": false}
+{"limn_a": "lux", "limn_b": "liq", "meaning_a": "light-related", "meaning_b": "flexible, adaptable, flowing", "category": "near-homophone", "similar": false}
+{"limn_a": "dar", "limn_b": "dan", "meaning_a": "dark, ignorance", "meaning_b": "dance, movement", "category": "near-homophone", "similar": false}
+{"limn_a": "ful", "limn_b": "fut", "meaning_a": "full, complete", "meaning_b": "future, what will be", "category": "near-homophone", "similar": false}
+{"limn_a": "pas", "limn_b": "pat", "meaning_a": "past, what was", "meaning_b": "pattern, design", "category": "near-homophone", "similar": false}
+{"limn_a": "hum", "limn_b": "hom", "meaning_a": "human, person", "meaning_b": "home, house, dwelling", "category": "near-homophone", "similar": false}
+{"limn_a": "hum", "limn_b": "hav", "meaning_a": "human, person", "meaning_b": "have, possess, contain", "category": "near-homophone", "similar": false}
+{"limn_a": "fri", "limn_b": "fre", "meaning_a": "friend, companion", "meaning_b": "freezing, icy", "category": "near-homophone", "similar": false}
+{"limn_a": "fri", "limn_b": "fir", "meaning_a": "friend, companion", "meaning_b": "first, initial", "category": "near-homophone", "similar": false}
+{"limn_a": "lov@fea inc", "limn_b": "lov@joy inc", "meaning_a": "fear-in-love increases (growing anxiety about beloved)", "meaning_b": "joy-in-love increases (growing delight in beloved)", "category": "near-structure", "similar": false}
+{"limn_a": "sol aqu tra liq:hot^0.9", "limn_b": "sol aqu tra gas:hot^0.9", "meaning_a": "ice melts when very hot (melting)", "meaning_b": "ice sublimates when very hot (sublimation)", "category": "near-structure", "similar": false}
+{"limn_a": "hum joy^0 @ all", "limn_b": "hum ang^0 @ all", "meaning_a": "humans joyless all time (everyone unhappy)", "meaning_b": "humans angerless all time (everyone calm)", "category": "near-structure", "similar": false}
+{"limn_a": "lov^0.9:tem", "limn_b": "lov^0.1:tem", "meaning_a": "intense love given time (deepening devotion)", "meaning_b": "fading love given time (waning affection)", "category": "near-structure", "similar": false}
+{"limn_a": "fea^0.9:dan", "limn_b": "fea^0.1:dan", "meaning_a": "intense fear given danger (panic)", "meaning_b": "slight fear given danger (composure under threat)", "category": "near-structure", "similar": false}
+{"limn_a": "(joy@sad)^0.7:tem", "limn_b": "(joy@sad)^0.2:tem", "meaning_a": "strong bittersweet over time (deep nostalgia)", "meaning_b": "mild bittersweet over time (faint reminiscence)", "category": "near-structure", "similar": false}
+{"limn_a": "lov inc whi fea dec", "limn_b": "lov dec whi fea inc", "meaning_a": "love increases while fear decreases (growing trust)", "meaning_b": "love decreases while fear increases (relationship collapse)", "category": "near-structure", "similar": false}
+{"limn_a": "kno gro whi dbt dec", "limn_b": "kno dec whi dbt gro", "meaning_a": "knowledge grows while doubt decreases (learning)", "meaning_b": "knowledge decreases while doubt grows (confusion)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@fea tra lov\\fea", "limn_b": "lov\\fea tra lov@fea", "meaning_a": "anxious love transforms to secure love (healing)", "meaning_b": "secure love transforms to anxious love (betrayal)", "category": "near-structure", "similar": false}
+{"limn_a": "sol tra liq tra gas", "limn_b": "gas tra liq tra sol", "meaning_a": "solid → liquid → gas (heating sequence)", "meaning_b": "gas → liquid → solid (cooling sequence)", "category": "near-structure", "similar": false}
+{"limn_a": "big^0.9 tre", "limn_b": "sma^0.9 tre", "meaning_a": "very big tree (ancient oak)", "meaning_b": "very small tree (bonsai, seedling)", "category": "near-structure", "similar": false}
+{"limn_a": "hig mtn", "limn_b": "dee val", "meaning_a": "high mountain (peak)", "meaning_b": "deep valley (gorge)", "category": "near-structure", "similar": false}
+{"limn_a": "big oce", "limn_b": "sma lak", "meaning_a": "big ocean (vast sea)", "meaning_b": "small lake (pond)", "category": "near-structure", "similar": false}
+{"limn_a": "bri lux", "limn_b": "dim nox", "meaning_a": "bright light (blinding)", "meaning_b": "dim darkness (murky)", "category": "near-structure", "similar": false}
+{"limn_a": "fas mov", "limn_b": "slo mov", "meaning_a": "fast movement (sprint, dash)", "meaning_b": "slow movement (crawl, drift)", "category": "near-structure", "similar": false}
+{"limn_a": "new beg", "limn_b": "old end", "meaning_a": "new beginning (fresh start)", "meaning_b": "old ending (final chapter)", "category": "near-structure", "similar": false}
+{"limn_a": "fri lov", "limn_b": "ene hat", "meaning_a": "friend's love (friendship)", "meaning_b": "enemy's hate (enmity)", "category": "near-structure", "similar": false}
+{"limn_a": "hum kno", "limn_b": "hum dbt", "meaning_a": "human knowing (understanding)", "meaning_b": "human doubt (skepticism)", "category": "near-structure", "similar": false}
+{"limn_a": "lif gro", "limn_b": "lif dec", "meaning_a": "life growing (flourishing)", "meaning_b": "life decaying (withering)", "category": "near-structure", "similar": false}
+{"limn_a": "lov gro:tem", "limn_b": "lov dec:tem", "meaning_a": "love deepening over time (maturing bond)", "meaning_b": "love decaying over time (fading passion)", "category": "near-structure", "similar": false}
+{"limn_a": "aqu flo fas", "limn_b": "aqu flo slo", "meaning_a": "water flowing fast (rapids, flood)", "meaning_b": "water flowing slow (lazy river, pond)", "category": "near-structure", "similar": false}
+{"limn_a": "pyr bri^0.9", "limn_b": "pyr dim^0.9", "meaning_a": "very bright fire (blazing)", "meaning_b": "very dim fire (embers, dying fire)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "lov fea", "meaning_a": "fear-component of love (projection, extracting an aspect)", "meaning_b": "love and fear (simple juxtaposition)", "category": "near-structure", "similar": false}
+{"limn_a": "sol*liq", "limn_b": "sol liq", "meaning_a": "solid-liquid interference (gel, glass)", "meaning_b": "solid and liquid (two separate states)", "category": "near-structure", "similar": false}
+{"limn_a": "joy*sad", "limn_b": "joy sad", "meaning_a": "joy-sadness interference (bittersweet, new emergent state)", "meaning_b": "joy and sadness (two feelings mentioned together)", "category": "near-structure", "similar": false}
+{"limn_a": "kno*dbt", "limn_b": "kno dbt", "meaning_a": "knowledge-doubt interference (uncertain knowing)", "meaning_b": "knowing and doubting (two mental states)", "category": "near-structure", "similar": false}
+{"limn_a": "hot*col", "limn_b": "hot col", "meaning_a": "hot-cold interference (thermal shock/lukewarm)", "meaning_b": "hot and cold (two temperatures)", "category": "near-structure", "similar": false}
+{"limn_a": "lov*fea@hop", "limn_b": "lov@fea*hop", "meaning_a": "hope-component of love-fear state (hope within passion)", "meaning_b": "fear-of-love interfering with hope (anxious hope)", "category": "near-structure", "similar": false}
+{"limn_a": "(lov@fea)^0.9", "limn_b": "(lov*fea)^0.9", "meaning_a": "intense fear-component of love (deep anxiety of loss)", "meaning_b": "intense love-fear interference (overwhelming passion)", "category": "near-structure", "similar": false}
+{"limn_a": "lov\\fea:tru", "limn_b": "lov:tru\\fea", "meaning_a": "secure love given truth (fearless honest love)", "meaning_b": "love given truth without fear (same? different parsing)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@fea", "limn_b": "lov@fer", "meaning_a": "fear-component of love (using fea=fear)", "meaning_b": "fear-component of love (using fer — not in vocab)", "category": "near-homophone", "similar": false}
+{"limn_a": "sol*liq*gas", "limn_b": "sol*liq*pla", "meaning_a": "three-phase matter: solid-liquid-gas (foam/aerogel)", "meaning_b": "three-phase matter: solid-liquid-plasma (exotic state)", "category": "near-structure", "similar": false}
+{"limn_a": "lov@(fea*hop)", "limn_b": "lov@(fea*sad)", "meaning_a": "love projected onto fearful-hope (anxious optimism in love)", "meaning_b": "love projected onto fearful-sadness (dread in love)", "category": "near-structure", "similar": false}
+{"limn_a": "((kno@dbt)*thi)^0.6:tem", "limn_b": "((kno@dbt)*thi)^0.9:tem", "meaning_a": "moderate thoughtful uncertain-knowledge over time (gentle contemplation)", "meaning_b": "intense thoughtful uncertain-knowledge over time (deep existential doubt)", "category": "near-structure", "similar": false}
+{"limn_a": "lov±hat", "limn_b": "lov*hat", "meaning_a": "love and hate in superposition (both unresolved, ambivalent)", "meaning_b": "love-hate interference (new emergent state, passionate conflict)", "category": "operator-swap", "similar": false}
+{"limn_a": "lif±dea", "limn_b": "lif*dea", "meaning_a": "life and death in superposition (undead, liminal)", "meaning_b": "life-death interference (near-death, transcendence)", "category": "operator-swap", "similar": false}
+{"limn_a": "new±old", "limn_b": "new*old", "meaning_a": "new and old in superposition (ageless)", "meaning_b": "new-old interference (vintage, retro)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov:fri", "limn_b": "lov@fri", "meaning_a": "love given friendship context (friendly love)", "meaning_b": "friendship-component of love (platonic aspect)", "category": "operator-swap", "similar": false}
+{"limn_a": "fea:dar", "limn_b": "fea@dar", "meaning_a": "fear given darkness context (fear of dark)", "meaning_b": "darkness-component of fear (primal dread)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno:exp", "limn_b": "kno\\exp", "meaning_a": "knowledge given experience (empirical knowledge)", "meaning_b": "knowledge without experience (theoretical/book knowledge)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov:tem", "limn_b": "lov\\tem", "meaning_a": "love given time context (mature love)", "meaning_b": "love without time (timeless love, eternal)", "category": "operator-swap", "similar": false}
+{"limn_a": "hop:los", "limn_b": "hop\\los", "meaning_a": "hope given loss context (hope after defeat)", "meaning_b": "hope without loss (untested optimism)", "category": "operator-swap", "similar": false}
+{"limn_a": "cou:fea", "limn_b": "cou\\fea", "meaning_a": "courage given fear (bravery facing fear)", "meaning_b": "courage without fear (fearlessness, recklessness)", "category": "operator-swap", "similar": false}
+{"limn_a": "wis:dbt", "limn_b": "wis\\dbt", "meaning_a": "wisdom given doubt (cautious wisdom)", "meaning_b": "wisdom without doubt (dogmatic certainty)", "category": "operator-swap", "similar": false}
+{"limn_a": "joy:fri", "limn_b": "joy\\fri", "meaning_a": "joy given friendship (shared happiness)", "meaning_b": "joy without friends (solitary pleasure)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov@fea@hop", "limn_b": "lov@hop@fea", "meaning_a": "hope-component of fear-in-love (hoping despite love-anxiety)", "meaning_b": "fear-component of hope-in-love (dreading love's promise)", "category": "operator-swap", "similar": false}
+{"limn_a": "kno@(wis*dbt)", "limn_b": "kno@(wis\\dbt)", "meaning_a": "knowledge projected onto wise-doubt (epistemically humble)", "meaning_b": "knowledge projected onto doubtless-wisdom (epistemically arrogant)", "category": "operator-swap", "similar": false}
+{"limn_a": "lov^0.5@fea", "limn_b": "lov@fea^0.5", "meaning_a": "fear-component of moderate love (mild anxiety in affection)", "meaning_b": "moderate-fear component of love (slight love-anxiety)", "category": "operator-swap", "similar": false}
