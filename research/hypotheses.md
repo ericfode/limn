@@ -263,12 +263,102 @@ The current SLM is asked to do everything: define words, translate, compose expr
 
 ---
 
+## H15: Compositionality is a conditional attractor, not a universal optimum
+
+**Status:** INVESTIGATING — strong evidence FOR
+**Source:** Literature survey (Chaabouni 2020, Kottur 2017, Ren 2020, Futrell & Hahn 2025)
+**Risk:** HIGH — challenges Limn's theoretical foundation
+
+The emergent communication literature is clear: unconstrained neural agents converge to **holistic, anti-efficient codes** (Kottur 2017), not compositional ones. Compositionality only emerges under specific pressures:
+
+1. **Transmission bottleneck** — New agents must learn from limited data (Ren 2020, iterated learning)
+2. **Channel capacity constraint** — Vocab too small for holistic codes (Kottur 2017)
+3. **Sequential processing limits** — Human cognitive architecture (Futrell & Hahn 2025)
+4. **Heterogeneous receivers** — Multiple listeners with different interests (Lee 2024)
+
+Without these pressures, holistic codes are the equilibrium. Chaabouni 2020 found **no correlation** between compositionality and generalization — compositionality only helps with cultural transmission (learnability).
+
+**Implication for Limn:** Limn's compositionality is a *design choice* that is not inevitable for machine communication. For machine-to-machine use, the right question is: which of these pressures exist in the deployment context? If agents are never retrained and channel capacity is unlimited, compositionality may be unnecessary overhead.
+
+**Experimental test:** The Lewis game baseline (hq-jbm2m) confirms this: topsim≈0.27 (holistic). Variants A-E (hq-2uoa8) test which pressures induce compositionality.
+
+---
+
+## H16: Limn's density advantage is fragility under noise
+
+**Status:** UNTESTED — strong theoretical basis
+**Source:** Shannon channel coding theorem; Coupe et al. 2019; Gibson et al. 2019
+**Risk:** HIGH — could invalidate deployment claims
+
+Limn is 53% denser than English (H11). English has ~50% redundancy (Shannon 1948). This redundancy is not waste — it is error correction. Every corrupted English word has contextual cues for recovery. A maximally dense code like Limn offers no such recovery.
+
+**Key results from literature:**
+- Coupe et al. 2019: All 17 human languages studied converge to ~39 bits/s throughput regardless of per-syllable density. Denser languages are spoken slower.
+- Shannon's source-channel separation: The correct architecture is maximal source compression (Limn) + separate channel coding (error correction layer). Limn without a channel code is fragile.
+- Chaabouni 2019: Emergent codes are *anti*-Zipfian — neural agents prefer longer messages for discrimination. This suggests density is not the natural equilibrium.
+
+**Test needed:** Noise injection experiment. Take Limn-English parallel corpus, corrupt Limn tokens at rates 1%, 5%, 10%, 20%. Measure meaning recovery vs same corruption rate on English. Prediction: English degrades gracefully, Limn fails catastrophically.
+
+**Resolution if confirmed:** Limn is optimal as a *source code* (compact representation) but needs an explicit error-correction layer for any non-ideal channel. The 53% density claim should be qualified: "53% source-coding advantage, channel coding TBD."
+
+---
+
+## H17: Grokking will induce compositionality in Lewis signaling games
+
+**Status:** UNTESTED — strong theoretical prediction, no prior experimental work
+**Source:** Power et al. 2022; Nanda et al. 2023; Kumar et al. 2024 (ICLR)
+**Risk:** HIGH — novel experimental prediction
+
+**Theoretical chain:**
+1. Grokking = phase transition from memorization to generalization (Power et al. 2022)
+2. Mechanism: weight decay destroys high-norm memorization circuits; lower-norm generalizing circuits survive (Nanda et al. 2023)
+3. Compositionality is lower-norm than holistic encoding (fewer parameters needed to represent structured mappings)
+4. Lewis game agents memorize arbitrary protocols first (Rita et al. 2022 confirms co-adaptation overfitting)
+5. Therefore: AdamW + weight decay + extended training should produce sudden snap from holistic→compositional
+
+**Predicted signature (Variant E of hq-2uoa8):**
+- Steps 0-20k: topsim≈0.27 (holistic, same as baseline)
+- Steps 20k-150k: topsim plateau, but weight norm decreasing
+- Steps 150k-200k: topsim jumps >0.55 (phase transition)
+- Weight norm inflection point at transition
+
+**If confirmed:** Compositionality is the "true minimum" — the attractor that networks reach when regularized. Limn's design is a shortcut to where machines would converge given enough compute. This is the strongest possible argument for Limn's design.
+
+**If falsified:** Compositionality is NOT a deeper minimum for communication tasks. It is a human design preference, not an emergent property. Limn's structure would need justification on other grounds.
+
+**Key experimental parameters (from literature):**
+- Optimizer: AdamW (not Adam with L2) — Loshchilov & Hutter 2019
+- Weight decay: 0.01 (tunable)
+- Training budget: 10x+ baseline (200k vs 20k)
+- Tracking: topsim every 1k steps, weight norm, per-position MI
+
+---
+
+## H18: Fixed CVC defeats Zipfian efficiency
+
+**Status:** UNTESTED
+**Source:** Piantadosi et al. 2011; Kanwal et al. 2017; Limn spec
+**Risk:** MEDIUM
+
+All Limn words are exactly 3 characters (CVC). Natural languages use shorter words for frequent meanings — Piantadosi et al. 2011 showed word length correlates with surprisal-in-context across 10 languages. This Zipfian optimization is impossible in Limn.
+
+**Consequence:** Limn cannot assign shorter codes to higher-frequency concepts. "the" in English is 3 characters; its equivalent in Limn usage (pipe separator "|") is 1 character but serves a different function. High-frequency compositional patterns pay the same 3-char cost as rare ones.
+
+For machine communication, variable-length tokens would be strictly more efficient. The CVC constraint is a human-learnability concession.
+
+**Test needed:** Compute the Zipfian efficiency loss: compare Limn's actual encoding against an optimal variable-length code over the same frequency distribution. The gap is the "CVC tax."
+
+---
+
 ## Summary Priority Matrix
 
 | ID | Risk | Effort to Test | Impact if Wrong |
 |----|------|----------------|-----------------|
 | H2 | FALSIFIED | Low (data fix) | Eval is meaningless |
-| H5 | HIGH | Medium | DPO loop is broken |
+| H5 | FALSIFIED | Medium | DPO loop is broken |
+| H15 | HIGH | Low (running) | Limn's compositionality is design choice, not convergent |
+| H16 | HIGH | Medium | Density = fragility under noise |
+| H17 | HIGH | Medium (running) | Compositionality is/isn't the true minimum |
 | H4 | HIGH | Medium | Architecture change needed |
 | H1 | HIGH | Medium | Core claim invalidated |
 | H11 | HIGH | Medium | Project thesis ungrounded |
@@ -276,6 +366,7 @@ The current SLM is asked to do everything: define words, translate, compose expr
 | H6 | MEDIUM | Medium | Model can't generalize |
 | H3 | MEDIUM | High | Wrong base model |
 | H7 | MEDIUM | Low | Operator learning incomplete |
+| H18 | MEDIUM | Low | CVC wastes encoding capacity |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |

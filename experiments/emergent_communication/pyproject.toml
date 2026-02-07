@@ -1,0 +1,10 @@
+[project]
+name = "emergent-communication"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.2.6",
+    "scipy>=1.15.3",
+    "tinygrad>=0.12.0",
+]
