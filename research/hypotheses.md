@@ -370,6 +370,36 @@ All Limn words are exactly 3 characters (CVC/tri-letter). Natural languages use 
 
 ---
 
+## H19: Limn's density advantage survives channel coding
+
+**Status:** CONFIRMED (2026-02-07)
+**Source:** Shannon source-channel separation; H11 (density); H16 (fragility)
+**Risk:** RESOLVED — strong positive result
+
+H16 showed Limn is fragile under noise (-14 to -27pp vs English). The question: does adding error correction eat Limn's 53% density advantage?
+
+**Answer: No.** Limn can tolerate up to 52.9% coding overhead before breaking even with English. Even at the Shannon limit:
+
+| Corruption Rate | Coded Limn (bpsu) | English (bpsu) | Advantage Surviving |
+|----------------|-------------------|----------------|---------------------|
+| 1% | 13.6 | 27.6 | +50.7% |
+| 5% | 15.6 | 27.6 | +43.4% |
+| 10% | 18.2 | 27.6 | +34.1% |
+| 20% | 24.5 | 27.6 | +11.4% |
+
+**Practical codes:**
+- RS(11,9) at 1% corruption: 15.9 bpsu, <1% error, +42.5% advantage
+- At 5-20%: simple codes (Hamming, RS) have high residual error. Need LDPC/turbo/polar codes to approach Shannon limit.
+- Repetition coding is always WORSE than English (too wasteful).
+
+**Key insight:** Limn's density advantage is so large that it dominates the error-correction overhead. The correct architecture is Shannon's: Limn as source code (dense), channel code as separate layer (redundant). Combined system beats English at all realistic corruption rates.
+
+**Caveat:** English's noise resilience is "free" (built into natural redundancy). Limn requires explicit engineering of the channel coding layer. The density advantage survives, but system complexity increases.
+
+**Full analysis:** `experiments/information_theory/channel_coding_analysis.py`
+
+---
+
 ## Summary Priority Matrix
 
 | ID | Risk | Effort to Test | Impact if Wrong |
@@ -387,6 +417,7 @@ All Limn words are exactly 3 characters (CVC/tri-letter). Natural languages use 
 | H3 | MEDIUM | High | Wrong base model |
 | H7 | MEDIUM | Low | Operator learning incomplete |
 | H18 | CONFIRMED | — | CVC wastes 49.3% of encoding capacity |
+| H19 | CONFIRMED | — | Density survives channel coding (+11% to +51%) |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |

@@ -1,0 +1,329 @@
+{
+  "source_coding": {
+    "limn_bpsu": 13.00265721877768,
+    "english_bpsu": 27.63153232949513,
+    "raw_advantage": 0.5294268495961021,
+    "break_even_rate": 0.4705731504038979,
+    "max_tolerable_overhead": 0.5294268495961021
+  },
+  "analysis_per_corruption_rate": {
+    "rate_0.01": {
+      "corruption_rate": 0.01,
+      "uncoded_limn_preserved": 0.8368152372787631,
+      "uncoded_english_preserved": 0.980467429989288,
+      "gap": 0.14365219271052498,
+      "p_word_error": 0.029700999999999977,
+      "shannon_capacity": 0.9545853076662059,
+      "coding_schemes": {
+        "repetition_k3": {
+          "p_word_error_after": 0.0025940467642817946,
+          "code_rate": 0.3333333333333333,
+          "coded_bpsu": 39.00797165633304,
+          "vs_english": "WORSE",
+          "advantage": -0.41171945121169373
+        },
+        "repetition_k5": {
+          "p_word_error_after": 0.0002504730577990699,
+          "code_rate": 0.2,
+          "coded_bpsu": 65.0132860938884,
+          "vs_english": "WORSE",
+          "advantage": -1.3528657520194893
+        },
+        "repetition_k7": {
+          "p_word_error_after": 2.534272274950244e-05,
+          "code_rate": 0.14285714285714285,
+          "coded_bpsu": 91.01860053144377,
+          "vs_english": "WORSE",
+          "advantage": -2.2940120528272856
+        },
+        "hamming_secded": {
+          "p_word_error_after": 0.004473893567129433,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "rs_11_9": {
+          "n_symbols": 11,
+          "k_data": 9,
+          "t_correct": 1,
+          "p_decode_fail": 0.0051797174903150615,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_13_9": {
+          "n_symbols": 13,
+          "k_data": 9,
+          "t_correct": 2,
+          "p_decode_fail": 0.0002653052947172175,
+          "code_rate": 0.6923076923076923,
+          "coded_bpsu": 18.781615982678872,
+          "vs_english": "BETTER"
+        },
+        "rs_22_18": {
+          "n_symbols": 22,
+          "k_data": 18,
+          "t_correct": 2,
+          "p_decode_fail": 0.001335629193781107,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_24_18": {
+          "n_symbols": 24,
+          "k_data": 18,
+          "t_correct": 3,
+          "p_decode_fail": 9.053764174621806e-05,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "shannon_limit": {
+          "code_rate": 0.9545853076662059,
+          "coded_bpsu": 13.621262672235028,
+          "vs_english": "BETTER"
+        }
+      },
+      "best_practical": {
+        "scheme": "rs_11_9",
+        "coded_bpsu": 15.892136600728275,
+        "code_rate": 0.8181818181818182
+      }
+    },
+    "rate_0.05": {
+      "corruption_rate": 0.05,
+      "uncoded_limn_preserved": 0.8320789789406811,
+      "uncoded_english_preserved": 0.9634182484667952,
+      "gap": 0.1313392695261142,
+      "p_word_error": 0.1426250000000001,
+      "shannon_capacity": 0.8313390685033297,
+      "coding_schemes": {
+        "repetition_k3": {
+          "p_word_error_after": 0.05522314757421883,
+          "code_rate": 0.3333333333333333,
+          "coded_bpsu": 39.00797165633304,
+          "vs_english": "WORSE",
+          "advantage": -0.41171945121169373
+        },
+        "repetition_k5": {
+          "p_word_error_after": 0.02315983673494055,
+          "code_rate": 0.2,
+          "coded_bpsu": 65.0132860938884,
+          "vs_english": "WORSE",
+          "advantage": -1.3528657520194893
+        },
+        "repetition_k7": {
+          "p_word_error_after": 0.010090498913993575,
+          "code_rate": 0.14285714285714285,
+          "coded_bpsu": 91.01860053144377,
+          "vs_english": "WORSE",
+          "advantage": -2.2940120528272856
+        },
+        "hamming_secded": {
+          "p_word_error_after": 0.08824171454033569,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "rs_11_9": {
+          "n_symbols": 11,
+          "k_data": 9,
+          "t_correct": 1,
+          "p_decode_fail": 0.1018945911424316,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_13_9": {
+          "n_symbols": 13,
+          "k_data": 9,
+          "t_correct": 2,
+          "p_decode_fail": 0.024507841745871166,
+          "code_rate": 0.6923076923076923,
+          "coded_bpsu": 18.781615982678872,
+          "vs_english": "BETTER"
+        },
+        "rs_22_18": {
+          "n_symbols": 22,
+          "k_data": 18,
+          "t_correct": 2,
+          "p_decode_fail": 0.0948230459184308,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_24_18": {
+          "n_symbols": 24,
+          "k_data": 18,
+          "t_correct": 3,
+          "p_decode_fail": 0.029782496908446008,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "shannon_limit": {
+          "code_rate": 0.8313390685033297,
+          "coded_bpsu": 15.64061850501809,
+          "vs_english": "BETTER"
+        }
+      }
+    },
+    "rate_0.1": {
+      "corruption_rate": 0.1,
+      "uncoded_limn_preserved": 0.756962412798279,
+      "uncoded_english_preserved": 0.9179188833924201,
+      "gap": 0.1609564705941411,
+      "p_word_error": 0.2709999999999999,
+      "shannon_capacity": 0.7136030428840437,
+      "coding_schemes": {
+        "repetition_k3": {
+          "p_word_error_after": 0.18051797799999988,
+          "code_rate": 0.3333333333333333,
+          "coded_bpsu": 39.00797165633304,
+          "vs_english": "WORSE",
+          "advantage": -0.41171945121169373
+        },
+        "repetition_k5": {
+          "p_word_error_after": 0.1268913646471059,
+          "code_rate": 0.2,
+          "coded_bpsu": 65.0132860938884,
+          "vs_english": "WORSE",
+          "advantage": -1.3528657520194893
+        },
+        "repetition_k7": {
+          "p_word_error_after": 0.0915766309558246,
+          "code_rate": 0.14285714285714285,
+          "coded_bpsu": 91.01860053144377,
+          "vs_english": "WORSE",
+          "advantage": -2.2940120528272856
+        },
+        "hamming_secded": {
+          "p_word_error_after": 0.2641604750561508,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "rs_11_9": {
+          "n_symbols": 11,
+          "k_data": 9,
+          "t_correct": 1,
+          "p_decode_fail": 0.30264311980000014,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_13_9": {
+          "n_symbols": 13,
+          "k_data": 9,
+          "t_correct": 2,
+          "p_decode_fail": 0.13388275479160008,
+          "code_rate": 0.6923076923076923,
+          "coded_bpsu": 18.781615982678872,
+          "vs_english": "BETTER"
+        },
+        "rs_22_18": {
+          "n_symbols": 22,
+          "k_data": 18,
+          "t_correct": 2,
+          "p_decode_fail": 0.37995906158809684,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_24_18": {
+          "n_symbols": 24,
+          "k_data": 18,
+          "t_correct": 3,
+          "p_decode_fail": 0.2142622390466099,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "shannon_limit": {
+          "code_rate": 0.7136030428840437,
+          "coded_bpsu": 18.22113477295042,
+          "vs_english": "BETTER"
+        }
+      }
+    },
+    "rate_0.2": {
+      "corruption_rate": 0.2,
+      "uncoded_limn_preserved": 0.5436958237642128,
+      "uncoded_english_preserved": 0.8088584676016046,
+      "gap": 0.26516264383739185,
+      "p_word_error": 0.4879999999999999,
+      "shannon_capacity": 0.5310044064107188,
+      "coding_schemes": {
+        "repetition_k3": {
+          "p_word_error_after": 0.4820034559999998,
+          "code_rate": 0.3333333333333333,
+          "coded_bpsu": 39.00797165633304,
+          "vs_english": "WORSE",
+          "advantage": -0.41171945121169373
+        },
+        "repetition_k5": {
+          "p_word_error_after": 0.47750863850700775,
+          "code_rate": 0.2,
+          "coded_bpsu": 65.0132860938884,
+          "vs_english": "WORSE",
+          "advantage": -1.3528657520194893
+        },
+        "repetition_k7": {
+          "p_word_error_after": 0.4737651147752443,
+          "code_rate": 0.14285714285714285,
+          "coded_bpsu": 91.01860053144377,
+          "vs_english": "WORSE",
+          "advantage": -2.2940120528272856
+        },
+        "hamming_secded": {
+          "p_word_error_after": 0.6082530018748321,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "rs_11_9": {
+          "n_symbols": 11,
+          "k_data": 9,
+          "t_correct": 1,
+          "p_decode_fail": 0.6778774528000006,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_13_9": {
+          "n_symbols": 13,
+          "k_data": 9,
+          "t_correct": 2,
+          "p_decode_fail": 0.4983478198272003,
+          "code_rate": 0.6923076923076923,
+          "coded_bpsu": 18.781615982678872,
+          "vs_english": "BETTER"
+        },
+        "rs_22_18": {
+          "n_symbols": 22,
+          "k_data": 18,
+          "t_correct": 2,
+          "p_decode_fail": 0.8455085183826834,
+          "code_rate": 0.8181818181818182,
+          "coded_bpsu": 15.892136600728275,
+          "vs_english": "BETTER"
+        },
+        "rs_24_18": {
+          "n_symbols": 24,
+          "k_data": 18,
+          "t_correct": 3,
+          "p_decode_fail": 0.7361377727696595,
+          "code_rate": 0.75,
+          "coded_bpsu": 17.33687629170357,
+          "vs_english": "BETTER"
+        },
+        "shannon_limit": {
+          "code_rate": 0.5310044064107188,
+          "coded_bpsu": 24.486910206015214,
+          "vs_english": "BETTER"
+        }
+      }
+    }
+  },
+  "verdict": "DENSITY_SURVIVES: Coded Limn beats English at all tested corruption rates (Shannon limit)"
+}
