@@ -41,11 +41,14 @@ from scipy import stats
 
 os.environ.setdefault("CUDA_PATH", "/usr/lib/wsl/lib/libcuda.so.1")
 
-from tinygrad import Tensor, Device
+from tinygrad import Tensor, Device, dtypes
 from tinygrad.nn.state import get_parameters, safe_save, get_state_dict
 from tinygrad.nn.optim import Adam
 from tinygrad.engine.jit import TinyJit
 import tinygrad.nn as nn
+
+# Labels tensor (constant, created once)
+LABELS = None  # initialized after device selection
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
@@ -120,15 +123,17 @@ def sample_batch_np(batch_size, n_distractors):
 
 # ─── Gumbel-Softmax ─────────────────────────────────────────────────────────
 
-def gumbel_softmax(logits, temperature, hard=True):
-    """Gumbel-Softmax with optional straight-through."""
-    # Gumbel noise: -log(-log(U))
-    u = Tensor.rand(*logits.shape)
+def gumbel_softmax(logits, temperature, noise=None, hard=True):
+    """Gumbel-Softmax with optional straight-through.
+    If noise is provided (uniform samples), use it instead of generating new."""
+    if noise is None:
+        u = Tensor.rand(*logits.shape)
+    else:
+        u = noise
     g = -(-(u + 1e-20).log() + 1e-20).log()
     y = ((logits + g) / temperature).softmax(axis=-1)
 
     if hard:
-        # Straight-through: hard in forward, soft in backward
         idx = y.argmax(axis=-1)
         y_hard = idx.one_hot(logits.shape[-1]).cast(y.dtype)
         y = (y_hard - y).detach() + y
@@ -144,14 +149,14 @@ class Sender:
         input_dim = N_ATTRIBUTES * N_VALUES  # 32
         self.enc1 = nn.Linear(input_dim, HIDDEN_DIM)
         self.enc2 = nn.Linear(HIDDEN_DIM, HIDDEN_DIM)
-        # One head per message position
         self.heads = [nn.Linear(HIDDEN_DIM, VOCAB_SIZE) for _ in range(MSG_LEN)]
 
-    def __call__(self, x, temperature):
+    def __call__(self, x, temperature, noise_packed=None):
         """
         Args:
             x: (batch, 32) one-hot objects
-            temperature: float
+            temperature: float or Tensor
+            noise_packed: optional (MSG_LEN, batch, VOCAB_SIZE) uniform noise tensor
         Returns:
             msg_soft: (batch, MSG_LEN, VOCAB_SIZE) soft distributions
             msg_hard: (batch, MSG_LEN) discrete token indices
@@ -159,14 +164,15 @@ class Sender:
         h = self.enc2(self.enc1(x).relu()).relu()
         softs = []
         hards = []
-        for head in self.heads:
-            logits = head(h)  # (batch, VOCAB_SIZE)
-            gs = gumbel_softmax(logits, temperature, hard=True)  # (batch, VOCAB_SIZE)
+        for i, head in enumerate(self.heads):
+            logits = head(h)
+            n = noise_packed[i] if noise_packed is not None else None
+            gs = gumbel_softmax(logits, temperature, noise=n, hard=True)
             softs.append(gs)
-            hards.append(gs.argmax(axis=-1))  # (batch,)
+            hards.append(gs.argmax(axis=-1))
 
-        msg_soft = Tensor.stack(*softs, dim=1)   # (batch, MSG_LEN, VOCAB_SIZE)
-        msg_hard = Tensor.stack(*hards, dim=1)   # (batch, MSG_LEN)
+        msg_soft = Tensor.stack(*softs, dim=1)
+        msg_hard = Tensor.stack(*hards, dim=1)
         return msg_soft, msg_hard
 
 
@@ -215,7 +221,8 @@ def get_temperature(step):
 
 
 def train():
-    """Run the full training loop."""
+    """Run the full training loop with TinyJit for speed."""
+    global LABELS
     np.random.seed(SEED)
     random.seed(SEED)
     Tensor.manual_seed(SEED)
@@ -224,6 +231,18 @@ def train():
     receiver = Receiver()
     params = get_parameters(sender) + get_parameters(receiver)
     opt = Adam(params, lr=LR)
+    LABELS = Tensor.zeros(BATCH_SIZE, dtype=dtypes.int)
+
+    # JIT-compiled training step — all random data passed as arguments
+    @TinyJit
+    def train_step(tgt_oh, cand_oh, noise_packed, temp_t):
+        msg_soft, _ = sender(tgt_oh, temp_t, noise_packed=noise_packed)
+        scores = receiver(msg_soft, cand_oh)
+        loss = scores.sparse_categorical_crossentropy(LABELS)
+        loss.backward()
+        opt.step()
+        opt.zero_grad()
+        return loss.realize(), (scores.argmax(axis=-1) == 0).mean().realize()
 
     history = {"step": [], "loss": [], "accuracy": [], "temperature": [],
                "msg_entropy": [], "topsim": []}
@@ -240,41 +259,32 @@ def train():
     for step in range(N_STEPS):
         temperature = get_temperature(step)
 
-        # Sample batch (numpy) → tinygrad tensors
+        # All random data generated OUTSIDE JIT
         tgt_oh_np, cand_oh_np, _ = sample_batch_np(BATCH_SIZE, N_DISTRACTORS)
         tgt_oh = Tensor(tgt_oh_np)
         cand_oh = Tensor(cand_oh_np)
+        noise_packed = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
+        temp_t = Tensor([temperature])
 
-        # Forward
-        msg_soft, msg_hard = sender(tgt_oh, temperature)
-        scores = receiver(msg_soft, cand_oh)
+        loss, acc = train_step(tgt_oh, cand_oh, noise_packed, temp_t)
 
-        # Loss: target is at index 0
-        labels = Tensor.zeros(BATCH_SIZE).cast("int")
-        loss = scores.sparse_categorical_crossentropy(labels)
-
-        # Backward
-        loss.backward()
-        opt.step()
-        opt.zero_grad()
-
-        # Logging
+        # Logging (infrequent, not JIT'd)
         if step % EVAL_EVERY == 0 or step == N_STEPS - 1:
             Tensor.training = False
             loss_val = loss.numpy()
-            acc = (scores.argmax(axis=-1).numpy() == 0).mean()
+            acc_val = acc.numpy()
 
             entropy = compute_message_entropy(sender)
             topsim = compute_topographic_similarity(sender, n_samples=1000)
 
             history["step"].append(step)
             history["loss"].append(float(loss_val))
-            history["accuracy"].append(float(acc))
+            history["accuracy"].append(float(acc_val))
             history["temperature"].append(temperature)
             history["msg_entropy"].append(entropy)
             history["topsim"].append(topsim)
 
-            print(f"Step {step:>6d} | Loss {loss_val:.4f} | Acc {acc:.4f} | "
+            print(f"Step {step:>6d} | Loss {loss_val:.4f} | Acc {acc_val:.4f} | "
                   f"Temp {temperature:.3f} | H(msg) {entropy:.2f} | TopSim {topsim:.4f}")
             Tensor.training = True
 
