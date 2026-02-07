@@ -486,6 +486,46 @@ When different receivers need different attributes, holistic codes fail because 
 
 ---
 
+## H23: Reconstruction objective forces compositionality by requiring full encoding
+
+**Status:** CONFIRMED (STRONG)
+**Source:** Ben Zion, Carmeli, Paradise & Belinkov (2024, NeurIPS) — "Semantics and Spatiality of Emergent Communication"
+
+Discrimination objectives (Lewis game with random distractors) can be solved with semantically inconsistent protocols because only 1-2 attributes distinguish random candidates (H20). Reconstruction objectives require encoding ALL attributes, inherently forcing compositional structure.
+
+**Test:** 3 conditions, 20k steps each:
+- A (discrimination): Standard Lewis game baseline
+- B (reconstruction): Receiver outputs attribute values from message only
+- C (combined): 50% discrimination + 50% reconstruction loss
+
+**Results:**
+| Condition | TopSim | Disentanglement | Accuracy |
+|-----------|--------|-----------------|----------|
+| A discrimination | 0.366 | 0.486 | 0.996 |
+| B reconstruction | 0.520 | 0.549 | 0.893 |
+| C combined | 0.444 | 0.567 | 1.000 |
+
+**Key findings:**
+1. Reconstruction alone achieves topsim=0.520 (+0.154 over baseline) — comparable to 10 generations of iterated learning (0.544) in a single run!
+2. Accuracy trade-off: reconstruction alone drops to 89% (harder task)
+3. Combined objective (C) is the sweet spot: topsim=0.444 with perfect accuracy
+4. Disentanglement improves across all non-baseline conditions
+
+**Comparison of all tested pressures:**
+| Pressure | TopSim | Cost |
+|----------|--------|------|
+| Iterated learning (10 gen) | 0.544 | ~8 min (10 generations) |
+| Reconstruction (single run) | 0.520 | ~3 min (1 training) |
+| Combined disc+recon | 0.444 | ~3 min (1 training) |
+| Receiver ensemble (2 same) | 0.445 | ~3 min (1 training) |
+| Baseline | 0.366 | ~3 min (1 training) |
+
+**Open question:** What happens when you combine iterated learning WITH reconstruction? Could break 0.60+ topsim.
+
+**Experiment:** `experiments/emergent_communication/reconstruction_game.py`
+
+---
+
 ## Summary Priority Matrix
 
 | ID | Risk | Effort to Test | Impact if Wrong |
@@ -507,6 +547,7 @@ When different receivers need different attributes, holistic codes fail because 
 | H20 | CONFIRMED | — | Sampling too easy (98.8% need 1 symbol, explains topsim ceiling) |
 | H21 | CONFIRMED | — | Iterated learning breaks ceiling (0.37→0.54), strongest single pressure |
 | H22 | PART. FALSIFIED | — | Heterogeneity doesn't help; ensemble effect does |
+| H23 | CONFIRMED | — | Reconstruction forces compositionality (+0.154, nearly matches iterated learning) |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |

@@ -1,0 +1,29 @@
+{
+  "config": {
+    "train_steps": 20000,
+    "batch_size": 512,
+    "seed": 42,
+    "device": "CUDA"
+  },
+  "conditions": [
+    {
+      "condition": "A_discrimination",
+      "topsim": 0.3663176224099878,
+      "disentanglement": 0.4862224592945549,
+      "accuracy": 0.99609375
+    },
+    {
+      "condition": "B_reconstruction",
+      "topsim": 0.5200585215975585,
+      "disentanglement": 0.5489575162657958,
+      "accuracy": 0.892578125
+    },
+    {
+      "condition": "C_combined",
+      "topsim": 0.44411071952656117,
+      "disentanglement": 0.5672716182128634,
+      "accuracy": 1.0
+    }
+  ],
+  "verdict": "RECONSTRUCTION_HELPS: B_reconstruction improved topsim by +0.1537"
+}
