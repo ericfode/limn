@@ -1,0 +1,210 @@
+{"id": "hn-001", "expr_a": "lov@fea", "meaning_a": "fear-component of love (anxiety of loss)", "expr_b": "lov*fea", "meaning_b": "love-fear interference (passion/obsession)", "category": "operator-swap"}
+{"id": "hn-002", "expr_a": "lov@fea", "meaning_a": "fear-component of love", "expr_b": "fea@lov", "meaning_b": "love-component of fear (what we fear losing)", "category": "operator-swap"}
+{"id": "hn-003", "expr_a": "joy*sad", "meaning_a": "bittersweet (joy-sadness interference)", "expr_b": "joy@sad", "meaning_b": "sadness-component within joy", "category": "operator-swap"}
+{"id": "hn-004", "expr_a": "joy*sad", "meaning_a": "bittersweet", "expr_b": "joy±sad", "meaning_b": "unresolved joy-or-sadness", "category": "operator-swap"}
+{"id": "hn-005", "expr_a": "hot^0.3", "meaning_a": "slightly hot (warm)", "expr_b": "hot^0.9", "meaning_b": "very hot (scalding)", "category": "operator-swap"}
+{"id": "hn-006", "expr_a": "lov^0.3", "meaning_a": "slight love (affection)", "expr_b": "lov^0.9", "meaning_b": "intense love (devotion)", "category": "operator-swap"}
+{"id": "hn-007", "expr_a": "lov\\fea", "meaning_a": "love without fear (secure love)", "expr_b": "lov@fea", "meaning_b": "fear-component of love (anxiety)", "category": "operator-swap"}
+{"id": "hn-008", "expr_a": "lov\\fea", "meaning_a": "love without fear", "expr_b": "lov*fea", "meaning_b": "love-fear interference", "category": "operator-swap"}
+{"id": "hn-009", "expr_a": "lov:tru", "meaning_a": "love given trust (secure love)", "expr_b": "lov@tru", "meaning_b": "truth-component of love", "category": "operator-swap"}
+{"id": "hn-010", "expr_a": "lov:tru", "meaning_a": "love given trust", "expr_b": "lov*tru", "meaning_b": "love-truth interference", "category": "operator-swap"}
+{"id": "hn-011", "expr_a": "tru±fal", "meaning_a": "paradox (both true and false unresolved)", "expr_b": "tru*fal", "meaning_b": "true-false interference (ambiguity)", "category": "operator-swap"}
+{"id": "hn-012", "expr_a": "sel@oth", "meaning_a": "other-component of self (influence)", "expr_b": "sel*oth", "meaning_b": "self-other interference (empathy/merge)", "category": "operator-swap"}
+{"id": "hn-013", "expr_a": "sel\\oth", "meaning_a": "self without other (pure individuality)", "expr_b": "sel±oth", "meaning_b": "self-other superposition (identity blur)", "category": "operator-swap"}
+{"id": "hn-014", "expr_a": "kno@dou", "meaning_a": "doubt-component of knowing", "expr_b": "kno*dou", "meaning_b": "knowing-doubting interference (epistemic anxiety)", "category": "operator-swap"}
+{"id": "hn-015", "expr_a": "kno\\dou", "meaning_a": "knowledge without doubt (certainty)", "expr_b": "kno:dou", "meaning_b": "knowledge given doubt (cautious knowledge)", "category": "operator-swap"}
+{"id": "hn-016", "expr_a": "sol*liq", "meaning_a": "gel/glass (solid-liquid interference)", "expr_b": "sol@liq", "meaning_b": "liquid-component of solid (plasticity)", "category": "operator-swap"}
+{"id": "hn-017", "expr_a": "sol*liq", "meaning_a": "gel/glass", "expr_b": "sol±liq", "meaning_b": "solid-or-liquid (undetermined state)", "category": "operator-swap"}
+{"id": "hn-018", "expr_a": "sol\\liq", "meaning_a": "solid without liquid quality (pure rigidity)", "expr_b": "sol*liq", "meaning_b": "gel (solid-liquid interference)", "category": "operator-swap"}
+{"id": "hn-019", "expr_a": "fea@ang", "meaning_a": "anger-component of fear (defensive reaction)", "expr_b": "ang@fea", "meaning_b": "fear-component of anger (what anger masks)", "category": "operator-swap"}
+{"id": "hn-020", "expr_a": "fea*ang", "meaning_a": "fear-anger interference (rage/panic)", "expr_b": "fea:ang", "meaning_b": "fear given anger (fear in angry context)", "category": "operator-swap"}
+{"id": "hn-021", "expr_a": "hop@dou", "meaning_a": "doubt-component of hope (uncertainty in hoping)", "expr_b": "hop\\dou", "meaning_b": "hope without doubt (confidence)", "category": "operator-swap"}
+{"id": "hn-022", "expr_a": "hop*dou", "meaning_a": "hope-doubt interference (wavering)", "expr_b": "hop±dou", "meaning_b": "hope-or-doubt unresolved", "category": "operator-swap"}
+{"id": "hn-023", "expr_a": "bri*dim", "meaning_a": "bright-dim interference (twilight)", "expr_b": "bri@dim", "meaning_b": "dim-component of brightness (fading)", "category": "operator-swap"}
+{"id": "hn-024", "expr_a": "bri\\dim", "meaning_a": "brightness without dimness (pure light)", "expr_b": "bri*dim", "meaning_b": "twilight", "category": "operator-swap"}
+{"id": "hn-025", "expr_a": "nrg^0.2", "meaning_a": "low energy (lethargy)", "expr_b": "nrg^0.8", "meaning_b": "high energy (vigor)", "category": "operator-swap"}
+{"id": "hn-026", "expr_a": "sad^0.2", "meaning_a": "slight sadness (melancholy)", "expr_b": "sad^0.8", "meaning_b": "deep sadness (grief)", "category": "operator-swap"}
+{"id": "hn-027", "expr_a": "fea^0.1", "meaning_a": "barely afraid (uneasy)", "expr_b": "fea^0.9", "meaning_b": "terrified", "category": "operator-swap"}
+{"id": "hn-028", "expr_a": "cal^0.3", "meaning_a": "slightly calm (settling)", "expr_b": "cal^0.9", "meaning_b": "deeply calm (serene)", "category": "operator-swap"}
+{"id": "hn-029", "expr_a": "pre^0.3", "meaning_a": "slight pressure", "expr_b": "pre^0.9", "meaning_b": "extreme pressure", "category": "operator-swap"}
+{"id": "hn-030", "expr_a": "sta^0.2", "meaning_a": "barely stable (precarious)", "expr_b": "sta^0.9", "meaning_b": "very stable (solid)", "category": "operator-swap"}
+{"id": "hn-031", "expr_a": "lov^0.7*fea^0.3", "meaning_a": "mostly love with some fear (anxious affection)", "expr_b": "lov^0.3*fea^0.7", "meaning_b": "mostly fear with some love (possessive dread)", "category": "operator-swap"}
+{"id": "hn-032", "expr_a": "joy^0.8*sad^0.2", "meaning_a": "mostly joy with touch of sadness (wistful happiness)", "expr_b": "joy^0.2*sad^0.8", "meaning_b": "mostly sadness with touch of joy (grieving with gratitude)", "category": "operator-swap"}
+{"id": "hn-033", "expr_a": "hot^0.5*col^0.5", "meaning_a": "lukewarm (equal hot-cold)", "expr_b": "hot^0.9*col^0.1", "meaning_b": "near-boiling with faint coolness", "category": "operator-swap"}
+{"id": "hn-034", "expr_a": "str^0.5*wea^0.5", "meaning_a": "equal strength and weakness", "expr_b": "str^0.9*wea^0.1", "meaning_b": "mostly strong with slight weakness", "category": "operator-swap"}
+{"id": "hn-035", "expr_a": "kno^0.9*dou^0.1", "meaning_a": "high knowledge with slight doubt (confident)", "expr_b": "kno^0.1*dou^0.9", "meaning_b": "slight knowledge with much doubt (confused)", "category": "operator-swap"}
+{"id": "hn-036", "expr_a": "lov tra hat", "meaning_a": "love transforms into hate", "expr_b": "hat tra lov", "meaning_b": "hate transforms into love", "category": "structural"}
+{"id": "hn-037", "expr_a": "sol aqu", "meaning_a": "solid water (ice)", "expr_b": "liq aqu", "meaning_b": "liquid water (water)", "category": "structural"}
+{"id": "hn-038", "expr_a": "sol aqu", "meaning_a": "ice", "expr_b": "gas aqu", "meaning_b": "steam", "category": "structural"}
+{"id": "hn-039", "expr_a": "liq aqu", "meaning_a": "water", "expr_b": "gas aqu", "meaning_b": "steam", "category": "structural"}
+{"id": "hn-040", "expr_a": "hot pyr", "meaning_a": "hot fire (burning)", "expr_b": "col pyr", "meaning_b": "cold fire (embers/dying flame)", "category": "structural"}
+{"id": "hn-041", "expr_a": "bri lux", "meaning_a": "bright light (sunlight)", "expr_b": "dim lux", "meaning_b": "dim light (candle/twilight)", "category": "structural"}
+{"id": "hn-042", "expr_a": "big tre", "meaning_a": "big tree", "expr_b": "sma tre", "meaning_b": "small tree (sapling)", "category": "structural"}
+{"id": "hn-043", "expr_a": "fas mov", "meaning_a": "stylish motion", "expr_b": "slo mov", "meaning_b": "slope motion (rolling downhill)", "category": "structural"}
+{"id": "hn-044", "expr_a": "dep aqu", "meaning_a": "deep water (ocean)", "expr_b": "dep ter", "meaning_b": "deep earth (underground)", "category": "structural"}
+{"id": "hn-045", "expr_a": "hig ris", "meaning_a": "high rising (climbing)", "expr_b": "low fal", "meaning_b": "low falling (sinking)", "category": "structural"}
+{"id": "hn-046", "expr_a": "str bnd", "meaning_a": "strong bond", "expr_b": "wea bnd", "meaning_b": "weak bond (fragile connection)", "category": "structural"}
+{"id": "hn-047", "expr_a": "new beg", "meaning_a": "new beginning", "expr_b": "old end", "meaning_b": "old ending", "category": "structural"}
+{"id": "hn-048", "expr_a": "lov gro", "meaning_a": "love grows/deepens", "expr_b": "lov dec", "meaning_b": "love decays", "category": "structural"}
+{"id": "hn-049", "expr_a": "fea ris", "meaning_a": "fear rises", "expr_b": "fea fal", "meaning_b": "fear falls (relief)", "category": "structural"}
+{"id": "hn-050", "expr_a": "sad dep", "meaning_a": "sadness deep (grief)", "expr_b": "joy dep", "meaning_b": "joy deep (bliss)", "category": "structural"}
+{"id": "hn-051", "expr_a": "nrg ris", "meaning_a": "energy rises", "expr_b": "nrg dec", "meaning_b": "energy decays (exhaustion)", "category": "structural"}
+{"id": "hn-052", "expr_a": "lif beg", "meaning_a": "life begins (birth)", "expr_b": "lif end", "meaning_b": "life ends (death)", "category": "structural"}
+{"id": "hn-053", "expr_a": "aqu flo for", "meaning_a": "water flows forward (river)", "expr_b": "aqu flo bac", "meaning_b": "water flows backward (tidal reversal)", "category": "structural"}
+{"id": "hn-054", "expr_a": "sel see oth", "meaning_a": "self sees other", "expr_b": "oth see sel", "meaning_b": "other sees self", "category": "structural"}
+{"id": "hn-055", "expr_a": "par lov sel", "meaning_a": "parent loves self (parental love)", "expr_b": "sel lov par", "meaning_b": "self loves parent (filial love)", "category": "structural"}
+{"id": "hn-056", "expr_a": "giv lov", "meaning_a": "giving love", "expr_b": "tak lov", "meaning_b": "taking love", "category": "structural"}
+{"id": "hn-057", "expr_a": "ope hrt", "meaning_a": "open heart", "expr_b": "clo hrt", "meaning_b": "closed heart (but clo=cloud, so clouded heart)", "category": "structural"}
+{"id": "hn-058", "expr_a": "cli sen req", "meaning_a": "client sends request", "expr_b": "svr sen ans", "meaning_b": "server sends answer", "category": "structural"}
+{"id": "hn-059", "expr_a": "dat inp", "meaning_a": "data input", "expr_b": "dat out", "meaning_b": "data output", "category": "structural"}
+{"id": "hn-060", "expr_a": "err ris", "meaning_a": "error rises (more errors)", "expr_b": "err dec", "meaning_b": "error decays (fewer errors)", "category": "structural"}
+{"id": "hn-061", "expr_a": "net ope", "meaning_a": "network open", "expr_b": "net sec", "meaning_b": "network secret (encrypted)", "category": "structural"}
+{"id": "hn-062", "expr_a": "acc vel", "meaning_a": "accelerating velocity (speeding up)", "expr_b": "dec vel", "meaning_b": "decaying velocity (slowing down)", "category": "structural"}
+{"id": "hn-063", "expr_a": "cel gro", "meaning_a": "cell grows", "expr_b": "cel dec", "meaning_b": "cell decays (apoptosis)", "category": "structural"}
+{"id": "hn-064", "expr_a": "mol joi", "meaning_a": "molecules joining (bonding)", "expr_b": "mol brk", "meaning_b": "molecules breaking (dissociation)", "category": "structural"}
+{"id": "hn-065", "expr_a": "dna dup", "meaning_a": "DNA duplicates (replication)", "expr_b": "dna brk", "meaning_b": "DNA breaks (mutation/damage)", "category": "structural"}
+{"id": "hn-066", "expr_a": "nuc joi", "meaning_a": "nuclei joining (fusion)", "expr_b": "nuc brk", "meaning_b": "nucleus breaking (fission)", "category": "structural"}
+{"id": "hn-067", "expr_a": "pre ris", "meaning_a": "pressure rises", "expr_b": "pre rel", "meaning_b": "pressure releases", "category": "structural"}
+{"id": "hn-068", "expr_a": "tru gro", "meaning_a": "trust grows", "expr_b": "tru brk", "meaning_b": "trust breaks", "category": "structural"}
+{"id": "hn-069", "expr_a": "wav ris", "meaning_a": "wave rises (crest)", "expr_b": "wav fal", "meaning_b": "wave falls (trough)", "category": "structural"}
+{"id": "hn-070", "expr_a": "sel ope", "meaning_a": "self opens (vulnerability)", "expr_b": "sel pro", "meaning_b": "self protects (defensiveness)", "category": "structural"}
+{"id": "hn-071", "expr_a": "sol", "meaning_a": "stubborn/rigid/solid", "expr_b": "sof", "meaning_b": "soft/yielding", "category": "near-homophone"}
+{"id": "hn-072", "expr_a": "sol", "meaning_a": "stubborn/rigid", "expr_b": "slo", "meaning_b": "slope/incline", "category": "near-homophone"}
+{"id": "hn-073", "expr_a": "col", "meaning_a": "distant/cold/aloof", "expr_b": "cod", "meaning_b": "code/program", "category": "near-homophone"}
+{"id": "hn-074", "expr_a": "col", "meaning_a": "distant/cold", "expr_b": "con", "meaning_b": "contraction", "category": "near-homophone"}
+{"id": "hn-075", "expr_a": "cal", "meaning_a": "calm", "expr_b": "car", "meaning_b": "carbon", "category": "near-homophone"}
+{"id": "hn-076", "expr_a": "cal", "meaning_a": "calm", "expr_b": "cat", "meaning_b": "catalyst", "category": "near-homophone"}
+{"id": "hn-077", "expr_a": "lov", "meaning_a": "love", "expr_b": "low", "meaning_b": "low/ground", "category": "near-homophone"}
+{"id": "hn-078", "expr_a": "lov", "meaning_a": "love", "expr_b": "lon", "meaning_b": "long-lasting", "category": "near-homophone"}
+{"id": "hn-079", "expr_a": "fea", "meaning_a": "fear", "expr_b": "fed", "meaning_b": "feed", "category": "near-homophone"}
+{"id": "hn-080", "expr_a": "fea", "meaning_a": "fear", "expr_b": "fre", "meaning_b": "freezing", "category": "near-homophone"}
+{"id": "hn-081", "expr_a": "sad", "meaning_a": "sadness", "expr_b": "sam", "meaning_b": "same", "category": "near-homophone"}
+{"id": "hn-082", "expr_a": "sad", "meaning_a": "sadness", "expr_b": "saf", "meaning_b": "safe", "category": "near-homophone"}
+{"id": "hn-083", "expr_a": "hop", "meaning_a": "hope", "expr_b": "hot", "meaning_b": "passion/hot", "category": "near-homophone"}
+{"id": "hn-084", "expr_a": "hop", "meaning_a": "hope", "expr_b": "hol", "meaning_b": "hold", "category": "near-homophone"}
+{"id": "hn-085", "expr_a": "ang", "meaning_a": "anger", "expr_b": "ans", "meaning_b": "answer/reply", "category": "near-homophone"}
+{"id": "hn-086", "expr_a": "ang", "meaning_a": "anger", "expr_b": "anx", "meaning_b": "anxious", "category": "near-homophone"}
+{"id": "hn-087", "expr_a": "thi", "meaning_a": "thinking", "expr_b": "thr", "meaning_b": "thread/string", "category": "near-homophone"}
+{"id": "hn-088", "expr_a": "thi", "meaning_a": "thinking", "expr_b": "thm", "meaning_b": "theorem", "category": "near-homophone"}
+{"id": "hn-089", "expr_a": "kno", "meaning_a": "knowing", "expr_b": "nox", "meaning_b": "darkness", "category": "near-homophone"}
+{"id": "hn-090", "expr_a": "sel", "meaning_a": "self", "expr_b": "sen", "meaning_b": "sentence", "category": "near-homophone"}
+{"id": "hn-091", "expr_a": "sel", "meaning_a": "self", "expr_b": "sec", "meaning_b": "secret", "category": "near-homophone"}
+{"id": "hn-092", "expr_a": "sel", "meaning_a": "self", "expr_b": "see", "meaning_b": "seeing", "category": "near-homophone"}
+{"id": "hn-093", "expr_a": "see", "meaning_a": "seeing", "expr_b": "seq", "meaning_b": "sequence", "category": "near-homophone"}
+{"id": "hn-094", "expr_a": "see", "meaning_a": "seeing", "expr_b": "sec", "meaning_b": "secret", "category": "near-homophone"}
+{"id": "hn-095", "expr_a": "ris", "meaning_a": "rising/ascending", "expr_b": "res", "meaning_b": "rest/stillness", "category": "near-homophone"}
+{"id": "hn-096", "expr_a": "ris", "meaning_a": "rising", "expr_b": "rul", "meaning_b": "ruling", "category": "near-homophone"}
+{"id": "hn-097", "expr_a": "mov", "meaning_a": "motion", "expr_b": "mol", "meaning_b": "molecule", "category": "near-homophone"}
+{"id": "hn-098", "expr_a": "mov", "meaning_a": "motion", "expr_b": "mor", "meaning_b": "more", "category": "near-homophone"}
+{"id": "hn-099", "expr_a": "flo", "meaning_a": "flowing", "expr_b": "fal", "meaning_b": "failure/decline", "category": "near-homophone"}
+{"id": "hn-100", "expr_a": "flo", "meaning_a": "flowing", "expr_b": "for", "meaning_b": "forward", "category": "near-homophone"}
+{"id": "hn-101", "expr_a": "net", "meaning_a": "network", "expr_b": "ner", "meaning_b": "nerve", "category": "near-homophone"}
+{"id": "hn-102", "expr_a": "net", "meaning_a": "network", "expr_b": "new", "meaning_b": "new", "category": "near-homophone"}
+{"id": "hn-103", "expr_a": "dat", "meaning_a": "data", "expr_b": "dec", "meaning_b": "decay", "category": "near-homophone"}
+{"id": "hn-104", "expr_a": "dat", "meaning_a": "data", "expr_b": "dep", "meaning_b": "depth", "category": "near-homophone"}
+{"id": "hn-105", "expr_a": "err", "meaning_a": "error", "expr_b": "ear", "meaning_b": "ear", "category": "near-homophone"}
+{"id": "hn-106", "expr_a": "nuc", "meaning_a": "nucleus", "expr_b": "nrg", "meaning_b": "energy", "category": "near-homophone"}
+{"id": "hn-107", "expr_a": "cel", "meaning_a": "cell (biology)", "expr_b": "cle", "meaning_b": "clear (communication)", "category": "near-homophone"}
+{"id": "hn-108", "expr_a": "gen", "meaning_a": "gene/heredity", "expr_b": "giv", "meaning_b": "giving", "category": "near-homophone"}
+{"id": "hn-109", "expr_a": "dna", "meaning_a": "DNA/genetic code", "expr_b": "dim", "meaning_b": "dim/faint", "category": "near-homophone"}
+{"id": "hn-110", "expr_a": "tra", "meaning_a": "transformation", "expr_b": "tru", "meaning_b": "true", "category": "near-homophone"}
+{"id": "hn-111", "expr_a": "tra", "meaning_a": "transformation", "expr_b": "tre", "meaning_b": "tree", "category": "near-homophone"}
+{"id": "hn-112", "expr_a": "pre", "meaning_a": "pressure", "expr_b": "pri", "meaning_b": "pride", "category": "near-homophone"}
+{"id": "hn-113", "expr_a": "pre", "meaning_a": "pressure", "expr_b": "prf", "meaning_b": "perform", "category": "near-homophone"}
+{"id": "hn-114", "expr_a": "bre", "meaning_a": "brief", "expr_b": "bri", "meaning_b": "bright", "category": "near-homophone"}
+{"id": "hn-115", "expr_a": "bre", "meaning_a": "brief", "expr_b": "brk", "meaning_b": "break", "category": "near-homophone"}
+{"id": "hn-116", "expr_a": "des", "meaning_a": "desire/crave", "expr_b": "dep", "meaning_b": "depth", "category": "near-homophone"}
+{"id": "hn-117", "expr_a": "des", "meaning_a": "desire", "expr_b": "def", "meaning_b": "definition", "category": "near-homophone"}
+{"id": "hn-118", "expr_a": "des", "meaning_a": "desire", "expr_b": "dec", "meaning_b": "decay", "category": "near-homophone"}
+{"id": "hn-119", "expr_a": "gro", "meaning_a": "learning/deepening", "expr_b": "grt", "meaning_b": "gratitude", "category": "near-homophone"}
+{"id": "hn-120", "expr_a": "gro", "meaning_a": "learning", "expr_b": "grp", "meaning_b": "grip/hold", "category": "near-homophone"}
+{"id": "hn-121", "expr_a": "lov dep", "meaning_a": "love deep (profound love)", "expr_b": "lov dec", "meaning_b": "love decays (fading love)", "category": "near-homophone"}
+{"id": "hn-122", "expr_a": "sel hel", "meaning_a": "self helping (self-care)", "expr_b": "sel hid", "meaning_b": "self hiding (withdrawal)", "category": "near-homophone"}
+{"id": "hn-123", "expr_a": "fea ris", "meaning_a": "fear rises", "expr_b": "fea res", "meaning_b": "fear rests (dormant fear)", "category": "near-homophone"}
+{"id": "hn-124", "expr_a": "joy ris", "meaning_a": "joy rises", "expr_b": "joi ris", "meaning_b": "joining rises (connections increase)", "category": "near-homophone"}
+{"id": "hn-125", "expr_a": "tru gro", "meaning_a": "truth grows/deepens", "expr_b": "tre gro", "meaning_b": "tree grows", "category": "near-homophone"}
+{"id": "hn-126", "expr_a": "nrg flo", "meaning_a": "energy flows", "expr_b": "ner flo", "meaning_b": "nerve flows (neural current)", "category": "near-homophone"}
+{"id": "hn-127", "expr_a": "cod err", "meaning_a": "code error (bug)", "expr_b": "col err", "meaning_b": "cold error (distant mistake)", "category": "near-homophone"}
+{"id": "hn-128", "expr_a": "dat flo", "meaning_a": "data flows", "expr_b": "dat dec", "meaning_b": "data decays (corruption)", "category": "near-homophone"}
+{"id": "hn-129", "expr_a": "sel tra sel", "meaning_a": "self transforms self (personal growth)", "expr_b": "sel tra oth", "meaning_b": "self transforms other (influence)", "category": "structural"}
+{"id": "hn-130", "expr_a": "oth tra sel", "meaning_a": "other transforms self (being changed)", "expr_b": "sel tra sel", "meaning_b": "self transforms self (self-improvement)", "category": "structural"}
+{"id": "hn-131", "expr_a": "sol tra liq", "meaning_a": "solid transforms to liquid (melting)", "expr_b": "liq tra sol", "meaning_b": "liquid transforms to solid (freezing)", "category": "structural"}
+{"id": "hn-132", "expr_a": "liq tra gas", "meaning_a": "liquid transforms to gas (evaporation)", "expr_b": "gas tra liq", "meaning_b": "gas transforms to liquid (condensation)", "category": "structural"}
+{"id": "hn-133", "expr_a": "ele flo → mag ris", "meaning_a": "electric flow creates magnetism", "expr_b": "mag cha → ele mov", "meaning_b": "magnetic change creates electric motion", "category": "structural"}
+{"id": "hn-134", "expr_a": "hot flo → col", "meaning_a": "heat flows to cold", "expr_b": "col sta → hot", "meaning_b": "cold stays while heat arrives", "category": "structural"}
+{"id": "hn-135", "expr_a": "req sen → ans rec", "meaning_a": "request sent → answer received", "expr_b": "ans sen → req rec", "meaning_b": "answer sent → request received (backwards)", "category": "structural"}
+{"id": "hn-136", "expr_a": "inp → prf → out", "meaning_a": "input → process → output", "expr_b": "out → prf → inp", "meaning_b": "output → process → input (reverse)", "category": "structural"}
+{"id": "hn-137", "expr_a": "lov ris | fea dec", "meaning_a": "love rises as fear decays (growing trust)", "expr_b": "fea ris | lov dec", "meaning_b": "fear rises as love decays (growing distrust)", "category": "structural"}
+{"id": "hn-138", "expr_a": "sel kno sel", "meaning_a": "self knows self (self-awareness)", "expr_b": "sel kno oth", "meaning_b": "self knows other (empathy/knowledge)", "category": "structural"}
+{"id": "hn-139", "expr_a": "thi beg → thi end", "meaning_a": "thinking begins → thinking ends", "expr_b": "thi end → thi beg", "meaning_b": "thinking ends → thinking begins (new thought)", "category": "structural"}
+{"id": "hn-140", "expr_a": "bnd str → mol sta", "meaning_a": "bond strong → molecule stable", "expr_b": "bnd wea → mol brk", "meaning_b": "bond weak → molecule breaks", "category": "structural"}
+{"id": "hn-141", "expr_a": "cel joi cel", "meaning_a": "cell joins cell (tissue formation)", "expr_b": "cel cut cel", "meaning_b": "cell separates from cell (division)", "category": "structural"}
+{"id": "hn-142", "expr_a": "tok tru → acc", "meaning_a": "token true → accepted (auth success)", "expr_b": "tok fal → err", "meaning_b": "token false → error (auth failure)", "category": "structural"}
+{"id": "hn-143", "expr_a": "sys hea → prf sta", "meaning_a": "system healthy → performance stable", "expr_b": "sys err → prf dec", "meaning_b": "system error → performance decays", "category": "structural"}
+{"id": "hn-144", "expr_a": "mem ful → mem rel", "meaning_a": "memory full → memory released (cache eviction)", "expr_b": "mem emp → mem dat", "meaning_b": "memory empty → memory stores data (cache fill)", "category": "structural"}
+{"id": "hn-145", "expr_a": "gen str → sho", "meaning_a": "strong gene → shows (dominant)", "expr_b": "gen wea → sec", "meaning_b": "weak gene → secret (recessive)", "category": "structural"}
+{"id": "hn-146", "expr_a": "wav hig", "meaning_a": "wave high (crest/peak)", "expr_b": "wav low", "meaning_b": "wave low (trough)", "category": "structural"}
+{"id": "hn-147", "expr_a": "vel fas → orb wid", "meaning_a": "fast velocity → wide orbit", "expr_b": "vel slo → orb nea", "meaning_b": "slow velocity → near orbit", "category": "structural"}
+{"id": "hn-148", "expr_a": "ato nea → bnd", "meaning_a": "atoms near → bond (chemical bonding)", "expr_b": "ato far → non bnd", "meaning_b": "atoms far → no bond", "category": "structural"}
+{"id": "hn-149", "expr_a": "pre hig → flo", "meaning_a": "pressure high → flow", "expr_b": "pre eql → res", "meaning_b": "pressure equal → rest", "category": "structural"}
+{"id": "hn-150", "expr_a": "sum add add", "meaning_a": "sum of additions (accumulation)", "expr_b": "sum sub sub", "meaning_b": "sum of subtractions (diminishing)", "category": "structural"}
+{"id": "hn-151", "expr_a": "lov@fea:tau", "meaning_a": "fear-in-love over time (anxiety deepening)", "expr_b": "lov@joy:tau", "meaning_b": "joy-in-love over time (happiness deepening)", "category": "structural"}
+{"id": "hn-152", "expr_a": "sel:oth lov", "meaning_a": "self given other's love (being loved)", "expr_b": "sel:oth ang", "meaning_b": "self given other's anger (being targeted)", "category": "structural"}
+{"id": "hn-153", "expr_a": "kno:exp", "meaning_a": "knowledge through expansion (experiential)", "expr_b": "kno:abs", "meaning_b": "knowledge through abstraction (theoretical)", "category": "structural"}
+{"id": "hn-154", "expr_a": "fea:fut", "meaning_a": "fear given future (anticipatory anxiety)", "expr_b": "fea:pas", "meaning_b": "fear given past (traumatic memory)", "category": "structural"}
+{"id": "hn-155", "expr_a": "lov:tru dep", "meaning_a": "love given deep trust (secure attachment)", "expr_b": "lov:fea dep", "meaning_b": "love given deep fear (anxious attachment)", "category": "structural"}
+{"id": "hn-156", "expr_a": "sol aqu tra liq", "meaning_a": "ice melts (solid water → liquid)", "expr_b": "sol ter tra liq", "meaning_b": "solid earth transforms to liquid (lava)", "category": "structural"}
+{"id": "hn-157", "expr_a": "aqu flo dep", "meaning_a": "water flows deep (underground river)", "expr_b": "aqu flo wid", "meaning_b": "water flows wide (delta/flood)", "category": "structural"}
+{"id": "hn-158", "expr_a": "lux thr aqu", "meaning_a": "light through water (refraction)", "expr_b": "lux thr aer", "meaning_b": "light through air (clear day)", "category": "structural"}
+{"id": "hn-159", "expr_a": "lux thr sol", "meaning_a": "light through solid (transparency)", "expr_b": "lux thr gas", "meaning_b": "light through gas (scattering)", "category": "structural"}
+{"id": "hn-160", "expr_a": "ner net bra", "meaning_a": "nerve network of brain (neural network)", "expr_b": "ner net bod", "meaning_b": "nerve network of body (peripheral nerves)", "category": "structural"}
+{"id": "hn-161", "expr_a": "lov@fea dec", "meaning_a": "fear-in-love decays (becoming secure)", "expr_b": "lov@fea ris", "meaning_b": "fear-in-love rises (becoming anxious)", "category": "structural"}
+{"id": "hn-162", "expr_a": "(lov@fea)*hop", "meaning_a": "hopeful fearful-love (optimistic anxiety)", "expr_b": "(lov@fea)*sad", "meaning_b": "sad fearful-love (mourning anxiety)", "category": "structural"}
+{"id": "hn-163", "expr_a": "(joy*sad):tau", "meaning_a": "bittersweet over time (nostalgia)", "expr_b": "(joy*sad):sel", "meaning_b": "bittersweet about self (mixed self-regard)", "category": "structural"}
+{"id": "hn-164", "expr_a": "lov gro:tau lon", "meaning_a": "love deepens over long time (mature love)", "expr_b": "lov dec:tau lon", "meaning_b": "love decays over long time (dying relationship)", "category": "structural"}
+{"id": "hn-165", "expr_a": "sol tra liq:hot", "meaning_a": "solid transforms to liquid given heat (melting)", "expr_b": "sol tra liq:pre", "meaning_b": "solid transforms to liquid given pressure (pressure melting)", "category": "structural"}
+{"id": "hn-166", "expr_a": "thi@rea", "meaning_a": "reality-component of thinking (practical thought)", "expr_b": "thi@abs", "meaning_b": "abstraction-component of thinking (theoretical thought)", "category": "operator-swap"}
+{"id": "hn-167", "expr_a": "thi@rea", "meaning_a": "real-component of thinking", "expr_b": "thi*rea", "meaning_b": "thinking-reality interference (insight)", "category": "operator-swap"}
+{"id": "hn-168", "expr_a": "joy\\sad", "meaning_a": "joy without sadness (pure joy)", "expr_b": "joy*sad", "meaning_b": "joy-sadness interference (bittersweet)", "category": "operator-swap"}
+{"id": "hn-169", "expr_a": "ang\\fea", "meaning_a": "anger without fear (righteous fury)", "expr_b": "ang*fea", "meaning_b": "anger-fear interference (panic/rage)", "category": "operator-swap"}
+{"id": "hn-170", "expr_a": "ang\\fea", "meaning_a": "anger without fear", "expr_b": "ang:fea", "meaning_b": "anger given fear (defensive anger)", "category": "operator-swap"}
+{"id": "hn-171", "expr_a": "sad:los", "meaning_a": "sadness given loss (grief)", "expr_b": "sad@los", "meaning_b": "loss-component of sadness (bereavement aspect)", "category": "operator-swap"}
+{"id": "hn-172", "expr_a": "sad:los", "meaning_a": "grief", "expr_b": "sad*los", "meaning_b": "sadness-loss interference (mourning state)", "category": "operator-swap"}
+{"id": "hn-173", "expr_a": "sel:lov", "meaning_a": "self given love (beloved self)", "expr_b": "sel@lov", "meaning_b": "love-component of self (capacity for love)", "category": "operator-swap"}
+{"id": "hn-174", "expr_a": "nrg@mov", "meaning_a": "motion-component of energy (kinetic energy)", "expr_b": "nrg\\mov", "meaning_b": "energy without motion (potential energy)", "category": "operator-swap"}
+{"id": "hn-175", "expr_a": "nrg@mov", "meaning_a": "kinetic energy", "expr_b": "nrg*mov", "meaning_b": "energy-motion interference (work)", "category": "operator-swap"}
+{"id": "hn-176", "expr_a": "wav@ato", "meaning_a": "particle-component of wave (quantum particle)", "expr_b": "wav±ato", "meaning_b": "wave-particle superposition (quantum duality)", "category": "operator-swap"}
+{"id": "hn-177", "expr_a": "dat:sec", "meaning_a": "data given secrecy (encrypted data)", "expr_b": "dat\\sec", "meaning_b": "data without secrecy (public data)", "category": "operator-swap"}
+{"id": "hn-178", "expr_a": "sys:err", "meaning_a": "system given error (degraded system)", "expr_b": "sys\\err", "meaning_b": "system without error (healthy system)", "category": "operator-swap"}
+{"id": "hn-179", "expr_a": "sys@hea", "meaning_a": "health-component of system (uptime)", "expr_b": "sys:hea", "meaning_b": "system given health (healthy system)", "category": "operator-swap"}
+{"id": "hn-180", "expr_a": "req@err", "meaning_a": "error-component of request (request flaw)", "expr_b": "req:err", "meaning_b": "request given error (retry after failure)", "category": "operator-swap"}
+{"id": "hn-181", "expr_a": "sum@equ", "meaning_a": "equality-component of sum (balanced total)", "expr_b": "sum:equ", "meaning_b": "sum given equality (summing equals)", "category": "operator-swap"}
+{"id": "hn-182", "expr_a": "set@emp", "meaning_a": "empty-component of set (sparse set)", "expr_b": "set\\emp", "meaning_b": "set without emptiness (full set)", "category": "operator-swap"}
+{"id": "hn-183", "expr_a": "pos*neg", "meaning_a": "positive-negative interference (zero/cancellation)", "expr_b": "pos±neg", "meaning_b": "positive-or-negative unresolved (ambiguous sign)", "category": "operator-swap"}
+{"id": "hn-184", "expr_a": "acc^0.3", "meaning_a": "slight acceleration (gentle speedup)", "expr_b": "acc^0.9", "meaning_b": "strong acceleration (rapid speedup)", "category": "operator-swap"}
+{"id": "hn-185", "expr_a": "den^0.2", "meaning_a": "sparse (low density)", "expr_b": "den^0.9", "meaning_b": "very dense (compacted)", "category": "operator-swap"}
+{"id": "hn-186", "expr_a": "clr^0.3", "meaning_a": "slightly clear (hazy)", "expr_b": "clr^0.9", "meaning_b": "very clear (transparent)", "category": "operator-swap"}
+{"id": "hn-187", "expr_a": "str^0.2", "meaning_a": "barely strong (feeble)", "expr_b": "str^0.9", "meaning_b": "very strong (powerful)", "category": "operator-swap"}
+{"id": "hn-188", "expr_a": "lov dep → sel ope", "meaning_a": "deep love → self opens (vulnerability)", "expr_b": "lov dep → sel pro", "meaning_b": "deep love → self protects (guarding)", "category": "structural"}
+{"id": "hn-189", "expr_a": "sha ris → sel hid", "meaning_a": "shame rises → self hides", "expr_b": "sha dec → sel sho", "meaning_b": "shame decays → self shows", "category": "structural"}
+{"id": "hn-190", "expr_a": "anx → thi cyc", "meaning_a": "anxiety → thinking cycles (rumination)", "expr_b": "cal → thi flo", "meaning_b": "calm → thinking flows (clarity)", "category": "structural"}
+{"id": "hn-191", "expr_a": "sel wit lov", "meaning_a": "self within love (embraced)", "expr_b": "sel wit fea", "meaning_b": "self within fear (trapped)", "category": "structural"}
+{"id": "hn-192", "expr_a": "sel obs sel", "meaning_a": "self observes self (introspection)", "expr_b": "sel obs oth", "meaning_b": "self observes other (curiosity/judgment)", "category": "structural"}
+{"id": "hn-193", "expr_a": "hrt ope → joi", "meaning_a": "heart opens → connection", "expr_b": "hrt brk → cut", "meaning_b": "heart breaks → separation", "category": "structural"}
+{"id": "hn-194", "expr_a": "gro:lov", "meaning_a": "growth through love", "expr_b": "gro:sad", "meaning_b": "growth through sadness", "category": "structural"}
+{"id": "hn-195", "expr_a": "gro:lov", "meaning_a": "growth through love", "expr_b": "gro:fea", "meaning_b": "growth through fear", "category": "structural"}
+{"id": "hn-196", "expr_a": "sel tra:lov", "meaning_a": "self transforms through love", "expr_b": "sel tra:los", "meaning_b": "self transforms through loss", "category": "structural"}
+{"id": "hn-197", "expr_a": "mem:pas lov", "meaning_a": "memory of past love (romantic nostalgia)", "expr_b": "mem:pas fea", "meaning_b": "memory of past fear (trauma)", "category": "structural"}
+{"id": "hn-198", "expr_a": "req hel", "meaning_a": "requires help (asking)", "expr_b": "giv hel", "meaning_b": "giving help (offering)", "category": "structural"}
+{"id": "hn-199", "expr_a": "req hel", "meaning_a": "requires help", "expr_b": "req non hel", "meaning_b": "requires no help (independent)", "category": "structural"}
+{"id": "hn-200", "expr_a": "non kno", "meaning_a": "not knowing (ignorance)", "expr_b": "non und", "meaning_b": "not understanding (confusion)", "category": "structural"}
+{"id": "hn-201", "expr_a": "non kno", "meaning_a": "not knowing", "expr_b": "non see", "meaning_b": "not seeing (blindness)", "category": "structural"}
+{"id": "hn-202", "expr_a": "dat joi dat", "meaning_a": "data joins data (merge)", "expr_b": "dat cut dat", "meaning_b": "data separates from data (partition)", "category": "structural"}
+{"id": "hn-203", "expr_a": "sys joi sys", "meaning_a": "system joins system (integration)", "expr_b": "sys fra sys", "meaning_b": "system fragments from system (decomposition)", "category": "structural"}
+{"id": "hn-204", "expr_a": "tru bre", "meaning_a": "trust brief (fleeting trust)", "expr_b": "tru lon", "meaning_b": "trust long-lasting (deep trust)", "category": "structural"}
+{"id": "hn-205", "expr_a": "sel ful:joy", "meaning_a": "self full of joy (fulfilled)", "expr_b": "sel emp:joy", "meaning_b": "self empty of joy (hollow)", "category": "structural"}
+{"id": "hn-206", "expr_a": "lov^0.5 sel", "meaning_a": "moderate self-love (healthy self-regard)", "expr_b": "lov^1.0 sel", "meaning_b": "maximum self-love (narcissism)", "category": "operator-swap"}
+{"id": "hn-207", "expr_a": "all joi → one", "meaning_a": "all join to one (convergence)", "expr_b": "one fra → all", "meaning_b": "one fragments to all (divergence)", "category": "structural"}
+{"id": "hn-208", "expr_a": "beg → end", "meaning_a": "beginning → ending (lifecycle)", "expr_b": "end → beg", "meaning_b": "ending → beginning (rebirth)", "category": "structural"}
+{"id": "hn-209", "expr_a": "sha:sel", "meaning_a": "shame about self (internal shame)", "expr_b": "sha:oth", "meaning_b": "shame about other (vicarious shame)", "category": "structural"}
+{"id": "hn-210", "expr_a": "att her → cal", "meaning_a": "attention here → calm (mindfulness)", "expr_b": "att yon → anx", "meaning_b": "attention there → anxiety (worry)", "category": "structural"}
