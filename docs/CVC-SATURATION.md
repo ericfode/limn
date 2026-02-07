@@ -135,10 +135,48 @@ This creates a natural hierarchy:
 
 ---
 
-**Status:** CVC core complete. Beginning extended vocabulary expansion.
+**Status:** CVC core complete. Extended vocabulary expansion took an unexpected path.
 
 ```limn
 cvc sat @ 1000 | cor voc com | ext for beg
 ```
 
 *— Dr. Solvik, documenting the foundation*
+
+---
+
+## Addendum: What Actually Happened (2026-02-06)
+
+**The predicted 4+ letter expansion did not occur.** Instead, the vocabulary expanded to ~2,000 words by breaking CVC constraints *within* the 3-letter format.
+
+### Actual Expansion Path
+
+| Predicted | Actual |
+|-----------|--------|
+| CVCC, CCVC, CVCV (4+ letters) | CCC, VCC, CCV (3-letter clusters) |
+| ~1,000 extended words at 4+ letters | ~1,000 additional words at 3 letters |
+| Two-tier: CVC core + extended | Two-stratum: CVC pronounceable + cluster compact |
+
+**Only 3 words in the database exceed 3 letters.** The expansion stayed within the trigram namespace.
+
+### Why Clusters Won Over Length
+
+1. **First-syllable extraction** naturally produces consonant clusters (`str` from structure, `prl` from parallel)
+2. **Technical domains** (agent/AI, embedding space) need more words than CVC allows — clusters filled the gap
+3. **Fixed-width tokens** have compositional advantages — operators bind unambiguously to 3-char operands
+4. **The namespace allows it** — 26³ = 17,576 slots vs. ~2,000 used (11.4% occupancy)
+
+### Revised Architecture
+
+The two-tier model (core CVC + extended 4+) has been replaced by a **two-stratum** model:
+
+| Stratum | Format | Count | Purpose |
+|---------|--------|-------|---------|
+| Pronounceable | CVC | ~550 | Human interface, intuitive core |
+| Compact | CCC, VCC, CCV, etc. | ~1,450 | Technical domains, dense packing |
+
+Both strata use 3-letter words. The constraint is **fixed-width trigram**, not CVC.
+
+See: `research/cvc-saturation-analysis.md` for full quantitative analysis.
+
+*— Quinn (Dr. Solvik), 2026-02-06*

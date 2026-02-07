@@ -17,8 +17,8 @@
 | Question | Answer |
 |----------|--------|
 | Where is the bootstrap? | `docs/spec/bootstrap-v4-compositional.md` |
-| Is there a v4? | No. v3-natural is current. |
-| What about minimal-bootstrap.md? | Subset only. Read v3-natural first. |
+| Which version is current? | v4-compositional (extends v3 with operators) |
+| What about minimal-bootstrap.md? | Subset only. Read v4-compositional first. |
 | What about the old versions? | Archived. Don't use them. |
 | How do I navigate all the files? | See `docs/BOOTSTRAP.md` |
 | Complete file map? | See `docs/spec/BOOTSTRAP-INDEX.md` |

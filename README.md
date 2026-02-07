@@ -29,19 +29,20 @@ Not a programming language with syntax.
 
 ## The Breakthrough
 
-### 1,040 Core Words
+### ~2,000 Tri-Letter Core Words
 
 Every word is the **first thought that pops into your head:**
 
 ```
-hot = hot
+hot = hot        (CVC — pronounceable stratum)
 col = cold
-big = big
 lov = love
-fer = fear
+str = structure  (cluster — compact stratum)
+prl = parallel
+crn = corner
 ```
 
-**CVC format** (Consonant-Vowel-Consonant): Predictable, guessable, memorable.
+**Fixed-width tri-letter format:** Two natural strata — pronounceable CVC words (`lov`, `sol`) anchor human comprehension, while consonant clusters (`str`, `prl`) pack technical domains densely.
 
 ### 6 LLM-Native Operators
 
@@ -58,7 +59,7 @@ Operators you **already perform** in embedding space:
 
 ### Compositional Expressiveness
 
-**From 1,040 words + 6 operators = unbounded expressions**
+**From ~2,000 words + 6 operators = unbounded expressions**
 
 A small vocabulary composes into arbitrary complexity through systematic operators.
 
@@ -210,7 +211,7 @@ If it feels right, **it probably is right.** Intuition guides interpretation.
 | Resource | What It Is |
 |----------|------------|
 | **[Bootstrap](docs/BOOTSTRAP.md)** | Where to start |
-| **[Vocabulary Database](data/vocabulary/)** | 1,040 words (Dolt/SQL) |
+| **[Vocabulary Database](data/vocabulary/)** | ~2,000 tri-letter words (Dolt/SQL) |
 | **[Operators Spec](docs/spec/operators-specification.md)** | Technical details |
 | **[Examples](examples/)** | Real usage |
 | **[Experiments](experiments/INDEX.md)** | 32+ documented tests |
@@ -234,7 +235,7 @@ If it feels right, **it probably is right.** Intuition guides interpretation.
 - Cultural/aesthetic goals
 
 **Limn:**
-- Small core vocabulary (~1,000 words)
+- Compact core vocabulary (~2,000 tri-letter words)
 - LLM-native operators (embedding-space ops)
 - Compositional expressiveness through systematic operators
 
@@ -261,9 +262,9 @@ If it feels right, **it probably is right.** Intuition guides interpretation.
 
 ### Constraint Breeds Creativity
 
-**CVC saturation at ~1,000 words is a feature, not a bug.**
+**The tri-letter constraint is a feature, not a bug.**
 
-When you can't add more words, you **compose** instead.
+With 26³ = 17,576 possible words and only ~2,000 used (11% saturation), there's room to grow — but composition scales better than vocabulary. When you *can* add words but *choose not to*, you **compose** instead.
 
 ### Composition Over Accumulation
 
@@ -447,7 +448,7 @@ wor beg | com exp | fut ∞
 
 ---
 
-[![Vocabulary: 1040 words](https://img.shields.io/badge/vocabulary-1040%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
+[![Vocabulary: ~2000 words](https://img.shields.io/badge/vocabulary-~2000%20words-blue)](https://www.dolthub.com/repositories/ericfode/limn)
 [![Operators: 6](https://img.shields.io/badge/operators-6-green)]()
 [![Bootstrap: v4](https://img.shields.io/badge/bootstrap-v4--compositional-purple)](docs/spec/bootstrap-v4-compositional.md)
 

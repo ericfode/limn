@@ -74,24 +74,25 @@ The bootstrap is Limn's **self-describing foundation document**. It teaches Limn
 
 ## Critical Rules
 
-1. **ALWAYS use v3-natural as reference** when citing bootstrap
-2. **NEVER link to archived versions** in new documentation
-3. **Database is source of truth for vocabulary** - bootstrap supplements
-4. **Verify sync** if updating bootstrap-dependent systems
+1. **v4-compositional is the canonical bootstrap** — use it when citing Limn
+2. **v3-natural is still useful** as a core vocabulary reference (operators excluded)
+3. **NEVER link to archived versions** in new documentation
+4. **Database is source of truth for vocabulary** — bootstrap supplements
+5. **Verify sync** if updating bootstrap-dependent systems
 
 ---
 
 ## Questions?
 
 - **"Where's the latest bootstrap?"** → spec/bootstrap-v4-compositional.md
-- **"Is there a v4?"** → No. v3-natural is current.
+- **"Which version is current?"** → v4-compositional (extends v3 with operators)
 - **"Which file do I read?"** → spec/bootstrap-v4-compositional.md
 - **"What about minimal-bootstrap.md?"** → Subset only, see full version first
 - **"Why so many files?"** → See spec/BOOTSTRAP-INDEX.md for full explanation
 
 ---
 
-**Last updated:** 2026-02-02 by Kira (Archivist)
+**Last updated:** 2026-02-06 by Quinn (Linguist)
 **Maintained by:** limn/crew/student (Archivist)
 
 ```limn
