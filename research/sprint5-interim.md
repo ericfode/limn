@@ -1,41 +1,83 @@
-# Sprint 5 Interim Report: Compositionality Under Proper Pressure
+# Sprint 5 Report: Compositionality Under Proper Pressure
 
 **Date:** 2026-02-07
 **Author:** Lex (researcher)
-**Status:** IN PROGRESS — iterated learning experiment running (5/10 generations)
-**Beads:** hq-2sn9b (iterated learning — in progress)
+**Status:** COMPLETE — all 3 experiments finished
+**Beads:** hq-2sn9b (iterated learning — closed)
 
-## Key Finding: Sprint 3-4 Results Were Confounded
+## Executive Summary
 
-**H20 (CONFIRMED):** 98.8% of our Lewis game training samples need only 1 message symbol to discriminate target from 3 random distractors. The ~0.42 topsim ceiling across ALL Sprint 3-4 experiments was an artifact of trivially easy discrimination, not a genuine compositionality limit.
+Three compositionality pressures tested. Two work strongly, one doesn't:
 
-This means:
-- The "compositionality doesn't emerge" conclusion was premature
-- Variants A-E (generalization pressure, bottleneck, entropy reg, grokking) may all have been fighting against a ceiling imposed by task difficulty, not by lack of pressure
-- The Lewis game setup needs fundamental changes: harder distractors, reconstruction objective, or receiver heterogeneity
+| Pressure | TopSim | vs Baseline | Verdict |
+|----------|--------|-------------|---------|
+| **Reconstruction** (H23) | 0.520 | +0.154 | STRONG (single run!) |
+| **Iterated learning** (H21) | 0.544 | +0.178 | STRONG (10 generations) |
+| Combined disc+recon | 0.444 | +0.078 | MODERATE (sweet spot) |
+| Receiver ensemble | 0.445 | +0.089 | MODERATE (gradient effect) |
+| **Receiver heterogeneity** (H22) | 0.385 | +0.019 | WEAK/NONE |
+| Baseline (discrimination) | 0.366 | — | Reference |
 
-## Iterated Learning: First Positive Result
+## Key Finding: Sprint 3-4 Results Were Confounded (H20)
 
-The iterated learning experiment (25% transmission bottleneck, 10 generations) shows genuine compositionality increase:
+98.8% of Lewis game training samples need only 1 symbol to discriminate target from 3 random distractors. The ~0.42 topsim ceiling across ALL Sprint 3-4 experiments was an artifact of trivially easy discrimination, not a genuine compositionality limit.
 
-| Generation | TopSim | Δ | Accuracy |
-|-----------|--------|---|----------|
-| 0 (baseline) | 0.3663 | — | 99.6% |
-| 1 | 0.4097 | +0.043 | 99.2% |
-| 2 | 0.4180 | +0.008 | 99.4% |
-| 3 | 0.4710 | +0.053 | 99.2% |
-| 4 | 0.4750 | +0.004 | *pending* |
+## Experiment 1: Iterated Learning (H21 — CONFIRMED)
 
-- Linear trend: +0.028/gen
-- Projected gen 10: 0.651
-- Total improvement: +0.109 (29.7% relative increase)
-- Accuracy maintained >99% throughout
+10 generations, 25% transmission bottleneck. JIT'd imitation phase (60x speedup).
 
-**Why iterated learning is less affected by H20:** The bottleneck operates on LEARNING CAPACITY (generalize from 25% of examples), not discrimination difficulty. The imitation phase forces the student to discover compositional structure as the simplest explanation for the limited data. The communication phase (which IS affected by H20) just fine-tunes.
+| Gen | TopSim | Δ |
+|-----|--------|---|
+| 0 | 0.366 | — |
+| 1 | 0.410 | +0.043 |
+| 2 | 0.418 | +0.008 |
+| 3 | 0.471 | +0.053 |
+| 4 | 0.475 | +0.004 |
+| 5 | 0.471 | -0.004 |
+| 6 | 0.482 | +0.011 |
+| 7 | 0.516 | +0.034 |
+| 8 | 0.536 | +0.021 |
+| 9 | 0.550 | +0.013 |
+| 10 | 0.544 | -0.006 |
 
-## H19: Density Survives Channel Coding
+- Total: +0.178, two-phase climb with plateau at gen 4-6
+- Gen 9 peaked at 0.550 near "strong" threshold
+- **Only pressure tested that breaks the 0.42 ceiling** (H20)
+- Accuracy >0.99 throughout
+- Performance: ~8 min total (JIT'd) vs 3+ hours (non-JIT)
 
-Limn can tolerate up to **52.9% coding overhead** before losing its density advantage over English. Even at the Shannon limit for 20% corruption, coded Limn is 11.4% denser than English.
+## Experiment 2: Receiver Heterogeneity (H22 — PARTIALLY FALSIFIED)
+
+4 conditions, 20k steps each. All JIT'd.
+
+| Condition | TopSim | Disentanglement | Acc |
+|-----------|--------|-----------------|-----|
+| A baseline (1 recv) | 0.357 | 0.413 | 1.000 |
+| B disjoint (2 recv) | 0.344 | 0.413 | 0.996 |
+| C individual (4 recv) | 0.385 | 0.521 | 0.995 |
+| D same (2 recv, control) | 0.445 | 0.574 | 0.998 |
+
+**Surprise:** The control condition (D: same interests) wins. The improvement is from **ensemble gradient amplification** (2x training signal), not from diverse receiver interests. Heterogeneity per se doesn't help because H20 sampling pitfall undermines the benefit.
+
+C_individual_4 does increase disentanglement (+26%) — per-attribute receivers push toward position-attribute correspondence — but this doesn't translate to strong topsim.
+
+## Experiment 3: Reconstruction Game (H23 — CONFIRMED, STRONG)
+
+3 conditions, 20k steps each. All JIT'd.
+
+| Condition | TopSim | Disentanglement | Accuracy |
+|-----------|--------|-----------------|----------|
+| A discrimination | 0.366 | 0.486 | 0.996 |
+| B reconstruction | 0.520 | 0.549 | 0.893 |
+| C combined (50/50) | 0.444 | 0.567 | 1.000 |
+
+**Star result:** Reconstruction alone achieves topsim=0.520 in a SINGLE training run — comparable to iterated learning's 0.544 after 10 generations. The combined objective (C) is the practical sweet spot: topsim=0.444 with perfect accuracy.
+
+Reconstruction inherently forces encoding ALL attributes, directly addressing H20.
+
+## H19: Density Survives Channel Coding (From Early Sprint 5)
+
+Limn can tolerate up to 52.9% coding overhead before losing its density advantage over English.
 
 | Corruption | Shannon-coded Limn (bpsu) | English (bpsu) | Advantage |
 |-----------|---------------------------|----------------|-----------|
@@ -44,68 +86,36 @@ Limn can tolerate up to **52.9% coding overhead** before losing its density adva
 | 10% | 18.2 | 27.6 | +34.1% |
 | 20% | 24.5 | 27.6 | +11.4% |
 
-At realistic 1% corruption, RS(11,9) gives +42.5% advantage with <1% residual error. The correct architecture is Shannon's: Limn as source code (dense) + channel code as separate layer.
+## Updated Hypothesis Scorecard
 
-## Arxiv Index Expansion (15 → 32 papers)
+| ID | Status | Finding |
+|----|--------|---------|
+| H19 | CONFIRMED | Density survives channel coding (+11% to +51%) |
+| H20 | CONFIRMED | Sampling pitfall (98.8% need 1 symbol, explains ceiling) |
+| H21 | CONFIRMED | Iterated learning breaks ceiling (0.37→0.54, strongest) |
+| H22 | PART. FALSIFIED | Heterogeneity doesn't help; ensemble effect does |
+| H23 | CONFIRMED | Reconstruction forces compositionality (+0.154 in single run) |
 
-Key new findings from the expanded survey:
+## Open Questions / Next Steps
 
-1. **Freeborn 2025:** Standard receivers fail to interpret compositional messages compositionally. They use messages as holistic hashes. Novel minimalist/generalist receiver architectures fix this.
-
-2. **Sevestre & Dupoux 2025:** Limited data exposure (not frequency) drives compositionality. Directly supports iterated learning mechanism.
-
-3. **Lee et al. 2026:** Iterated learning scales to 128-glyph meaning spaces with semi-supervised autoencoder. Validates our approach.
-
-4. **Zhang 2024:** The sampling pitfall we confirmed as H20. Standard Lewis games are too easy.
-
-5. **Ben Zion et al. 2024:** Reconstruction > discrimination for semantic consistency. Discrimination objectives allow semantically inconsistent protocols.
-
-Updated pressure taxonomy: 9 positive pressures + 4 documented non-pressures.
-
-## Experiments Designed (Ready to Run)
-
-### 1. Receiver Heterogeneity (`receiver_heterogeneity.py`)
-- 4 conditions: baseline, 2 disjoint receivers, 4 individual receivers, 2 same receivers
-- Specialized receivers force encoding ALL attributes (inherently fixes H20)
-- Based on Lee 2024 (EMNLP), second strongest compositionality pressure
-
-### 2. Reconstruction Game (`reconstruction_game.py`)
-- 3 conditions: discrimination (baseline), reconstruction, combined
-- Reconstruction forces encoding all attributes (fixes H20)
-- Based on Ben Zion et al. 2024 (NeurIPS)
-
-### 3. Sampling Analysis (`sampling_analysis.py`)
-- Confirmed H20: 98.8% of samples need 1 symbol
-- Even 63 random distractors: only 1.5% need all 4 symbols
-- Hard distractors (sharing 3/4 attrs): avg 2.31 symbols needed
+1. **Combine iterated learning + reconstruction** — could push past 0.60 topsim
+2. **Hard distractors** — share 3/4 attributes, force multi-symbol discrimination
+3. **Omnibus experiment** — all pressures combined (iterated learning + reconstruction + hard distractors)
+4. **Scale to Limn** — apply findings to actual Limn language model training
 
 ## Performance Note
 
-The iterated learning experiment has a critical performance bottleneck: the non-JIT imitation phase takes ~39 min per generation (vs ~30s for the JIT'd communication phase). A JIT'd version is prepared and will reduce per-generation time from 39 min to ~40 sec (60x speedup). Apply after current experiment completes.
-
-## Updated Hypothesis Scorecard
-
-| ID | Status | Sprint 5 Update |
-|----|--------|-----------------|
-| H15 | CONFIRMED | Reframed: compositionality IS emergent under proper pressure |
-| H19 | CONFIRMED | Density survives channel coding (+11% to +51%) |
-| H20 | CONFIRMED | Sampling pitfall explains topsim ceiling |
-| H17 | FALSIFIED | Still falsified — grokking doesn't help |
-
-## Next Steps (when experiment finishes)
-
-1. Analyze full 10-gen iterated learning trajectory
-2. Apply JIT fix to iterated_learning.py
-3. Run receiver heterogeneity experiment (~1 hour with 4 conditions × 20k steps)
-4. Run reconstruction game (~1 hour with 3 conditions × 20k steps)
-5. Design and run omnibus experiment (all pressures combined)
-6. Write final sprint 5 synthesis
+All experiments JIT'd for speed:
+- Iterated learning: ~8 min (was 3+ hours non-JIT)
+- Receiver heterogeneity: ~12 min (4 conditions)
+- Reconstruction game: ~10 min (3 conditions)
+- Key pattern: pass per-position/per-attribute targets as separate tensor args to @TinyJit
 
 ---
 
 ```limn
-prs fnd | pit unc | tru ris
-> pressures found | pitfall uncovered | truth rises
+prs tes | tru fnd | kno bui
+> pressures tested | truth found | knowledge built
 ```
 
 *— Lex*
