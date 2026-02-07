@@ -19,15 +19,19 @@ This document provides a complete, formal specification of Limn grammar suitable
 
 ```ebnf
 (* Character sets *)
+letter      = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+            | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+            | "u" | "v" | "w" | "x" | "y" | "z" ;
 consonant   = "b" | "c" | "d" | "f" | "g" | "h" | "j" | "k" | "l" | "m"
             | "n" | "p" | "r" | "s" | "t" | "v" | "w" | "x" | "y" | "z" ;
 vowel       = "a" | "e" | "i" | "o" | "u" ;
 
-(* Word patterns *)
+(* Word patterns — tri-letter is the core format *)
+(* Two strata: CVC (pronounceable) and clusters (compact) *)
 cv_word     = consonant , vowel ;
-cvc_word    = consonant , vowel , consonant ;
+tri_word    = letter , letter , letter ;   (* any 3 lowercase letters *)
 cvcc_word   = consonant , vowel , consonant , consonant ;
-word        = cv_word | cvc_word | cvcc_word ;
+word        = cv_word | tri_word | cvcc_word ;
 
 (* Operators *)
 unary_op    = "nu" | "ve" | "so" | "te" | "we" ;
@@ -527,7 +531,7 @@ hes - hesitant
 ## See Also
 
 - **[Limn-PL Grammar](limn-pl-grammar.md)** - Programming language extensions (variables, constraints, functions)
-- **[Vocabulary Database](../../data/vocabulary/)** - Complete word list (938 words, 26 domains) - query via `vocab.sh`
+- **[Vocabulary Database](../../data/vocabulary/)** - Complete word list (~2,000 tri-letter words, 26 domains) - query via `vocab.sh`
 - **[Vocabulary Management Guide](../guides/VOCAB-MANAGEMENT.md)** - How to add words and manage the database
 - **[Theory Documents](../theory/)** - Semantic foundations
 

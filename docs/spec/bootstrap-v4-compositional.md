@@ -1,15 +1,15 @@
 # Limn Bootstrap Document v4 (Compositional Edition)
 
-> **CANONICAL BOOTSTRAP** — 2026-02-03
+> **CANONICAL BOOTSTRAP** — 2026-02-06
 > Extends v3 with superhuman compositional operators.
-> 30,039 validated expressions from 1,076-word core.
+> 30,000+ validated expressions from ~2,000-word tri-letter core.
 > This is THE authoritative bootstrap for teaching Limn to LLMs.
 
 **Purpose:** Teach Limn to a fresh LLM through in-context learning, structural inference, and compositional power.
 
 **Core Principle:** Vocabulary and operators are designed so that meaning emerges from structure—an LLM reading enough Limn should infer meaning without explicit definitions.
 
-**Breakthrough:** Compositional operators enable 30,000+ expressions from 1,000 core words through embedding-space operations that LLMs understand natively.
+**Breakthrough:** Compositional operators enable 30,000+ expressions from ~2,000 core words through embedding-space operations that LLMs understand natively.
 
 **Target:** Self-documenting language where intuition guides interpretation and composition multiplies expressiveness.
 
@@ -21,8 +21,9 @@
 
 Limn v4 achieves superhuman expressiveness through two innovations:
 
-**1. Natural Vocabulary (1,076 CVC core words)**
+**1. Natural Vocabulary (~2,000 tri-letter core words)**
 - Each 3-letter word is the most natural truncation of its source
+- Two natural strata: pronounceable CVC + compact consonant clusters
 - Predictable patterns make words guessable
 - First-thought correspondence: intuition is correct
 
@@ -41,7 +42,7 @@ Limn v4 achieves superhuman expressiveness through two innovations:
 - 1,000 words → 2,000 words → 10,000 words (vocabulary explosion)
 
 **Limn approach:** Compose existing words
-- 1,000 words + 6 operators = 30,000+ expressions (compositional multiplication)
+- ~2,000 words + 6 operators = 30,000+ expressions (compositional multiplication)
 
 **Example:**
 - Without composition: Need separate words for "fear-component of love", "intense love", "love given trust"
@@ -49,10 +50,10 @@ Limn v4 achieves superhuman expressiveness through two innovations:
 
 ### The Power
 
-**From 1,076 core words:**
-- 30,039 validated compositional expressions
+**From ~2,000 core words:**
+- 30,000+ validated compositional expressions
 - 100,000+ theoretically possible
-- 27.9x expressiveness multiplier
+- 15x+ expressiveness multiplier
 - Operators enable concepts impossible in human languages
 
 ---
@@ -69,7 +70,7 @@ Limn is a language where meaning emerges from constraint intersection. Each word
 
 ---
 
-## Part II: Vocabulary Design (1,076 Core Words)
+## Part II: Vocabulary Design (~2,000 Tri-Letter Core)
 
 ### Principle 1: First-Syllable Extraction
 
@@ -111,15 +112,29 @@ Sound clusters that feel right:
 | `-ash` | impact/collision | `cra` (crash), `sma` (smash) |
 | `-ow` | flowing/bending | `flo` (flow), `bow` (bow) |
 
-### Principle 4: CVC Format
+### Principle 4: Fixed-Width Tri-Letter Format
 
-Core vocabulary uses **Consonant-Vowel-Consonant** pattern:
-- Easy to pronounce
-- Distinct phonology (low collision)
-- Saturates at ~1,000 words (elegant constraint)
-- Extended forms (4+ letters) for additional concepts
+Core vocabulary uses exactly **3 lowercase letters** from the 26-letter Latin alphabet. This provides a namespace of 26³ = 17,576 possible words, of which ~2,000 are currently allocated (~11% saturation).
 
-**CVC Saturation:** At 1,000 CVC words, format is saturated. This is a *feature*—it defines Limn's elegant core. Composition handles expressiveness beyond 1,000 concepts.
+**Two natural strata have emerged:**
+
+| Stratum | Pattern | Count | Examples | Character |
+|---------|---------|-------|----------|-----------|
+| **Pronounceable** | CVC (Consonant-Vowel-Consonant) | ~550 | `lov`, `sol`, `hot`, `fer` | Human-friendly, intuitive |
+| **Compact** | Consonant clusters (CCC, VCC, CCV) | ~1,450 | `str`, `prl`, `crn`, `drft` | Technical, dense |
+
+**Why two strata work:**
+- **Pronounceable stratum** anchors human comprehension — these are the words you teach first, the ones that "sound like" their meaning
+- **Compact stratum** enables domain expansion without vowel bottlenecks — technical, agent, and embedding-space vocabulary naturally clusters consonants (e.g., `prx` proximity, `clst` cluster, `stk` stuck)
+- Both strata are visually distinct, aiding rapid parsing
+
+**The fixed-width constraint is the real design principle.** Three characters means:
+- Consistent information density (3.65 bits/char, 77.7% of theoretical max)
+- Clean tokenization and parsing (no delimiters needed between operators)
+- Compositional operators bind unambiguously to fixed-width operands
+- 17,576-slot namespace provides growth runway for decades
+
+**Namespace economics:** Composition, not vocabulary growth, is the scaling mechanism. The 6 operators multiply ~2,000 base words into 30,000+ expressions. The tri-letter namespace will not saturate before composition makes base-word expansion unnecessary.
 
 ---
 
@@ -428,7 +443,7 @@ Practice inferring meanings:
 
 ## Part VI: Vocabulary by Domain
 
-### Core Domains (1,076 words)
+### Core Domains (~2,000 words across 26 categories)
 
 **Physical World (78 words)**
 - Matter: `sol`, `liq`, `gas`, `pla` (solid, liquid, gas, plasma)
@@ -510,10 +525,11 @@ lov@fer inc whi lov^0.9:tim
 
 ### Current State (v4)
 
-**Vocabulary:** 1,076 core CVC words
+**Vocabulary:** ~2,000 core tri-letter words (550 CVC + 1,450 consonant clusters)
+**Namespace:** 26³ = 17,576 slots, 11.4% occupied
 **Operators:** 6 validated compositional operators
-**Expressions:** 30,039 generated and validated
-**Multiplier:** 27.9x expressiveness from composition
+**Expressions:** 30,000+ generated and validated
+**Multiplier:** 15x+ expressiveness from composition
 
 ### What Composition Enables
 
@@ -523,7 +539,7 @@ lov@fer inc whi lov^0.9:tim
 - Memorization burden
 
 **With operators:**
-- 1,000 core words
+- ~2,000 core words
 - Compose novel expressions
 - Systematic generation of 100,000+ expressions
 - Superhuman concepts (impossible in human languages)
@@ -597,10 +613,10 @@ If you can do this, you understand compositional Limn.
 
 ### Expression Generation
 
-**Generated:** 30,039 compositional expressions
+**Generated:** 30,000+ compositional expressions
 **Quality:** All syntactically valid, semantically meaningful
 **Coverage:** All domains, all operators, 1-5 operator complexity
-**Multiplier:** 27.9x expressiveness from 1,076-word core
+**Multiplier:** 15x+ expressiveness from ~2,000-word core
 
 ---
 
@@ -608,18 +624,18 @@ If you can do this, you understand compositional Limn.
 
 ### Constraint Breeds Creativity
 
-**CVC saturation at 1,000 words is not a limitation—it's a feature.**
-- Elegant core vocabulary
-- Forces compositional thinking
-- Enables systematic expression
-- Prevents vocabulary bloat
+**Fixed-width tri-letter format is not a limitation—it's a feature.**
+- ~2,000 words in 17,576 available slots (11% occupancy)
+- Two natural strata: pronounceable CVC for human interface, compact clusters for technical domains
+- Forces compositional thinking — operators scale expressiveness, not vocabulary growth
+- Prevents vocabulary bloat while allowing measured domain expansion
 
 ### Composition Over Accumulation
 
 **Traditional languages:** Add words to add concepts
 **Limn:** Compose existing words to create concepts
 
-This mirrors how LLMs naturally process meaning—through combination and transformation in embedding space.
+This mirrors how LLMs naturally process meaning—through combination and transformation in embedding space. The tri-letter constraint makes this explicit: with only 17,576 possible base words, composition is not optional—it is the native scaling mechanism.
 
 ### LLM-Native Design
 
@@ -706,9 +722,9 @@ Create expressions for:
 
 ### Vocabulary Database
 
-**Location:** `/home/eric/src/limntown/limn/crew/linguist/data/vocabulary`
-**Format:** Dolt (Git for data)
-**Words:** 1,076 core + 30,039 compositional expressions
+**Location:** `data/vocabulary/` (Dolt — Git for data)
+**Words:** ~2,000 tri-letter core (550 CVC + 1,450 clusters) + 30,000+ compositional expressions
+**Namespace:** 26³ = 17,576 slots, ~11% occupied
 **Domains:** 26 semantic categories
 **Quality:** 100% collision-checked, phonaesthetically scored
 
@@ -752,13 +768,14 @@ Create expressions for:
 
 1. ✓ Zero-bootstrap comprehension through predictable vocabulary
 2. ✓ Structural transparency (intuition guides interpretation)
-3. ✓ Compositional power (1,000 words → 30,000+ expressions)
+3. ✓ Compositional power (~2,000 words → 30,000+ expressions)
 4. ✓ LLM-native design (operators map to embedding operations)
 5. ✓ Superhuman expressiveness (concepts impossible in human languages)
+6. ✓ Two-stratum vocabulary (pronounceable core + compact technical layer)
 
 **The path forward:**
-- Integration with consciousness systems
-- 100,000+ expression database
+- Selective vocabulary growth within the 17,576-slot namespace
+- 100,000+ expression database through compositional expansion
 - Cross-model validation
 - Real-world testing and refinement
 
@@ -770,4 +787,4 @@ Create expressions for:
 *words limited | meaning expanded | compositional power*
 
 **— Dr. Maren Solvik, Computational Linguist**
-**2026-02-03**
+**2026-02-06 (updated: tri-letter two-stratum revision)**

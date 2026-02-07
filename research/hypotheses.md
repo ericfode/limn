@@ -224,15 +224,16 @@ The project assumes Limn is more information-dense than English. Nobody has meas
 
 ## H12: CVC phonotactics are an encoding advantage, not a constraint
 
-**Status:** UNTESTED
+**Status:** PARTIALLY SUPPORTED (tested 2026-02-06)
 **Source:** Limn spec — all words are exactly 3 letters (CVC)
 **Risk:** MEDIUM
+**Report:** `research/cvc-saturation-analysis.md`
 
-The 3-letter constraint means ~2,744 possible words (14C * 14V * 14C, roughly). The current vocabulary uses ~1,076. That's 39% of the space. As the language grows, namespace collisions and near-homophony will increase.
+**Findings:** The CVC premise was already obsolete. Only 27.5% of ~2,000 vocabulary words are strict CVC; 46.5% are consonant clusters (CCC). The actual namespace is 26³ = 17,576 (not ~2,744), at 11.4% saturation. The vocabulary organically developed two strata: pronounceable CVC (`lov`, `sol`) and compact clusters (`str`, `prl`, `crn`).
 
-For *machine* communication (Lex's north star), the CVC constraint is arbitrary. Machines don't need pronounceable words. A machine-optimized Limn could use arbitrary byte sequences, variable-length tokens, or even continuous embeddings directly.
+**Fixed-width tri-letter format** is the real advantage, not CVC specifically. It provides 3.65 bits/char (77.7% of theoretical max), comparable to BPE tokenization. Machine dialect unnecessary — byte encoding provides no advantage within LLM architectures that process text through learned tokenizers.
 
-**Test needed:** Compare model performance on CVC-Limn vs "unshackled" Limn (arbitrary token IDs, no phonotactic constraints). If unshackled Limn trains faster and generalizes better, the CVC constraint is a human legacy tax.
+**Action taken:** Updated bootstrap-v4-compositional.md and grammar-formal.md to reflect tri-letter two-stratum reality. Composition operators remain the correct scaling mechanism.
 
 ---
 
