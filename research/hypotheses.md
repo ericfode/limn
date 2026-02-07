@@ -265,7 +265,7 @@ The current SLM is asked to do everything: define words, translate, compose expr
 
 ## H15: Compositionality is a conditional attractor, not a universal optimum
 
-**Status:** INVESTIGATING — strong evidence FOR
+**Status:** CONFIRMED
 **Source:** Literature survey (Chaabouni 2020, Kottur 2017, Ren 2020, Futrell & Hahn 2025)
 **Risk:** HIGH — challenges Limn's theoretical foundation
 
@@ -280,7 +280,7 @@ Without these pressures, holistic codes are the equilibrium. Chaabouni 2020 foun
 
 **Implication for Limn:** Limn's compositionality is a *design choice* that is not inevitable for machine communication. For machine-to-machine use, the right question is: which of these pressures exist in the deployment context? If agents are never retrained and channel capacity is unlimited, compositionality may be unnecessary overhead.
 
-**Experimental test:** The Lewis game baseline (hq-jbm2m) confirms this: topsim≈0.27 (holistic). Variants A-E (hq-2uoa8) test which pressures induce compositionality.
+**Experimental evidence (2026-02-07):** Lewis game baseline topsim=0.42 (mildly compositional). Five variants tested: generalization pressure (-0.08), bottleneck (-0.01), combined (-0.06), entropy reg (-0.18), grokking 200k steps (-0.01). **No variant exceeded baseline.** Compositionality is confirmed as conditional — it requires specific pressures (transmission bottleneck, heterogeneous receivers) that were not present in these experiments.
 
 ---
 
@@ -305,32 +305,30 @@ Limn is 53% denser than English (H11). English has ~50% redundancy (Shannon 1948
 
 ## H17: Grokking will induce compositionality in Lewis signaling games
 
-**Status:** UNTESTED — strong theoretical prediction, no prior experimental work
+**Status:** FALSIFIED (2026-02-07)
 **Source:** Power et al. 2022; Nanda et al. 2023; Kumar et al. 2024 (ICLR)
-**Risk:** HIGH — novel experimental prediction
+**Risk:** RESOLVED
 
-**Theoretical chain:**
+**Theoretical chain (was):**
 1. Grokking = phase transition from memorization to generalization (Power et al. 2022)
 2. Mechanism: weight decay destroys high-norm memorization circuits; lower-norm generalizing circuits survive (Nanda et al. 2023)
 3. Compositionality is lower-norm than holistic encoding (fewer parameters needed to represent structured mappings)
 4. Lewis game agents memorize arbitrary protocols first (Rita et al. 2022 confirms co-adaptation overfitting)
 5. Therefore: AdamW + weight decay + extended training should produce sudden snap from holistic→compositional
 
-**Predicted signature (Variant E of hq-2uoa8):**
-- Steps 0-20k: topsim≈0.27 (holistic, same as baseline)
-- Steps 20k-150k: topsim plateau, but weight norm decreasing
-- Steps 150k-200k: topsim jumps >0.55 (phase transition)
-- Weight norm inflection point at transition
+**Experimental result (Variant E, hq-2uoa8):**
+- 200k steps, AdamW weight_decay=0.01, eval every 2k steps
+- TopSim trajectory: 0.00 → 0.36 (0-20k) → 0.39 (20k-100k) → 0.41 (100k-200k)
+- Weight norm: 24 → 74 (peaked ~100k) → 72 (200k)
+- **No phase transition.** Gradual creep, not sudden reorganization.
+- Final topsim: 0.406 — statistically indistinguishable from baseline (0.418)
 
-**If confirmed:** Compositionality is the "true minimum" — the attractor that networks reach when regularized. Limn's design is a shortcut to where machines would converge given enough compute. This is the strongest possible argument for Limn's design.
+**Why it failed:**
+1. Grokking requires small data relative to model capacity (e.g., modular arithmetic with 97 examples). 4096 objects with 512-batch training is not the small-data regime.
+2. Both holistic and compositional protocols achieve >99% accuracy — no loss-landscape pressure to prefer one over the other.
+3. Weight decay compressed the holistic protocol into lower-norm weights rather than replacing it with a structurally different compositional protocol.
 
-**If falsified:** Compositionality is NOT a deeper minimum for communication tasks. It is a human design preference, not an emergent property. Limn's structure would need justification on other grounds.
-
-**Key experimental parameters (from literature):**
-- Optimizer: AdamW (not Adam with L2) — Loshchilov & Hutter 2019
-- Weight decay: 0.01 (tunable)
-- Training budget: 10x+ baseline (200k vs 20k)
-- Tracking: topsim every 1k steps, weight norm, per-position MI
+**Implication:** Compositionality is NOT a deeper minimum that emerges from regularization. It is a human design preference. Limn's compositionality must be justified as an engineered advantage (learnability, interpretability, extensibility), not as convergent behavior.
 
 ---
 
@@ -356,9 +354,9 @@ For machine communication, variable-length tokens would be strictly more efficie
 |----|------|----------------|-----------------|
 | H2 | FALSIFIED | Low (data fix) | Eval is meaningless |
 | H5 | FALSIFIED | Medium | DPO loop is broken |
-| H15 | HIGH | Low (running) | Limn's compositionality is design choice, not convergent |
+| H15 | CONFIRMED | — | Limn's compositionality is design choice, not convergent |
 | H16 | HIGH | Medium | Density = fragility under noise |
-| H17 | HIGH | Medium (running) | Compositionality is/isn't the true minimum |
+| H17 | FALSIFIED | — | Compositionality is NOT the true minimum |
 | H4 | HIGH | Medium | Architecture change needed |
 | H1 | HIGH | Medium | Core claim invalidated |
 | H11 | HIGH | Medium | Project thesis ungrounded |
