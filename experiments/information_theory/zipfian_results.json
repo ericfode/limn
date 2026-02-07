@@ -1,0 +1,28 @@
+{
+  "experiment": "zipfian_efficiency_h18",
+  "pairs_count": 329,
+  "limn_tokens": 1938,
+  "limn_unique": 259,
+  "english_tokens": 3664,
+  "english_unique": 946,
+  "encoding": {
+    "limn_fixed_bits_per_word": 14.101319154423276,
+    "limn_entropy_bits_per_word": 7.115257004460214,
+    "limn_huffman_bits_per_word": 7.14344685242518,
+    "english_fixed_bits_per_word": 21.388027014423656,
+    "english_entropy_bits_per_word": 8.376005779833775,
+    "english_huffman_bits_per_word": 8.403657205240174
+  },
+  "cvc_tax": {
+    "bits_per_word_vs_entropy": 6.986062149963062,
+    "bits_per_word_vs_huffman": 6.957872301998096,
+    "overhead_fraction": 0.493419957792783,
+    "total_wasted_bits": 13484.35652127231,
+    "variable_length_savings": 0.493419957792783
+  },
+  "zipf": {
+    "limn_alpha": 1.0450112160933338,
+    "english_alpha": 0.8975986933529516
+  },
+  "h18_verdict": "STRONGLY SUPPORTED"
+}

@@ -343,17 +343,30 @@ Limn is 53% denser than English (H11). English has ~50% redundancy (Shannon 1948
 
 ## H18: Fixed CVC defeats Zipfian efficiency
 
-**Status:** UNTESTED
+**Status:** CONFIRMED — STRONGLY SUPPORTED (2026-02-07)
 **Source:** Piantadosi et al. 2011; Kanwal et al. 2017; Limn spec
-**Risk:** MEDIUM
+**Risk:** RESOLVED
 
-All Limn words are exactly 3 characters (CVC). Natural languages use shorter words for frequent meanings — Piantadosi et al. 2011 showed word length correlates with surprisal-in-context across 10 languages. This Zipfian optimization is impossible in Limn.
+All Limn words are exactly 3 characters (CVC/tri-letter). Natural languages use shorter words for frequent meanings — Piantadosi et al. 2011 showed word length correlates with surprisal-in-context across 10 languages. This Zipfian optimization is impossible in Limn.
 
-**Consequence:** Limn cannot assign shorter codes to higher-frequency concepts. "the" in English is 3 characters; its equivalent in Limn usage (pipe separator "|") is 1 character but serves a different function. High-frequency compositional patterns pay the same 3-char cost as rare ones.
+**Experimental results (329 HGttG pairs, 1938 Limn tokens, 259 unique words):**
 
-For machine communication, variable-length tokens would be strictly more efficient. The CVC constraint is a human-learnability concession.
+| Metric | Value |
+|--------|-------|
+| Limn fixed encoding | 14.10 bits/word (3 chars × 4.70 bits/char) |
+| Shannon entropy | 7.12 bits/word |
+| Huffman optimal | 7.14 bits/word |
+| **CVC tax** | **6.96 bits/word (49.3% overhead)** |
+| Variable-length savings | 49.3% of total bandwidth |
+| Zipf alpha | 1.045 (near-perfect Zipf distribution) |
 
-**Test needed:** Compute the Zipfian efficiency loss: compare Limn's actual encoding against an optimal variable-length code over the same frequency distribution. The gap is the "CVC tax."
+**Key finding:** The top 7 words (`say`, `ford`, `nu`, `wrl`, `mac`, `al`, `hum`) account for ~22% of all tokens and could each be encoded in ~1.1 equivalent characters instead of 3 — a 65% savings per word.
+
+**Interesting comparison:** Limn is actually MORE efficient than English (50.5% vs 39.2% entropy/fixed ratio). English wastes 60.8% of its encoding capacity because its variable word lengths evolved for morphology and phonology, not optimal information coding. But for machine communication, both are suboptimal compared to Huffman coding.
+
+**Implication:** The CVC constraint is purely a human-learnability concession that costs 49% of bandwidth. For machine-to-machine communication, variable-length tokens are strictly superior. A machine dialect of Limn could double throughput by dropping the fixed-width constraint.
+
+**Full analysis:** `experiments/information_theory/zipfian_efficiency.py`
 
 ---
 
@@ -373,7 +386,7 @@ For machine communication, variable-length tokens would be strictly more efficie
 | H6 | MEDIUM | Medium | Model can't generalize |
 | H3 | MEDIUM | High | Wrong base model |
 | H7 | MEDIUM | Low | Operator learning incomplete |
-| H18 | MEDIUM | Low | CVC wastes encoding capacity |
+| H18 | CONFIRMED | — | CVC wastes 49.3% of encoding capacity |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |
