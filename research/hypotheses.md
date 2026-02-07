@@ -286,20 +286,29 @@ Without these pressures, holistic codes are the equilibrium. Chaabouni 2020 foun
 
 ## H16: Limn's density advantage is fragility under noise
 
-**Status:** UNTESTED — strong theoretical basis
+**Status:** CONFIRMED (2026-02-07)
 **Source:** Shannon channel coding theorem; Coupe et al. 2019; Gibson et al. 2019
-**Risk:** HIGH — could invalidate deployment claims
+**Risk:** RESOLVED — deployment implications clear
 
 Limn is 53% denser than English (H11). English has ~50% redundancy (Shannon 1948). This redundancy is not waste — it is error correction. Every corrupted English word has contextual cues for recovery. A maximally dense code like Limn offers no such recovery.
 
-**Key results from literature:**
-- Coupe et al. 2019: All 17 human languages studied converge to ~39 bits/s throughput regardless of per-syllable density. Denser languages are spoken slower.
-- Shannon's source-channel separation: The correct architecture is maximal source compression (Limn) + separate channel coding (error correction layer). Limn without a channel code is fragile.
-- Chaabouni 2019: Emergent codes are *anti*-Zipfian — neural agents prefer longer messages for discrimination. This suggests density is not the natural equilibrium.
+**Experimental results (noise injection on 329 HGttG pairs, 10 trials/rate):**
 
-**Test needed:** Noise injection experiment. Take Limn-English parallel corpus, corrupt Limn tokens at rates 1%, 5%, 10%, 20%. Measure meaning recovery vs same corruption rate on English. Prediction: English degrades gracefully, Limn fails catastrophically.
+| Corruption Rate | English Preserved | Limn Preserved | Gap | Limn Collision Rate |
+|----------------|-------------------|----------------|-----|---------------------|
+| 1% | 98.0% | 83.7% | -14.4pp | 3.3% |
+| 5% | 96.3% | 83.2% | -13.1pp | 3.5% |
+| 10% | 91.8% | 75.7% | -16.1pp | 4.9% |
+| 20% | 80.9% | 54.4% | -26.5pp | 8.8% |
 
-**Resolution if confirmed:** Limn is optimal as a *source code* (compact representation) but needs an explicit error-correction layer for any non-ideal channel. The 53% density claim should be qualified: "53% source-coding advantage, channel coding TBD."
+**Why Limn is fragile:**
+1. **Short words**: 3-letter words mean each corruption affects 33% of the word. English 5-letter words: 20%.
+2. **Low recoverability**: Corrupted 3-letter words are ambiguous — often equidistant from multiple valid Limn words. English's longer words are usually uniquely recoverable at edit distance 1.
+3. **Silent corruption**: Limn's dense namespace (11.4% of 3-letter space occupied) means corrupted words often accidentally become OTHER valid words. At 20% corruption, 8.8% of Limn words become wrong-but-valid (vs 1.2% for English). The receiver gets *wrong* meaning, not *no* meaning.
+
+**Resolution:** Limn is optimal as a *source code* (compact representation) but needs an explicit error-correction layer for any non-ideal channel. The 53% density claim must be qualified: "53% source-coding advantage on noiseless channels; requires channel coding for noisy deployment."
+
+**Full analysis:** `experiments/information_theory/noise_injection.py`
 
 ---
 
@@ -355,7 +364,7 @@ For machine communication, variable-length tokens would be strictly more efficie
 | H2 | FALSIFIED | Low (data fix) | Eval is meaningless |
 | H5 | FALSIFIED | Medium | DPO loop is broken |
 | H15 | CONFIRMED | — | Limn's compositionality is design choice, not convergent |
-| H16 | HIGH | Medium | Density = fragility under noise |
+| H16 | CONFIRMED | — | Density = fragility under noise (14-27pp worse than English) |
 | H17 | FALSIFIED | — | Compositionality is NOT the true minimum |
 | H4 | HIGH | Medium | Architecture change needed |
 | H1 | HIGH | Medium | Core claim invalidated |

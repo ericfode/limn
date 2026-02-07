@@ -1,0 +1,116 @@
+{
+  "experiment": "noise_injection_h16",
+  "pairs_count": 329,
+  "n_trials": 10,
+  "limn_vocab_size": 2006,
+  "english_vocab_size": 1210,
+  "corruption_rates": [
+    0.01,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "results": {
+    "rate_0.01": {
+      "rate": 0.01,
+      "limn": {
+        "word_survival": 0.8240822568178191,
+        "word_recovery": 0.012732980460943986,
+        "collision_rate": 0.03289055844526969,
+        "broken_rate": 0.1302942042759672,
+        "text_similarity": 0.966108756842715,
+        "meaning_preserved": 0.8368152372787631
+      },
+      "english": {
+        "word_survival": 0.8937699436354445,
+        "word_recovery": 0.08669748635384358,
+        "collision_rate": 0.0015363991176730704,
+        "broken_rate": 0.017996170893038854,
+        "text_similarity": 0.9820918142880187,
+        "meaning_preserved": 0.980467429989288
+      },
+      "delta": {
+        "survival": -0.06968768681762538,
+        "recovery": -0.0739645058928996,
+        "collision": 0.031354159327596616,
+        "meaning_preserved": -0.14365219271052498
+      }
+    },
+    "rate_0.05": {
+      "rate": 0.05,
+      "limn": {
+        "word_survival": 0.8223883495767994,
+        "word_recovery": 0.009690629363881643,
+        "collision_rate": 0.03473209752085132,
+        "broken_rate": 0.13318892353846762,
+        "text_similarity": 0.9656410356980792,
+        "meaning_preserved": 0.8320789789406811
+      },
+      "english": {
+        "word_survival": 0.8163262096868069,
+        "word_recovery": 0.14709203877998836,
+        "collision_rate": 0.0029948112982919484,
+        "broken_rate": 0.03358694023491281,
+        "text_similarity": 0.9673590204960016,
+        "meaning_preserved": 0.9634182484667952
+      },
+      "delta": {
+        "survival": 0.0060621398899924905,
+        "recovery": -0.1374014094161067,
+        "collision": 0.03173728622255937,
+        "meaning_preserved": -0.1313392695261142
+      }
+    },
+    "rate_0.1": {
+      "rate": 0.1,
+      "limn": {
+        "word_survival": 0.7408773276706407,
+        "word_recovery": 0.01608508512763832,
+        "collision_rate": 0.049094302354180774,
+        "broken_rate": 0.19394328484754017,
+        "text_similarity": 0.9475207479439883,
+        "meaning_preserved": 0.756962412798279
+      },
+      "english": {
+        "word_survival": 0.6414434372810759,
+        "word_recovery": 0.2764754461113443,
+        "collision_rate": 0.006728492587364534,
+        "broken_rate": 0.07535262402021528,
+        "text_similarity": 0.928808514694011,
+        "meaning_preserved": 0.9179188833924201
+      },
+      "delta": {
+        "survival": 0.09943389038956485,
+        "recovery": -0.26039036098370594,
+        "collision": 0.04236580976681624,
+        "meaning_preserved": -0.1609564705941411
+      }
+    },
+    "rate_0.2": {
+      "rate": 0.2,
+      "limn": {
+        "word_survival": 0.5180850515576959,
+        "word_recovery": 0.025610772206516887,
+        "collision_rate": 0.08776425364571261,
+        "broken_rate": 0.36853992259007456,
+        "text_similarity": 0.8867401276549737,
+        "meaning_preserved": 0.5436958237642128
+      },
+      "english": {
+        "word_survival": 0.3941079823206651,
+        "word_recovery": 0.4147504852809396,
+        "collision_rate": 0.01154886030276981,
+        "broken_rate": 0.17959267209562552,
+        "text_similarity": 0.849269729486411,
+        "meaning_preserved": 0.8088584676016046
+      },
+      "delta": {
+        "survival": 0.12397706923703083,
+        "recovery": -0.38913971307442274,
+        "collision": 0.0762153933429428,
+        "meaning_preserved": -0.26516264383739185
+      }
+    }
+  },
+  "h16_verdict": "SUPPORTED"
+}
