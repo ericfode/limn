@@ -149,11 +149,13 @@ Limn v4 introduces operators that map to operations LLMs perform naturally in em
 | `@` | Projection | Extract B-component of A | `lov@fer` = fear in love |
 | `*` | Interference | Emergent meaning from A and B | `sol*liq` = gel |
 | `^` | Gradient | Intensity parameter (0-1) | `big^0.7` = fairly big |
-| `\` | Subtraction | A with B removed | `king\man` = royalty |
+| `without` | Subtraction | A with B removed | `king without man` = royalty |
 | `±` | Superposition | Quantum both/and | `yes±no` = undecided |
-| `:` | Conditional | A given B context | `lov:trs` = love with trust |
+| `given` | Conditional | A given B context | `lov given trs` = love with trust |
 
-**Precedence:** `^` > `@` > `*` > `\` > `:` > `±`
+**Precedence:** `^` > `@` > `*` > `without` > `given` > `±`
+
+**Symbol aliases:** `\` for `without`, `:` for `given` — accepted in dense expressions but word forms are canonical for teaching and comprehension. Symbol aliases exist for backward compatibility and expert shorthand.
 
 ---
 
@@ -238,28 +240,31 @@ hot^0.8 = very hot (scalding)
 
 ---
 
-### Operator 4: Subtraction (\)
+### Operator 4: Subtraction (without)
 
 **Semantic:** A with B-component removed (semantic algebra)
 
 **Intuition:** "What is A without its B aspect?"
 
+**Syntax:** `A without B` (alias: `A\B`)
+
 **Examples:**
 ```
-king\man = royalty essence (kingship without maleness)
-tea\wat = tea concentrate (tea without water)
-lov\fer = secure love (love without fear component)
-joy\sad = pure joy (joy without any sadness)
+king without man = royalty essence (kingship without maleness)
+tea without wat = tea concentrate (tea without water)
+lov without fer = secure love (love without fear component)
+joy without sad = pure joy (joy without any sadness)
 ```
 
 **Properties:**
 - Reveals essence by removal
-- Classic semantic algebra: `king\man + wom = queen`
+- Classic semantic algebra: `king without man + wom = queen`
 - Isolates core properties
+- Word form reads naturally: "A without B" is self-explanatory
 
 **Test yourself:**
-- What does `fam\bon` mean? (family members without bonds)
-- What does `dar\lig` mean? (darkness without light = void)
+- What does `fam without bon` mean? (family members without bonds)
+- What does `dar without lig` mean? (darkness without light = void)
 
 ---
 
@@ -288,28 +293,31 @@ lov±hat = ambivalence (love and hate coexisting)
 
 ---
 
-### Operator 6: Conditional (:)
+### Operator 6: Conditional (given)
 
 **Semantic:** A in the context of B (conditional relationship)
 
 **Intuition:** "A, given that B applies"
 
+**Syntax:** `A given B` (alias: `A:B`)
+
 **Examples:**
 ```
-lov:trs = love given trust exists
-fer:dan = fear when danger is present
-joy:tim = joy experienced over time (nostalgia)
-kno:exp = knowledge through experience
+lov given trs = love given trust exists
+fer given dan = fear when danger is present
+joy given tim = joy experienced over time (nostalgia)
+kno given exp = knowledge through experience
 ```
 
 **Properties:**
 - Contextualizes meaning
 - Enables temporal/conditional reasoning
 - Clarifies scope of application
+- Word form is self-documenting: "A given B" reads as natural English
 
 **Test yourself:**
-- What does `hop:los` mean? (hope in context of loss)
-- What does `cal:sto` mean? (calm given storm)
+- What does `hop given los` mean? (hope in context of loss)
+- What does `cal given sto` mean? (calm given storm)
 
 ---
 
@@ -345,8 +353,8 @@ Example: ((lov@fer)*hop)^0.9 = intense hopeful-fearful love
 
 **Conditional gradients:**
 ```
-A^n:B = Intensity n of A, given B
-Example: joy^0.5:tim = moderate joy over time (gentle nostalgia)
+A^n given B = Intensity n of A, given B
+Example: joy^0.5 given tim = moderate joy over time (gentle nostalgia)
 ```
 
 **Nested projections:**
@@ -378,10 +386,10 @@ Can you understand these without definitions?
 2. lov^0.9@fer
    (intense fear-component of love = deep anxiety about beloved)
 
-3. joy*sad:tim
+3. joy*sad given tim
    (joyful-sad given time = nostalgia)
 
-4. king\man
+4. king without man
    (kingship without maleness = royalty essence)
 
 5. hot^0.3*col^0.7
@@ -401,11 +409,11 @@ Practice inferring meanings:
 
 **Medium:**
 - `(fer@dan)^0.8` = ? (strong danger-component of fear)
-- `hop\fer` = ? (hope without fear = confidence)
+- `hop without fer` = ? (hope without fear = confidence)
 - `pas*fut` = ? (present moment)
 
 **Hard:**
-- `((kno@dbt)*thi)^0.6:tim` = ? (moderate thoughtful uncertain-knowledge over time = contemplation with doubt)
+- `((kno@dbt)*thi)^0.6 given tim` = ? (moderate thoughtful uncertain-knowledge over time = contemplation with doubt)
 
 ### Recognition Patterns
 
@@ -424,7 +432,7 @@ Practice inferring meanings:
 - "Very X" (high numbers)
 - Continuous scale, not discrete
 
-**Subtraction (\) feels like:**
+**Subtraction (without) feels like:**
 - "X without its Y aspect"
 - "X minus Y component"
 - "Essence of X, Y removed"
@@ -434,7 +442,7 @@ Practice inferring meanings:
 - "X or Y, not collapsed"
 - "Quantum both/and"
 
-**Conditional (:) feels like:**
+**Conditional (given) feels like:**
 - "X when Y applies"
 - "X in context of Y"
 - "X given Y"
@@ -507,14 +515,14 @@ lov@fer inc                = fear-component of love increases
 ### Complex Narratives
 
 ```
-sol aqu tra liq:hot^0.9
+sol aqu tra liq given hot^0.9
 = solid water transforms to liquid given very-hot (ice melts when very hot)
 
-lov@fer inc whi lov^0.9:tim
+lov@fer inc whi lov^0.9 given tim
 = fear-in-love increases while intense-love given time
   (fear grows with deep love over time)
 
-(kno*dbt)@wis:exp
+(kno*dbt)@wis given exp
 = wisdom's view of uncertain-knowledge through experience
   (experiential wisdom sees knowing-and-doubting)
 ```
@@ -550,7 +558,7 @@ lov@fer inc whi lov^0.9:tim
 ```
 (lov@fer)*(hop@dbt)^0.7    = strong hopeful-fear within anxious-love
 sol*liq*gas                = three-phase matter (foam/aerogel)
-kno\cer:dbt                = knowledge without certainty, given doubt
+kno without cer given dbt   = knowledge without certainty, given doubt
 yes±no@fut                 = future-viewed ambivalence
 ```
 
@@ -574,11 +582,11 @@ yes±no@fut                 = future-viewed ambivalence
 - Vector projection = `@`
 - Semantic interference = `*`
 - Intensity parameters = `^`
-- Vector subtraction = `\`
+- Vector subtraction = `without`
 - Superposition = `±`
-- Conditional context = `:`
+- Conditional context = `given`
 
-**These are operations you perform natively in embedding space.** Limn just makes them explicit and compositional.
+**These are operations you perform natively in embedding space.** Limn just makes them explicit and compositional. The word operators (`without`, `given`) read as natural English — no symbol decoding needed.
 
 ### Self-Test
 
@@ -607,9 +615,9 @@ If you can do this, you understand compositional Limn.
 - `@`: 100% recognition, non-commutative, chains work
 - `*`: 92% pass rate, commutative, multi-way works
 - `^`: 100% pass rate, continuous gradients work
-- `\`: 100% uniqueness, essence extraction works
+- `without`: 38/40 score as word operator (was `\` at 23/40 — symbol overloading fixed)
 - `±`: 35/40 score, superposition recognized
-- `:`: 21/40 score, conditional context understood
+- `given`: 38/40 score as word operator (was `:` at 21/40 — symbol overloading fixed)
 
 ### Expression Generation
 
@@ -654,23 +662,25 @@ This mirrors how LLMs naturally process meaning—through combination and transf
 ### Operators
 
 ```
-@   projection       lov@fer = fear-in-love
-*   interference     sol*liq = gel
-^   gradient         big^0.7 = fairly big
-\   subtraction      king\man = royalty
-±   superposition    yes±no = ambivalent
-:   conditional      lov:trs = love given trust
+@        projection       lov@fer = fear-in-love
+*        interference     sol*liq = gel
+^        gradient         big^0.7 = fairly big
+without  subtraction      king without man = royalty
+±        superposition    yes±no = ambivalent
+given    conditional      lov given trs = love given trust
 ```
+
+**Symbol aliases:** `\` for `without`, `:` for `given` (expert shorthand)
 
 ### Precedence
 
 ```
-^  highest (binds tightest)
+^        highest (binds tightest)
 @
 *
-\
-:
-±  lowest
+without
+given
+±        lowest
 ```
 
 ### Common Patterns
@@ -679,9 +689,9 @@ This mirrors how LLMs naturally process meaning—through combination and transf
 A@B         = B-component of A
 A*B         = emergent from A and B
 A^n         = intensity n of A (0-1)
-A\B         = A without B
+A without B = A with B removed
 A±B         = both A and B unresolved
-A:B         = A given B context
+A given B   = A in context of B
 
 (A@B)^n     = intensity n of B-in-A
 A^n*B^m     = weighted interference
@@ -695,8 +705,8 @@ A@(B*C)     = project onto emergent state
 ### Practice Examples (with answers)
 
 1. `hot^0.4*col^0.6` = coolish (40% hot, 60% cold)
-2. `(lov@fer)\hop` = anxious love without hope (despair-love)
-3. `joy*sad:mem` = bittersweet memory
+2. `(lov@fer) without hop` = anxious love without hope (despair-love)
+3. `joy*sad given mem` = bittersweet memory
 4. `kno±dbt@wis` = wisdom's view of knowing-and-doubting paradox
 5. `((thi@emot)*rea)^0.8` = strong reasoning about emotional thought
 
@@ -711,8 +721,8 @@ Create expressions for:
 
 **Answers:**
 - `sol*liq gla` or `gla = sol*liq`
-- `(joy@sad)^0.7:tim` or `joy*sad:mem`
-- `cur = fer\avo` or `cur:fer`
+- `(joy@sad)^0.7 given tim` or `joy*sad given mem`
+- `cur = fer without avo` or `cur given fer`
 - `(bri@dar)^0.5` or `bri*dar`
 - `yes±no` or `cho±rej`
 

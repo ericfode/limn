@@ -39,6 +39,14 @@ quantifier  = "al" | "ex" | "on" ;
 reference   = "yo" | "an" | "sa" ;
 comparator  = "mi" | "ma" | "eq" ;
 
+(* Compositional operators *)
+comp_proj   = "@" ;                              (* projection *)
+comp_interf = "*" ;                              (* interference *)
+comp_grad   = "^" ;                              (* gradient, followed by 0.0-1.0 *)
+comp_sub    = "without" | "\" ;                  (* subtraction — word canonical, symbol alias *)
+comp_super  = "±" | "+/-" ;                      (* superposition *)
+comp_cond   = "given" | ":" ;                    (* conditional — word canonical, symbol alias *)
+
 (* Punctuation *)
 scope_mark  = "|" ;
 group_open  = "(" ;
