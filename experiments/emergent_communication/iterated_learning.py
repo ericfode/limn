@@ -334,11 +334,11 @@ def train_generation_n(teacher_sender, gen_num):
         imit_targets = exposed_messages[imit_idx]  # (batch, 4) int targets
 
         logits_list = student_sender.get_logits(imit_objects)
-        imit_loss = Tensor([0.0])
+        imit_losses = []
         for p in range(MSG_LEN):
             target_p = Tensor(imit_targets[:, p].astype(np.int32))
-            imit_loss = imit_loss + logits_list[p].sparse_categorical_crossentropy(target_p)
-        imit_loss = imit_loss / MSG_LEN
+            imit_losses.append(logits_list[p].sparse_categorical_crossentropy(target_p))
+        imit_loss = Tensor.stack(*imit_losses).mean()
 
         # === Communication loss (standard Lewis game) ===
         tgt_oh_np, cand_oh_np = sample_batch_np(BATCH_SIZE, N_DISTRACTORS)
