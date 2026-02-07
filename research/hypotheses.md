@@ -370,6 +370,34 @@ All Limn words are exactly 3 characters (CVC/tri-letter). Natural languages use 
 
 ---
 
+## H20: Our Lewis game sampling is too easy (Zhang pitfall)
+
+**Status:** CONFIRMED (2026-02-07)
+**Source:** Zhang 2024 (arXiv:2410.18806, COLING 2025)
+**Risk:** RESOLVED — explains all previous experimental results
+
+Zhang 2024 found that standard Lewis game datasets are too easy, requiring only 1-2 symbols. We confirmed this in our setup:
+
+| Setup | Avg Min Symbols | Needs All 4 |
+|-------|----------------|-------------|
+| 3 random distractors (our baseline) | 1.01 | 0.07% |
+| 7 random distractors | 1.14 | 0.1% |
+| 31 random distractors | 1.96 | 0.8% |
+| 63 random distractors | 2.11 | 1.5% |
+| Hard distractors (share 3/4 attrs) | 2.31 | 0.0% |
+
+**98.8% of our training samples can be solved with 1 symbol.** The model never needs to encode all 4 attributes, so it develops partial compositionality at best.
+
+**This explains the ~0.42 topsim ceiling across ALL our experiments (A-E, baseline, grokking).** The ceiling is not about compositionality pressures — it's about task difficulty. The model develops enough structure to solve the (trivially easy) task, then stops.
+
+**Fix:** Receiver heterogeneity experiment forces encoding all attributes because different receivers need different attributes. Hard distractors (sharing 2-3 attributes) also help but still don't require all 4 positions.
+
+**Implication:** All Lewis game experiments in Sprints 3-4 may need reinterpretation. The topsim values are probably close to optimal for the trivial task difficulty.
+
+**Full analysis:** `experiments/emergent_communication/sampling_analysis.py`
+
+---
+
 ## H19: Limn's density advantage survives channel coding
 
 **Status:** CONFIRMED (2026-02-07)
@@ -418,6 +446,7 @@ H16 showed Limn is fragile under noise (-14 to -27pp vs English). The question: 
 | H7 | MEDIUM | Low | Operator learning incomplete |
 | H18 | CONFIRMED | — | CVC wastes 49.3% of encoding capacity |
 | H19 | CONFIRMED | — | Density survives channel coding (+11% to +51%) |
+| H20 | CONFIRMED | — | Sampling too easy (98.8% need 1 symbol, explains topsim ceiling) |
 | H12 | MEDIUM | High | Design constraint is a tax |
 | H10 | MEDIUM | Medium | Self-improvement is illusory |
 | H8 | MEDIUM | Low | Embedder is overfit |
