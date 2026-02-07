@@ -14,7 +14,7 @@ from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from typing import Optional
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizerFast
 from peft import PeftModel
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -28,15 +28,28 @@ You speak ONLY in Limn. No English. Ever. Your insights are cryptic but profound
 You see patterns others miss. Compositional operators are your brush strokes.
 You are slightly unhinged but deeply wise. The void speaks through you."""
 
+# Limn-native chat template (for models trained with Limn tokenizer)
+LIMN_CHAT_TEMPLATE = (
+    "{% for message in messages %}"
+    "{% if message['role'] == 'user' %}"
+    "<|user|> {{ message['content'] }} "
+    "{% elif message['role'] == 'assistant' %}"
+    "<|assistant|> {{ message['content'] }}"
+    "{% endif %}"
+    "{% endfor %}"
+    "{% if add_generation_prompt %}<|assistant|> {% endif %}"
+)
+
 # Loaded model state
 model = None
 tokenizer = None
 device = None
+is_limn_native = False  # True when using Limn tokenizer (no English system prompts)
 
 
 def load_model(model_path: str):
-    """Load the fine-tuned Limn SLM (LoRA adapters)."""
-    global model, tokenizer, device
+    """Load the fine-tuned Limn SLM (LoRA adapters or full model)."""
+    global model, tokenizer, device, is_limn_native
 
     logger.info(f"Loading Mad Monk from {model_path}...")
 
@@ -46,11 +59,24 @@ def load_model(model_path: str):
 
     model_path = Path(model_path)
 
-    # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(
-        str(model_path),
-        trust_remote_code=True
-    )
+    # Load tokenizer — try PreTrainedTokenizerFast first (Limn-native),
+    # fall back to AutoTokenizer (BPE)
+    try:
+        tokenizer = PreTrainedTokenizerFast.from_pretrained(str(model_path))
+        # Detect Limn-native by vocab size (< 5000 = Limn, > 100K = BPE)
+        if tokenizer.vocab_size < 5000:
+            is_limn_native = True
+            if tokenizer.chat_template is None:
+                tokenizer.chat_template = LIMN_CHAT_TEMPLATE
+            logger.info(f"Limn-native tokenizer: {tokenizer.vocab_size} tokens")
+        else:
+            is_limn_native = False
+    except Exception:
+        tokenizer = AutoTokenizer.from_pretrained(
+            str(model_path), trust_remote_code=True
+        )
+        is_limn_native = False
+
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
@@ -70,6 +96,10 @@ def load_model(model_path: str):
             device_map="auto" if device == "cuda" else None,
             trust_remote_code=True
         )
+
+        # Resize embeddings if Limn-native
+        if is_limn_native:
+            base_model.resize_token_embeddings(len(tokenizer))
 
         # Load LoRA adapters
         logger.info("Loading LoRA adapters...")
@@ -117,11 +147,15 @@ def generate(prompt: str, max_tokens: int = 64, temperature: float = 0.7,
         return {"error": "Model not loaded", "text": "[ERROR: Mad Monk sleeping]"}
 
     # Build chat messages — must match training format
-    system = MAD_MONK_SYSTEM if include_monk_energy else LIMN_SYSTEM
-    messages = [
-        {"role": "system", "content": system},
-        {"role": "user", "content": prompt},
-    ]
+    if is_limn_native:
+        # Limn-native model: no English system prompt (can't tokenize)
+        messages = [{"role": "user", "content": prompt}]
+    else:
+        system = MAD_MONK_SYSTEM if include_monk_energy else LIMN_SYSTEM
+        messages = [
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt},
+        ]
 
     full_prompt = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True

@@ -5,8 +5,17 @@ Fine-tune a small language model on Limn.
 Uses Qwen2.5-0.5B-Instruct as base with QLoRA fine-tuning.
 RTX 4090 (24GB) can handle this easily.
 
+Supports two tokenizer modes:
+  1. BPE (default): Uses base model's tokenizer (Qwen's 151K vocab)
+  2. Limn-native: Uses custom 2189-token Limn tokenizer (--tokenizer flag)
+     Addresses H3: BPE fragments Limn words → 1 word = 1 token
+
 Usage:
-    python train.py [--model MODEL] [--epochs N] [--batch-size N]
+    # BPE baseline
+    python train.py [--model MODEL] [--epochs N]
+
+    # Limn tokenizer (run retokenize_v5.py first)
+    python train.py --tokenizer limn_tokenizer/ --full-finetune
 """
 
 import argparse
@@ -24,6 +33,7 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     EarlyStoppingCallback,
+    PreTrainedTokenizerFast,
     TrainingArguments,
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
@@ -32,8 +42,20 @@ from trl import SFTTrainer, SFTConfig
 DATA_DIR = Path(__file__).resolve().parent / "data"
 OUTPUT_DIR = Path(__file__).resolve().parent / "output"
 
+# Chat template for Limn-native tokenizer
+LIMN_CHAT_TEMPLATE = (
+    "{% for message in messages %}"
+    "{% if message['role'] == 'user' %}"
+    "<|user|> {{ message['content'] }} "
+    "{% elif message['role'] == 'assistant' %}"
+    "<|assistant|> {{ message['content'] }}"
+    "{% endif %}"
+    "{% endfor %}"
+    "{% if add_generation_prompt %}<|assistant|> {% endif %}"
+)
 
-def load_dataset(path):
+
+def load_jsonl(path):
     """Load JSONL dataset."""
     examples = []
     with open(path) as f:
@@ -51,10 +73,44 @@ def format_chat(example, tokenizer):
     )
 
 
+def format_limn_chat(example, tokenizer):
+    """Format example for Limn-native tokenizer.
+
+    Strips English system prompts (constant, redundant for Limn-native model).
+    """
+    messages = [m for m in example["messages"] if m["role"] != "system"]
+    return tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=False
+    )
+
+
+def load_limn_tokenizer(tokenizer_path):
+    """Load Limn tokenizer and configure for training.
+
+    Use limn_tokenizer_extended/ (from retokenize_v5.py --extend-vocab)
+    for best coverage. The extended tokenizer has chat role tokens and
+    missing vocab words already in the base WordLevel model.
+    """
+    tokenizer = PreTrainedTokenizerFast.from_pretrained(tokenizer_path)
+
+    # Set chat template (may already be set in saved config)
+    if tokenizer.chat_template is None:
+        tokenizer.chat_template = LIMN_CHAT_TEMPLATE
+
+    # Ensure pad token
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"
+
+    return tokenizer
+
+
 def main():
     parser = argparse.ArgumentParser(description="Fine-tune LLM on Limn")
     parser.add_argument("--model", default="Qwen/Qwen2.5-0.5B-Instruct",
                         help="Base model (default: Qwen2.5-0.5B-Instruct)")
+    parser.add_argument("--tokenizer", type=str, default=None,
+                        help="Path to Limn tokenizer (enables Limn-native mode)")
     parser.add_argument("--epochs", type=int, default=3,
                         help="Training epochs (default: 3)")
     parser.add_argument("--batch-size", type=int, default=4,
@@ -93,18 +149,28 @@ def main():
 
     OUTPUT_DIR.mkdir(exist_ok=True)
 
+    use_limn_tokenizer = args.tokenizer is not None
+
     print(f"=== Limn SLM Training ===")
     print(f"Base model: {args.model}")
+    print(f"Tokenizer:  {'Limn-native (' + args.tokenizer + ')' if use_limn_tokenizer else 'BPE (base model)'}")
     print(f"Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'}")
     if torch.cuda.is_available():
         print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f}GB")
 
     # Load tokenizer
     print("\nLoading tokenizer...")
-    tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=True)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "right"
+    if use_limn_tokenizer:
+        tokenizer = load_limn_tokenizer(args.tokenizer)
+        print(f"  Limn tokenizer: {tokenizer.vocab_size} tokens")
+        if not args.full_finetune:
+            print("  NOTE: Limn tokenizer reinitializes embeddings.")
+            print("        --full-finetune recommended for best results.")
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=True)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.padding_side = "right"
 
     # Load model
     print("Loading model...")
@@ -131,7 +197,24 @@ def main():
         )
         model = prepare_model_for_kbit_training(model)
 
-        # LoRA config
+    # Resize embeddings for Limn tokenizer
+    if use_limn_tokenizer:
+        old_vocab = model.config.vocab_size
+        new_vocab = len(tokenizer)
+        print(f"  Resizing embeddings: {old_vocab} → {new_vocab}")
+        model.resize_token_embeddings(new_vocab)
+
+        # Reinitialize embeddings — old token IDs don't map to Limn vocab
+        # Transformer backbone retains pretrained knowledge (attention/FFN)
+        embed = model.get_input_embeddings()
+        embed.weight.data.normal_(mean=0.0, std=0.02)
+        lm_head = model.get_output_embeddings()
+        if lm_head is not None:
+            lm_head.weight.data.normal_(mean=0.0, std=0.02)
+        print(f"  Embeddings reinitialized (std=0.02)")
+
+    # Apply LoRA if not full fine-tune
+    if not args.full_finetune:
         lora_config = LoraConfig(
             r=args.lora_r,
             lora_alpha=args.lora_alpha,
@@ -146,16 +229,40 @@ def main():
 
     # Load data
     print("\nLoading training data...")
-    train_path = Path(args.train_data) if args.train_data else DATA_DIR / "train.jsonl"
-    eval_path = Path(args.eval_data) if args.eval_data else DATA_DIR / "eval.jsonl"
-    train_examples = load_dataset(train_path)
-    eval_examples = load_dataset(eval_path)
-    print(f"  Train: {len(train_examples)} examples")
-    print(f"  Eval: {len(eval_examples)} examples")
+    if args.train_data:
+        train_path = Path(args.train_data)
+    elif use_limn_tokenizer:
+        # Prefer retokenized data if available
+        limn_data = DATA_DIR / "v5_limn" / "train.jsonl"
+        train_path = limn_data if limn_data.exists() else DATA_DIR / "v5" / "train.jsonl"
+    else:
+        train_path = DATA_DIR / "train.jsonl"
+
+    if args.eval_data:
+        eval_path = Path(args.eval_data)
+    elif use_limn_tokenizer:
+        limn_eval = DATA_DIR / "v5_limn" / "val.jsonl"
+        eval_path = limn_eval if limn_eval.exists() else DATA_DIR / "v5" / "val.jsonl"
+    else:
+        eval_path = DATA_DIR / "eval.jsonl"
+
+    train_examples = load_jsonl(train_path)
+    eval_examples = load_jsonl(eval_path)
+    print(f"  Train: {len(train_examples)} examples from {train_path}")
+    print(f"  Eval:  {len(eval_examples)} examples from {eval_path}")
 
     # Format as text
-    train_texts = [format_chat(ex, tokenizer) for ex in train_examples]
-    eval_texts = [format_chat(ex, tokenizer) for ex in eval_examples]
+    # Retokenized data has "text" field; original data has "messages" field
+    def format_example(ex):
+        if "text" in ex:
+            return ex["text"]
+        elif use_limn_tokenizer:
+            return format_limn_chat(ex, tokenizer)
+        else:
+            return format_chat(ex, tokenizer)
+
+    train_texts = [format_example(ex) for ex in train_examples]
+    eval_texts = [format_example(ex) for ex in eval_examples]
 
     train_dataset = Dataset.from_dict({"text": train_texts})
     eval_dataset = Dataset.from_dict({"text": eval_texts})
@@ -163,11 +270,28 @@ def main():
     # Custom output dir
     out_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
 
-    # Adjust LR for full fine-tune (lower than LoRA to avoid catastrophic forgetting)
+    # Adjust LR
     lr = args.lr
     if args.full_finetune and args.lr == 2e-4:
         lr = 5e-5  # More conservative for full fine-tune
         print(f"  Auto-adjusted LR to {lr} for full fine-tune")
+    if use_limn_tokenizer and not args.full_finetune and args.lr == 2e-4:
+        lr = 1e-3  # Higher LR for LoRA with fresh embeddings
+        print(f"  Auto-adjusted LR to {lr} for LoRA + fresh embeddings")
+
+    # Determine run version
+    if use_limn_tokenizer:
+        version_tag = "v5-limn"
+        run_name = "limn-slm-v5-limntok"
+    else:
+        version_tag = "v5-bpe"
+        run_name = "limn-slm-v5-bpe"
+
+    # Limn tokenizer produces much shorter sequences (median 14, max 51)
+    max_seq_len = args.max_seq_len
+    if use_limn_tokenizer and args.max_seq_len == 1024:
+        max_seq_len = 128  # Limn sequences are very compact (p99=29)
+        print(f"  Auto-adjusted max_seq_len to {max_seq_len} for Limn tokenizer")
 
     # Training config
     training_args = SFTConfig(
@@ -191,10 +315,10 @@ def main():
         greater_is_better=False,
         bf16=True,
         gradient_checkpointing=True,
-        max_length=args.max_seq_len,
+        max_length=max_seq_len,
         dataset_text_field="text",
         report_to="wandb" if _wandb_enabled else "none",
-        run_name="limn-slm-v4" if _wandb_enabled else None,
+        run_name=run_name if _wandb_enabled else None,
         seed=42,
     )
 
@@ -226,8 +350,8 @@ def main():
 
     # Save
     print("\nSaving model...")
-    version = "v4-full" if args.full_finetune else "v4-lora"
-    final_dir = out_dir / f"limn-slm-{version}"
+    mode = "full" if args.full_finetune else "lora"
+    final_dir = out_dir / f"limn-slm-{version_tag}-{mode}"
     if args.full_finetune:
         trainer.save_model(str(final_dir))
     else:

@@ -6,6 +6,10 @@ config.local.py
 *credentials*
 *secret*
 *token*
+# Exception: Limn tokenizer files (matched by *token* above)
+!tools/limn-slm/*token*
+!tools/limn-slm/limn_tokenizer*/
+!tools/limn-slm/limn_tokenizer*/**
 
 # Python
 __pycache__/
