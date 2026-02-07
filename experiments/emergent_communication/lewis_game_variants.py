@@ -516,7 +516,7 @@ def run_variant_e(n_steps=200_000, lr=1e-3, weight_decay=0.01):
     sender = Sender(vocab_size=32)
     receiver = Receiver(vocab_size=32)
     params = get_parameters(sender) + get_parameters(receiver)
-    opt = AdamW(params, lr=lr, wd=weight_decay)
+    opt = AdamW(params, lr=lr, weight_decay=weight_decay)
     labels = Tensor.zeros(BATCH_SIZE, dtype=dtypes.int)
 
     @TinyJit
