@@ -71,11 +71,11 @@ BATCH_SIZE = 512
 SEED = 42
 
 # Iterated learning parameters
-N_GENERATIONS = 15          # Number of generations
+N_GENERATIONS = 10          # Number of generations
 GEN0_STEPS = 20_000         # Training steps for generation 0 (full Lewis game)
-GENX_STEPS = 10_000         # Training steps for generations 1+ (mixed training)
+IMIT_STEPS = 5_000          # Imitation steps per generation (supervised from teacher)
+COMM_STEPS = 5_000          # Communication steps per generation (Lewis game with new receiver)
 BOTTLENECK_FRACTION = 0.25  # Fraction of objects seen by each new generation
-IMITATION_WEIGHT = 0.5      # Weight of imitation loss vs communication loss
 LR = 1e-3
 TEMP_INIT = 2.0
 TEMP_MIN = 0.5
@@ -284,13 +284,15 @@ def train_generation_0():
 # ─── Generation N: Iterated Learning ────────────────────────────────────────
 
 def train_generation_n(teacher_sender, gen_num):
-    """Train a new generation using iterated learning.
+    """Train a new generation using iterated learning (two-phase).
 
-    The new sender learns through a MIX of:
-    1. Imitation: reproduce teacher's messages for a subset of objects
-    2. Communication: standard Lewis game with new receiver
+    Phase 1 (Imitation): New sender learns to reproduce teacher's messages
+    for a LIMITED subset of objects (the transmission bottleneck).
+    Phase 2 (Communication): New sender+receiver play Lewis game together
+    using JIT for speed.
 
-    The imitation subset is the transmission bottleneck.
+    The bottleneck in Phase 1 is what forces compositionality: with only 25%
+    of object-message pairs, the easiest protocol to learn is compositional.
     """
     print(f"\n{'─' * 60}")
     print(f"GENERATION {gen_num}")
@@ -300,7 +302,7 @@ def train_generation_n(teacher_sender, gen_num):
     Tensor.training = False
     teacher_messages = get_all_messages(teacher_sender, temperature=0.1)  # (4096, 4)
 
-    # Transmission bottleneck: student sees only a fraction of objects
+    # Transmission bottleneck: student sees only a fraction
     n_exposed = int(N_OBJECTS * BOTTLENECK_FRACTION)
     exposed_indices = np.random.choice(N_OBJECTS, size=n_exposed, replace=False)
     exposed_objects_oh = ALL_ONEHOT_NP[exposed_indices]  # (n_exposed, 32)
@@ -308,63 +310,71 @@ def train_generation_n(teacher_sender, gen_num):
 
     print(f"  Bottleneck: {n_exposed}/{N_OBJECTS} objects ({BOTTLENECK_FRACTION:.0%})")
 
-    # Create new agents
+    # ── Phase 1: Imitation (sender only, JIT'd for speed) ──
     student_sender = Sender()
-    student_receiver = Receiver()
-    params = get_parameters(student_sender) + get_parameters(student_receiver)
-    opt = Adam(params, lr=LR)
-    labels = Tensor.zeros(BATCH_SIZE, dtype=dtypes.int)
+    sender_params = get_parameters(student_sender)
+    sender_opt = Adam(sender_params, lr=LR)
 
-    # Pre-convert exposed messages to one-hot targets for imitation
-    exposed_msg_onehot = np.zeros((n_exposed, MSG_LEN, VOCAB_SIZE), dtype=np.float32)
-    for i in range(n_exposed):
-        for p in range(MSG_LEN):
-            exposed_msg_onehot[i, p, exposed_messages[i, p]] = 1.0
+    @TinyJit
+    def imit_step(imit_objects, tgt_0, tgt_1, tgt_2, tgt_3):
+        logits_list = student_sender.get_logits(imit_objects)
+        targets = [tgt_0, tgt_1, tgt_2, tgt_3]
+        losses = [logits_list[p].sparse_categorical_crossentropy(targets[p])
+                  for p in range(MSG_LEN)]
+        loss = Tensor.stack(*losses).mean()
+        loss.backward()
+        sender_opt.step()
+        sender_opt.zero_grad()
+        return loss.realize()
 
-    # Training loop (no JIT for mixed loss — simpler and still fast enough)
     Tensor.training = True
-
-    for step in range(GENX_STEPS):
-        temperature = get_temperature(step)
-        temp_t = Tensor([temperature])
-
-        # === Imitation loss (learn teacher's protocol) ===
+    for step in range(IMIT_STEPS):
         imit_idx = np.random.choice(n_exposed, size=BATCH_SIZE, replace=True)
         imit_objects = Tensor(exposed_objects_oh[imit_idx])
-        imit_targets = exposed_messages[imit_idx]  # (batch, 4) int targets
+        imit_targets = exposed_messages[imit_idx]
+        tgt_per_pos = [Tensor(imit_targets[:, p].astype(np.int32)) for p in range(MSG_LEN)]
+        imit_loss = imit_step(imit_objects, *tgt_per_pos)
 
-        logits_list = student_sender.get_logits(imit_objects)
-        imit_losses = []
-        for p in range(MSG_LEN):
-            target_p = Tensor(imit_targets[:, p].astype(np.int32))
-            imit_losses.append(logits_list[p].sparse_categorical_crossentropy(target_p))
-        imit_loss = Tensor.stack(*imit_losses).mean()
-
-        # === Communication loss (standard Lewis game) ===
-        tgt_oh_np, cand_oh_np = sample_batch_np(BATCH_SIZE, N_DISTRACTORS)
-        noise_packed = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
-        msg_soft, _ = student_sender(Tensor(tgt_oh_np), temp_t, noise_packed=noise_packed)
-        scores = student_receiver(msg_soft, Tensor(cand_oh_np))
-        comm_loss = scores.sparse_categorical_crossentropy(labels)
-
-        # === Combined loss ===
-        total_loss = IMITATION_WEIGHT * imit_loss + (1 - IMITATION_WEIGHT) * comm_loss
-        total_loss.backward()
-        opt.step()
-        opt.zero_grad()
-
-        if step % EVAL_EVERY == 0 or step == GENX_STEPS - 1:
+        if step % EVAL_EVERY == 0 or step == IMIT_STEPS - 1:
             Tensor.training = False
             topsim = compute_topographic_similarity(student_sender)
-            acc_val = (scores.argmax(axis=-1) == 0).mean().numpy()
-            print(f"  Gen {gen_num} Step {step:>6d} | "
-                  f"Imit {imit_loss.numpy():.4f} | Comm {comm_loss.numpy():.4f} | "
-                  f"Acc {acc_val:.4f} | TopSim {topsim:.4f}")
+            print(f"  Gen {gen_num} Imit Step {step:>6d} | "
+                  f"Loss {imit_loss.numpy():.4f} | TopSim {topsim:.4f}")
+            Tensor.training = True
+
+    # ── Phase 2: Communication (sender+receiver, JIT'd) ──
+    student_receiver = Receiver()
+    all_params = get_parameters(student_sender) + get_parameters(student_receiver)
+    comm_opt = Adam(all_params, lr=LR)
+    labels = Tensor.zeros(BATCH_SIZE, dtype=dtypes.int)
+
+    @TinyJit
+    def comm_step(tgt_oh, cand_oh, noise_packed, temp_t):
+        msg_soft, _ = student_sender(tgt_oh, temp_t, noise_packed=noise_packed)
+        scores = student_receiver(msg_soft, cand_oh)
+        loss = scores.sparse_categorical_crossentropy(labels)
+        loss.backward()
+        comm_opt.step()
+        comm_opt.zero_grad()
+        return loss.realize(), (scores.argmax(axis=-1) == 0).mean().realize()
+
+    Tensor.training = True
+    for step in range(COMM_STEPS):
+        temperature = get_temperature(step)
+        tgt_oh_np, cand_oh_np = sample_batch_np(BATCH_SIZE, N_DISTRACTORS)
+        noise_packed = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
+        temp_t = Tensor([temperature])
+        loss, acc = comm_step(Tensor(tgt_oh_np), Tensor(cand_oh_np), noise_packed, temp_t)
+
+        if step % EVAL_EVERY == 0 or step == COMM_STEPS - 1:
+            Tensor.training = False
+            topsim = compute_topographic_similarity(student_sender)
+            print(f"  Gen {gen_num} Comm Step {step:>6d} | "
+                  f"Loss {loss.numpy():.4f} | Acc {acc.numpy():.4f} | TopSim {topsim:.4f}")
             Tensor.training = True
 
     Tensor.training = False
     final_topsim = compute_topographic_similarity(student_sender)
-    # Compute accuracy on a fresh batch
     tgt_oh_np, cand_oh_np = sample_batch_np(BATCH_SIZE, N_DISTRACTORS)
     noise_packed = Tensor.rand(MSG_LEN, BATCH_SIZE, VOCAB_SIZE)
     msg_soft, _ = student_sender(Tensor(tgt_oh_np), 0.1, noise_packed=noise_packed)
@@ -382,15 +392,16 @@ def run_experiment():
     print("=" * 60)
     print("ITERATED LEARNING EXPERIMENT")
     print(f"Generations: {N_GENERATIONS}, Bottleneck: {BOTTLENECK_FRACTION:.0%}")
+    print(f"Per gen: {IMIT_STEPS} imitation + {COMM_STEPS} communication steps")
     print("=" * 60)
 
     results = {
         "config": {
             "n_generations": N_GENERATIONS,
             "gen0_steps": GEN0_STEPS,
-            "genx_steps": GENX_STEPS,
+            "imit_steps": IMIT_STEPS,
+            "comm_steps": COMM_STEPS,
             "bottleneck_fraction": BOTTLENECK_FRACTION,
-            "imitation_weight": IMITATION_WEIGHT,
             "seed": SEED,
             "device": Device.DEFAULT,
         },

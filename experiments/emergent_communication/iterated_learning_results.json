@@ -1,0 +1,69 @@
+{
+  "config": {
+    "n_generations": 10,
+    "gen0_steps": 20000,
+    "imit_steps": 5000,
+    "comm_steps": 5000,
+    "bottleneck_fraction": 0.25,
+    "seed": 42,
+    "device": "CUDA"
+  },
+  "generations": [
+    {
+      "generation": 0,
+      "topsim": 0.3663176224099878,
+      "accuracy": 0.99609375
+    },
+    {
+      "generation": 1,
+      "topsim": 0.40968171760639405,
+      "accuracy": 0.9921875
+    },
+    {
+      "generation": 2,
+      "topsim": 0.41802270040795125,
+      "accuracy": 0.994140625
+    },
+    {
+      "generation": 3,
+      "topsim": 0.4710046481543358,
+      "accuracy": 0.9921875
+    },
+    {
+      "generation": 4,
+      "topsim": 0.4750178458140561,
+      "accuracy": 0.998046875
+    },
+    {
+      "generation": 5,
+      "topsim": 0.47143458295797125,
+      "accuracy": 0.994140625
+    },
+    {
+      "generation": 6,
+      "topsim": 0.4822701860209744,
+      "accuracy": 0.99609375
+    },
+    {
+      "generation": 7,
+      "topsim": 0.5158279348243336,
+      "accuracy": 0.994140625
+    },
+    {
+      "generation": 8,
+      "topsim": 0.5363758191622348,
+      "accuracy": 0.998046875
+    },
+    {
+      "generation": 9,
+      "topsim": 0.5496671554986841,
+      "accuracy": 0.998046875
+    },
+    {
+      "generation": 10,
+      "topsim": 0.5435706609244313,
+      "accuracy": 0.994140625
+    }
+  ],
+  "verdict": "MODERATE_IMPROVEMENT"
+}
