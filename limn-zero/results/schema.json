@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/limn-zero/result.schema.json",
+  "title": "Limn Zero Run Result",
+  "type": "object",
+  "required": [
+    "run_id",
+    "experiment_id",
+    "variant",
+    "seed",
+    "status",
+    "git_commit",
+    "config_sha256",
+    "dataset_manifest_sha256",
+    "metrics",
+    "artifacts"
+  ],
+  "properties": {
+    "run_id": { "type": "string", "minLength": 1 },
+    "experiment_id": { "type": "string", "pattern": "^E[0-9]{3,}$" },
+    "variant": { "type": "string", "minLength": 1 },
+    "seed": { "type": "integer" },
+    "status": { "enum": ["completed", "failed", "aborted"] },
+    "git_commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "config_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "dataset_manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": "string", "format": "date-time" },
+    "hardware": { "type": "object" },
+    "software": { "type": "object" },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": { "type": ["number", "integer", "null"] }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "sha256", "location"],
+        "properties": {
+          "kind": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "location": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "failure": {
+      "type": ["object", "null"],
+      "properties": {
+        "stage": { "type": "string" },
+        "error_type": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

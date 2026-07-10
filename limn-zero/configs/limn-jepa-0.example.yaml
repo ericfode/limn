@@ -1,0 +1,39 @@
+experiment_id: E000
+status: example_not_frozen
+seeds: [11, 23, 37, 53, 71]
+
+domains:
+  - object_world
+  - temporal_causal
+
+variants:
+  - continuous_jepa
+  - flat_quantized
+  - fixed_graph
+  - emergent_graph
+
+model:
+  target_encoder_update: ema
+  embedding_dim: 256
+  predictor_layers: 6
+  predictor_heads: 8
+  recurrent_cache: false
+
+bottleneck:
+  channel_budget_bits: 256
+  max_nodes: 16
+  max_edges: 24
+  concept_codes: 256
+  relation_codes: 16
+  grade_bins: 16
+
+training:
+  steps: null
+  batch_size: null
+  optimizer: adamw
+  precision: null
+
+evaluation:
+  matched_compute: true
+  causal_interventions: true
+  fresh_receiver: true
